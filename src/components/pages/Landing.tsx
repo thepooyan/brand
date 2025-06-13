@@ -2,10 +2,9 @@ import { A } from "@solidjs/router"
 import { Button } from "../ui/button"
 import { FiChevronLeft as ChevronLeft, FiCode as Code, FiGlobe as Globe, FiMessageSquare as MessageSquare } from "solid-icons/fi"
 
-export default function Home() {
+export default function Landing() {
   return (
     <div class="min-h-screen flex flex-col" dir="rtl">
-      {/* Navigation */}
       <header class="border-b">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">

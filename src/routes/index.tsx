@@ -1,10 +1,9 @@
-import { Button } from "~/components/ui/button";
+import Landing from "~/components/pages/Landing";
 
 export default function Home() {
   return (
     <>
-      hi
-      <Button>hi</Button>
+      <Landing/>
     </>
   );
 }
