@@ -60,7 +60,7 @@ export default function Landing() {
             کنیم.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <Button class="bg-primary  text-white px-8 py-6 text-lg">
+            <Button class="bg-primary   px-8 py-6 text-lg">
               شروع کنید
               <ChevronLeft class="mr-2 h-5 w-5" />
             </Button>
@@ -145,7 +145,7 @@ export default function Landing() {
                 تیم متخصص ما مشتاق نوآوری و متعهد به ارائه راه‌حل‌های سفارشی است که نیازهای منحصر به فرد کسب و کار شما را
                 برآورده می‌کند.
               </p>
-              <Button class="bg-primary  text-white">داستان ما</Button>
+              <Button class="bg-primary  ">داستان ما</Button>
             </div>
             <div class="order-1 md:order-2">
               <div class="h-64 md:h-96 bg-gray-200 rounded-lg">
@@ -218,14 +218,14 @@ export default function Landing() {
                   placeholder="پیام شما"
                 ></textarea>
               </div>
-              <Button class="w-full bg-primary  text-white py-6">ارسال پیام</Button>
+              <Button class="w-full bg-primary   py-6">ارسال پیام</Button>
             </form>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer class="bg-gray-900 text-white py-12">
+      <footer class="bg-gray-900  py-12">
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
