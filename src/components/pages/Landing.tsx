@@ -9,7 +9,7 @@ export default function Landing() {
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="h-8 w-8 rounded-full bg-orange-500"></div>
-            <span class="text-xl font-bold">پویان</span>
+            <span class="text-xl font-bold">سحرتک</span>
           </div>
           <nav class="hidden md:flex items-center gap-6">
             <A href="#services" class="text-sm font-medium hover:text-orange-500 transition-colors">
@@ -135,9 +135,9 @@ export default function Landing() {
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
-              <h2 class="text-3xl md:text-4xl font-bold mb-6">درباره پویان</h2>
+              <h2 class="text-3xl md:text-4xl font-bold mb-6">درباره سحرتک</h2>
               <p class="text-gray-600 mb-6">
-                پویان یک آژانس دیجیتال آینده‌نگر است که به کمک کسب و کارها در هدایت فضای پیچیده دیجیتال اختصاص دارد. ما
+                سحرتک یک آژانس دیجیتال آینده‌نگر است که به کمک کسب و کارها در هدایت فضای پیچیده دیجیتال اختصاص دارد. ما
                 خلاقیت، فناوری و استراتژی را ترکیب می‌کنیم تا نتایج استثنایی ارائه دهیم.
               </p>
               <p class="text-gray-600 mb-8">
@@ -150,7 +150,7 @@ export default function Landing() {
               <div class="h-64 md:h-96 bg-gray-200 rounded-lg">
                 <img
                   src="/placeholder.svg?height=384&width=576"
-                  alt="درباره پویان"
+                  alt="درباره سحرتک"
                   class="w-full h-full object-cover rounded-lg"
                 />
               </div>
@@ -230,7 +230,7 @@ export default function Landing() {
             <div>
               <div class="flex items-center gap-2 mb-4">
                 <div class="h-8 w-8 rounded-full bg-orange-500"></div>
-                <span class="text-xl font-bold">پویان</span>
+                <span class="text-xl font-bold">سحرتک</span>
               </div>
               <p class="text-gray-400">تبدیل ایده‌ها به واقعیت دیجیتال با راه‌حل‌های نوآورانه.</p>
             </div>
@@ -294,7 +294,7 @@ export default function Landing() {
             </div>
           </div>
           <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-400 text-sm">© ۱۴۰۴ پویان. تمامی حقوق محفوظ است.</p>
+            <p class="text-gray-400 text-sm">© ۱۴۰۴ سحرتک. تمامی حقوق محفوظ است.</p>
             <div class="flex space-x-6 mt-4 md:mt-0">
               <A href="#" class="text-gray-400 hover:text-orange-500 transition-colors">
                 <span class="sr-only">فیسبوک</span>
