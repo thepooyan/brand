@@ -99,7 +99,7 @@ export default function Landing() {
             </div>
 
             {/* Online Marketing */}
-            <div class="bg-white p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+            <div class=" bg-white p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
               <div class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mb-6">
                 <Globe class="h-6 w-6 text-primary" />
               </div>
