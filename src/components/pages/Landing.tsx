@@ -1,16 +1,16 @@
 import { A } from "@solidjs/router"
-import { Button } from "../ui/button"
 import { FiChevronLeft as ChevronLeft, FiCode as Code, FiGlobe as Globe, FiMessageSquare as MessageSquare } from "solid-icons/fi"
-import { name } from "../../../config/config"
+import { Button } from "../ui/button"
 
-export default function Landing() {
+export default function Home() {
   return (
     <div class="min-h-screen flex flex-col" dir="rtl">
-      <header class="border-b">
+      {/* Navigation */}
+      <header class="border-b border-border">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="h-8 w-8 rounded-full bg-primary"></div>
-            <span class="text-xl font-bold">{name}</span>
+            <span class="text-xl font-bold">پویان</span>
           </div>
           <nav class="hidden md:flex items-center gap-6">
             <A href="#services" class="text-sm font-medium hover:text-primary transition-colors">
@@ -19,13 +19,13 @@ export default function Landing() {
             <A href="#about" class="text-sm font-medium hover:text-primary transition-colors">
               درباره ما
             </A>
-            <A href="#contact" class="text-sm font-medium  transition-colors">
+            <A href="#contact" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </A>
-            <Button variant="outline">
+            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10">
               ورود
             </Button>
-            <Button>شروع کنید</Button>
+            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
           </nav>
           <Button variant="ghost" size="icon" class="md:hidden">
             <span class="sr-only">تغییر منو</span>
@@ -36,8 +36,8 @@ export default function Landing() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
+              stroke-Width="2"
+              stroke-Linecap="round"
               stroke-Linejoin="round"
               class="h-6 w-6"
             >
@@ -55,19 +55,16 @@ export default function Landing() {
           <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
             تبدیل ایده‌ها به <span class="text-primary">واقعیت دیجیتال</span>
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 max-w-2xl mb-10">
+          <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10">
             ما در خدمات هوش مصنوعی، بازاریابی آنلاین و توسعه وب‌سایت تخصص داریم تا به کسب و کار شما در فضای دیجیتال کمک
             کنیم.
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <Button class="bg-primary   px-8 py-6 text-lg">
+            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
               شروع کنید
               <ChevronLeft class="mr-2 h-5 w-5" />
             </Button>
-            <Button
-              variant="outline"
-              class="border-primary   px-8 py-6 text-lg"
-            >
+            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg">
               بیشتر بدانید
             </Button>
           </div>
@@ -75,22 +72,22 @@ export default function Landing() {
       </section>
 
       {/* Services Section */}
-      <section id="services" class="py-20 bg-gray-50">
+      <section id="services" class="py-20 bg-card">
         <div class="container mx-auto px-4">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">خدمات ما</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">
+            <p class="text-muted-foreground max-w-2xl mx-auto">
               ما راه‌حل‌های جامع دیجیتال برای کمک به رشد و موفقیت کسب و کار شما ارائه می‌دهیم.
             </p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* AI Services */}
-            <div class="bg-white p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <div class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mb-6">
+            <div class="bg-background p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
                 <MessageSquare class="h-6 w-6 text-primary" />
               </div>
               <h3 class="text-xl font-bold mb-3">خدمات هوش مصنوعی</h3>
-              <p class="text-gray-600 mb-6">
+              <p class="text-muted-foreground mb-6">
                 از قدرت هوش مصنوعی برای خودکارسازی فرآیندها، کسب بینش و بهبود تجربه مشتری استفاده کنید.
               </p>
               <A href="#" class="text-primary font-medium flex items-center">
@@ -99,12 +96,12 @@ export default function Landing() {
             </div>
 
             {/* Online Marketing */}
-            <div class=" bg-white p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <div class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mb-6">
+            <div class="bg-background p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
                 <Globe class="h-6 w-6 text-primary" />
               </div>
               <h3 class="text-xl font-bold mb-3">بازاریابی آنلاین</h3>
-              <p class="text-gray-600 mb-6">
+              <p class="text-muted-foreground mb-6">
                 با کمپین‌های بازاریابی دیجیتال استراتژیک که باعث افزایش ترافیک، تعامل و تبدیل می‌شوند، به مخاطبان هدف خود
                 برسید.
               </p>
@@ -114,12 +111,12 @@ export default function Landing() {
             </div>
 
             {/* Website Development */}
-            <div class="bg-white p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <div class="h-12 w-12 bg-primary rounded-lg flex items-center justify-center mb-6">
+            <div class="bg-background p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
                 <Code class="h-6 w-6 text-primary" />
               </div>
               <h3 class="text-xl font-bold mb-3">توسعه وب‌سایت</h3>
-              <p class="text-gray-600 mb-6">
+              <p class="text-muted-foreground mb-6">
                 وب‌سایت‌های خیره‌کننده و واکنش‌گرا ایجاد کنید که برند شما را به نمایش بگذارند و تجربه کاربری فوق‌العاده‌ای
                 ارائه دهند.
               </p>
@@ -136,22 +133,22 @@ export default function Landing() {
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
-              <h2 class="text-3xl md:text-4xl font-bold mb-6">درباره {name}</h2>
-              <p class="text-gray-600 mb-6">
-                {name} یک آژانس دیجیتال آینده‌نگر است که به کمک کسب و کارها در هدایت فضای پیچیده دیجیتال اختصاص دارد. ما
+              <h2 class="text-3xl md:text-4xl font-bold mb-6">درباره پویان</h2>
+              <p class="text-muted-foreground mb-6">
+                پویان یک آژانس دیجیتال آینده‌نگر است که به کمک کسب و کارها در هدایت فضای پیچیده دیجیتال اختصاص دارد. ما
                 خلاقیت، فناوری و استراتژی را ترکیب می‌کنیم تا نتایج استثنایی ارائه دهیم.
               </p>
-              <p class="text-gray-600 mb-8">
+              <p class="text-muted-foreground mb-8">
                 تیم متخصص ما مشتاق نوآوری و متعهد به ارائه راه‌حل‌های سفارشی است که نیازهای منحصر به فرد کسب و کار شما را
                 برآورده می‌کند.
               </p>
-              <Button class="bg-primary  ">داستان ما</Button>
+              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">داستان ما</Button>
             </div>
             <div class="order-1 md:order-2">
-              <div class="h-64 md:h-96 bg-gray-200 rounded-lg">
+              <div class="h-64 md:h-96 bg-muted rounded-lg">
                 <img
                   src="/placeholder.svg?height=384&width=576"
-                  alt={` درباره ${name} `}
+                  alt="درباره پویان"
                   class="w-full h-full object-cover rounded-lg"
                 />
               </div>
@@ -161,11 +158,11 @@ export default function Landing() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" class="py-20 bg-gray-50">
+      <section id="contact" class="py-20 bg-card">
         <div class="container mx-auto px-4">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">تماس با ما</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">
+            <p class="text-muted-foreground max-w-2xl mx-auto">
               آماده تحول کسب و کار خود هستید؟ همین امروز با ما تماس بگیرید تا در مورد چگونگی کمک به شما برای رسیدن به
               اهدافتان صحبت کنیم.
             </p>
@@ -174,87 +171,87 @@ export default function Landing() {
             <form class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                  <label for="name" class="block text-sm font-medium mb-1">
                     نام
                   </label>
                   <input
                     type="text"
                     id="name"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="نام شما"
                   />
                 </div>
                 <div>
-                  <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                  <label for="email" class="block text-sm font-medium mb-1">
                     ایمیل
                   </label>
                   <input
                     type="email"
                     id="email"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="ایمیل شما"
                   />
                 </div>
               </div>
               <div>
-                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="subject" class="block text-sm font-medium mb-1">
                   موضوع
                 </label>
                 <input
                   type="text"
                   id="subject"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="موضوع"
                 />
               </div>
               <div>
-                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="message" class="block text-sm font-medium mb-1">
                   پیام
                 </label>
                 <textarea
                   id="message"
                   rows={4}
-                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="پیام شما"
                 ></textarea>
               </div>
-              <Button class="w-full bg-primary   py-6">ارسال پیام</Button>
+              <Button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6">ارسال پیام</Button>
             </form>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer class="bg-gray-900  py-12">
+      <footer class="bg-black py-12">
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div class="flex items-center gap-2 mb-4">
                 <div class="h-8 w-8 rounded-full bg-primary"></div>
-                <span class="text-xl font-bold">{name}</span>
+                <span class="text-xl font-bold">پویان</span>
               </div>
-              <p class="text-gray-400">تبدیل ایده‌ها به واقعیت دیجیتال با راه‌حل‌های نوآورانه.</p>
+              <p class="text-muted-foreground">تبدیل ایده‌ها به واقعیت دیجیتال با راه‌حل‌های نوآورانه.</p>
             </div>
             <div>
               <h3 class="text-lg font-semibold mb-4">خدمات</h3>
               <ul class="space-y-2">
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     خدمات هوش مصنوعی
                   </A>
                 </li>
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     بازاریابی آنلاین
                   </A>
                 </li>
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     توسعه وب‌سایت
                   </A>
                 </li>
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     استراتژی دیجیتال
                   </A>
                 </li>
@@ -264,22 +261,22 @@ export default function Landing() {
               <h3 class="text-lg font-semibold mb-4">شرکت</h3>
               <ul class="space-y-2">
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     درباره ما
                   </A>
                 </li>
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     تیم ما
                   </A>
                 </li>
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     فرصت‌های شغلی
                   </A>
                 </li>
                 <li>
-                  <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     وبلاگ
                   </A>
                 </li>
@@ -288,16 +285,16 @@ export default function Landing() {
             <div>
               <h3 class="text-lg font-semibold mb-4">تماس</h3>
               <ul class="space-y-2">
-                <li class="text-gray-400">info@pooyan.com</li>
-                <li class="text-gray-400">۱۲۳۴۵۶۷-۰۲۱</li>
-                <li class="text-gray-400">خیابان دیجیتال، شهر فناوری، ایران</li>
+                <li class="text-muted-foreground">info@pooyan.com</li>
+                <li class="text-muted-foreground">۱۲۳۴۵۶۷-۰۲۱</li>
+                <li class="text-muted-foreground">خیابان دیجیتال، شهر فناوری، ایران</li>
               </ul>
             </div>
           </div>
-          <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-400 text-sm">© ۱۴۰۴ {name}. تمامی حقوق محفوظ است.</p>
+          <div class="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-muted-foreground text-sm">© ۱۴۰۴ پویان. تمامی حقوق محفوظ است.</p>
             <div class="flex space-x-6 mt-4 md:mt-0">
-              <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">فیسبوک</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path
@@ -307,7 +304,7 @@ export default function Landing() {
                   />
                 </svg>
               </A>
-              <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">اینستاگرام</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path
@@ -317,13 +314,13 @@ export default function Landing() {
                   />
                 </svg>
               </A>
-              <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">توییتر</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </A>
-              <A href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">لینکدین</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
