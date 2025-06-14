@@ -2,12 +2,12 @@ import { FiChevronLeft as ChevronLeft } from "solid-icons/fi"
 import { Button } from "../ui/button"
 import { ChangeColor } from "~/animation/ChangeColor"
 import { ComeUp } from "~/animation/ComeUp"
-import { BackwardFade } from "~/animation/BackwardFade"
+import { Intro } from "~/animation/Intro"
 
 const Hero = () => {
   return (
     <>
-      <BackwardFade>
+      <Intro>
         <section class="py-20 md:py-32">
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center">
@@ -36,7 +36,7 @@ const Hero = () => {
             </div>
           </div>
         </section>
-      </BackwardFade>
+      </Intro>
     </>
   )
 }
