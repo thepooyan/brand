@@ -1,4 +1,4 @@
-import { Capsule } from "./Capsule";
+import { Capsule } from "./primitives/Capsule";
 
 export const ChangeColor = Capsule(
   {color: ["#fff", "#000"]},

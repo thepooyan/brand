@@ -1,4 +1,4 @@
-import { CapsuleProps } from "./Capsule";
+import { CapsuleProps } from "./primitives/Capsule"
 
 interface props {
   delay?: number
