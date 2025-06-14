@@ -1,6 +1,7 @@
 import { A } from "@solidjs/router"
 import { Button } from "../ui/button"
 import { name } from "../../../config/config"
+import { FiMenu } from "solid-icons/fi"
 
 const Header = () => {
   return (
@@ -26,24 +27,9 @@ const Header = () => {
             </Button>
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
           </nav>
-          <Button variant="ghost" size="icon" class="md:hidden">
+          <Button variant="outline" size="icon" class="md:hidden">
             <span class="sr-only">تغییر منو</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-Width="2"
-              stroke-Linecap="round"
-              stroke-Linejoin="round"
-              class="h-6 w-6"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
+            <FiMenu/>
           </Button>
         </div>
       </header>
