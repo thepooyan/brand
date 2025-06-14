@@ -13,7 +13,7 @@ const Motion = (props:ParentProps<props>) => {
   })
 
   return (
-    <div ref={ref}>{props.children}</div>
+    <span ref={ref}>{props.children}</span>
   )
 }
 

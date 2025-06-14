@@ -2,6 +2,7 @@ import { FiChevronLeft as ChevronLeft } from "solid-icons/fi"
 import { Button } from "../ui/button"
 import Motion from "~/animation/Motion"
 import Appear from "~/animation/Appear"
+import { ChangeColor } from "~/animation/ChangeColor"
 
 const Hero = () => {
   return (
@@ -11,7 +12,10 @@ const Hero = () => {
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-              تبدیل ایده‌ها به <span class="text-primary">واقعیت دیجیتال</span>
+              تبدیل ایده‌ها به 
+              <ChangeColor>
+                <span class="text-primary">واقعیت دیجیتال</span>
+              </ChangeColor>
             </h1>
             <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10">
               ما در خدمات هوش مصنوعی، بازاریابی آنلاین و توسعه وب‌سایت تخصص داریم تا به کسب و کار شما در فضای دیجیتال کمک
