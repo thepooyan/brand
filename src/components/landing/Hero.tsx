@@ -1,10 +1,13 @@
 import { FiChevronLeft as ChevronLeft, FiCode as Code, FiGlobe as Globe, FiMessageSquare as MessageSquare } from "solid-icons/fi"
 import { Button } from "../ui/button"
+import Motion from "~/animation/test"
 
 const Hero = () => {
   return (
     <>
+      <Motion animate={{opacity: .1}} >
       <section class="py-20 md:py-32">
+
         <div class="container mx-auto px-4 flex flex-col items-center text-center">
           <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
             تبدیل ایده‌ها به <span class="text-primary">واقعیت دیجیتال</span>
@@ -24,6 +27,7 @@ const Hero = () => {
           </div>
         </div>
       </section>
+        </Motion>
     </>
   )
 }
