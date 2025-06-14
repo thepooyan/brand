@@ -1,11 +1,12 @@
 import { FiChevronLeft as ChevronLeft } from "solid-icons/fi"
 import { Button } from "../ui/button"
-import Motion from "~/animation/test"
+import Motion from "~/animation/Motion"
+import Appear from "~/animation/Appear"
 
 const Hero = () => {
   return (
     <>
-      <Motion animate={{opacity: [0,1]}} options={{duration: 4}}>
+      <Motion animate={{opacity: [0,1]}} options={{duration: 3}}>
         <section class="py-20 md:py-32">
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center">
@@ -17,13 +18,17 @@ const Hero = () => {
               کنیم.
             </p>
             <div class="flex flex-col sm:flex-row gap-4">
-              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
-                شروع کنید
-                <ChevronLeft class="mr-2 h-5 w-5" />
-              </Button>
-              <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg">
-                بیشتر بدانید
-              </Button>
+              <Appear>
+                <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
+                  شروع کنید
+                  <ChevronLeft class="mr-2 h-5 w-5" />
+                </Button>
+              </Appear>
+              <Appear delay={.2}>
+                <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg">
+                  بیشتر بدانید
+                </Button>
+              </Appear>
             </div>
           </div>
         </section>
