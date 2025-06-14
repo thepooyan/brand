@@ -1,9 +1,14 @@
 import { A } from "@solidjs/router"
 import { Button } from "../ui/button"
 import { name } from "../../../config/config"
+import MobileMenu from "../parts/MobileMenu"
 import { FiMenu } from "solid-icons/fi"
+import { createSignal } from "solid-js"
 
 const Header = () => {
+
+  const [isOpen, setOpen] = createSignal(false)
+
   return (
     <>
       <header class="border-b border-border">
@@ -27,11 +32,12 @@ const Header = () => {
             </Button>
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
           </nav>
-          <Button variant="outline" size="icon" class="md:hidden">
+          <Button variant="outline" size="icon" class="md:hidden" onclick={() => setOpen(prev => !prev)}>
             <span class="sr-only">تغییر منو</span>
             <FiMenu/>
           </Button>
         </div>
+        <MobileMenu isOpen={isOpen} setOpen={setOpen}/>
       </header>
     </>
   )
