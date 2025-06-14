@@ -8,7 +8,7 @@ const Header = () => {
       <header class="border-b border-border">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="h-8 w-8 rounded-full bg-primary"></div>
+            <div class="h-8 w-8 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
             <span class="text-xl font-bold">{name}</span>
           </div>
           <nav class="hidden md:flex items-center gap-6">
