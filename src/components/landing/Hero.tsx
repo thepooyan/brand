@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { ChangeColor } from "~/animation/ChangeColor"
 import { ComeUp } from "~/animation/ComeUp"
 import { Intro } from "~/animation/Intro"
+import { Wiggle } from "~/animation/Wiggle"
 
 const Hero = () => {
   return (
@@ -25,7 +26,9 @@ const Hero = () => {
               <ComeUp>
                 <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
                   شروع کنید
-                  <ChevronLeft class="mr-2 h-5 w-5" />
+                  <Wiggle>
+                    <ChevronLeft class="mr-2 h-5 w-5" />
+                  </Wiggle>
                 </Button>
               </ComeUp>
               <ComeUp delay={.2}>
