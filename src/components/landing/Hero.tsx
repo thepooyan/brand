@@ -1,8 +1,8 @@
 import { FiChevronLeft as ChevronLeft } from "solid-icons/fi"
 import { Button } from "../ui/button"
 import Motion from "~/animation/Motion"
-import Appear from "~/animation/Appear"
 import { ChangeColor } from "~/animation/ChangeColor"
+import { ComeUp } from "~/animation/ComeUp"
 
 const Hero = () => {
   return (
@@ -22,17 +22,17 @@ const Hero = () => {
               کنیم.
             </p>
             <div class="flex flex-col sm:flex-row gap-4">
-              <Appear>
+              <ComeUp>
                 <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
                   شروع کنید
                   <ChevronLeft class="mr-2 h-5 w-5" />
                 </Button>
-              </Appear>
-              <Appear delay={.2}>
+              </ComeUp>
+              <ComeUp delay={.2}>
                 <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg">
                   بیشتر بدانید
                 </Button>
-              </Appear>
+              </ComeUp>
             </div>
           </div>
         </section>

@@ -9,3 +9,12 @@ export const Capsule = (animate: DOMKeyframesDefinition, options: AnimationOptio
     </Motion>
   }
 }
+
+export function CapsuleProps<O extends Record<string, any>>(func: (pr:ParentProps<O>) => {animate: DOMKeyframesDefinition, options: AnimationOptions}) {
+  return (pr:ParentProps<O>) => {
+    let {animate, options} = func(pr)
+    return <Motion animate={animate} options={options}>
+      {pr.children}
+    </Motion>
+  }
+}
