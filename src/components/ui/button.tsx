@@ -43,7 +43,7 @@ const Button = <T extends ValidComponent = "button">(
   const [local, others] = splitProps(props as ButtonProps, ["variant", "size", "class"])
   return (
     <ButtonPrimitive.Root
-      class={cn(buttonVariants({ variant: local.variant, size: local.size }), local.class)}
+      class={cn(buttonVariants({ variant: local.variant, size: local.size }), local.class, "cursor-pointer")}
       {...others}
     />
   )
