@@ -74,7 +74,7 @@ export default function LoginPage() {
                     placeholder="۰۹۱۲۳۴۵۶۷۸۹"
                     value={phoneNumber()}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    class="pl-3 pr-10 bg-input border-border text-right placeholder:text-muted-foreground"
+                    class="pl-3 pr-10 bg-input border-border ltr placeholder:text-muted-foreground"
                     dir="rtl"
                   />
                 </div>
@@ -101,7 +101,7 @@ export default function LoginPage() {
                       value={digit}
                       onChange={(e) => handleOtpChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
-                      class="w-10 h-12 text-center bg-input border-border text-lg"
+                      class="w-10 h-12 text-center bg-input border-border text-lg ltr"
                     />
                   ))}
                 </div>
@@ -120,7 +120,7 @@ export default function LoginPage() {
           )}
         </CardContent>
         <CardFooter class="flex justify-center text-sm text-muted-foreground">
-          <p>تمامی حقوق محفوظ است © ۱۴۰۴</p>
+          <p>ثبت نام آسان و سریع!</p>
         </CardFooter>
       </Card>
     </div>

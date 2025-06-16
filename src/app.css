@@ -3,6 +3,11 @@
 
 body {
   font-family: "Vazirmatn", system-ui, sans-serif;
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
 }
 
 @font-face {
