@@ -25,7 +25,7 @@ const Hero = () => {
                 <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg intro">
                   شروع کنید
                   <Wiggle>
-                    <ChevronLeft class="mr-2 h-5 w-5" />
+                    <ChevronLeft class="  h-5 w-5" />
                   </Wiggle>
                 </Button>
                 <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg intro">
