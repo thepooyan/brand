@@ -18,10 +18,22 @@ export default function LoginPage() {
   }
 
   const handleOtpChange = (index: number, value: string) => {
+    if (value.length > 1) {
+      value = value[0]
+    }
 
+    const newOtp = [...otp()]
+    newOtp[index] = value
+    setOtp(newOtp)
+    if (value !== "" && index < 5) {
+      const nextInput = document.getElementById(`otp-${index + 1}`)
+      if (nextInput) {
+        nextInput.focus()
+      }
+    }
   }
 
-  const handleOtpSubmit = (e: any ) => {
+  const handleOtpSubmit = (e: any) => {
     e.preventDefault()
     // Here you would verify the OTP with your backend
     alert("کد تایید با موفقیت ارسال شد!")
@@ -76,7 +88,7 @@ export default function LoginPage() {
                 <Label for="otp" class="text-right block text-foreground">
                   کد تایید
                 </Label>
-                <div class="flex justify-center gap-2 dir-rtl">
+                <div class="flex justify-center gap-2 ltr ">
                   {otp().map((digit, index) => (
                     <Input
                       id={`otp-${index}`}
