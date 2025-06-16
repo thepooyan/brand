@@ -1,6 +1,6 @@
-import { Accessor, createEffect, ParentProps, Setter } from "solid-js"
+import { Accessor, ParentProps, Setter } from "solid-js"
 import { A } from "@solidjs/router"
-import { animate } from "motion"
+import clsx from "clsx"
 
 interface props {
   isOpen: Accessor<boolean>,
@@ -13,7 +13,9 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
 
   return (
     <>
-      <div class="fixed bg-secondary -left-100 h-dvh top-0 flex flex-col w-3/5 z-100 invisible" ref={menuRef}>
+      <div class={clsx("fixed bg-secondary -left-100 h-dvh top-0 flex flex-col w-3/5 z-100 invisible transition-all duration-200",
+        isOpen() && "left-0 visible"
+      )} ref={menuRef}>
           <L href="#services">
             خدمات
           </L>
@@ -24,7 +26,9 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
             تماس با ما
           </L>
       </div>
-      <div class="fixed bg-black w-2/5 h-full top-0 z-100 opacity-0 invisible" ref={backdropRef} onclick={() => setOpen(false)}>
+      <div class={clsx("fixed bg-black w-2/5 h-full top-0 z-100 opacity-0 invisible transition-all duration-200",
+        isOpen() && "opacity-90 visible"
+      )} ref={backdropRef} onclick={() => setOpen(false)}>
       </div>
     </>
   )
