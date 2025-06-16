@@ -1,14 +1,16 @@
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import { Label } from "~/components/ui/label"
-import { createSignal } from "solid-js"
+import { createSignal, onMount } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
 
 export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("phone")
   const [phoneNumber, setPhoneNumber] = createSignal("")
-  const [otp, setOtp] = createSignal(["", "", "", "", "", ""])
+  const otpLength = 6;
+  const [otp, setOtp] = createSignal(Array(otpLength).fill(""))
+  const otpElements:HTMLInputElement[] = [];
 
   const handlePhoneSubmit = (e: any) => {
     e.preventDefault()
@@ -18,19 +20,9 @@ export default function LoginPage() {
   }
 
   const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) {
-      value = value[0]
-    }
-
-    const newOtp = [...otp()]
+    let newOtp = [...otp()]
     newOtp[index] = value
     setOtp(newOtp)
-    if (value !== "" && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`)
-      if (nextInput) {
-        nextInput.focus()
-      }
-    }
   }
 
   const handleOtpSubmit = (e: any) => {
@@ -40,12 +32,8 @@ export default function LoginPage() {
   }
 
   const handleKeyDown = (index: number, e: any) => {
-    if (e.key === "Backspace" && otp()[index] === "" && index > 0) {
-      const prevInput = document.getElementById(`otp-${index - 1}`)
-      if (prevInput) {
-        prevInput.focus()
-      }
-    }
+    if (index+1 === otpLength) return alert("done")
+    otpElements[index+1].focus()
   }
 
   return (
@@ -91,14 +79,14 @@ export default function LoginPage() {
                 <div class="flex justify-center gap-2 ltr ">
                   {otp().map((digit, index) => (
                     <Input
-                      id={`otp-${index}`}
+                      ref={otpElements[index]}
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={1}
                       value={digit}
                       onChange={(e) => handleOtpChange(index, e.target.value)}
-                      onKeyDown={(e) => handleKeyDown(index, e)}
+                      onkeyup={(e) => handleKeyDown(index, e)}
                       class="w-10 h-12 text-center bg-input border-border text-lg ltr"
                     />
                   ))}
