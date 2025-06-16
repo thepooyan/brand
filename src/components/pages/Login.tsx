@@ -18,21 +18,7 @@ export default function LoginPage() {
   }
 
   const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) {
-      value = value[0]
-    }
 
-    const newOtp = [...otp()]
-    newOtp[index] = value
-    setOtp(newOtp)
-
-    // Auto-focus next input
-    if (value !== "" && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`)
-      if (nextInput) {
-        nextInput.focus()
-      }
-    }
   }
 
   const handleOtpSubmit = (e: any ) => {
@@ -119,9 +105,6 @@ export default function LoginPage() {
             </form>
           )}
         </CardContent>
-        <CardFooter class="flex justify-center text-sm text-muted-foreground">
-          <p>ثبت نام آسان و سریع!</p>
-        </CardFooter>
       </Card>
     </div>
   )
