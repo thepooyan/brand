@@ -11,25 +11,6 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
   let menuRef!: HTMLDivElement
   let backdropRef!: HTMLDivElement
 
-  createEffect(() => {
-    if (isOpen()) {
-      animate(menuRef, 
-        {x: 600, }
-      )
-      animate(backdropRef, 
-        {opacity: 80, }
-      )
-    } else {
-      animate(menuRef, 
-        {x: 0, "visibility": "visible"}
-      )
-      animate(backdropRef, 
-        {opacity: 0, "visibility": "visible"}
-      )
-
-    }
-  })
-
   return (
     <>
       <div class="fixed bg-secondary -left-100 h-dvh top-0 flex flex-col w-3/5 z-100 invisible" ref={menuRef}>
