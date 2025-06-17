@@ -38,6 +38,7 @@ export class Timer {
   }
 
   restart() {
+    this.done()
     this.reset()
     this.start()
   }

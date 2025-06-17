@@ -1,7 +1,7 @@
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Label } from "~/components/ui/label"
-import { createEffect, createSignal } from "solid-js"
+import { createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
 import MyButton from "../parts/MyButton"
@@ -20,11 +20,6 @@ export default function LoginPage() {
   const timer = new Timer(30)
   const timerSignal = timer.getAccessor()
 
-  createEffect(() => {
-    if (step() === "otp")
-      timer.start()
-  })
-
   const navigate = useNavigate()
 
   const handlePhoneSubmit = async (e: any) => {
@@ -33,7 +28,7 @@ export default function LoginPage() {
 
     setIsPhoneWaiting(true)
     await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
-    .then(() => setStep("otp"))
+    .then(() => {setStep("otp"); timer.restart()})
     .catch(err => {alert(err)})
     .finally(() => setIsPhoneWaiting(false))
   }
