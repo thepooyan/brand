@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
   const [isOtpWaiting, setIsOtpWaiting] = createSignal(false)
   const [isResendWaiting, setIsResendWaiting] = createSignal(false)
-  const timer = new Timer(5)
+  const timer = new Timer(30)
   const timerSignal = timer.getAccessor()
 
   createEffect(() => {
