@@ -5,9 +5,8 @@ import { createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
 import { wait } from "~/lib/utils"
-import clsx from "clsx"
-import Spinner from "../parts/Spinner"
 import MyButton from "../parts/MyButton"
+import axios from "axios"
 
 export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("phone")
@@ -22,9 +21,10 @@ export default function LoginPage() {
     if (phoneNumber().length < 10) return
 
     setIsPhoneWaiting(true)
-    await wait(5000)
-    setIsPhoneWaiting(false)
-    setStep("otp")
+    await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
+    .then(() => setStep("otp"))
+    .catch(err => {alert(err)})
+    .finally(() => setIsPhoneWaiting(false))
   }
 
   const getOtpValue = () => {
