@@ -7,6 +7,7 @@ import Input from "../ui/input"
 import { wait } from "~/lib/utils"
 import clsx from "clsx"
 import Spinner from "../parts/Spinner"
+import MyButton from "../parts/MyButton"
 
 export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("phone")
@@ -84,16 +85,10 @@ export default function LoginPage() {
                   />
                 </div>
               </div>
-              <Button type="submit" 
-                disabled={isPhoneWaiting()}
-                class={clsx("w-full bg-primary hover:bg-primary/90 text-primary-foreground",
-                isPhoneWaiting() && "opacity-85"
-              )}>
-                {isPhoneWaiting() ? <Spinner/> : <>
+              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isPhoneWaiting}>
                   دریافت کد تایید
                   <FiArrowLeft class="mr-2 h-4 w-4" />
-                </>}
-              </Button>
+              </MyButton>
             </form>
           ) : (
             <form onSubmit={handleOtpSubmit} class="space-y-4">
