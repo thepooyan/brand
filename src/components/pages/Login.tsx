@@ -1,12 +1,13 @@
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Label } from "~/components/ui/label"
-import { createSignal } from "solid-js"
+import { createEffect, createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
 import MyButton from "../parts/MyButton"
 import axios from "axios"
 import { useNavigate } from "@solidjs/router"
+import { Timer } from "~/lib/utils"
 
 export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("phone")
@@ -15,6 +16,13 @@ export default function LoginPage() {
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
   const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
   const [isOtpWaiting, setIsOtpWaiting] = createSignal(false)
+  const timer = new Timer(1)
+  const timerSignal = timer.getAccessor()
+
+  createEffect(() => {
+    if (step() === "otp")
+      timer.start()
+  })
 
   const navigate = useNavigate()
 
@@ -119,6 +127,15 @@ export default function LoginPage() {
                 </div>
                 <p class="text-sm text-muted-foreground text-center mt-2">
                   کد تایید به شماره {phoneNumber()} ارسال شد
+                </p>
+                <p class="text-sm text-muted-foreground text-center mt-2">
+                    {timerSignal() === 0 ? <>
+                      کد را دریافت نکرده اید؟
+                      <Button variant="link" class="inline p-0 mr-1 h-auto">ارسال مجدد</Button>
+                    </> : <>
+                      کد را دریافت نکرده اید؟
+                      ارسال مجدد در {timerSignal()} ثانیه
+                    </>}
                 </p>
               </div>
               <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isOtpWaiting}>
