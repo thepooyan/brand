@@ -9,7 +9,6 @@ export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("otp")
   const [phoneNumber, setPhoneNumber] = createSignal("")
   const otpLength = 6;
-  const [otp, setOtp] = createSignal<string[]>(Array(otpLength).fill(""))
   const otpElements:HTMLInputElement[] = [];
 
   const handlePhoneSubmit = (e: any) => {
@@ -21,7 +20,6 @@ export default function LoginPage() {
 
   const handleOtpSubmit = (e: any) => {
     e.preventDefault()
-    console.log(otp())
   }
   const handleKeydown = (index:number, e:KeyboardEvent) => {
     if (e.key === "Backspace") {
@@ -34,12 +32,8 @@ export default function LoginPage() {
     otpElements[index].value = ""
   }
 
-  const handleInput = (index: number, e: any) => {
-    let newOtp = [...otp()]
-    newOtp[index] = e.target.value
-    setOtp(newOtp)
-    if (index+1 === otpLength) return
-    otpElements[index+1].focus()
+  const handleInput = (index: number) => {
+    if (index+1 <= otpLength) otpElements[index+1].focus()
   }
 
   return (
@@ -83,15 +77,14 @@ export default function LoginPage() {
                   کد تایید
                 </Label>
                 <div class="flex justify-center gap-2 ltr ">
-                  {otp().map((digit, index) => (
+                  {[1,2,3,4,5,6].map((index) => (
                     <Input
                       ref={otpElements[index]}
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       maxLength={1}
-                      value={digit}
-                      oninput={(e) => handleInput(index, e)}
+                      oninput={() => handleInput(index)}
                       onKeyDown={e => handleKeydown(index, e)}
                       onfocus={() => handleFocues(index)}
                       class="w-10 h-12 text-center bg-input border-border text-lg ltr"
