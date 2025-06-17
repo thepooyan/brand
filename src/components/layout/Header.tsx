@@ -27,7 +27,7 @@ const Header = () => {
             <A href="#contact" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </A>
-            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10">
+            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as="A" href="/Login">
               ورود
             </Button>
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
