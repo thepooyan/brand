@@ -7,10 +7,11 @@ import Input from "../ui/input"
 import MyButton from "../parts/MyButton"
 import axios from "axios"
 import { useNavigate } from "@solidjs/router"
-import { Timer, transition, transitionID } from "~/lib/utils"
+import { Timer } from "~/lib/utils"
+import { transitionID, transitionSignal } from "~/lib/viewTransition"
 
 export default function LoginPage() {
-  const [step, setStep] = createSignal<"phone" | "otp">("phone")
+  const [step, setStep] = transitionSignal<"phone" | "otp">("phone")
   const [phoneNumber, setPhoneNumber] = createSignal("")
   const otpLength = 6;
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
@@ -29,9 +30,7 @@ export default function LoginPage() {
     setIsPhoneWaiting(true)
     await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
     .then(() => {
-      transition(()=> {
-        setStep("otp"); 
-      })
+      setStep("otp"); 
       timer.restart()
     })
     .catch(err => {alert(err)})
@@ -157,7 +156,7 @@ export default function LoginPage() {
                 تایید و ورود
                 <FiLock class="mr-2 h-4 w-4" />
               </MyButton>
-              <Button type="button" variant="link" class="w-full text-primary" onClick={() => transition(() => setStep("phone")) }>
+              <Button type="button" variant="link" class="w-full text-primary" onClick={() =>  setStep("phone")}>
                 تغییر شماره تلفن
               </Button>
             </form>
