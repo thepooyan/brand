@@ -51,3 +51,11 @@ export class Timer {
     return this.accessor
   }
 }
+
+export const transitionID = (name: string) => ({style: {"view-transition-name": name}})
+
+export const transition = (callback: ()=>void) => {
+  if (document.startViewTransition) 
+    document.startViewTransition(callback)
+  else callback()
+}

@@ -7,7 +7,7 @@ import Input from "../ui/input"
 import MyButton from "../parts/MyButton"
 import axios from "axios"
 import { useNavigate } from "@solidjs/router"
-import { Timer } from "~/lib/utils"
+import { Timer, transition, transitionID } from "~/lib/utils"
 
 export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("phone")
@@ -28,7 +28,12 @@ export default function LoginPage() {
 
     setIsPhoneWaiting(true)
     await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
-    .then(() => {setStep("otp"); timer.restart()})
+    .then(() => {
+      transition(()=> {
+        setStep("otp"); 
+      })
+      timer.restart()
+    })
     .catch(err => {alert(err)})
     .finally(() => setIsPhoneWaiting(false))
   }
@@ -77,8 +82,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div class="min-h-screen flex items-center justify-center bg-background dotted-background p-4">
-      <Card class="w-full max-w-md border-border bg-card text-card-foreground">
+    <div class="min-h-screen flex items-center justify-center bg-background p-4">
+      <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...transitionID("card")}>
         <CardHeader class="text-center">
           <CardTitle class="text-2xl font-bold text-primary">ورود به حساب کاربری</CardTitle>
           <CardDescription class="text-muted-foreground">
@@ -105,7 +110,9 @@ export default function LoginPage() {
                   />
                 </div>
               </div>
-              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isPhoneWaiting}>
+              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isPhoneWaiting}
+                {...transitionID("btn")}
+              >
                   دریافت کد تایید
                   <FiArrowLeft class="mr-2 h-4 w-4" />
               </MyButton>
@@ -144,11 +151,13 @@ export default function LoginPage() {
                     </>}
                 </p>
               </div>
-              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isOtpWaiting}>
+              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                  {...transitionID("btn")}
+                  isWaiting={isOtpWaiting}>
                 تایید و ورود
                 <FiLock class="mr-2 h-4 w-4" />
               </MyButton>
-              <Button type="button" variant="link" class="w-full text-primary" onClick={() => setStep("phone")}>
+              <Button type="button" variant="link" class="w-full text-primary" onClick={() => transition(() => setStep("phone")) }>
                 تغییر شماره تلفن
               </Button>
             </form>
