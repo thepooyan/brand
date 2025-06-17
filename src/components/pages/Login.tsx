@@ -4,9 +4,9 @@ import { Label } from "~/components/ui/label"
 import { createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
-import { wait } from "~/lib/utils"
 import MyButton from "../parts/MyButton"
 import axios from "axios"
+import { useNavigate } from "@solidjs/router"
 
 export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("phone")
@@ -15,6 +15,8 @@ export default function LoginPage() {
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
   const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
   const [isOtpWaiting, setIsOtpWaiting] = createSignal(false)
+
+  const navigate = useNavigate()
 
   const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()
@@ -38,9 +40,10 @@ export default function LoginPage() {
 
   const sendOtpBack = async () => {
     setIsOtpWaiting(true)
-    await wait(3000)
-    console.log(getOtpValue())
-    setIsOtpWaiting(false)
+    await axios.post("/api/verifyOTP", {phoneNumber: phoneNumber(), otp: getOtpValue()})
+    .then(() => navigate("/"))
+    .catch(err => alert(err))
+    .finally(() => setIsOtpWaiting(false))
   }
 
   const handleKeydown = (index:number, e:KeyboardEvent) => {
