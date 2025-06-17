@@ -36,8 +36,11 @@ export default function LoginPage() {
     sendOtpBack()
   }
 
-  const sendOtpBack = () => {
+  const sendOtpBack = async () => {
+    setIsOtpWaiting(true)
+    await wait(3000)
     console.log(getOtpValue())
+    setIsOtpWaiting(false)
   }
 
   const handleKeydown = (index:number, e:KeyboardEvent) => {
@@ -115,10 +118,10 @@ export default function LoginPage() {
                   کد تایید به شماره {phoneNumber()} ارسال شد
                 </p>
               </div>
-              <Button type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isOtpWaiting}>
                 تایید و ورود
                 <FiLock class="mr-2 h-4 w-4" />
-              </Button>
+              </MyButton>
               <Button type="button" variant="link" class="w-full text-primary" onClick={() => setStep("phone")}>
                 تغییر شماره تلفن
               </Button>
