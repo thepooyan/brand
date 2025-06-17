@@ -1,6 +1,7 @@
 import type { APIEvent } from "@solidjs/start/server";
 
-export function POST(params: APIEvent) {
+export async function POST(event: APIEvent) {
+  let data: {phoneNumber: string, otp: string} = await event.request.json()
   
-  return "hi"
+  return "ok"
 }
