@@ -4,18 +4,26 @@ import { Label } from "~/components/ui/label"
 import { createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
+import { wait } from "~/lib/utils"
+import clsx from "clsx"
+import Spinner from "../parts/Spinner"
 
 export default function LoginPage() {
-  const [step, setStep] = createSignal<"phone" | "otp">("otp")
+  const [step, setStep] = createSignal<"phone" | "otp">("phone")
   const [phoneNumber, setPhoneNumber] = createSignal("")
   const otpLength = 6;
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
+  const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
+  const [isOtpWaiting, setIsOtpWaiting] = createSignal(false)
 
-  const handlePhoneSubmit = (e: any) => {
+  const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()
-    if (phoneNumber().length >= 10) {
-      setStep("otp")
-    }
+    if (phoneNumber().length < 10) return
+
+    setIsPhoneWaiting(true)
+    await wait(5000)
+    setIsPhoneWaiting(false)
+    setStep("otp")
   }
 
   const getOtpValue = () => {
@@ -76,9 +84,15 @@ export default function LoginPage() {
                   />
                 </div>
               </div>
-              <Button type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                دریافت کد تایید
-                <FiArrowLeft class="mr-2 h-4 w-4" />
+              <Button type="submit" 
+                disabled={isPhoneWaiting()}
+                class={clsx("w-full bg-primary hover:bg-primary/90 text-primary-foreground",
+                isPhoneWaiting() && "opacity-85"
+              )}>
+                {isPhoneWaiting() ? <Spinner/> : <>
+                  دریافت کد تایید
+                  <FiArrowLeft class="mr-2 h-4 w-4" />
+                </>}
               </Button>
             </form>
           ) : (
