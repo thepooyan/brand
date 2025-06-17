@@ -12,25 +12,37 @@ export const wait = async (amount: number) => {
 
 
 export class Timer {
+  initialTime: number
   time = 0
   jump = 1000
   timeOut: NodeJS.Timeout | undefined
   accessor: Accessor<number>
   setter: Setter<number>
 
-  constructor(amount: number) {
-    this.time = amount
-    let [a, b] = createSignal(amount)
+  constructor(initialTime: number) {
+    this.initialTime = initialTime
+    this.time = initialTime
+    let [a, b] = createSignal(initialTime)
     this.accessor = a
     this.setter = b
   }
 
   start() {
     this.timeOut = setInterval(() => {
+      if (this.time === 0) return this.done()
       this.time -= 1
       this.setter(this.time)
-      if (this.time === 0) this.done()
     }, this.jump)
+  }
+
+  reset() {
+    this.time = this.initialTime
+    this.setter(this.time)
+  }
+
+  restart() {
+    this.reset()
+    this.start()
   }
 
   done() {

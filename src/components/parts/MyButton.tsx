@@ -6,6 +6,7 @@ import clsx from "clsx"
 
 interface more {
   isWaiting?: Accessor<boolean>
+  reverseSpinner?: boolean
 }
 
 function MyButton<T extends ValidComponent = "button">(props: PolymorphicProps<T, ButtonProps<T>> & more) {
@@ -17,7 +18,7 @@ function MyButton<T extends ValidComponent = "button">(props: PolymorphicProps<T
         props.isWaiting && props.isWaiting() && "opacity-85"
       )}
     >
-      {props.isWaiting && props.isWaiting() ? <Spinner/> : props.children}
+      {props.isWaiting && props.isWaiting() ? <Spinner reverse={props.reverseSpinner}/> : props.children}
     </Button>
   )
 }

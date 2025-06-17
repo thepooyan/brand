@@ -16,7 +16,8 @@ export default function LoginPage() {
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
   const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
   const [isOtpWaiting, setIsOtpWaiting] = createSignal(false)
-  const timer = new Timer(1)
+  const [isResendWaiting, setIsResendWaiting] = createSignal(false)
+  const timer = new Timer(5)
   const timerSignal = timer.getAccessor()
 
   createEffect(() => {
@@ -59,6 +60,16 @@ export default function LoginPage() {
       let prev = otpElements[index-1]
       if (prev) prev.focus()
     }
+  }
+
+  const sendAgain = async () => {
+    setIsResendWaiting(true)
+    await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
+    .catch(err => alert(err))
+    .finally(() => {
+      setIsResendWaiting(false)
+      timer.restart()
+    })
   }
 
   const handleFocues = (index: number) => {
@@ -131,7 +142,7 @@ export default function LoginPage() {
                 <p class="text-sm text-muted-foreground text-center mt-2">
                     {timerSignal() === 0 ? <>
                       کد را دریافت نکرده اید؟
-                      <Button variant="link" class="inline p-0 mr-1 h-auto">ارسال مجدد</Button>
+                      <MyButton reverseSpinner variant="link" class="inline p-0 mr-1 h-auto" onclick={sendAgain} isWaiting={isResendWaiting}>ارسال مجدد</MyButton>
                     </> : <>
                       کد را دریافت نکرده اید؟
                       ارسال مجدد در {timerSignal()} ثانیه
