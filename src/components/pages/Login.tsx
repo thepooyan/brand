@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [step, setStep] = createSignal<"phone" | "otp">("otp")
   const [phoneNumber, setPhoneNumber] = createSignal("")
   const otpLength = 6;
-  const otpElements:HTMLInputElement[] = [];
+  const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
 
   const handlePhoneSubmit = (e: any) => {
     e.preventDefault()
@@ -18,9 +18,19 @@ export default function LoginPage() {
     }
   }
 
+  const getOtpValue = () => {
+    return otpElements.map(o => o.value)
+  }
+
   const handleOtpSubmit = (e: any) => {
     e.preventDefault()
+    sendOtpBack()
   }
+
+  const sendOtpBack = () => {
+    console.log(getOtpValue())
+  }
+
   const handleKeydown = (index:number, e:KeyboardEvent) => {
     if (e.key === "Backspace") {
       let prev = otpElements[index-1]
@@ -33,7 +43,8 @@ export default function LoginPage() {
   }
 
   const handleInput = (index: number) => {
-    if (index+1 <= otpLength) otpElements[index+1].focus()
+    if (otpElements[index+1]) otpElements[index+1].focus()
+    else sendOtpBack()
   }
 
   return (
@@ -77,7 +88,7 @@ export default function LoginPage() {
                   کد تایید
                 </Label>
                 <div class="flex justify-center gap-2 ltr ">
-                  {[1,2,3,4,5,6].map((index) => (
+                  {otpElements.map((_,index) => (
                     <Input
                       ref={otpElements[index]}
                       type="text"
