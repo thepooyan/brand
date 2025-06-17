@@ -1,2 +1,3 @@
-add abstract dotted background to hero
-going back and fourth in login two pages breaks the timer
+add abstract dotted background to hero (and login?)
+add modal
+implement view transition for login page
