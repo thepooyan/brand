@@ -1,4 +1,4 @@
-import { createSignal, Signal } from "solid-js"
+import { Accessor, createSignal, Setter, Signal } from "solid-js"
 
 export const transitionID = (name: string) => ({style: {"view-transition-name": name}})
 
@@ -52,3 +52,30 @@ export class viewTransition<T> {
     return {style: {"view-transition-name": this.que[0]() ? `${this.groupName}-${name}` : ""}}
   }
 }
+
+export function useViewTransition<T>(groupName: string, initial: T):[
+  Accessor<T>,
+  (arg: setterArg<T>)=>void,
+  (name: string) => { style: { "view-transition-name": string } }
+] {
+  const [state, setState] = createSignal<T>(initial)
+  const [que, setQue] = createSignal(false)
+
+  const setWithTransition = (arg: setterArg<T>) => {
+    setQue(true)
+    transition(() => {
+      setState(arg)
+    }, () => {
+      setQue(false)
+    })
+  }
+
+  const markElement = (name = "") => ({
+    style: {
+      "view-transition-name": que() ? `${groupName}-${name}` : ""
+    }
+  })
+
+  return [state, setWithTransition, markElement]
+}
+
