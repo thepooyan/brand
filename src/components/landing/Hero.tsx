@@ -8,9 +8,9 @@ const Hero = () => {
   return (
     <>
       <IntroStagger>
-        <section class="py-20 md:py-32">
+        <section class="py-20 md:py-32 bg-[url('/wave.png')] !pt-10  bg-repeat-x sm:bg-position-[0_-5rem] bg-position-[0_-10rem] sm:!pt-45 ">
 
-          <div class="container mx-auto px-4 flex flex-col items-center text-center">
+          <div class="container mx-auto px-4 flex flex-col items-center text-center  ">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 intro">
               تبدیل ایده‌ها به 
               <ChangeColor>
