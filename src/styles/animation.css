@@ -1,0 +1,12 @@
+@keyframes move-bg {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -100%;
+  }
+}
+
+.infiniteRotate {
+  animation: move-bg 47s linear infinite;
+}
