@@ -39,7 +39,7 @@ export const callModal = (content: JSXElement, stateToBe?: Istate) => {
 
 callModal.success = (msg: string = "Successfully done!") => callModal(msg, "success")
 callModal.fail = (msg: string = "Something went wrong!") => callModal(msg, "fail")
-callModal.wait = (msg: string = "لطفا کمی صبر کنید") => callModal(<div class="space-y-4"><p>{msg}</p><Spinner/></div>, "wait")
+callModal.wait = (msg: string = "لطفا کمی صبر کنید") => callModal(<div class="space-y-4"><p>{msg}</p><Spinner reverse/></div>, "wait")
 callModal.prompt = (msg: string = "Are you sure?") => {
   callModal(msg, "prompt");
   return {

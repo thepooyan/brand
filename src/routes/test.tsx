@@ -4,7 +4,7 @@ import { account, ID } from "~/lib/appwrite";
 const test = () => {
 
   const ff = async () => {
-    callModal.success("hey")
+    callModal.wait("hey")
   }
 
   return (
