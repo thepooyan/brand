@@ -166,7 +166,7 @@ export default function LoginPage() {
           )}
         </CardContent>
       </Card>
-      <Button as={TA} variant="link" href="/">
+      <Button as={TA} variant="link" href="/" {...markElement("a")}>
         خانه
         <FiArrowLeft/>
       </Button>
