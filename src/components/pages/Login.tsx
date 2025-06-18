@@ -80,7 +80,7 @@ export default function LoginPage() {
     else sendOtpBack()
   }
 
-  const [step, setStep, markElement] = useViewTransition<"phone" | "otp">("sten", "phone")
+  const [step, setStep, markElement] = useViewTransition<"phone" | "otp">("step", "phone")
 
   return (
     <div class="min-h-screen flex items-center justify-center bg-blue-300 p-4" {...pageMarker()}>
