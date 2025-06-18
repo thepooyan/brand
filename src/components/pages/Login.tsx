@@ -80,10 +80,6 @@ export default function LoginPage() {
     else sendOtpBack()
   }
 
-  // const [step, setStep] = transitionSignal<"phone" | "otp">("phone")
-  // let tr = new viewTransition<"phone" | "otp">("step", "phone")
-  // let step = tr.getAccessor()
-  // let setStep = tr.getSetter()
   const [step, setStep, markElement] = useViewTransition<"phone" | "otp">("sten", "phone")
 
   return (
