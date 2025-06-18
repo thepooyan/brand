@@ -59,22 +59,13 @@ export function useViewTransition<T>(groupName: string, initial: T):[
   (name: string) => { style: { "view-transition-name": string } }
 ] {
   const [state, setState] = createSignal<T>(initial)
-  const [que, setQue] = createSignal(false)
+  const [markElement, applyTransition] = useTransitionMarker(groupName)
 
   const setWithTransition = (arg: setterArg<T>) => {
-    setQue(true)
-    transition(() => {
+    applyTransition(()=> {
       setState(arg)
-    }, () => {
-      setQue(false)
     })
   }
-
-  const markElement = (name = "") => ({
-    style: {
-      "view-transition-name": que() ? `${groupName}-${name}` : ""
-    }
-  })
 
   return [state, setWithTransition, markElement]
 }
