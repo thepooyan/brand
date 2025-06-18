@@ -16,15 +16,15 @@ const Header = () => {
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="h-8 w-8 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
-            <span class="text-xl font-bold">{name}</span>
+            <TA class="text-xl font-bold" href="/">{name}</TA>
           </div>
           <nav class="hidden md:flex items-center gap-6">
             <A href="#services" class="text-sm font-medium hover:text-primary transition-colors">
               خدمات
             </A>
-            <A href="#about" class="text-sm font-medium hover:text-primary transition-colors">
+            <TA href="/About" class="text-sm font-medium hover:text-primary transition-colors">
               درباره ما
-            </A>
+            </TA>
             <A href="#contact" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </A>
