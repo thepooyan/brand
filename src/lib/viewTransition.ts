@@ -23,12 +23,12 @@ export const transitionSignal = <T>(value: T):[() => T, (v: setterArg<T>)=>void]
 }
 
 export class viewTransition<T> {
-  name: string
+  groupName: string
   signal: Signal<T>
   que: Signal<boolean>
 
-  constructor(name: string, T: T) {
-    this.name = name
+  constructor(groupName: string, T: T) {
+    this.groupName = groupName
     this.signal = createSignal(T)
     this.que = createSignal(false)
     this.middleSetter = this.middleSetter.bind(this)
@@ -47,8 +47,8 @@ export class viewTransition<T> {
   getSetter() {
     return this.middleSetter
   }
-  markElement() {
+  markElement(name?: string) {
     //replace this with transition ID and see if it works
-    return {style: {"view-transition-name": this.que[0]() ? this.name : ""}}
+    return {style: {"view-transition-name": this.que[0]() ? `${this.groupName}-${name}` : ""}}
   }
 }

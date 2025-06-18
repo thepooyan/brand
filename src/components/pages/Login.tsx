@@ -8,7 +8,7 @@ import MyButton from "../parts/MyButton"
 import axios from "axios"
 import { useNavigate } from "@solidjs/router"
 import { Timer } from "~/lib/utils"
-import { transitionID, transitionSignal, viewTransition } from "~/lib/viewTransition"
+import { viewTransition } from "~/lib/viewTransition"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -80,13 +80,13 @@ export default function LoginPage() {
   }
 
   // const [step, setStep] = transitionSignal<"phone" | "otp">("phone")
-  let tr = new viewTransition<"phone" | "otp">("card", "phone")
+  let tr = new viewTransition<"phone" | "otp">("step", "phone")
   let step = tr.getAccessor()
   let setStep = tr.getSetter()
 
   return (
     <div class="min-h-screen flex items-center justify-center bg-blue-300 p-4" >
-      <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...tr.markElement()}>
+      <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...tr.markElement("card")}>
         <CardHeader class="text-center">
           <CardTitle class="text-2xl font-bold text-primary">ورود به حساب کاربری</CardTitle>
           <CardDescription class="text-muted-foreground">
@@ -114,7 +114,7 @@ export default function LoginPage() {
                 </div>
               </div>
               <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isPhoneWaiting}
-                {...transitionID("btn")}
+                {...tr.markElement("btn")}
               >
                   دریافت کد تایید
                   <FiArrowLeft class="mr-2 h-4 w-4" />
@@ -155,7 +155,7 @@ export default function LoginPage() {
                 </p>
               </div>
               <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                  {...transitionID("btn")}
+                  {...tr.markElement("btn")}
                   isWaiting={isOtpWaiting}>
                 تایید و ورود
                 <FiLock class="mr-2 h-4 w-4" />
