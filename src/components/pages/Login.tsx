@@ -8,10 +8,9 @@ import MyButton from "../parts/MyButton"
 import axios from "axios"
 import { useNavigate } from "@solidjs/router"
 import { Timer } from "~/lib/utils"
-import { transitionID, transitionSignal } from "~/lib/viewTransition"
+import { transitionID, transitionSignal, viewTransition } from "~/lib/viewTransition"
 
 export default function LoginPage() {
-  const [step, setStep] = transitionSignal<"phone" | "otp">("phone")
   const [phoneNumber, setPhoneNumber] = createSignal("")
   const otpLength = 6;
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
@@ -80,9 +79,14 @@ export default function LoginPage() {
     else sendOtpBack()
   }
 
+  // const [step, setStep] = transitionSignal<"phone" | "otp">("phone")
+  let tr = new viewTransition<"phone" | "otp">("card", "phone")
+  let step = tr.getAccessor()
+  let setStep = tr.getSetter()
+
   return (
-    <div class="min-h-screen flex items-center justify-center bg-background p-4">
-      <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...transitionID("card")}>
+    <div class="min-h-screen flex items-center justify-center bg-blue-300 p-4" >
+      <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...tr.markElement()}>
         <CardHeader class="text-center">
           <CardTitle class="text-2xl font-bold text-primary">ورود به حساب کاربری</CardTitle>
           <CardDescription class="text-muted-foreground">
