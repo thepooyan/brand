@@ -6,11 +6,10 @@ import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "../ui/input"
 import MyButton from "../parts/MyButton"
 import axios from "axios"
-import { useNavigate } from "@solidjs/router"
 import { Timer } from "~/lib/utils"
 import { useViewTransition } from "~/lib/viewTransition"
-import { pageMarker } from "~/lib/signal"
 import TA from "../parts/TA"
+import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -22,7 +21,7 @@ export default function LoginPage() {
   const timer = new Timer(30)
   const timerSignal = timer.getAccessor()
 
-  const navigate = useNavigate()
+  const navigate = useTransitiveNavigate()
 
   const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()

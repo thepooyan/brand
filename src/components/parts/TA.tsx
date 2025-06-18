@@ -1,17 +1,15 @@
-import { useNavigate, usePreloadRoute } from "@solidjs/router"
+import {  usePreloadRoute } from "@solidjs/router"
 import { JSXElement } from "solid-js"
-import { routeChangeTransition } from "~/lib/signal"
+import { useTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 const TA = (props: any):JSXElement => {
 
-  const nv = useNavigate()
+  const nv = useTransitiveNavigate()
   const pr = usePreloadRoute()
 
   const handleClick = (e:MouseEvent) => {
     e.preventDefault()
-    routeChangeTransition(() => {
-      nv(props.href)
-    })
+    nv(props.href)
   }
 
   const handleHover = () => {

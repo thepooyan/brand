@@ -1,4 +1,4 @@
-import { pageMarker } from "~/lib/signal";
+import { pageMarker } from "~/lib/routeChangeTransition";
 import About from "../landing/About";
 import { Contact } from "../landing/Contact";
 import Hero from "../landing/Hero";
