@@ -1,1 +1,1 @@
-add abstract dotted background to hero (and login?)
+a new pattern for login
