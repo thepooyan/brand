@@ -31,8 +31,8 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
           ورود
         </Button>
       </div>
-      <div class={clsx("fixed bg-black w-2/5 h-full top-0 z-100 opacity-0 invisible transition-all duration-200",
-        isOpen() && "opacity-90 visible"
+      <div class={clsx("fixed bg-black w-full h-full top-0  z-99 opacity-0 invisible transition-all duration-200 ",
+        isOpen() && "opacity-90 visible blur-[100px]"
       )} ref={backdropRef} onclick={() => setOpen(false)}>
       </div>
     </>
