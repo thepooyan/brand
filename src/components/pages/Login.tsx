@@ -10,6 +10,7 @@ import { Timer } from "~/lib/utils"
 import { useViewTransition } from "~/lib/viewTransition"
 import TA from "../parts/TA"
 import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
+import { callModal } from "../layout/Modal"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -49,7 +50,7 @@ export default function LoginPage() {
   const sendOtpBack = async () => {
     setIsOtpWaiting(true)
     await axios.post("/api/verifyOTP", {phoneNumber: phoneNumber(), otp: getOtpValue()})
-    .then(() => navigate("/"))
+    .then(() => {navigate("/"); callModal.success("خوش آمدید!")})
     .catch(err => alert(err))
     .finally(() => setIsOtpWaiting(false))
   }
