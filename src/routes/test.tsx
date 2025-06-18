@@ -1,9 +1,10 @@
+import { callModal } from "~/components/layout/Modal";
 import { account, ID } from "~/lib/appwrite";
 
 const test = () => {
 
   const ff = async () => {
-    await account.create(ID.unique(), "tests@gmail.com", "@Aa12345", "ali");
+    callModal.success("hey")
   }
 
   return (

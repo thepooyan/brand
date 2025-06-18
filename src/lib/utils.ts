@@ -52,3 +52,26 @@ export class Timer {
   }
 }
 
+type func = () => void
+export class CallbackStore {
+  private yes: func | null = null
+  private no: func | null = null
+  setYes(callback: ()=>void) {
+    this.yes = callback
+  }
+  setNo(callback: ()=>void) {
+    this.no = callback
+  }
+  callYes() {
+    this.yes && this.yes()
+    this.clear()
+  }
+  callNo() {
+    this.no && this.no()
+    this.clear()
+  }
+  private clear() {
+    this.yes = null
+    this.no = null
+  }
+}
