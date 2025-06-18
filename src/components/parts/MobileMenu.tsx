@@ -1,6 +1,8 @@
 import { Accessor, ParentProps, Setter } from "solid-js"
 import { A } from "@solidjs/router"
 import clsx from "clsx"
+import { Button } from "../ui/button"
+import TA from "./TA"
 
 interface props {
   isOpen: Accessor<boolean>,
@@ -25,6 +27,9 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
           <L href="#contact">
             تماس با ما
           </L>
+        <Button as={TA} href="/Login" class="w-max mx-auto mt-auto mb-5">
+          ورود
+        </Button>
       </div>
       <div class={clsx("fixed bg-black w-2/5 h-full top-0 z-100 opacity-0 invisible transition-all duration-200",
         isOpen() && "opacity-90 visible"
