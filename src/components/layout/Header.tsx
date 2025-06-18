@@ -4,6 +4,7 @@ import { name } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
 import { FiMenu } from "solid-icons/fi"
 import { createSignal } from "solid-js"
+import TA from "../parts/TA"
 
 const Header = () => {
 
@@ -27,7 +28,7 @@ const Header = () => {
             <A href="#contact" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </A>
-            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as="A" href="/Login">
+            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
               ورود
             </Button>
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
