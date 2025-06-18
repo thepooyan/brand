@@ -1,5 +1,6 @@
 // @refresh reload
 import { createHandler, StartServer } from "@solidjs/start/server";
+import { pageMarker } from "./lib/signal";
 
 export default createHandler(() => (
   <StartServer

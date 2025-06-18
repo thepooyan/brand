@@ -1,4 +1,4 @@
-import { Accessor, createSignal, Setter, Signal } from "solid-js"
+import { Accessor, createSignal, Signal } from "solid-js"
 
 export const transitionID = (name: string) => ({style: {"view-transition-name": name}})
 
@@ -79,3 +79,27 @@ export function useViewTransition<T>(groupName: string, initial: T):[
   return [state, setWithTransition, markElement]
 }
 
+
+export function useTransitionMarker(groupName: string):[
+  (name?: string) => { style: { "view-transition-name": string } },
+  typeof applyTransition
+] {
+  const [que, setQue] = createSignal(false)
+
+  const applyTransition = (changeTheDOM: ()=>void) => {
+    setQue(true)
+    transition(() => {
+      changeTheDOM()
+    }, () => {
+      setQue(false)
+    })
+  }
+
+  const markElement = (name = "") => {
+    return {style: {
+      "view-transition-name": que() ? name ? `${groupName}-${name}` : groupName : ""
+    }
+  }}
+
+  return [markElement, applyTransition]
+}

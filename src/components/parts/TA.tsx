@@ -1,6 +1,6 @@
 import { useNavigate, usePreloadRoute } from "@solidjs/router"
 import { JSXElement } from "solid-js"
-import { transition } from "~/lib/viewTransition"
+import { routeChangeTransition } from "~/lib/signal"
 
 const TA = (props: any):JSXElement => {
 
@@ -9,7 +9,7 @@ const TA = (props: any):JSXElement => {
 
   const handleClick = (e:MouseEvent) => {
     e.preventDefault()
-    transition(() => {
+    routeChangeTransition(() => {
       nv(props.href)
     })
   }
