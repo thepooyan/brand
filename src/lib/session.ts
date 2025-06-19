@@ -1,7 +1,8 @@
 import { useSession } from "vinxi/http";
+import { Iuser } from "./interface";
 
 type SessionData = {
-  token: string
+  user: Iuser
 };
 
 export async function useAuthSession() {
@@ -18,7 +19,7 @@ export async function getAuthSession() {
   "use server";
   const session = await useAuthSession();
 
-  return session.data.token;
+  return session.data.user;
 }
 
 export async function updateAuthSession(data: SessionData) {

@@ -3,6 +3,7 @@ import { db } from "~/db/db"
 import { generateOTP, Response, validatePhone, warpResponse } from "./util"
 import { otpTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
+import { updateAuthSession } from "~/lib/session"
 
 
 export const sendOTP = async (number: string):Response => {
@@ -34,6 +35,10 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     if (selection[0].otp !== otp) return {ok: false, msg: "کد ارسالی اشتباه میباشد"}
 
     await db.delete(otpTable).where(eq(otpTable.number, number))
+
+    await updateAuthSession({user: {
+      number: number
+    }})
 
     return {ok: true}
   }) 
