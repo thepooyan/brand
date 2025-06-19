@@ -2,10 +2,9 @@ import 'dotenv/config';
 import { eq } from 'drizzle-orm';
 import { usersTable } from '~/db/schema';
 import { db } from '~/db/db';
-export const GET = () => {
-  
 
-async function main() {
+export const GET = async () => {
+
   const user: typeof usersTable.$inferInsert = {
     name: 'John',
     age: 30,
@@ -36,9 +35,7 @@ async function main() {
 
   await db.delete(usersTable).where(eq(usersTable.email, user.email));
   console.log('User deleted!')
-}
 
-main();
 
   return "hi"
 }
