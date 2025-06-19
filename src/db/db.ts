@@ -1,5 +1,5 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/libsql';
 
-export const db = drizzle("mydb.sqlite");
+export const db = drizzle("file:mydb.sqlite");
 

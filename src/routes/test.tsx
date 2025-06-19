@@ -1,10 +1,9 @@
 import { callModal } from "~/components/layout/Modal";
-import { account, ID } from "~/lib/appwrite";
 
 const test = () => {
 
   const ff = async () => {
-    callModal.wait("hey")
+
   }
 
   return (
