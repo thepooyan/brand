@@ -1,8 +1,8 @@
 import { useSession } from "vinxi/http";
-import { Iuser } from "./interface";
+import { usersTable } from "~/db/schema";
 
 type SessionData = {
-  user: Iuser
+  user: typeof usersTable.$inferSelect
 };
 
 export async function useAuthSession() {
