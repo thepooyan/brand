@@ -4,14 +4,19 @@ import { generateOTP, validatePhone } from "./util"
 import { otpTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 
-type response = Promise<{ok: boolean, msg?: string}>
+type ErrorResponse = { ok: false; msg: string }
+type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
+type response<T = void> = Promise<SuccessResponse<T> | ErrorResponse>
 
 export const sendOTP = async (number: string):response => {
   if (!validatePhone(number)) return {ok: false, msg: "شماره تلفن وارد شده صحیح نمیباشد"}
 
+  let newOtp = generateOTP()
+  console.log(newOtp)
+
   const value: typeof otpTable.$inferInsert = {
     number: number,
-    otp: generateOTP()
+    otp: newOtp
   } 
 
   try {
