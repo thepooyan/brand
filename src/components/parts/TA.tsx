@@ -1,4 +1,5 @@
-import {  usePreloadRoute } from "@solidjs/router"
+import {  useLocation, usePreloadRoute } from "@solidjs/router"
+import clsx from "clsx"
 import { JSXElement } from "solid-js"
 import { useTransitiveNavigate } from "~/lib/routeChangeTransition"
 
@@ -6,6 +7,11 @@ const TA = (props: any):JSXElement => {
 
   const nv = useTransitiveNavigate()
   const pr = usePreloadRoute()
+  const location = useLocation()
+  
+  const isActive = () => {
+    return location.pathname === props.href
+  }
 
   const handleClick = (e:MouseEvent) => {
     e.preventDefault()
@@ -17,7 +23,11 @@ const TA = (props: any):JSXElement => {
   }
 
   return (
-    <a {...props} onclick={handleClick} onpointerenter={handleHover}>{props.children}</a>
+    <a {...props} onclick={handleClick} onpointerenter={handleHover}
+      class={clsx(props.class,
+        isActive() && props.activeClass
+      )}
+    >{props.children}</a>
   )
 }
 

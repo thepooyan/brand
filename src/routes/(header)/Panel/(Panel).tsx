@@ -1,6 +1,10 @@
+import { pageMarker } from "~/lib/routeChangeTransition"
+
 const index = () => {
   return (
-    <div>index</div>
+    <main {...pageMarker()}>
+      index
+    </main>
   )
 }
 
