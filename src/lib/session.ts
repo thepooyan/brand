@@ -28,7 +28,7 @@ export async function updateAuthSession(data: SessionData) {
   await session.update(data);
 }
 
-export async function clearThemeSession() {
+export async function clearAuthSession() {
   "use server";
   const session = await useAuthSession();
   await session.clear();
