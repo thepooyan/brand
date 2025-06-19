@@ -1,13 +1,15 @@
-import { callModal } from "~/components/layout/Modal";
+import { createResource } from "solid-js"
+import { Button } from "~/components/ui/button"
+import { getAuthSession, updateAuthSession } from "~/lib/session"
 
 const test = () => {
 
-  const ff = async () => {
-
-  }
+  const [a] = createResource(getAuthSession)
 
   return (
-    <div onclick={ff}>test</div>
+    <div >
+      {a()}
+    </div>
   )
 }
 
