@@ -9,11 +9,12 @@ import { clearAuthSession, getAuthSession } from "~/lib/session"
 
 const Header = () => {
 
-  const [user] = createResource(getAuthSession)
+  const [user, {refetch}] = createResource(getAuthSession)
   const [isOpen, setOpen] = createSignal(false)
 
   const logout = async () => {
     await clearAuthSession()
+    refetch()
   }
 
   return (
