@@ -11,6 +11,7 @@ import { useViewTransition } from "~/lib/viewTransition"
 import TA from "../parts/TA"
 import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { callModal } from "../layout/Modal"
+import { sendOTP, verifyOTP } from "~/server/actions"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -29,13 +30,14 @@ export default function LoginPage() {
     if (phoneNumber().length < 10) return
 
     setIsPhoneWaiting(true)
-    await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
-    .then(() => {
+    let res = await sendOTP(phoneNumber())
+    if (res.ok) {
       setStep("otp"); 
       timer.restart()
-    })
-    .catch(err => {alert(err)})
-    .finally(() => setIsPhoneWaiting(false))
+    } else {
+      callModal.fail(res.msg)
+    }
+    setIsPhoneWaiting(false)
   }
 
   const getOtpValue = () => {
@@ -49,10 +51,14 @@ export default function LoginPage() {
 
   const sendOtpBack = async () => {
     setIsOtpWaiting(true)
-    await axios.post("/api/verifyOTP", {phoneNumber: phoneNumber(), otp: getOtpValue()})
-    .then(() => {navigate("/"); callModal.success("خوش آمدید!")})
-    .catch(err => alert(err))
-    .finally(() => setIsOtpWaiting(false))
+    let res = await verifyOTP(phoneNumber(), getOtpValue().join(""))
+    if (res.ok) {
+      navigate("/");
+      callModal.success("خوش آمدید!")
+    } else {
+      callModal.fail(res.msg)
+    }
+    setIsOtpWaiting(false)
   }
 
   const handleKeydown = (index:number, e:KeyboardEvent) => {
