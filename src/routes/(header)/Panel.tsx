@@ -1,8 +1,13 @@
-import PanelPage from "~/components/pages/Panel"
+import { ParentProps } from "solid-js"
 
-const Panel = () => {
+const Panel = ({children}:ParentProps) => {
   return (
-    <PanelPage/>
+    <main >
+      <div>
+        list
+      </div>
+      {children}
+    </main>
   )
 }
 
