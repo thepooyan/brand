@@ -13,6 +13,7 @@ export const sendOTP = async (number: string):response => {
 
   let newOtp = generateOTP()
   console.log(newOtp)
+  //send otp to phone number
 
   const value: typeof otpTable.$inferInsert = {
     number: number,
