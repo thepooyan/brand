@@ -27,7 +27,7 @@ export default function LoginPage() {
 
   const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()
-    if (phoneNumber().length < 10) return
+    if (phoneNumber().length !== 11) return
 
     setIsPhoneWaiting(true)
     let res = await sendOTP(phoneNumber())
