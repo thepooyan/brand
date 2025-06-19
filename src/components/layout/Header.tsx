@@ -3,11 +3,13 @@ import { Button } from "../ui/button"
 import { name } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
 import { FiMenu } from "solid-icons/fi"
-import { createSignal } from "solid-js"
+import { createResource, createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
+import { getAuthSession } from "~/lib/session"
 
 const Header = () => {
 
+  const [user] = createResource(getAuthSession)
   const [isOpen, setOpen] = createSignal(false)
 
   return (
@@ -28,9 +30,14 @@ const Header = () => {
             <A href="#contact" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </A>
-            <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
-              ورود
-            </Button>
+            <Show when={user}>
+              <Button class="bg-red-700 text-white hover:bg-red-900">خروج</Button>
+            </Show>
+            <Show when={!user}>
+              <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
+                ورود
+              </Button>
+            </Show>
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
           </nav>
           <Button variant="outline" size="icon" class="md:hidden" onclick={() => setOpen(prev => !prev)}>
