@@ -1,7 +1,7 @@
 "use server"
 import { db } from "~/db/db"
 import { generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { otpTable } from "~/db/schema"
+import { otpTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { updateAuthSession } from "~/lib/session"
 
@@ -36,10 +36,18 @@ export const verifyOTP = async (number: string, otp: string):Response => {
 
     await db.delete(otpTable).where(eq(otpTable.number, number))
 
-    await updateAuthSession({user: {
-      number: number
-    }})
+    let user = (await db.select().from(usersTable).where(eq(usersTable.number, number))).at(0)
 
+    if (!user) {
+      const newUser: typeof usersTable.$inferInsert = {
+        number: number
+      }
+      let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
+      if (!result) throw new Error()
+      await updateAuthSession({user: result})
+      return {ok: true}
+    }
+    await updateAuthSession({user: user})
     return {ok: true}
   }) 
 }
