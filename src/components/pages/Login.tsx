@@ -70,12 +70,12 @@ export default function LoginPage() {
 
   const sendAgain = async () => {
     setIsResendWaiting(true)
-    await axios.post("/api/generateOTP", {phoneNumber: phoneNumber()})
-    .catch(err => alert(err))
-    .finally(() => {
-      setIsResendWaiting(false)
-      timer.restart()
-    })
+    let res = await sendOTP(phoneNumber())
+    if (!res.ok) {
+      callModal.fail(res.msg)
+    }
+    setIsResendWaiting(false)
+    timer.restart()
   }
 
   const handleFocues = (index: number) => {
