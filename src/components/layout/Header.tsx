@@ -37,13 +37,14 @@ const Header = () => {
             </A>
             <Show when={user() !== undefined}>
               <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
+              <Button as={TA} href="/Panel">پنل کاربری</Button>
             </Show>
             <Show when={user() === undefined}>
               <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
                 ورود
               </Button>
+              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
             </Show>
-            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
           </nav>
           <Button variant="outline" size="icon" class="md:hidden" onclick={() => setOpen(prev => !prev)}>
             <span class="sr-only">تغییر منو</span>
