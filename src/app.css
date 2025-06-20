@@ -6,6 +6,10 @@
 @import "./styles/chadcn.css";
 @config "../tailwind.config.ts";
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family: "Vazirmatn", system-ui, sans-serif;
   direction: rtl;
