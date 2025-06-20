@@ -16,6 +16,7 @@ const TA = (props: any):JSXElement => {
   const handleClick = (e:MouseEvent) => {
     e.preventDefault()
     nv(props.href)
+    props.onclick && props.onclick()
   }
 
   const handleHover = () => {
