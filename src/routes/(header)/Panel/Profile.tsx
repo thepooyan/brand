@@ -33,6 +33,14 @@ const Profile = () => {
   const [data] = createResource(getData)
   const submission = useSubmission(handleSubmit)
 
+  createEffect(() => {
+    if (submission.error) {
+      callModal.fail()
+    } else if (submission.result) {
+      callModal.success()
+    } 
+  })
+
   return (
     <div {...pageMarker()} class=" rounded m-4 max-w-xl mx-auto ">
       <div class="flex justify-center">

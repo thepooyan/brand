@@ -37,8 +37,8 @@ export const callModal = (content: JSXElement, stateToBe?: Istate) => {
   readyToOpen = false;
 }
 
-callModal.success = (msg: string = "Successfully done!") => callModal(msg, "success")
-callModal.fail = (msg: string = "Something went wrong!") => callModal(msg, "fail")
+callModal.success = (msg: string = "با موفقیت انجام شد!") => callModal(msg, "success")
+callModal.fail = (msg: string = "متاسفانه خطایی پیش آمده. لطفا مجددا تلاش کنید") => callModal(msg, "fail")
 callModal.wait = (msg: string = "لطفا کمی صبر کنید") => callModal(<div class="space-y-4"><p>{msg}</p><Spinner reverse/></div>, "wait")
 callModal.prompt = (msg: string = "Are you sure?") => {
   callModal(msg, "prompt");
