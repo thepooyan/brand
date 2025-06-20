@@ -1,5 +1,6 @@
 import { action } from "@solidjs/router"
 import { eq } from "drizzle-orm"
+import { createResource } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import Input from "~/components/ui/input"
@@ -19,7 +20,15 @@ const handleSubmit = action(async (formData:FormData) => {
   await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
 })
 
+const getData = async () => {
+  "use server"
+  let num = (await getAuthSession()).number
+  return (await db.select().from(usersTable).where(eq(usersTable.number, num))).at(0)
+}
+
 const Profile = () => {
+  const [data] = createResource(getData)
+
   return (
     <div {...pageMarker()} class=" rounded m-4 max-w-xl mx-auto ">
       <div class="flex justify-center">
@@ -36,7 +45,7 @@ const Profile = () => {
                     نام
                 </Label>
                 <div class="flex items-center">
-                  <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name"/>
+                  <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data()?.name || ""}/>
                 </div>
               </div>
 
@@ -45,7 +54,7 @@ const Profile = () => {
                   ایمیل
                 </Label>
                 <div class="flex items-center">
-                  <Input  placeholder="نام خانوادگی خود را وارد کنید" class="text-right" name="email"/>
+                  <Input  placeholder="نام خانوادگی خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
                 </div>
               </div>
 
