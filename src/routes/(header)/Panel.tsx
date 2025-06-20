@@ -3,7 +3,7 @@ import TA from "~/components/parts/TA"
 
 const Panel = ({children}:ParentProps) => {
   return (
-    <main >
+    <main class="p-3" >
       <div class=" border-1 m-4 rounded w-max mx-auto overflow-hidden ">
         <I href="/Panel">داشبورد</I>
         <I href="/Panel/Profile">پروفایل</I>
