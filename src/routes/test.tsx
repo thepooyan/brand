@@ -1,16 +1,15 @@
-import { createResource } from "solid-js"
-import { Button } from "~/components/ui/button"
-import { getAuthSession, updateAuthSession } from "~/lib/session"
+import { action } from "@solidjs/router"
 
 const test = () => {
-
-  const [a] = createResource(getAuthSession)
-
   return (
-    <div >
-      {a()}
-    </div>
-  )
-}
+    <form action={deleteTodo} method="post">
+      <input name="folan"  class="bg-white"/>
+      <button type="submit">send</button>
+    </form>
+)}
 
+const deleteTodo = action(async (formData:FormData) => {
+  "use server"
+  console.log(formData)
+})
 export default test
