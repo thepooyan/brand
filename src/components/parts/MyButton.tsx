@@ -5,20 +5,27 @@ import Spinner from "./Spinner"
 import clsx from "clsx"
 
 interface more {
-  isWaiting?: Accessor<boolean>
+  isWaiting?: Accessor<boolean> | boolean
   reverseSpinner?: boolean
 }
 
 function MyButton<T extends ValidComponent = "button">(props: PolymorphicProps<T, ButtonProps<T>> & more) {
 
+  let isWaiting = () => {
+    if (!props.isWaiting) return
+    if (typeof props.isWaiting === "boolean")
+      return props.isWaiting
+    else return props.isWaiting()
+  }
+
   return (
     <Button {...props}
-      disabled={props.isWaiting && props.isWaiting()}
+      disabled={isWaiting()}
       class={clsx(props.class,
-        props.isWaiting && props.isWaiting() && "opacity-85"
+        isWaiting() && "opacity-85"
       )}
     >
-      {props.isWaiting && props.isWaiting() ? <Spinner reverse={props.reverseSpinner}/> : props.children}
+      {isWaiting() ? <Spinner reverse={props.reverseSpinner}/> : props.children}
     </Button>
   )
 }

@@ -1,6 +1,8 @@
-import { action } from "@solidjs/router"
+import { action, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { createResource } from "solid-js"
+import { createEffect, createResource, onMount } from "solid-js"
+import { callModal, closeModal } from "~/components/layout/Modal"
+import MyButton from "~/components/parts/MyButton"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import Input from "~/components/ui/input"
@@ -18,7 +20,8 @@ const handleSubmit = action(async (formData:FormData) => {
   let number = (await getAuthSession()).number
 
   await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
-})
+  return "done"
+}, "profileAction")
 
 const getData = async () => {
   "use server"
@@ -28,6 +31,7 @@ const getData = async () => {
 
 const Profile = () => {
   const [data] = createResource(getData)
+  const submission = useSubmission(handleSubmit)
 
   return (
     <div {...pageMarker()} class=" rounded m-4 max-w-xl mx-auto ">
@@ -60,9 +64,9 @@ const Profile = () => {
 
             </CardContent>
             <CardFooter>
-              <Button type="submit" class="w-full">
+              <MyButton type="submit" class="w-full" isWaiting={submission.pending}>
                 ثبت اطلاعات
-              </Button>
+              </MyButton>
             </CardFooter>
           </form>
         </Card>
