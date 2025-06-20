@@ -54,7 +54,7 @@ const Profile = () => {
                   ایمیل
                 </Label>
                 <div class="flex items-center">
-                  <Input  placeholder="نام خانوادگی خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
+                  <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
                 </div>
               </div>
 
