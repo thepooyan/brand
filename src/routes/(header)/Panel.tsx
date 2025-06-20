@@ -1,4 +1,4 @@
-import { createAsync, query, redirect } from "@solidjs/router"
+import { query, redirect } from "@solidjs/router"
 import { ParentProps } from "solid-js"
 import TA from "~/components/parts/TA"
 import { getAuthSession } from "~/lib/session"
@@ -13,7 +13,7 @@ const checkAuth = query(async () => {
 
 const Panel = ({children}:ParentProps) => {
 
-  createAsync(() => checkAuth())
+  checkAuth()
 
   return (
     <main class="p-3" >
