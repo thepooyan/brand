@@ -38,7 +38,7 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
           <div class="flex gap-2 mx-auto mt-auto mb-5">
 
             <Button class="bg-red-700 text-white hover:bg-red-900" onclick={() => {logout();setOpen(false)}}>خروج</Button>
-            <Button as={TA} href="/Panel" onclick={()=> {setOpen(false); console.log("hhes")} } >پنل کاربری</Button>
+            <Button as={TA} href="/Panel" onclick={()=> {setOpen(false)} } >پنل کاربری</Button>
           </div>
         </Show>
         <Show when={user() === undefined}>
