@@ -8,9 +8,7 @@ const Panel = ({children}:ParentProps) => {
         <I href="/Panel">داشبورد</I>
         <I href="/Panel/Profile">پروفایل</I>
       </div>
-      <div class="p-4 border-1 bg-zinc-800 rounded m-4">
-        {children}
-      </div>
+      {children}
     </main>
   )
 }

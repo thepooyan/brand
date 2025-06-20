@@ -1,11 +1,11 @@
-import { pageMarker } from "~/lib/routeChangeTransition"
+import { pageMarker } from "~/lib/routeChangeTransition";
 
 const index = () => {
   return (
-    <main {...pageMarker()}>
-      index
-    </main>
-  )
-}
+    <div class=" bg-zinc-800 rounded m-4 max-w-xl mx-auto" {...pageMarker()}>
+      hey
+    </div>
+  );
+};
 
-export default index
+export default index;
