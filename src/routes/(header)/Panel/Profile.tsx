@@ -7,9 +7,9 @@ import { pageMarker } from "~/lib/routeChangeTransition"
 
 const Profile = () => {
   return (
-    <div {...pageMarker()} class=" bg-zinc-800 rounded m-4 max-w-xl mx-auto">
+    <div {...pageMarker()} class="  rounded m-4 max-w-xl mx-auto">
       <div class="flex justify-center">
-        <Card class="w-full bg-transparent">
+        <Card class="w-full">
           <CardHeader class="text-right">
             <CardTitle class="text-2xl font-bold">فرم اطلاعات شخصی</CardTitle>
             <CardDescription>در صورت تمایل اطلاعات شخصی خود را کامل کنید</CardDescription>
