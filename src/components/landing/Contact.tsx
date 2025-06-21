@@ -68,6 +68,30 @@ export const Contact = () => {
                 </div>
                 <div>
                   <label for="email" class="block text-sm font-medium mb-1">
+                    موضوع
+                  </label>
+                  <input
+                    type="email"
+                    name="subject"
+                    class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="موضوع"
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium mb-1">
+                    شماره تماس
+                  </label>
+                  <input
+                    type="text"
+                    name="number"
+                    class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="شماره تماس شما"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium mb-1">
                     ایمیل
                   </label>
                   <input
@@ -77,17 +101,6 @@ export const Contact = () => {
                     placeholder="ایمیل شما"
                   />
                 </div>
-              </div>
-              <div>
-                <label for="subject" class="block text-sm font-medium mb-1">
-                  موضوع
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="موضوع"
-                />
               </div>
               <div>
                 <label for="message" class="block text-sm font-medium mb-1">
