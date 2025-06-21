@@ -1,7 +1,7 @@
 import { Button } from "../ui/button"
 import { name } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
-import { FiMenu } from "solid-icons/fi"
+import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createResource, createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
@@ -47,10 +47,22 @@ const Header = () => {
               <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
             </Show>
           </nav>
-          <Button variant="outline" size="icon" class="md:hidden" onclick={() => setOpen(prev => !prev)}>
-            <span class="sr-only">تغییر منو</span>
-            <FiMenu/>
-          </Button>
+          <div class="md:hidden space-x-2">
+            <Button variant="outline" size="icon" onclick={() => setOpen(prev => !prev)}>
+              <span class="sr-only">تغییر منو</span>
+              <FiMenu/>
+            </Button>
+            <Show when={user() === undefined}>
+              <Button as={TA} href="/Login">
+                <FiLogIn/>
+              </Button>
+            </Show>
+            <Show when={user() !== undefined}>
+              <Button as={TA} href="/Panel">
+                <FiUser/>
+              </Button>
+            </Show>
+          </div>
         </div>
         <MobileMenu isOpen={isOpen} setOpen={setOpen}/>
       </header>
