@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router"
-import { name } from "../../../config/config"
+import { info, name, socialLinks } from "../../../config/config"
 
 const Footer = () => {
   return (
@@ -67,9 +67,9 @@ const Footer = () => {
             <div>
               <h3 class="text-lg font-semibold mb-4">تماس</h3>
               <ul class="space-y-2">
-                <li class="text-muted-foreground">info@pooyan.com</li>
-                <li class="text-muted-foreground">۱۲۳۴۵۶۷-۰۲۱</li>
-                <li class="text-muted-foreground">خیابان دیجیتال، شهر فناوری، ایران</li>
+                <li class="text-muted-foreground">{socialLinks.email}</li>
+                <li class="text-muted-foreground">{info.phone}</li>
+                <li class="text-muted-foreground">{info.address}</li>
               </ul>
             </div>
           </div>
