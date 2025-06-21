@@ -1,6 +1,8 @@
+import ContactUsPage from "~/components/pages/ContactUs"
+
 const ContactUs = () => {
   return (
-    <div>ContactUs</div>
+    <ContactUsPage/>
   )
 }
 
