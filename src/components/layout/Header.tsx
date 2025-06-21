@@ -41,10 +41,12 @@ const Header = () => {
               </div>
             </Show>
             <Show when={user() === undefined}>
-              <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
-                ورود
-              </Button>
-              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
+              <div class="space-x-2">
+                <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
+                  ورود
+                </Button>
+                <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">شروع کنید</Button>
+              </div>
             </Show>
           </nav>
           <div class="md:hidden space-x-2">
