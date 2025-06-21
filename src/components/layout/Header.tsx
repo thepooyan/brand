@@ -26,15 +26,15 @@ const Header = () => {
             <TA class="text-xl font-bold" href="/">{name}</TA>
           </div>
           <nav class="hidden md:flex items-center gap-6">
-            <A href="#services" class="text-sm font-medium hover:text-primary transition-colors">
+            <TA href="/Services" class="text-sm font-medium hover:text-primary transition-colors">
               خدمات
-            </A>
+            </TA>
             <TA href="/About" class="text-sm font-medium hover:text-primary transition-colors">
               درباره ما
             </TA>
-            <A href="#contact" class="text-sm font-medium hover:text-primary transition-colors">
+            <TA href="/ContactUs" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
-            </A>
+            </TA>
             <Show when={user() !== undefined}>
               <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
               <Button as={TA} href="/Panel">پنل کاربری</Button>
