@@ -16,14 +16,13 @@ const contactAction = action(async (formData:FormData) => {
   if (!name || !msg) return {ok: false, msg: "نام و پیام نمیتوانند خالی باشند"}
   if (!num && !email) return {ok: false, msg: "لطفا ایمیل یا شماره تلفن خود را جهت پاسخ دهی وارد کنید"}
 
-  const values: typeof messagesTable.$inferInsert = {
+  await db.insert(messagesTable).values({
     name: name,
     email: email,
     message: msg,
     subject: sub,
     number: num
-  }
-  await db.insert(messagesTable).values(values).catch(() => {
+  }).catch(() => {
     return {ok: false, msg: "خطایی در ثبت اطلاعات رخ داد. لطفا مجددا تلاش کنید"}
   })
   return {ok: true}
