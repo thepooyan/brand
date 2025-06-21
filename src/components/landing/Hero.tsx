@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { ChangeColor } from "~/animation/ChangeColor"
 import { Wiggle } from "~/animation/Wiggle"
 import IntroStagger from "~/animation/IntroStagger"
+import TA from "../parts/TA"
 
 const Hero = () => {
   return (
@@ -29,7 +30,9 @@ const Hero = () => {
                     <ChevronLeft class="  h-5 w-5" />
                   </Wiggle>
                 </Button>
-                <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg intro">
+                <Button variant="outline"
+                as={TA} href="/About"
+                class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg intro">
                   بیشتر بدانید
                 </Button>
             </div>
