@@ -1,5 +1,6 @@
 import { A } from "@solidjs/router"
 import { FiChevronLeft as ChevronLeft, FiCode as Code, FiGlobe as Globe, FiMessageSquare as MessageSquare } from "solid-icons/fi"
+import TA from "../parts/TA"
 
 const Services = () => {
   return (
@@ -22,9 +23,9 @@ const Services = () => {
               <p class="text-muted-foreground mb-6">
                 از قدرت هوش مصنوعی برای خودکارسازی فرآیندها، کسب بینش و بهبود تجربه مشتری استفاده کنید.
               </p>
-              <A href="#" class="text-primary font-medium flex items-center">
+              <TA href="/Services" class="text-primary font-medium flex items-center">
                 بیشتر بدانید <ChevronLeft class="mr-1 h-4 w-4" />
-              </A>
+              </TA>
             </div>
 
             {/* Online Marketing */}
@@ -37,9 +38,9 @@ const Services = () => {
                 با کمپین‌های بازاریابی دیجیتال استراتژیک که باعث افزایش ترافیک، تعامل و تبدیل می‌شوند، به مخاطبان هدف خود
                 برسید.
               </p>
-              <A href="#" class="text-primary font-medium flex items-center">
+              <TA href="/Services" class="text-primary font-medium flex items-center">
                 بیشتر بدانید <ChevronLeft class="mr-1 h-4 w-4" />
-              </A>
+              </TA>
             </div>
 
             {/* Website Development */}
@@ -52,9 +53,9 @@ const Services = () => {
                 وب‌سایت‌های خیره‌کننده و واکنش‌گرا ایجاد کنید که برند شما را به نمایش بگذارند و تجربه کاربری فوق‌العاده‌ای
                 ارائه دهند.
               </p>
-              <A href="#" class="text-primary font-medium flex items-center">
+              <TA href="/Services" class="text-primary font-medium flex items-center">
                 بیشتر بدانید <ChevronLeft class="mr-1 h-4 w-4" />
-              </A>
+              </TA>
             </div>
           </div>
         </div>
