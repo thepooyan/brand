@@ -30,12 +30,14 @@ const contactAction = action(async (formData:FormData) => {
 
 export const Contact = () => {
   const submission = useSubmission(contactAction)
+  let formRef!: HTMLFormElement
 
   createEffect(()=> {
     if (submission.result)
-      if (submission.result.ok)
+      if (submission.result.ok) {
         callModal.success()
-      else
+        formRef.reset()
+      } else
         callModal.fail(submission.result.msg)
   })
 
@@ -51,7 +53,7 @@ export const Contact = () => {
             </p>
           </div>
           <div class="max-w-2xl mx-auto">
-            <form class="space-y-6" method="post" action={contactAction}>
+            <form class="space-y-6" method="post" action={contactAction} ref={formRef}>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="name" class="block text-sm font-medium mb-1">
