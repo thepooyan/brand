@@ -1,5 +1,6 @@
 import { Button } from "../ui/button"
 import { name } from "../../../config/config"
+import TA from "../parts/TA"
 
 const About = () => {
   return (
@@ -17,7 +18,9 @@ const About = () => {
                 تیم متخصص ما مشتاق نوآوری و متعهد به ارائه راه‌حل‌های سفارشی است که نیازهای منحصر به فرد کسب و کار شما را
                 برآورده می‌کند.
               </p>
-              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">داستان ما</Button>
+              <Button
+                as={TA} href="/About"
+                class="bg-primary hover:bg-primary/90 text-primary-foreground">داستان ما</Button>
             </div>
             <div class="order-1 md:order-2">
               <div class="h-64 md:h-96 bg-muted rounded-lg">
