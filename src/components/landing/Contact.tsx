@@ -2,17 +2,30 @@ import { action, useSubmission } from "@solidjs/router"
 import MyButton from "../parts/MyButton"
 import { createEffect } from "solid-js"
 import { callModal } from "../layout/Modal"
+import { db } from "~/db/db"
+import { messagesTable } from "~/db/schema"
 
 const contactAction = action(async (formData:FormData) => {
   "use server"
-  let name = formData.get("name")
-  let email = formData.get("email")
-  let msg = formData.get("message")
-  let sub = formData.get("subject")
+  let name = formData.get("name")?.toString()
+  let email = formData.get("email")?.toString()
+  let msg = formData.get("message")?.toString()
+  let sub = formData.get("subject")?.toString()
+  let num = formData.get("number")?.toString()
 
-  if (!name || !email || !msg) return {ok: false, msg: "نام، ایمیل و پیام نمیتوانند خالی باشند"}
+  if (!name || !msg) return {ok: false, msg: "نام و پیام نمیتوانند خالی باشند"}
+  if (!num && !email) return {ok: false, msg: "لطفا ایمیل یا شماره تلفن خود را جهت پاسخ دهی وارد کنید"}
 
-  console.log(name, email, msg, sub)
+  const values: typeof messagesTable.$inferInsert = {
+    name: name,
+    email: email,
+    message: msg,
+    subject: sub,
+    number: num
+  }
+  await db.insert(messagesTable).values(values).catch(() => {
+    return {ok: false, msg: "خطایی در ثبت اطلاعات رخ داد. لطفا مجددا تلاش کنید"}
+  })
   return {ok: true}
 })
 

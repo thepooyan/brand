@@ -12,3 +12,11 @@ export const otpTable = sqliteTable("otp_table", {
   otp: text({length: 6}).notNull(),
   // timestamp: text().default(sql`(CURRENT_TIMESTAMP)`),
 })
+
+export const messagesTable = sqliteTable("messages_table", {
+  name: text().notNull(),
+  email: text(),
+  number: text(),
+  subject: text(),
+  message: text().notNull()
+})
