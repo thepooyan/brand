@@ -4,3 +4,8 @@ export const validateMobileNumber = (num: string): {ok: boolean, msg?: string} =
 
   return {ok: true}
 }
+
+export const validateEmail = (email: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}

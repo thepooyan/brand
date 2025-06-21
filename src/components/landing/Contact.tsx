@@ -4,7 +4,7 @@ import { createEffect } from "solid-js"
 import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
 import { messagesTable } from "~/db/schema"
-import { validateMobileNumber } from "~/lib/validation"
+import { validateEmail, validateMobileNumber } from "~/lib/validation"
 
 const contactAction = action(async (formData:FormData) => {
   "use server"
@@ -21,6 +21,9 @@ const contactAction = action(async (formData:FormData) => {
     let {msg} = validateMobileNumber(num)
     if (msg) return {ok: false, msg: msg}
   }
+
+  if (email)
+    if (!validateEmail(email)) return {ok: false, msg: "ایمیل وارد شده صحیح نمیباشد"}
 
   await db.insert(messagesTable).values({
     name: name,
