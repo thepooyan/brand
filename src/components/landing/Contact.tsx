@@ -10,23 +10,21 @@ const contactAction = action(async (formData:FormData) => {
   let msg = formData.get("message")
   let sub = formData.get("subject")
 
-  if (!name || !email || !msg) throw new Error("لطفا اطلاعات را کامل وارد کنید")
+  if (!name || !email || !msg) return {ok: false, msg: "نام، ایمیل و پیام نمیتوانند خالی باشند"}
 
   console.log(name, email, msg, sub)
-  return "ok"
+  return {ok: true}
 })
 
 export const Contact = () => {
   const submission = useSubmission(contactAction)
 
   createEffect(()=> {
-    console.log(submission.error)
-    console.log(submission.result)
-    if (submission.error) {
-      callModal.fail(submission.error)
-    } else if (submission.result) {
-      callModal.success()
-    }
+    if (submission.result)
+      if (submission.result.ok)
+        callModal.success()
+      else
+        callModal.fail(submission.result.msg)
   })
 
   return (
