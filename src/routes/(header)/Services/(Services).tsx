@@ -1,6 +1,8 @@
+import ServicesPage from "~/components/pages/ServicesPage"
+
 const Services = () => {
   return (
-    <div>Services</div>
+    <ServicesPage/>
   )
 }
 
