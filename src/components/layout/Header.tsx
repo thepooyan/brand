@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router"
 import { Button } from "../ui/button"
 import { name } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
@@ -36,8 +35,10 @@ const Header = () => {
               تماس با ما
             </TA>
             <Show when={user() !== undefined}>
-              <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
-              <Button as={TA} href="/Panel">پنل کاربری</Button>
+              <div class="space-x-2">
+                <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
+                <Button as={TA} href="/Panel">پنل کاربری</Button>
+              </div>
             </Show>
             <Show when={user() === undefined}>
               <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
