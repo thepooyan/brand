@@ -1,6 +1,6 @@
 import { action, createAsync, query, revalidate, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { createEffect, createResource, Suspense } from "solid-js"
+import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import MyButton from "~/components/parts/MyButton"
 import Spinner from "~/components/parts/Spinner"
