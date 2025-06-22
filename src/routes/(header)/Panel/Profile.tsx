@@ -1,8 +1,9 @@
-import { action, useSubmission } from "@solidjs/router"
+import { action, createAsync, query, revalidate, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { createEffect, createResource } from "solid-js"
+import { createEffect, createResource, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import MyButton from "~/components/parts/MyButton"
+import Spinner from "~/components/parts/Spinner"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
@@ -20,16 +21,16 @@ const handleSubmit = action(async (formData:FormData) => {
 
   await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
   return "done"
-}, "profileAction")
+})
 
-const getData = async () => {
+const getData = query(async () => {
   "use server"
   let num = (await getAuthSession()).number
   return (await db.select().from(usersTable).where(eq(usersTable.number, num))).at(0)
-}
+}, "profile")
 
 const Profile = () => {
-  const [data] = createResource(getData)
+  const data = createAsync(() => getData())
   const submission = useSubmission(handleSubmit)
 
   createEffect(() => {
@@ -56,7 +57,9 @@ const Profile = () => {
                     نام
                 </Label>
                 <div class="flex items-center">
-                  <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data()?.name || ""}/>
+                  <Suspense fallback={<Spinner reverse/>}>
+                    <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data()?.name || ""}/>
+                  </Suspense>
                 </div>
               </div>
 
@@ -65,7 +68,9 @@ const Profile = () => {
                   ایمیل
                 </Label>
                 <div class="flex items-center">
-                  <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
+                  <Suspense fallback={<Spinner reverse/>}>
+                    <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
+                  </Suspense>
                 </div>
               </div>
 
