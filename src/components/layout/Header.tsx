@@ -2,18 +2,20 @@ import { Button } from "../ui/button"
 import { name } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
 import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
-import { createResource, createSignal, Show } from "solid-js"
+import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
+import { createAsync, query, revalidate } from "@solidjs/router"
 
 const Header = () => {
 
-  const [user, {refetch}] = createResource(getAuthSession)
+  const authQ = query(() => getAuthSession(), "auth")
+  const user = createAsync(() => authQ())
   const [isOpen, setOpen] = createSignal(false)
 
   const logout = async () => {
     await clearAuthSession()
-    refetch()
+    revalidate("auth")
   }
 
   return (

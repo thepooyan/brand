@@ -1,5 +1,5 @@
-import { Accessor, createResource, ParentProps, Setter, Show } from "solid-js"
-import { A } from "@solidjs/router"
+import { Accessor, ParentProps, Setter, Show } from "solid-js"
+import { A, createAsync, query, revalidate } from "@solidjs/router"
 import clsx from "clsx"
 import { Button } from "../ui/button"
 import TA from "./TA"
@@ -11,10 +11,11 @@ interface props {
 }
 const MobileMenu = ({isOpen, setOpen}:props) => {
 
-  const [user, {refetch}] = createResource(getAuthSession)
+  const authQ = query(() => getAuthSession(), "auth")
+  const user = createAsync(() => authQ())
   const logout = async () => {
     await clearAuthSession()
-    refetch()
+    revalidate("auth")
   }
 
   let menuRef!: HTMLDivElement
