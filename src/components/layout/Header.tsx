@@ -4,18 +4,16 @@ import MobileMenu from "../parts/MobileMenu"
 import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
-import { clearAuthSession, getAuthSession } from "~/lib/session"
-import { createAsync, query, revalidate } from "@solidjs/router"
+import { createAsync } from "@solidjs/router"
+import { authQuery, logUserOut } from "~/lib/signal"
 
 const Header = () => {
 
-  const authQ = query(() => getAuthSession(), "auth")
-  const user = createAsync(() => authQ())
+  const user = createAsync(() => authQuery())
   const [isOpen, setOpen] = createSignal(false)
 
-  const logout = async () => {
-    await clearAuthSession()
-    revalidate("auth")
+  const logout = () => {
+    logUserOut()
   }
 
   return (

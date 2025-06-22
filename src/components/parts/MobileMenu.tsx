@@ -1,9 +1,9 @@
 import { Accessor, ParentProps, Setter, Show } from "solid-js"
-import { A, createAsync, query, revalidate } from "@solidjs/router"
+import { A, createAsync } from "@solidjs/router"
 import clsx from "clsx"
 import { Button } from "../ui/button"
 import TA from "./TA"
-import { clearAuthSession, getAuthSession } from "~/lib/session"
+import { authQuery, logUserOut } from "~/lib/signal"
 
 interface props {
   isOpen: Accessor<boolean>,
@@ -11,12 +11,7 @@ interface props {
 }
 const MobileMenu = ({isOpen, setOpen}:props) => {
 
-  const authQ = query(() => getAuthSession(), "auth")
-  const user = createAsync(() => authQ())
-  const logout = async () => {
-    await clearAuthSession()
-    revalidate("auth")
-  }
+  const user = createAsync(() => authQuery())
 
   let menuRef!: HTMLDivElement
   let backdropRef!: HTMLDivElement
@@ -38,7 +33,7 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
         <Show when={user() !== undefined}>
           <div class="flex gap-2 mx-auto mt-auto mb-5">
 
-            <Button class="bg-red-700 text-white hover:bg-red-900" onclick={() => {logout();setOpen(false)}}>خروج</Button>
+            <Button class="bg-red-700 text-white hover:bg-red-900" onclick={() => {logUserOut();setOpen(false)}}>خروج</Button>
             <Button as={TA} href="/Panel" onclick={()=> {setOpen(false)} } >پنل کاربری</Button>
           </div>
         </Show>
