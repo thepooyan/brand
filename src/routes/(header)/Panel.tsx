@@ -1,20 +1,7 @@
-import { query, redirect } from "@solidjs/router"
 import { ParentProps } from "solid-js"
 import TA from "~/components/parts/TA"
-import { getAuthSession } from "~/lib/session"
-
-const checkAuth = query(async () => {
-  "use server"
-  const auth = await getAuthSession()
-  if (!auth) {
-    throw redirect("/Login")
-  }
-}, "checkAuth")
 
 const Panel = ({children}:ParentProps) => {
-
-  checkAuth()
-
   return (
     <main class="p-3" >
       <div class=" border-1 m-4 rounded w-max mx-auto overflow-hidden ">

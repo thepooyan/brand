@@ -1,4 +1,4 @@
-import { action, createAsync, query, useSubmission } from "@solidjs/router"
+import { action, createAsync, query, redirect, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
@@ -17,7 +17,8 @@ const handleSubmit = action(async (formData:FormData) => {
   let name = formData.get("name")?.toString() || ""
   let email = formData.get("email")?.toString() || ""
 
-  let number = (await getAuthSession()).number
+  let number = (await getAuthSession())?.number
+  if (!number) throw redirect("/Login")
 
   await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
   return "done"
@@ -25,7 +26,8 @@ const handleSubmit = action(async (formData:FormData) => {
 
 const getData = query(async () => {
   "use server"
-  let num = (await getAuthSession()).number
+  let num = (await getAuthSession())?.number 
+  if (!num) throw redirect("/Login")
   return (await db.select().from(usersTable).where(eq(usersTable.number, num))).at(0)
 }, "profile")
 
