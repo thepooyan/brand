@@ -5,7 +5,7 @@ type SessionData = {
   user?: typeof usersTable.$inferSelect
 };
 
-export async function useAuthSession() {
+async function useAuthSession() {
   "use server";
   const session = await useSession<SessionData>({
     password: process.env.SESSION_SECRET as string,
