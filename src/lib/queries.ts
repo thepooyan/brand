@@ -1,4 +1,4 @@
-import { redirect } from "@solidjs/router";
+import { query, redirect } from "@solidjs/router";
 import { QueryClientConfig, useQuery } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
@@ -14,14 +14,14 @@ export const queryConfig:QueryClientConfig = {
   },
 }
 
-const getInitialProfile = async () => {
+const getInitialProfile = query(async () => {
   "use server"
   let num = (await getAuthSession())?.number 
   if (!num) throw redirect("/Login")
   return (await db.select().from(usersTable).where(eq(usersTable.number, num))).at(0)
-}
+}, "profile")
 
 export const profileQuery = () => useQuery(() => ({
   queryKey: ["profile"],
-  queryFn: getInitialProfile
+  queryFn: () => getInitialProfile()
 }))
