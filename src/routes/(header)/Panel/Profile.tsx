@@ -59,7 +59,7 @@ const Profile = () => {
                     نام
                 </Label>
                 <div class="flex items-center">
-                  <Suspense fallback={<Spinner reverse/>}>
+                  <Suspense fallback={<Fallback/>}>
                     <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data()?.name || ""}/>
                   </Suspense>
                 </div>
@@ -70,7 +70,7 @@ const Profile = () => {
                   ایمیل
                 </Label>
                 <div class="flex items-center">
-                  <Suspense fallback={<Spinner reverse/>}>
+                  <Suspense fallback={<Fallback/>}>
                     <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
                   </Suspense>
                 </div>
@@ -88,5 +88,7 @@ const Profile = () => {
     </div>
   )
 }
+
+const Fallback = () => <div class="w-full flex justify-center items-center rounded-md min-h-10 bg-gray-500 animate-pulse "><Spinner reverse/></div>
 
 export default Profile
