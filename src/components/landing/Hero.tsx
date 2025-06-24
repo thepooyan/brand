@@ -10,13 +10,13 @@ const Hero = () => {
     <>
       <IntroStagger>
         <section class="py-20 md:py-32 bg-[url('/wave.png')] infiniteRotate
-          !pt-10  bg-repeat-x sm:bg-position-[0_-5rem] bg-position-[0_-10rem] sm:!pt-45 ">
+          !pt-10  bg-repeat-x sm:bg-position-[0_-5rem] bg-position-[0_-10rem] sm:!pt-30 ">
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center  ">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 intro">
-              تبدیل ایده‌ها به 
+              هوش بان ، نردبانی به سوی 
               <ChangeColor>
-                <span class="text-primary intro">واقعیت دیجیتال</span>
+                <span class="text-primary intro whitespace-nowrap m-3 block ">آینده هوشمند</span>
               </ChangeColor>
             </h1>
             <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 intro">
