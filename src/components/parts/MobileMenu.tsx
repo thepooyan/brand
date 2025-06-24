@@ -11,7 +11,7 @@ interface props {
 }
 const MobileMenu = ({isOpen, setOpen}:props) => {
 
-  const user = createAsync(() => authQuery())
+  const user = createAsync(() => authQuery(), {deferStream: true})
 
   let menuRef!: HTMLDivElement
   let backdropRef!: HTMLDivElement

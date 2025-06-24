@@ -9,7 +9,7 @@ import { authQuery, logUserOut } from "~/lib/signal"
 
 const Header = () => {
 
-  const user = createAsync(() => authQuery())
+  const user = createAsync(() => authQuery(), {deferStream: true})
   const [isOpen, setOpen] = createSignal(false)
 
   const logout = () => {
