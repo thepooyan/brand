@@ -20,3 +20,9 @@ export const warpResponse = async <T>(fn: ()=>Promise<Response<T>>):Response<T> 
     return {ok:false, msg: "مشکلی پیش آمده، لطفا مجددا تلاش کنید"}
   }
 }
+
+export const compareEpochTime = (then: number) => {
+  const now = Math.floor(Date.now())
+  if (now - then > 60_000) return false
+  return true
+}

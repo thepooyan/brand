@@ -1,6 +1,6 @@
 "use server"
 import { db } from "~/db/db"
-import { generateOTP, Response, validatePhone, warpResponse } from "./util"
+import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
 import { otpTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { updateAuthSession } from "~/lib/session"
@@ -33,6 +33,8 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     if (selection.length === 0) return {ok: false, msg: "کدی برای شماره مورد نظر یافت نشد"}
 
     if (selection[0].otp !== otp) return {ok: false, msg: "کد ارسالی اشتباه میباشد"}
+
+    if (!compareEpochTime(selection[0].timestamp.getTime())) return {ok: false, msg: "کد ارسالی منقضی میباشد"}
 
     await db.delete(otpTable).where(eq(otpTable.number, number))
 
