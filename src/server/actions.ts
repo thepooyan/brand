@@ -34,9 +34,10 @@ export const verifyOTP = async (number: string, otp: string):Response => {
 
     if (selection[0].otp !== otp) return {ok: false, msg: "کد ارسالی اشتباه میباشد"}
 
-    if (!compareEpochTime(selection[0].timestamp.getTime())) return {ok: false, msg: "کد ارسالی منقضی میباشد"}
+    // code was sent correctly, either expired or ok to log in 
+    db.delete(otpTable).where(eq(otpTable.number, number))
 
-    await db.delete(otpTable).where(eq(otpTable.number, number))
+    if (!compareEpochTime(selection[0].timestamp.getTime())) return {ok: false, msg: "کد ارسالی منقضی میباشد"}
 
     let user = (await db.select().from(usersTable).where(eq(usersTable.number, number))).at(0)
 
