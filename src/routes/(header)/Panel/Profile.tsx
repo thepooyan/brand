@@ -33,12 +33,7 @@ const Profile = () => {
   const qc = useQueryClient()
   const navigate = useTransitiveNavigate()
 
-  onMount(() => {
-    if (data.data === null) navigate("/Login")
-  })
-
   createEffect(() => {
-    console.log(data.data)
     if (data.data === null) navigate("/Login")
 
     if (submission.error) {
