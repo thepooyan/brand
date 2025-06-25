@@ -1,6 +1,6 @@
 // @refresh reload
 import { createHandler, StartServer } from "@solidjs/start/server";
-import { nameEn } from "../config/config";
+import { description, nameEn } from "../config/config";
 
 export default createHandler(() => (
   <StartServer
@@ -12,6 +12,7 @@ export default createHandler(() => (
           <link rel="icon" href="/favicon.png" />
           {assets}
           <title>{nameEn}</title>
+          <meta name="description" content={description}/>
         </head>
         <body data-kb-theme="dark">
           <div id="app">{children}</div>
