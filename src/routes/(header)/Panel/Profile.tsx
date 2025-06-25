@@ -1,6 +1,7 @@
-import { action, redirect, useSubmission } from "@solidjs/router"
+import { action, redirect, revalidate, useSubmission } from "@solidjs/router"
+import { useQueryClient } from "@tanstack/solid-query"
 import { eq } from "drizzle-orm"
-import { createEffect, Suspense } from "solid-js"
+import { createEffect, onMount, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import MyButton from "~/components/parts/MyButton"
 import Spinner from "~/components/parts/Spinner"
@@ -10,7 +11,7 @@ import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
 import { profileQuery } from "~/lib/queries"
-import { pageMarker } from "~/lib/routeChangeTransition"
+import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 
 const handleSubmit = action(async (formData:FormData) => {
@@ -29,12 +30,22 @@ const handleSubmit = action(async (formData:FormData) => {
 const Profile = () => {
   const data = profileQuery()
   const submission = useSubmission(handleSubmit)
+  const qc = useQueryClient()
+  const navigate = useTransitiveNavigate()
+
+  onMount(() => {
+    if (data.data === null) navigate("/Login")
+  })
 
   createEffect(() => {
+    console.log(data.data)
+    if (data.data === null) navigate("/Login")
+
     if (submission.error) {
       callModal.fail()
     } else if (submission.result) {
       callModal.success()
+      qc.invalidateQueries({queryKey: ["profile"]})
     } 
   })
 
