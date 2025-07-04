@@ -21,7 +21,10 @@ const Header = () => {
       <header class="border-b border-border">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="h-8 w-8 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
+            <div class="relative">
+              <div class="h-8 w-8 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
+              <img src="/mini-logo.webp" class="absolute w-55 top-0"/>
+            </div>
             <TA class="text-xl font-bold" href="/">{name}</TA>
           </div>
           <nav class="hidden md:flex items-center gap-6">
