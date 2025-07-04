@@ -219,7 +219,7 @@ export default function WebDesign() {
       <section class="py-16">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12">چرا پویان را انتخاب کنید؟</h2>
+            <h2 class="text-3xl font-bold text-center mb-12">چرا {name} را انتخاب کنید؟</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div class="flex gap-4">
                 <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
