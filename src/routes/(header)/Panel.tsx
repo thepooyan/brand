@@ -7,6 +7,8 @@ const Panel = ({children}:ParentProps) => {
       <div class=" border-1 m-4 rounded w-max mx-auto overflow-hidden ">
         <I href="/Panel">داشبورد</I>
         <I href="/Panel/Profile">پروفایل</I>
+        <I href="/Panel/Place-order">ثبت سفارش</I>
+        <I href="/Panel/Order-status">وضعیت سفارش</I>
       </div>
       {children}
     </main>
