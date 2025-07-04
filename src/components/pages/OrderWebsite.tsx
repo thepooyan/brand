@@ -3,6 +3,7 @@ import { FiArrowLeft, FiCode } from "solid-icons/fi"
 import { createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
+import RedStar from '../parts/RedStar'
 
 export default function OrderWebsite() {
   const [formData, setFormData] = createSignal({
@@ -84,7 +85,7 @@ export default function OrderWebsite() {
     <>
 
       <div class="container mx-auto px-4 py-8">
-        {/* Back Button */}
+        
         <TA
           href="/"
           class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
@@ -94,7 +95,7 @@ export default function OrderWebsite() {
         </TA>
 
         <div class="max-w-4xl mx-auto">
-          {/* Header */}
+          
           <div class="text-center mb-12">
             <h1 class="text-3xl md:text-4xl font-bold mb-4">سفارش طراحی وب‌سایت</h1>
             <p class="text-muted-foreground text-lg">
@@ -103,7 +104,7 @@ export default function OrderWebsite() {
           </div>
 
           <form onSubmit={handleSubmit} class="space-y-8">
-            {/* Personal Information */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -114,7 +115,8 @@ export default function OrderWebsite() {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="name" class="block text-sm font-medium mb-2">
-                    نام و نام خانوادگی *
+                    <RedStar/>
+                    نام و نام خانوادگی 
                   </label>
                   <input
                     type="text"
@@ -129,7 +131,8 @@ export default function OrderWebsite() {
                 </div>
                 <div>
                   <label for="email" class="block text-sm font-medium mb-2">
-                    ایمیل *
+                    <RedStar/>
+                    ایمیل 
                   </label>
                   <input
                     type="email"
@@ -144,7 +147,8 @@ export default function OrderWebsite() {
                 </div>
                 <div>
                   <label for="phone" class="block text-sm font-medium mb-2">
-                    شماره تماس *
+                    <RedStar/>
+                    شماره تماس 
                   </label>
                   <input
                     type="tel"
@@ -160,7 +164,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Website Type */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -204,7 +208,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Website Details */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -216,7 +220,8 @@ export default function OrderWebsite() {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label for="pageCount" class="block text-sm font-medium mb-2">
-                      تعداد صفحات *
+                      <RedStar/>
+                      تعداد صفحات 
                     </label>
                     <select
                       id="pageCount"
@@ -236,7 +241,8 @@ export default function OrderWebsite() {
                   </div>
                   <div>
                     <label for="needsDatabase" class="block text-sm font-medium mb-2">
-                      نیاز به پایگاه داده *
+                      <RedStar/>
+                      نیاز به پایگاه داده 
                     </label>
                     <select
                       id="needsDatabase"
@@ -257,7 +263,8 @@ export default function OrderWebsite() {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label for="isMarketplace" class="block text-sm font-medium mb-2">
-                      آیا این یک وب‌سایت فروشگاهی است؟ *
+                      <RedStar/>
+                      آیا این یک وب‌سایت فروشگاهی است؟ 
                     </label>
                     <select
                       id="isMarketplace"
@@ -277,7 +284,8 @@ export default function OrderWebsite() {
                   </div>
                   <div>
                     <label for="timeline" class="block text-sm font-medium mb-2">
-                      زمان مورد نیاز *
+                      <RedStar/>
+                      زمان مورد نیاز 
                     </label>
                     <select
                       id="timeline"
@@ -298,7 +306,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Design Level */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -335,7 +343,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Additional Services */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -434,7 +442,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Additional Features */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -464,7 +472,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Budget and Description */}
+            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
@@ -510,7 +518,7 @@ export default function OrderWebsite() {
               </div>
             </div>
 
-            {/* Submit Button */}
+            
             <div class="flex justify-center pt-6">
               <Button
                 type="submit"
