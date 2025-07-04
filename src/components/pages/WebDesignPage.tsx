@@ -1,5 +1,4 @@
-import { A } from "@solidjs/router"
-import { FiArrowRight as ArrowRight, FiCheck as Check, FiX as X, FiCode as Code, FiZap as Zap,
+import { FiCheck as Check, FiX as X, FiCode as Code, FiZap as Zap,
   FiShield as Shield, FiSearch as Search } from "solid-icons/fi"
 import { Button } from "../ui/button"
 import { ImWordpress, ImWrench } from "solid-icons/im"
