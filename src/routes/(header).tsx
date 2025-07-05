@@ -4,7 +4,7 @@ import Header from "~/components/layout/Header"
 
 const header = (props: RouteSectionProps) => {
   return (
-    <div class="min-h-screen flex flex-col" dir="rtl">
+    <div class="min-h-screen flex flex-col relative" dir="rtl">
       <Header/>
       {props.children}
       <Footer/>

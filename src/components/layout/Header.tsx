@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <>
-      <header class="border-b border-border">
+      <header class="border-b border-border z-10 bg-black">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="relative w-10">
