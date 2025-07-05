@@ -1,11 +1,11 @@
 "use server"
 import OpenAI from "openai"
 import sp from "./systemPrompt.json" 
-import { folan } from "~/components/pages/Chatbot"
+import { message } from "~/components/pages/Chatbot"
 
-type role = {role: "system", content: string}
+type systemPrompt = {role: "system", content: string}
 
-export const proccessConversation = async (conver: folan[]) => {
+export const proccessConversation = async (conver: message[]) => {
   try {
 
     const openai = new OpenAI({
@@ -15,7 +15,7 @@ export const proccessConversation = async (conver: folan[]) => {
     const completion = await openai.chat.completions.create({
       model: "gemini-1.5-flash",
       messages: [
-        sp as role,
+        sp as systemPrompt,
         ...conver,
       ]
     })

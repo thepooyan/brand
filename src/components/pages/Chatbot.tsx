@@ -5,25 +5,20 @@ import { proccessConversation } from "~/server/chat"
 import Msg from "../parts/chat/Msg"
 import Spinner from "../parts/Spinner"
 
-export type folan = {role: string, content: string | null}
+export type message = {role: "user", content: string } | {role: "assistant", content: string | null}
 const Chatbot = () => {
 
-  const [conver, setConver] = createSignal<folan[]>([
-    // {role: 'user', content: 'سلام'}
-    // ,{content: 'سلام علیکم! خوش آمدید به هوشبان.  چطور می‌توانم به…که در ذهن دارید، خوشحال می‌شوم راهنمایی‌تان کنم.\n', role: 'assistant'}
-    // ,{role: 'user', content: 'چه خدماتی دارید'}
-    // ,{content: 'سلام! هوشبان طیف وسیعی از خدمات در حوزه توسعه وب و…اطلاعات بیشتری در مورد آن خدمت به شما ارائه دهم.\n', role: 'assistant'}
-  ])
+  const [conver, setConver] = createSignal<message[]>([])
   const [question, setQuestion] = createSignal("");
   const [isWaiting, setWaiting] = createSignal(false)
 
   const submitHandler = async (e: SubmitEvent) => {
     e.preventDefault()
     setWaiting(true)
-    let ts = {role: "user", content: question()}
+    let ts = question()
     setQuestion("")
-    setConver(prev => [...prev, ts])
-    let res = await proccessConversation([...conver(), ts])
+    setConver(prev => [...prev, {role: "user", content: ts}])
+    let res = await proccessConversation([...conver()])
     if (res === null) return
     setConver(prev => [...prev, res])
     setWaiting(false)
@@ -50,7 +45,6 @@ const Chatbot = () => {
           </TextField>
         </form>
       </div>
-
     </main>
   )
 }
