@@ -3,6 +3,7 @@ import { FiCheck as Check, FiX as X, FiCode as Code, FiZap as Zap,
 import { Button } from "../ui/button"
 import { ImWordpress, ImWrench } from "solid-icons/im"
 import { name } from "../../../config/config"
+import { pageMarker } from "~/lib/routeChangeTransition"
 
 export default function WebDesign() {
   const comparisonData = [
@@ -49,7 +50,7 @@ export default function WebDesign() {
   ]
 
   return (
-    <>
+    <main {...pageMarker()}>
 
       {/* Hero Section */}
       <section class="py-16 md:py-24">
@@ -277,7 +278,7 @@ export default function WebDesign() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   )
 }
 

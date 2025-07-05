@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router"
 import { FiChevronLeft as ChevronLeft, FiCode as Code, FiGlobe as Globe, FiMessageSquare as MessageSquare } from "solid-icons/fi"
 import TA from "../parts/TA"
 
@@ -53,7 +52,7 @@ const Services = () => {
                 وب‌سایت‌های خیره‌کننده و واکنش‌گرا ایجاد کنید که برند شما را به نمایش بگذارند و تجربه کاربری فوق‌العاده‌ای
                 ارائه دهند.
               </p>
-              <TA href="/Services" class="text-primary font-medium flex items-center">
+              <TA href="/Services/Web-design" class="text-primary font-medium flex items-center">
                 بیشتر بدانید <ChevronLeft class="mr-1 h-4 w-4" />
               </TA>
             </div>
