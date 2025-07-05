@@ -1,21 +1,28 @@
 "use server"
 import OpenAI from "openai"
 import sp from "./systemPrompt.json" 
+import { folan } from "~/components/pages/Chatbot"
 
 type role = {role: "system", content: string}
-const openai = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY!,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
-});
 
-export const proccessQuestion = async (q: string) => {
+export const proccessQuestion = async (conver: folan[]) => {
+  try {
 
-  const completion = await openai.chat.completions.create({
-    model: "gemini-1.5-flash",
-    messages: [
-      sp as role,
-      {role: "user", content: q}
-    ]
-  })
-  return completion.choices[0]?.message?.content || ""
+    const openai = new OpenAI({
+      baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+      apiKey: process.env.GEMINI_API_KEY!,
+    });
+    const completion = await openai.chat.completions.create({
+      model: "gemini-1.5-flash",
+      messages: [
+        sp as role,
+        ...conver,
+      ]
+    })
+    return completion.choices[0]?.message
+
+  } catch(e) {
+    console.log(e)
+    return null
+  }
 }
