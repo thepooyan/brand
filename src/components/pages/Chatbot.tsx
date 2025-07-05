@@ -39,7 +39,7 @@ const Chatbot = () => {
         </div>
 
         <form class="flex gap-2" onsubmit={submitHandler}>
-          <Button type="submit">Send</Button>
+          <Button type="submit">ارسال</Button>
           <TextField class="w-full">
             <TextFieldInput class="bg-black" value={question()} onchange={e => setQuestion(e.currentTarget.value)} />
           </TextField>
