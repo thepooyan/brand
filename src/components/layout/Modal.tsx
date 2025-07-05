@@ -1,6 +1,6 @@
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from "../ui/alert-dialog"
 import { ImCross } from 'solid-icons/im'
-import { createSignal, JSXElement, Match, Switch } from "solid-js"
+import { Component, createSignal, JSXElement, Match, Switch } from "solid-js"
 import { Button } from "../ui/button"
 import clsx from "clsx"
 import { AiOutlineCheck } from "solid-icons/ai"
@@ -8,9 +8,9 @@ import Spinner from "../parts/Spinner"
 import { CallbackStore } from "~/lib/utils"
 
 type Istate = "" | "prompt" | "fail" | "success" | "wait"
-type modalArgs = {content: JSXElement, state?: Istate}
+type modalArgs = {content: () => JSXElement, state?: Istate}
 const [open, setOpen] = createSignal(false)
-const [content, setContet] = createSignal<JSXElement>()
+const [content, setContet] = createSignal<Component>(() => <></>)
 const [state, setState] = createSignal<Istate>("")
 const callbackStore = new CallbackStore()
 let readyToOpen = true;
@@ -21,7 +21,7 @@ export const closeModal = () => {
 }
 
 const closeCleanup = () => {
-  setContet("")
+  setContet(() => () => "")
   setState("")
   readyToOpen = true;
 
@@ -29,19 +29,19 @@ const closeCleanup = () => {
   first && callModal(first.content, first.state)
 }
 
-export const callModal = (content: JSXElement, stateToBe?: Istate) => {
+export const callModal = (content: (()=> JSXElement), stateToBe?: Istate) => {
   if (!readyToOpen && state() !== "wait") return waitingStack.push({content: content, state: stateToBe})
   setOpen(true)
-  setContet(content)
+  setContet(() => () => content())
   stateToBe && setState(stateToBe)
   readyToOpen = false;
 }
 
-callModal.success = (msg: string = "با موفقیت انجام شد!") => callModal(msg, "success")
-callModal.fail = (msg: string = "متاسفانه خطایی پیش آمده. لطفا مجددا تلاش کنید") => callModal(msg, "fail")
-callModal.wait = (msg: string = "لطفا کمی صبر کنید") => callModal(<div class="space-y-4"><p>{msg}</p><Spinner reverse/></div>, "wait")
+callModal.success = (msg: string = "با موفقیت انجام شد!") => callModal(() => msg, "success")
+callModal.fail = (msg: string = "متاسفانه خطایی پیش آمده. لطفا مجددا تلاش کنید") => callModal(() => msg, "fail")
+callModal.wait = (msg: string = "لطفا کمی صبر کنید") => callModal(() => <div class="space-y-4"><p>{msg}</p><Spinner reverse/></div>, "wait")
 callModal.prompt = (msg: string = "Are you sure?") => {
-  callModal(msg, "prompt");
+  callModal(() => msg, "prompt");
   return {
     yes: (callback: ()=>void) => {
       callbackStore.setYes(callback)
@@ -81,7 +81,7 @@ const Modal = () => {
           <AlertDialogTitle>{title()}</AlertDialogTitle>
           <AlertDialogDescription>
             <p class="text-center text-md mb-2 mt-3">
-              {content()}
+              {content()("")}
             </p>
           </AlertDialogDescription>
             <Switch>
