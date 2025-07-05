@@ -4,6 +4,9 @@ import { Button } from "../ui/button"
 import { ImWordpress, ImWrench } from "solid-icons/im"
 import { name } from "../../../config/config"
 import { pageMarker } from "~/lib/routeChangeTransition"
+import TA from "../parts/TA"
+import { callModal } from "../layout/Modal"
+import ContactInfo from "../parts/ContactInfo"
 
 export default function WebDesign() {
   const comparisonData = [
@@ -48,6 +51,10 @@ export default function WebDesign() {
       wordpress: { value: "محدود", icon: "x", description: "محدودیت در رشد" },
     },
   ]
+
+  const freeConsultation = () => {
+    callModal(() => <ContactInfo/>)
+  }
 
   return (
     <main {...pageMarker()}>
@@ -271,7 +278,10 @@ export default function WebDesign() {
             با تیم متخصص {name} تماس بگیرید و پروژه وب‌سایت خود را همین امروز شروع کنید.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3">مشاوره رایگان</Button>
+            <Button
+              class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+              onclick={freeConsultation}
+            >مشاوره رایگان</Button>
             <Button variant="outline" class="border-primary text-primary hover:bg-primary/10 px-8 py-3">
               مشاهده نمونه کارها
             </Button>
