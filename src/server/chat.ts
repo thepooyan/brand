@@ -13,7 +13,8 @@ export const proccessConversation = async (conver: message[]) => {
       apiKey: process.env.GEMINI_API_KEY!,
     });
     const completion = await openai.chat.completions.create({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-pro",
+      // model: "gemini-2.5-flash",
       messages: [
         sp as systemPrompt,
         ...conver,
