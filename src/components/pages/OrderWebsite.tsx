@@ -1,5 +1,4 @@
-import { VsSymbolColor } from 'solid-icons/vs'
-import { FiArrowLeft, FiCode } from "solid-icons/fi"
+import { FiArrowRight, FiCode } from "solid-icons/fi"
 import { createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
@@ -83,14 +82,13 @@ export default function OrderWebsite() {
 
   return (
     <>
-
       <div class="container mx-auto px-4 py-8">
         
         <TA
           href="/"
           class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
         >
-          <FiArrowLeft class="ml-2 h-4 w-4" />
+          <FiArrowRight class="ml-2 h-4 w-4" />
           بازگشت به صفحه اصلی
         </TA>
 
@@ -142,22 +140,6 @@ export default function OrderWebsite() {
                     onChange={handleInputChange}
                     class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="example@email.com"
-                    required
-                  />
-                </div>
-                <div>
-                  <label for="phone" class="block text-sm font-medium mb-2">
-                    <RedStar/>
-                    شماره تماس 
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData().phone}
-                    onChange={handleInputChange}
-                    class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-left"
-                    placeholder="09123456789"
                     required
                   />
                 </div>
@@ -240,28 +222,6 @@ export default function OrderWebsite() {
                     </select>
                   </div>
                   <div>
-                    <label for="needsDatabase" class="block text-sm font-medium mb-2">
-                      <RedStar/>
-                      نیاز به پایگاه داده 
-                    </label>
-                    <select
-                      id="needsDatabase"
-                      name="needsDatabase"
-                      value={formData().needsDatabase}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      required
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="yes">بله، نیاز دارم</option>
-                      <option value="no">خیر، نیاز ندارم</option>
-                      <option value="not-sure">مطمئن نیستم</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
                     <label for="isMarketplace" class="block text-sm font-medium mb-2">
                       <RedStar/>
                       آیا این یک وب‌سایت فروشگاهی است؟ 
@@ -302,73 +262,6 @@ export default function OrderWebsite() {
                       <option value="no-rush">عجله‌ای ندارم</option>
                     </select>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            
-            <div class="bg-card p-6 rounded-lg border">
-              <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
-                  <span class="text-primary text-sm font-bold">۴</span>
-                </div>
-                سطح طراحی
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {designLevels.map((level) => (
-                  <label
-                    
-                    class={`flex flex-col p-4 border rounded-lg cursor-pointer transition-all ${
-                      formData().designLevel === level.value
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/50"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="designLevel"
-                      value={level.value}
-                      checked={formData().designLevel === level.value}
-                      onChange={handleInputChange}
-                      class="mb-3"
-                    />
-                    <div class="flex items-center gap-2 mb-2">
-                      <VsSymbolColor class="h-5 w-5 text-primary" />
-                      <span class="font-medium">{level.label}</span>
-                    </div>
-                    <p class="text-sm text-primary font-medium mb-2">{level.price}</p>
-                    <p class="text-sm text-muted-foreground">{level.description}</p>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            
-            <div class="bg-card p-6 rounded-lg border">
-              <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
-                  <span class="text-primary text-sm font-bold">۵</span>
-                </div>
-                خدمات اضافی
-              </h2>
-              <div class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="hasLogo" class="block text-sm font-medium mb-2">
-                      آیا لوگو دارید؟
-                    </label>
-                    <select
-                      id="hasLogo"
-                      name="hasLogo"
-                      value={formData().hasLogo}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="yes">بله، لوگو دارم</option>
-                      <option value="no">خیر، نیاز به طراحی لوگو دارم</option>
-                    </select>
-                  </div>
                   <div>
                     <label for="contentReady" class="block text-sm font-medium mb-2">
                       آیا محتوای وب‌سایت آماده است؟
@@ -383,72 +276,19 @@ export default function OrderWebsite() {
                       <option value="">انتخاب کنید</option>
                       <option value="yes">بله، محتوا آماده است</option>
                       <option value="partial">بخشی آماده است</option>
-                      <option value="no">خیر، نیاز به تولید محتوا دارم</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <label for="hostingNeeded" class="block text-sm font-medium mb-2">
-                      نیاز به هاست
-                    </label>
-                    <select
-                      id="hostingNeeded"
-                      name="hostingNeeded"
-                      value={formData().hostingNeeded}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="yes">بله، نیاز دارم</option>
-                      <option value="no">خیر، هاست دارم</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label for="domainNeeded" class="block text-sm font-medium mb-2">
-                      نیاز به دامنه
-                    </label>
-                    <select
-                      id="domainNeeded"
-                      name="domainNeeded"
-                      value={formData().domainNeeded}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="yes">بله، نیاز دارم</option>
-                      <option value="no">خیر، دامنه دارم</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label for="seoNeeded" class="block text-sm font-medium mb-2">
-                      بهینه‌سازی سئو
-                    </label>
-                    <select
-                      id="seoNeeded"
-                      name="seoNeeded"
-                      value={formData().seoNeeded}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="basic">سئو پایه</option>
-                      <option value="advanced">سئو پیشرفته</option>
-                      <option value="no">نیاز ندارم</option>
+                      <option value="no">خیر</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
 
-            
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
-                  <span class="text-primary text-sm font-bold">۶</span>
+                  <span class="text-primary text-sm font-bold">۴</span>
                 </div>
-                ویژگی‌های اضافی
+                خدمات دیگر
               </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {additionalFeatures.map((feature) => (
@@ -476,7 +316,7 @@ export default function OrderWebsite() {
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
                 <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
-                  <span class="text-primary text-sm font-bold">۷</span>
+                  <span class="text-primary text-sm font-bold">۵</span>
                 </div>
                 بودجه و توضیحات
               </h2>
