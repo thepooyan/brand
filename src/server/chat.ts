@@ -5,7 +5,7 @@ import { folan } from "~/components/pages/Chatbot"
 
 type role = {role: "system", content: string}
 
-export const proccessQuestion = async (conver: folan[]) => {
+export const proccessConversation = async (conver: folan[]) => {
   try {
 
     const openai = new OpenAI({

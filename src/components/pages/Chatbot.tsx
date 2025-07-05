@@ -1,8 +1,9 @@
-import { createSignal, For } from "solid-js"
+import { createSignal, For, Show } from "solid-js"
 import { Button } from "../ui/button"
 import { TextField, TextFieldInput } from "../ui/text-field"
-import { proccessQuestion } from "~/server/chat"
+import { proccessConversation } from "~/server/chat"
 import Msg from "../parts/chat/Msg"
+import Spinner from "../parts/Spinner"
 
 export type folan = {role: string, content: string | null}
 const Chatbot = () => {
@@ -14,23 +15,32 @@ const Chatbot = () => {
     // ,{content: 'سلام! هوشبان طیف وسیعی از خدمات در حوزه توسعه وب و…اطلاعات بیشتری در مورد آن خدمت به شما ارائه دهم.\n', role: 'assistant'}
   ])
   const [question, setQuestion] = createSignal("");
+  const [isWaiting, setWaiting] = createSignal(false)
 
   const submitHandler = async (e: SubmitEvent) => {
     e.preventDefault()
-    let ts = {role: "user", content: question() }
-    let res = await proccessQuestion([...conver(), ts])
+    setWaiting(true)
+    let ts = {role: "user", content: question()}
+    setQuestion("")
+    setConver(prev => [...prev, ts])
+    let res = await proccessConversation([...conver(), ts])
     if (res === null) return
-    setConver(prev => [...prev, ts, res])
-    console.log(conver())
+    setConver(prev => [...prev, res])
+    setWaiting(false)
   }
 
   return (
     <main class="h-dvh p-10">
       <div class=" rounded h-full flex justify-between flex-col  bg-zinc-900 p-5">
-        <div>
+        <div class="overscroll-auto h-full overflow-scroll">
           <For each={conver()}>
             {r => <Msg left={r.role === "assistant"}>{r.content}</Msg>}
           </For>
+          <Show when={isWaiting()}>
+            <div class="my-5">
+              <Spinner reverse/>
+            </div>
+          </Show>
         </div>
 
         <form class="flex gap-2" onsubmit={submitHandler}>
