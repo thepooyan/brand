@@ -1,22 +1,33 @@
 import { FiPhone } from "solid-icons/fi"
 import { Button } from "../ui/button"
 import { ImTelegram, ImWhatsapp } from "solid-icons/im"
+import { support } from "../../../config/config"
 
 const ContactInfo = () => {
   return (
     <div class="flex flex-col gap-2">
       <p>جهت دریافت مشاوره رایگان، میتواند از راه های زیر استفاده نمایید:</p>
-      <Button variant="secondary">
+      <br/>
+      <Button variant="secondary"
+        as="a"
+        href={`tel:${support.mobile}`}
+      >
         تلفن
-      </Button>
         <FiPhone/>
-      <Button variant="secondary">
-        تلگرام
-        <ImTelegram/>
       </Button>
-      <Button variant="secondary">
+      <Button variant="secondary" 
+        as="a"
+        href={support.telegram}
+      >
+        تلگرام
+        <ImTelegram class="text-blue-500"/>
+      </Button>
+      <Button variant="secondary" 
+        as="a"
+        href={`https://wa.me/${support.whatsapp}`}
+      >
         واتساپ
-        <ImWhatsapp class="text-red-700"/>
+        <ImWhatsapp class="text-green-500"/>
       </Button>
     </div>
   )
