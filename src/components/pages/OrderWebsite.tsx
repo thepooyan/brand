@@ -15,10 +15,10 @@ export default function OrderWebsite() {
   let [p] = useSearchParams()
   
   const [formData, setFormData] = createSignal({
-    name: user()?.name,
-    email: user()?.email,
+    name: user()?.name || "",
+    email: user()?.email || "",
     phone: "",
-    websiteType: p?.type,
+    websiteType: p?.type || "",
     needsDatabase: "",
     pageCount: "",
     isMarketplace: "",
@@ -56,8 +56,7 @@ export default function OrderWebsite() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    console.log(formData())
 
     setIsSubmitting(false)
     callModal.success("سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.")
