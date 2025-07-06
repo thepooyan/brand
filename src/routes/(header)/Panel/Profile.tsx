@@ -12,7 +12,7 @@ import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
 import { pageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { updateUserSession, userQuery } from "~/lib/signal"
+import { updateUserSession, userQueryRedirect } from "~/lib/signal"
 
 const handleSubmit = action(async (formData:FormData) => {
   "use server"
@@ -29,7 +29,7 @@ const handleSubmit = action(async (formData:FormData) => {
 
 
 const Profile = () => {
-  const data = createAsync(() => userQuery())
+  const data = createAsync(() => userQueryRedirect())
   const submission = useSubmission(handleSubmit)
   const qc = useQueryClient()
 
