@@ -12,7 +12,6 @@ export const userQuery = query(async () => {
 }, "user")
 
 export const logUserOut = async () => {
-  console.log("logout")
   await clearAuthSession()
   revalidate("user")
 }
