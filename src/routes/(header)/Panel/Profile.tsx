@@ -1,4 +1,4 @@
-import { action, createAsync, redirect, useSubmission } from "@solidjs/router"
+import { action, redirect, useSubmission } from "@solidjs/router"
 import { useQueryClient } from "@tanstack/solid-query"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
@@ -10,9 +10,10 @@ import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
+import { useGetUserRedirect } from "~/lib/hooks"
 import { pageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { updateUserSession, userQueryRedirect } from "~/lib/signal"
+import { updateUserSession } from "~/lib/signal"
 
 const handleSubmit = action(async (formData:FormData) => {
   "use server"
@@ -29,7 +30,7 @@ const handleSubmit = action(async (formData:FormData) => {
 
 
 const Profile = () => {
-  const data = createAsync(() => userQueryRedirect())
+  const user = useGetUserRedirect()
   const submission = useSubmission(handleSubmit)
   const qc = useQueryClient()
 
@@ -59,7 +60,7 @@ const Profile = () => {
                 </Label>
                 <div class="flex items-center">
                   <Suspense fallback={<Fallback/>}>
-                    <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data()?.name || ""}/>
+                    <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={user()?.name || ""}/>
                   </Suspense>
                 </div>
               </div>
@@ -70,7 +71,7 @@ const Profile = () => {
                 </Label>
                 <div class="flex items-center">
                   <Suspense fallback={<Fallback/>}>
-                    <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
+                    <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={user()?.email || ""}/>
                   </Suspense>
                 </div>
               </div>

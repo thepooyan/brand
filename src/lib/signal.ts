@@ -2,6 +2,7 @@ import { query, redirect, revalidate } from "@solidjs/router";
 import { clearAuthSession, getAuthSession, updateAuthSession } from "./session";
 
 export const userQueryRedirect = query(async () => {
+  console.log("qr")
   let user = await getAuthSession()
   if (!user) throw redirect("/Login")
   return user
