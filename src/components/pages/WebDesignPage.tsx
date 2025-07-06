@@ -205,12 +205,18 @@ export default function WebDesign() {
                     <tr class="bg-card">
                       <td class="p-6 font-bold text-lg">سفارش</td>
                       <td class="p-6 text-center">
-                        <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                        <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8"
+                          as={TA}
+                          href="/Place-order/Website?type=coded"
+                        >
                           سفارش وب‌سایت کدنویسی شده
                         </Button>
                       </td>
                       <td class="p-6 text-center">
-                        <Button variant="outline" class="border-blue-500 text-blue-500 hover:bg-blue-500/10 px-8">
+                        <Button variant="outline" class="border-blue-500 text-blue-500 hover:bg-blue-500/10 px-8"
+                          as={TA}
+                          href="/Place-order/Website?type=wordpress"
+                        >
                           سفارش وب‌سایت وردپرس
                         </Button>
                       </td>

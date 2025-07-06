@@ -3,13 +3,15 @@ import { createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
+import { useSearchParams } from "@solidjs/router"
 
 export default function OrderWebsite() {
+  let [p] = useSearchParams()
   const [formData, setFormData] = createSignal({
     name: "",
     email: "",
     phone: "",
-    websiteType: "",
+    websiteType: p.type,
     needsDatabase: "",
     pageCount: "",
     isMarketplace: "",
@@ -57,12 +59,6 @@ export default function OrderWebsite() {
   const websiteTypes = [
     { value: "coded", label: "وب‌سایت کدنویسی شده", description: "عملکرد بالا و سفارشی‌سازی کامل" },
     { value: "wordpress", label: "وب‌سایت وردپرس", description: "راه‌اندازی سریع و مدیریت آسان" },
-  ]
-
-  const designLevels = [
-    { value: "normal", label: "طراحی معمولی", price: "از ۵ میلیون تومان", description: "طراحی ساده و کاربردی" },
-    { value: "good", label: "طراحی خوب", price: "از ۱۰ میلیون تومان", description: "طراحی مدرن با جزئیات بیشتر" },
-    { value: "pro", label: "طراحی حرفه‌ای", price: "از ۲۰ میلیون تومان", description: "طراحی منحصر به فرد و پیشرفته" },
   ]
 
   const additionalFeatures = [
