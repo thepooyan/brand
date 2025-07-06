@@ -1,7 +1,7 @@
-import { action, redirect, revalidate, useSubmission } from "@solidjs/router"
+import { action, createAsync, redirect, useSubmission } from "@solidjs/router"
 import { useQueryClient } from "@tanstack/solid-query"
 import { eq } from "drizzle-orm"
-import { createEffect, onMount, Suspense } from "solid-js"
+import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import MyButton from "~/components/parts/MyButton"
 import Spinner from "~/components/parts/Spinner"
@@ -10,9 +10,9 @@ import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
-import { profileQuery } from "~/lib/queries"
-import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
+import { pageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
+import { updateUserSession, userQuery } from "~/lib/signal"
 
 const handleSubmit = action(async (formData:FormData) => {
   "use server"
@@ -23,19 +23,17 @@ const handleSubmit = action(async (formData:FormData) => {
   if (!number) throw redirect("/Login")
 
   await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
+  updateUserSession(name, email)
   return "done"
 })
 
 
 const Profile = () => {
-  const data = profileQuery()
+  const data = createAsync(() => userQuery())
   const submission = useSubmission(handleSubmit)
   const qc = useQueryClient()
-  const navigate = useTransitiveNavigate()
 
   createEffect(() => {
-    if (data.data === null) navigate("/Login")
-
     if (submission.error) {
       callModal.fail()
     } else if (submission.result) {
@@ -61,7 +59,7 @@ const Profile = () => {
                 </Label>
                 <div class="flex items-center">
                   <Suspense fallback={<Fallback/>}>
-                    <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data.data?.name || ""}/>
+                    <Input  placeholder="نام خود را وارد کنید" class="text-right" name="name" value={data()?.name || ""}/>
                   </Suspense>
                 </div>
               </div>
@@ -72,7 +70,7 @@ const Profile = () => {
                 </Label>
                 <div class="flex items-center">
                   <Suspense fallback={<Fallback/>}>
-                    <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data.data?.email || ""}/>
+                    <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={data()?.email || ""}/>
                   </Suspense>
                 </div>
               </div>

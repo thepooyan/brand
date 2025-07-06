@@ -5,11 +5,11 @@ import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
 import { createAsync } from "@solidjs/router"
-import { authQuery, logUserOut } from "~/lib/signal"
+import { userQuery, logUserOut } from "~/lib/signal"
 
 const Header = () => {
 
-  const user = createAsync(() => authQuery(), {deferStream: true})
+  const user = createAsync(() => userQuery(), {deferStream: true})
   const [isOpen, setOpen] = createSignal(false)
 
   const logout = () => {

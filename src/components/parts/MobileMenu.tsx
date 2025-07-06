@@ -3,7 +3,7 @@ import { A, createAsync } from "@solidjs/router"
 import clsx from "clsx"
 import { Button } from "../ui/button"
 import TA from "./TA"
-import { authQuery, logUserOut } from "~/lib/signal"
+import { userQuery, logUserOut } from "~/lib/signal"
 
 interface props {
   isOpen: Accessor<boolean>,
@@ -11,7 +11,7 @@ interface props {
 }
 const MobileMenu = ({isOpen, setOpen}:props) => {
 
-  const user = createAsync(() => authQuery(), {deferStream: true})
+  const user = createAsync(() => userQuery(), {deferStream: true})
 
   let menuRef!: HTMLDivElement
   let backdropRef!: HTMLDivElement
