@@ -5,6 +5,8 @@ import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
 import { createAsync, useSearchParams } from "@solidjs/router"
 import { getUser } from "~/server/actions"
+import { callModal } from "../layout/Modal"
+import Spinner from "../parts/Spinner"
 
 
 export default function OrderWebsite() {
@@ -58,7 +60,7 @@ export default function OrderWebsite() {
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
     setIsSubmitting(false)
-    alert("سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.")
+    callModal.success("سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.")
   }
 
   const websiteTypes = [
@@ -366,7 +368,10 @@ export default function OrderWebsite() {
                 disabled={isSubmitting()}
                 class="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-4 text-lg"
               >
-                {isSubmitting() ? "در حال ارسال..." : "ثبت سفارش"}
+                {isSubmitting() ? <>
+                  در حال ارسال... 
+                  <Spinner/>
+                </>: "ثبت سفارش"}
               </Button>
             </div>
           </form>
