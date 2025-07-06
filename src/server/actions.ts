@@ -3,7 +3,8 @@ import { db } from "~/db/db"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
 import { otpTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
-import { updateAuthSession } from "~/lib/session"
+import { getAuthSession, updateAuthSession } from "~/lib/session"
+import { query, redirect } from "@solidjs/router"
 
 
 export const sendOTP = async (number: string):Response => {
@@ -54,3 +55,9 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     return {ok: true}
   }) 
 }
+
+export const getUser = query(async () => {
+  let auth = await getAuthSession()
+  if (!auth) throw redirect("/Login")
+  return auth
+}, "user")

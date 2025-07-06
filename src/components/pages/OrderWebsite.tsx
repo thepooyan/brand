@@ -3,15 +3,20 @@ import { createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
-import { useSearchParams } from "@solidjs/router"
+import { createAsync, useSearchParams } from "@solidjs/router"
+import { getUser } from "~/server/actions"
+
 
 export default function OrderWebsite() {
+
+  let user = createAsync(() => getUser())
   let [p] = useSearchParams()
+  
   const [formData, setFormData] = createSignal({
-    name: "",
-    email: "",
+    name: user()?.name,
+    email: user()?.email,
     phone: "",
-    websiteType: p.type,
+    websiteType: p?.type,
     needsDatabase: "",
     pageCount: "",
     isMarketplace: "",
