@@ -296,7 +296,7 @@ export default function ChatbotPage() {
                   <input
                     type="text"
                     value={inputMessage()}
-                    onChange={(e) => setInputMessage(e.target.value)}
+                    onKeyUp={(e) => setInputMessage(e.currentTarget.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="پیام خود را بنویسید..."
                     class="flex-1 px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
