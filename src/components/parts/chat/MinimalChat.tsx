@@ -1,5 +1,4 @@
 import { FiSend } from "solid-icons/fi"
-import { AiFillRobot } from "solid-icons/ai"
 import { createEffect, createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { name } from "../../../../config/config"
