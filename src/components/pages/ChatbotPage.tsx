@@ -6,6 +6,7 @@ import { createEffect, createSignal } from "solid-js"
 import { AiFillRobot } from "solid-icons/ai"
 import { callModal } from "../layout/Modal"
 import ContactInfo from "../parts/ContactInfo"
+import { name } from "../../../config/config"
 
 interface Message {
   id: string
@@ -18,7 +19,7 @@ export default function ChatbotPage() {
   const [messages, setMessages] = createSignal<Message[]>([
     {
       id: "1",
-      text: "سلام! من دستیار هوشمند پویان هستم. چطور می‌تونم کمکتون کنم؟",
+      text: `سلام! من دستیار هوشمند ${name} هستم. چطور می‌تونم کمکتون کنم؟`,
       isUser: false,
       timestamp: new Date(),
     },
@@ -243,7 +244,7 @@ export default function ChatbotPage() {
                     <AiFillRobot class="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <h3 class="font-medium">دستیار هوشمند پویان</h3>
+                    <h3 class="font-medium">دستیار هوشمند {name}</h3>
                     <p class="text-sm text-muted-foreground">آنلاین</p>
                   </div>
                 </div>
