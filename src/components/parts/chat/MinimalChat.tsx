@@ -22,10 +22,13 @@ const MinimalChat = () => {
   ])
   const [inputMessage, setInputMessage] = createSignal("")
   const [isTyping, setIsTyping] = createSignal(false)
-  let messagesEndRef!: HTMLDivElement
+  let messagesRailRef!: HTMLDivElement
 
   const scrollToBottom = () => {
-    // messagesEndRef.scrollIntoView({ behavior: "smooth" })
+    messagesRailRef.scrollTo({
+      top: messagesRailRef.scrollHeight,
+      behavior: "smooth"
+    })
   }
 
   createEffect(() => {
@@ -98,7 +101,7 @@ const MinimalChat = () => {
           </div>
 
           {/* Chat Messages */}
-          <div class="h-96 overflow-y-auto p-4 space-y-4">
+          <div class="h-96 overflow-y-auto p-4 space-y-4" ref={messagesRailRef}>
             {messages().map((message) => (
               <div  class={`flex ${message.isUser ? "justify-start" : "justify-end"}`}>
                 <div
@@ -134,7 +137,6 @@ const MinimalChat = () => {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Chat Input */}
