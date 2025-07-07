@@ -3,6 +3,24 @@ check why view transition is not reliable (login and home button)
 add markdown support
 stream response
 
+services: {
+    AI 
+        ai chatbot
+            telegram
+            website widget
+            api
+            goftoman?
+        ai agent
+            ?
+
+    Web Design
+        normal website 
+        pro website
+
+    marketing
+        ??
+}
+
 ***
 Final steps:
 - finish config
