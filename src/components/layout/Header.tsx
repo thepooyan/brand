@@ -21,9 +21,9 @@ const Header = () => {
       <header class="border-b border-border z-10 bg-black">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="relative w-15">
-              <div class="h-15 w-15 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
-              <img src="/logo.webp" class="absolute top-0 rounded-full p-1"/>
+            <div class="relative w-13 flex justify-center ">
+              <div class="h-10 w-10 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
+              <img src="/logo.webp" class="absolute -top-1 rounded-full w-13 "/>
             </div>
             <TA class="text-xl font-bold" href="/">{name}</TA>
           </div>
