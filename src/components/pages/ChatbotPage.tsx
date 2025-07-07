@@ -1,9 +1,11 @@
 import { pageMarker } from "~/lib/routeChangeTransition"
-import { FiArrowLeft, FiMessageSquare, FiSend, FiSmartphone, FiCode, FiGlobe, FiZap, FiShield, FiClock } from "solid-icons/fi"
+import { FiMessageSquare, FiSend, FiSmartphone, FiCode, FiGlobe, FiZap, FiShield, FiClock, FiArrowRight } from "solid-icons/fi"
 import TA from "../parts/TA"
 import { Button } from "../ui/button"
 import { createEffect, createSignal } from "solid-js"
 import { AiFillRobot } from "solid-icons/ai"
+import { callModal } from "../layout/Modal"
+import ContactInfo from "../parts/ContactInfo"
 
 interface Message {
   id: string
@@ -26,7 +28,7 @@ export default function ChatbotPage() {
   let messagesEndRef!: HTMLDivElement
 
   const scrollToBottom = () => {
-    messagesEndRef.scrollIntoView({ behavior: "smooth" })
+    // messagesEndRef.scrollIntoView({ behavior: "smooth" })
   }
 
   createEffect(() => {
@@ -129,35 +131,13 @@ export default function ChatbotPage() {
   return (
 
     <main {...pageMarker()}>
-
-
-    <div class="min-h-screen bg-background" dir="rtl">
-      {/* Header */}
-      <header class="border-b border-border">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="h-8 w-8 rounded-full bg-primary"></div>
-            <span class="text-xl font-bold">پویان</span>
-          </div>
-          <nav class="hidden md:flex items-center gap-6">
-            <TA href="/" class="text-sm font-medium hover:text-primary transition-colors">
-              خانه
-            </TA>
-            <TA href="/order" class="text-sm font-medium hover:text-primary transition-colors">
-              سفارش پروژه
-            </TA>
-            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground">تماس با ما</Button>
-          </nav>
-        </div>
-      </header>
-
       <div class="container mx-auto px-4 py-8">
         {/* Back Button */}
         <TA
           href="/"
           class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
         >
-          <FiArrowLeft class="ml-2 h-4 w-4" />
+          <FiArrowRight class="ml-2 h-4 w-4" />
           بازگشت به صفحه اصلی
         </TA>
 
@@ -176,14 +156,10 @@ export default function ChatbotPage() {
             به مشتریان شما.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
-              درخواست مشاوره رایگان
-            </Button>
-            <Button
-              variant="outline"
-              class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg bg-transparent"
+            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg"
+              onclick={() => callModal(() => <ContactInfo/>)}
             >
-              مشاهده نمونه کارها
+              درخواست مشاوره رایگان
             </Button>
           </div>
         </div>
@@ -344,68 +320,6 @@ export default function ChatbotPage() {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer class="bg-black py-12 mt-16">
-        <div class="container mx-auto px-4">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div class="flex items-center gap-2 mb-4">
-                <div class="h-8 w-8 rounded-full bg-primary"></div>
-                <span class="text-xl font-bold">پویان</span>
-              </div>
-              <p class="text-muted-foreground">تبدیل ایده‌ها به واقعیت دیجیتال با راه‌حل‌های نوآورانه.</p>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold mb-4">خدمات</h3>
-              <ul class="space-y-2">
-                <li>
-                  <TA href="#" class="text-muted-foreground hover:text-primary transition-colors">
-                    چت‌بات هوشمند
-                  </TA>
-                </li>
-                <li>
-                  <TA href="#" class="text-muted-foreground hover:text-primary transition-colors">
-                    بازاریابی آنلاین
-                  </TA>
-                </li>
-                <li>
-                  <TA href="#" class="text-muted-foreground hover:text-primary transition-colors">
-                    توسعه وب‌سایت
-                  </TA>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold mb-4">شرکت</h3>
-              <ul class="space-y-2">
-                <li>
-                  <TA href="#" class="text-muted-foreground hover:text-primary transition-colors">
-                    درباره ما
-                  </TA>
-                </li>
-                <li>
-                  <TA href="#" class="text-muted-foreground hover:text-primary transition-colors">
-                    تماس با ما
-                  </TA>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="text-lg font-semibold mb-4">تماس</h3>
-              <ul class="space-y-2">
-                <li class="text-muted-foreground">info@pooyan.com</li>
-                <li class="text-muted-foreground">۱۲۳۴۵۶۷-۰۲۱</li>
-              </ul>
-            </div>
-          </div>
-          <div class="border-t border-border mt-12 pt-8 text-center">
-            <p class="text-muted-foreground text-sm">© ۱۴۰۴ پویان. تمامی حقوق محفوظ است.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
-
     </main>
   )
 }
