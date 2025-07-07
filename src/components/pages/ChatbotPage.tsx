@@ -90,18 +90,21 @@ export default function ChatbotPage() {
       title: "تلگرام بات",
       description: "چت‌بات هوشمند در تلگرام که مشتریان می‌تونن مستقیماً باهاش ارتباط برقرار کنن",
       features: ["پاسخ خودکار", "مدیریت سفارشات", "پشتیبانی ۲۴/۷"],
+      link: "/Telegram"
     },
     {
       icon: FiCode,
       title: "API Integration",
       description: "ادغام چت‌بات با سیستم‌های موجود شما از طریق API قدرتمند",
       features: ["RESTful API", "Webhook Support", "مستندات کامل"],
+      link: "/API"
     },
     {
       icon: FiGlobe,
       title: "ویجت وب‌سایت",
       description: "چت‌بات تعبیه شده در وب‌سایت شما با طراحی سفارشی",
       features: ["طراحی سفارشی", "نصب آسان", "واکنش‌گرا"],
+      link: "/Widget"
     },
   ]
 
@@ -174,13 +177,13 @@ export default function ChatbotPage() {
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             {integrationOptions.map((option, ) => (
-              <div  class="bg-card p-8 rounded-lg border hover:shadow-md transition-shadow">
+              <div  class="bg-card p-8 rounded-lg border hover:shadow-md transition-shadow flex flex-col">
                 <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
                   <option.icon class="h-6 w-6 text-primary" />
                 </div>
                 <h3 class="text-xl font-bold mb-3">{option.title}</h3>
                 <p class="text-muted-foreground mb-6">{option.description}</p>
-                <ul class="space-y-2">
+                <ul class="space-y-2 mb-4">
                   {option.features.map((feature, ) => (
                     <li  class="flex items-center text-sm">
                       <div class="h-1.5 w-1.5 bg-primary rounded-full ml-2"></div>
@@ -188,6 +191,9 @@ export default function ChatbotPage() {
                     </li>
                   ))}
                 </ul>
+                <Button variant="secondary" class="mt-auto"
+                  as={TA} href={`/Services/Chat-Bot/${option.link}`}
+                >مشاهده</Button>
               </div>
             ))}
           </div>
