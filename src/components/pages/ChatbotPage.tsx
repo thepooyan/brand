@@ -104,6 +104,12 @@ export default function ChatbotPage() {
         </div>
 
         <div ref={chatboxRef}>
+          <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">تست کنید</h2>
+            <p class="text-muted-foreground max-w-2xl mx-auto">
+              با چت‌بات نمونه ما صحبت کنید و سرعت و کیفیت پاسخ‌ها را تجربه کنید
+            </p>
+          </div>
           <MinimalChat/>
         </div>
 

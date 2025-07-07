@@ -81,93 +81,86 @@ const MinimalChat = () => {
     }
   }
   return (
-        <div class="mb-16">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">تست کنید</h2>
-            <p class="text-muted-foreground max-w-2xl mx-auto">
-              با چت‌بات نمونه ما صحبت کنید و سرعت و کیفیت پاسخ‌ها را تجربه کنید
-            </p>
-          </div>
-
-          <div class="max-w-2xl mx-auto">
-            <div class="bg-card border rounded-lg overflow-hidden">
-              {/* Chat Header */}
-              <div class="bg-primary/10 p-4 border-b">
-                <div class="flex items-center gap-3">
-                  <div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-                    <AiFillRobot class="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 class="font-medium">دستیار هوشمند {name}</h3>
-                    <p class="text-sm text-muted-foreground">آنلاین</p>
-                  </div>
-                </div>
+    <div class="mb-16">
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-card border rounded-lg overflow-hidden">
+          {/* Chat Header */}
+          <div class="bg-primary/10 p-4 border-b">
+            <div class="flex items-center gap-3">
+              <div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
+                <AiFillRobot class="h-5 w-5 text-primary" />
               </div>
-
-              {/* Chat Messages */}
-              <div class="h-96 overflow-y-auto p-4 space-y-4">
-                {messages().map((message) => (
-                  <div  class={`flex ${message.isUser ? "justify-start" : "justify-end"}`}>
-                    <div
-                      class={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                        message.isUser ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      <p class="text-sm">{message.text}</p>
-                      <p class="text-xs opacity-70 mt-1">
-                        {message.timestamp.toLocaleTimeString("fa-IR", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-
-                {isTyping() && (
-                  <div class="flex justify-end">
-                    <div class="bg-muted text-muted-foreground px-4 py-2 rounded-lg">
-                      <div class="flex space-x-1">
-                        <div class="w-2 h-2 bg-current rounded-full animate-bounce"></div>
-                        <div
-                          class="w-2 h-2 bg-current rounded-full animate-bounce"
-                          style={{ "animation-delay": "0.1s" }}
-                        ></div>
-                        <div
-                          class="w-2 h-2 bg-current rounded-full animate-bounce"
-                          style={{ "animation-delay": "0.2s" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-
-              {/* Chat Input */}
-              <div class="p-4 border-t">
-                <div class="flex gap-2">
-                  <input
-                    type="text"
-                    value={inputMessage()}
-                    onKeyUp={(e) => setInputMessage(e.currentTarget.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="پیام خود را بنویسید..."
-                    class="flex-1 px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    disabled={isTyping()}
-                  />
-                  <Button
-                    onClick={handleSendMessage}
-                    disabled={!inputMessage().trim() || isTyping()}
-                    class="bg-primary hover:bg-primary/90 text-primary-foreground"
-                  >
-                    <FiSend class="h-4 w-4" />
-                  </Button>
-                </div>
+              <div>
+                <h3 class="font-medium">دستیار هوشمند {name}</h3>
+                <p class="text-sm text-muted-foreground">آنلاین</p>
               </div>
             </div>
           </div>
+
+          {/* Chat Messages */}
+          <div class="h-96 overflow-y-auto p-4 space-y-4">
+            {messages().map((message) => (
+              <div  class={`flex ${message.isUser ? "justify-start" : "justify-end"}`}>
+                <div
+                  class={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                    message.isUser ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  <p class="text-sm">{message.text}</p>
+                  <p class="text-xs opacity-70 mt-1">
+                    {message.timestamp.toLocaleTimeString("fa-IR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+            {isTyping() && (
+              <div class="flex justify-end">
+                <div class="bg-muted text-muted-foreground px-4 py-2 rounded-lg">
+                  <div class="flex space-x-1">
+                    <div class="w-2 h-2 bg-current rounded-full animate-bounce"></div>
+                    <div
+                      class="w-2 h-2 bg-current rounded-full animate-bounce"
+                      style={{ "animation-delay": "0.1s" }}
+                    ></div>
+                    <div
+                      class="w-2 h-2 bg-current rounded-full animate-bounce"
+                      style={{ "animation-delay": "0.2s" }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Chat Input */}
+          <div class="p-4 border-t">
+            <div class="flex gap-2">
+              <input
+                type="text"
+                value={inputMessage()}
+                onKeyUp={(e) => setInputMessage(e.currentTarget.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="پیام خود را بنویسید..."
+                class="flex-1 px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                disabled={isTyping()}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={!inputMessage().trim() || isTyping()}
+                class="bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                <FiSend class="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
   )
 }
 
