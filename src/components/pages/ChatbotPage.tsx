@@ -25,6 +25,8 @@ export default function ChatbotPage() {
   ])
   const [inputMessage, setInputMessage] = createSignal("")
   const [isTyping, setIsTyping] = createSignal(false)
+
+  let chatboxRef!: HTMLDivElement
   let messagesEndRef!: HTMLDivElement
 
   const scrollToBottom = () => {
@@ -164,6 +166,11 @@ export default function ChatbotPage() {
             >
               درخواست مشاوره رایگان
             </Button>
+            <Button class="px-8 py-6 text-lg"
+              variant="secondary" onclick={() => chatboxRef.scrollIntoView({behavior: "smooth"})}
+            >
+              امتحان کنید!
+            </Button>
           </div>
         </div>
 
@@ -219,7 +226,7 @@ export default function ChatbotPage() {
         </div>
 
         {/* Live Chat Demo */}
-        <div class="mb-16">
+        <div class="mb-16" ref={chatboxRef} >
           <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">تست کنید</h2>
             <p class="text-muted-foreground max-w-2xl mx-auto">
