@@ -120,7 +120,7 @@ const MinimalChat = () => {
             {isTyping() && (
               <div class="flex justify-end">
                 <div class="bg-muted text-muted-foreground px-4 py-2 rounded-lg">
-                  <div class="flex space-x-1">
+                  <div class="flex space-x-1 py-2">
                     <div class="w-2 h-2 bg-current rounded-full animate-bounce"></div>
                     <div
                       class="w-2 h-2 bg-current rounded-full animate-bounce"
