@@ -5,15 +5,14 @@ export type message = {
   content: string
 };
 
-export const useChat = () => {
-  const [response, setResponse] = createSignal("");
+export const useChat = (valueSetter: (chunk: string) => void) => {
   const [messages, setMessages] = createSignal<message[]>([]);
   const [pending, setPending] = createSignal(false);
   const [streaming, setStreaming] = createSignal(false);
+  let response = ""
 
   const send = async (message: string) => {
     setPending(true);
-    setResponse("");
     const updated = [...messages(), { role: "user", content: message } as message];
     setMessages(updated);
 
@@ -56,8 +55,8 @@ export const useChat = () => {
             // fallback: use raw if JSON decoding fails
           }
 
-          setResponse(prev => prev + chunk);
-
+          response += chunk
+          valueSetter(response)
         }
       }
 
@@ -72,14 +71,15 @@ export const useChat = () => {
         chunk = JSON.parse(`"${chunk}"`);
       } catch {}
 
-      setResponse(prev => prev + chunk);
+      response += chunk
+      valueSetter(response)
     }
 
-    const final = response();
-    setMessages(prev => [...prev, { role: "assistant", content: final }]);
-    setResponse("");
+    setMessages(prev => [...prev, { role: "assistant", content: response }]);
+    response = ""
+    valueSetter(response)
     setStreaming(false)
   };
 
-  return { response, send, messages, pending, streaming };
+  return { send, messages, pending, streaming };
 };

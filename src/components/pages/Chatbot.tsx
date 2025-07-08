@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For, Show } from "solid-js"
+import { createSignal, For, Show } from "solid-js"
 import { Button } from "../ui/button"
 import { TextField, TextFieldInput } from "../ui/text-field"
 import Msg from "../parts/chat/Msg"
@@ -7,14 +7,14 @@ import { useChat } from "~/lib/chatUtil"
 
 const Chatbot = () => {
   const [question, setQuestion] = createSignal("");
-  const { response, send, messages, pending, streaming } = useChat()
 
   let divRef!:HTMLDivElement
 
-  createEffect(() => {
-    if (streaming())
-      divRef.innerText = response()
-  })
+  let getStream = (chunk: string) => {
+    divRef.innerText = chunk
+  }
+
+  const { send, messages, pending, streaming } = useChat(getStream)
 
   const submitHandler = async (e: SubmitEvent) => {
     e.preventDefault()
@@ -30,7 +30,9 @@ const Chatbot = () => {
           <For each={messages()}>
             {r => <Msg left={r.role === "assistant"}>{r.content}</Msg>}
           </For>
-          {streaming() && <Msg left ref={divRef}></Msg>}
+          <Show when={streaming()}>
+            <Msg left ref={divRef}></Msg>
+          </Show>
           <Show when={pending()}>
             <div class="my-5">
               <Spinner reverse/>
