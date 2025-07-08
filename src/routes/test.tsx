@@ -3,7 +3,7 @@ import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const test = () => {
   return (
-    <MinimalChat/>
+    <Chatbot/>
   )
 }
 
