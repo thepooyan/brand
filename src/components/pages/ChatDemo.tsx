@@ -4,22 +4,23 @@ import { Button } from '../ui/button'
 import RightSide from '../parts/DemoRightSide'
 import { name } from '../../../config/config'
 import { useChat } from '~/lib/chatUtil'
-
-const initialMessages = [
-  {
-    text: `سلام! من دستیار هوشمند ${name} هستم. چطور می‌تونم کمکتون کنم؟`,
-    isUser: false,
-    timestamp: new Date()
-  }
-]
+import Message from '../parts/chat/Message'
 
 export default function ChatbotDemoPage() {
   const [inputMessage, setInputMessage] = createSignal('')
+
   let messagesRailRef!:HTMLDivElement
+  let streamElementRef!:HTMLDivElement
 
-  const streamChat = (chunk: string) => {}
+  const time = new Date().toLocaleTimeString("fa-IR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
 
-  const {messages, pending, send} = useChat(streamChat)
+  const streamChat = (chunk: string) => {streamElementRef.innerText = chunk}
+
+  const {messages, pending, streaming, send} = useChat(streamChat)
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({
@@ -36,13 +37,6 @@ export default function ChatbotDemoPage() {
   const handleSendMessage = () => {
     const msg = inputMessage().trim()
     if (!msg) return
-
-    const userMessage = {
-      text: msg,
-      isUser: true,
-      timestamp: new Date()
-    }
-
     send(msg)
     setInputMessage('')
   }
@@ -77,25 +71,8 @@ export default function ChatbotDemoPage() {
           </div>
 
           <div class="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesRailRef}>
-            <For each={messages()}>{(message) => (
-              <div class={`flex ${message.role === "user" ? 'justify-start' : 'justify-end'}`}>
-                <div
-                  class={`max-w-md px-4 py-3 rounded-lg ${
-                    message.role === "user"
-                      ? 'bg-primary text-primary-foreground rounded-br-sm'
-                      : 'bg-muted text-foreground rounded-bl-sm'
-                  }`}
-                >
-                  <p class="text-sm leading-relaxed">{message.content}</p>
-                  <p class="text-xs opacity-70 mt-2">
-                    {/*message.timestamp.toLocaleTimeString('fa-IR', {
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })*/}
-                  </p>
-                </div>
-              </div>
-            )}</For>
+            <Message timestamp={time}>سلام! من دستیار هوشمند {name} هستم. چطور می‌تونم کمکتون کنم؟</Message>
+            <For each={messages()}>{(message) => <Message isUser={message.role === "user"}>{message.content}</Message>}</For>
             <Show when={pending()}>
               <div class="flex justify-end">
                 <div class="bg-muted text-foreground px-4 py-4 rounded-lg rounded-bl-sm">
@@ -106,6 +83,9 @@ export default function ChatbotDemoPage() {
                   </div>
                 </div>
               </div>
+            </Show>
+            <Show when={streaming()}>
+              <Message ref={streamElementRef}></Message>
             </Show>
           </div>
 
