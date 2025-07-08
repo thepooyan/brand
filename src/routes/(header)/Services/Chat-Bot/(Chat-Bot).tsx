@@ -1,3 +1,4 @@
+
 import ChatbotPage from "~/components/pages/ChatbotPage"
 
 const ChatBot = () => {
