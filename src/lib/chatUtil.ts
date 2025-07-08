@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
-import { message } from "~/components/pages/Chatbot";
 
+export type message = {role: "user" | "assistant" | "system", content: string }
 export const useChat = () => {
   const [response, setResponse] = createSignal("");
   const [messages, setMessages] = createSignal<message[]>([])

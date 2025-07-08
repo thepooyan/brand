@@ -5,10 +5,7 @@ import Msg from "../parts/chat/Msg"
 import Spinner from "../parts/Spinner"
 import { useChat } from "~/lib/chatUtil"
 
-export type message = {role: "user", content: string } | {role: "assistant", content: string | null}
 const Chatbot = () => {
-
-  
   const [question, setQuestion] = createSignal("");
   const { response, send, messages, pending } = useChat()
 
@@ -35,7 +32,7 @@ const Chatbot = () => {
         </div>
 
         <form class="flex gap-2" onsubmit={submitHandler}>
-          <Button type="submit">ارسال</Button>
+          <Button type="submit" disabled={pending()}>ارسال</Button>
           <TextField class="w-full">
             <TextFieldInput class="bg-black" value={question()} onchange={e => setQuestion(e.currentTarget.value)} />
           </TextField>
