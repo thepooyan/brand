@@ -1,9 +1,9 @@
 import { createSignal, For, Show, createEffect } from 'solid-js'
-import { createStore } from 'solid-js/store'
 import { Send, Bot } from 'lucide-solid'
 import { Button } from '../ui/button'
 import RightSide from '../parts/DemoRightSide'
 import { name } from '../../../config/config'
+import { useChat } from '~/lib/chatUtil'
 
 const initialMessages = [
   {
@@ -14,10 +14,12 @@ const initialMessages = [
 ]
 
 export default function ChatbotDemoPage() {
-  const [messages, setMessages] = createStore(initialMessages)
   const [inputMessage, setInputMessage] = createSignal('')
-  const [isTyping, setIsTyping] = createSignal(false)
   let messagesRailRef!:HTMLDivElement
+
+  const streamChat = (chunk: string) => {}
+
+  const {messages, pending, send} = useChat(streamChat)
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({
@@ -27,7 +29,7 @@ export default function ChatbotDemoPage() {
   }
 
   createEffect(() => {
-    isTyping()
+    pending()
     scrollToBottom()
   })
 
@@ -41,33 +43,8 @@ export default function ChatbotDemoPage() {
       timestamp: new Date()
     }
 
-    setMessages([...messages, userMessage])
+    send(msg)
     setInputMessage('')
-    setIsTyping(true)
-
-    setTimeout(() => {
-      const responses = [
-        'بله، ما می‌تونیم چت‌بات هوشمند برای کسب و کار شما طراحی کنیم...',
-        'چت‌بات‌های ما با هوش مصنوعی پیشرفته کار می‌کنن...',
-        'ما چت‌بات‌هایی طراحی می‌کنیم که ۲۴ ساعته در دسترس هستن...',
-        'قیمت چت‌بات بستگی به پیچیدگی و ویژگی‌هاش داره...',
-        'چت‌بات‌های ما قابلیت یادگیری دارن...',
-        'می‌تونیم چت‌بات رو طوری تنظیم کنیم که با سبک و لحن برند شما هماهنگ باشه.',
-        'چت‌بات‌های ما می‌تونن با سیستم‌های CRM و پایگاه داده شما ادغام بشن.',
-        'ما پشتیبانی کامل و آپدیت‌های منظم برای چت‌بات‌ها ارائه می‌دیم.'
-      ]
-
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-
-      const aiMessage = {
-        text: randomResponse,
-        isUser: false,
-        timestamp: new Date()
-      }
-
-      setMessages([...messages, aiMessage])
-      setIsTyping(false)
-    }, 500)
   }
 
   const handleQuickQuestion = (q:string) => setInputMessage(q)
@@ -100,26 +77,26 @@ export default function ChatbotDemoPage() {
           </div>
 
           <div class="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesRailRef}>
-            <For each={messages}>{(message) => (
-              <div class={`flex ${message.isUser ? 'justify-start' : 'justify-end'}`}>
+            <For each={messages()}>{(message) => (
+              <div class={`flex ${message.role === "user" ? 'justify-start' : 'justify-end'}`}>
                 <div
                   class={`max-w-md px-4 py-3 rounded-lg ${
-                    message.isUser
+                    message.role === "user"
                       ? 'bg-primary text-primary-foreground rounded-br-sm'
                       : 'bg-muted text-foreground rounded-bl-sm'
                   }`}
                 >
-                  <p class="text-sm leading-relaxed">{message.text}</p>
+                  <p class="text-sm leading-relaxed">{message.content}</p>
                   <p class="text-xs opacity-70 mt-2">
-                    {message.timestamp.toLocaleTimeString('fa-IR', {
+                    {/*message.timestamp.toLocaleTimeString('fa-IR', {
                       hour: '2-digit',
                       minute: '2-digit'
-                    })}
+                    })*/}
                   </p>
                 </div>
               </div>
             )}</For>
-            <Show when={isTyping()}>
+            <Show when={pending()}>
               <div class="flex justify-end">
                 <div class="bg-muted text-foreground px-4 py-4 rounded-lg rounded-bl-sm">
                   <div class="flex space-x-1">
@@ -139,7 +116,7 @@ export default function ChatbotDemoPage() {
                 <button
                   onClick={() => handleQuickQuestion(q)}
                   class="px-3 py-1 text-xs bg-muted hover:bg-muted/80 rounded-full transition-colors cursor-pointer"
-                  disabled={isTyping()}
+                  disabled={pending()}
                 >
                   {q}
                 </button>
@@ -161,11 +138,11 @@ export default function ChatbotDemoPage() {
                 }}
                 placeholder="پیام خود را بنویسید..."
                 class="flex-1 px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                disabled={isTyping()}
+                disabled={pending()}
               />
               <Button
                 onClick={handleSendMessage}
-                disabled={!inputMessage().trim() || isTyping()}
+                disabled={!inputMessage().trim() || pending()}
                 class="bg-primary hover:bg-primary/90 text-primary-foreground px-6"
               >
                 <Send class="h-4 w-4" />
