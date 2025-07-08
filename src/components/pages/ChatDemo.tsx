@@ -138,7 +138,7 @@ export default function ChatbotDemoPage() {
               <For each={quickQuestions}>{(q) => (
                 <button
                   onClick={() => handleQuickQuestion(q)}
-                  class="px-3 py-1 text-xs bg-muted hover:bg-muted/80 rounded-full transition-colors"
+                  class="px-3 py-1 text-xs bg-muted hover:bg-muted/80 rounded-full transition-colors cursor-pointer"
                   disabled={isTyping()}
                 >
                   {q}
