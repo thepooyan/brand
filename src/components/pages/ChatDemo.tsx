@@ -147,7 +147,7 @@ export default function ChatbotDemoPage() {
             </div>
           </div>
 
-          <div class="p-6 border-t">
+          <div class="p-3 px-2 border-t">
             <div class="flex gap-3 items-center">
               <input
                 type="text"
