@@ -5,6 +5,7 @@ import "./app.css";
 import Modal from "./components/layout/Modal";
 import {QueryClient, QueryClientProvider} from "@tanstack/solid-query"
 import { queryConfig } from "./lib/queries";
+import FallbackPage from "./components/pages/FallbackPage";
 
 export default function App() {
 
@@ -17,7 +18,7 @@ export default function App() {
         <Router
           root={props => (
             <>
-              <Suspense>{props.children}</Suspense>
+              <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
             </>
           )}
         >

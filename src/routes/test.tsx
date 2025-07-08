@@ -1,9 +1,8 @@
-import Chatbot from "~/components/pages/Chatbot"
-import MinimalChat from "~/components/parts/chat/MinimalChat"
+import FallbackPage from "~/components/pages/FallbackPage"
 
 const test = () => {
   return (
-    <Chatbot/>
+    <FallbackPage/>
   )
 }
 
