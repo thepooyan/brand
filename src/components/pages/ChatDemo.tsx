@@ -7,7 +7,6 @@ import { name } from '../../../config/config'
 
 const initialMessages = [
   {
-    id: '1',
     text: `سلام! من دستیار هوشمند ${name} هستم. چطور می‌تونم کمکتون کنم؟`,
     isUser: false,
     timestamp: new Date()
@@ -33,7 +32,6 @@ export default function ChatbotDemoPage() {
     if (!msg) return
 
     const userMessage = {
-      id: Date.now().toString(),
       text: msg,
       isUser: true,
       timestamp: new Date()
@@ -58,7 +56,6 @@ export default function ChatbotDemoPage() {
       const randomResponse = responses[Math.floor(Math.random() * responses.length)]
 
       const aiMessage = {
-        id: (Date.now() + 1).toString(),
         text: randomResponse,
         isUser: false,
         timestamp: new Date()
@@ -70,7 +67,7 @@ export default function ChatbotDemoPage() {
     }, 800 + Math.random() * 1500)
   }
 
-  const handleQuickQuestion = (q:any) => setInputMessage(q)
+  const handleQuickQuestion = (q:string) => setInputMessage(q)
 
   const quickQuestions = [
     'چت‌بات چقدر قیمت داره؟',
