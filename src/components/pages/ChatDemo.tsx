@@ -1,14 +1,14 @@
 import { createSignal, onMount, For, Show } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import { A } from '@solidjs/router'
-import { ArrowLeft, Send, Bot, MessageSquare, Zap, Users, Clock } from 'lucide-solid'
+import { Send, Bot } from 'lucide-solid'
 import { Button } from '../ui/button'
 import RightSide from '../parts/DemoRightSide'
+import { name } from '../../../config/config'
 
 const initialMessages = [
   {
     id: '1',
-    text: 'سلام! من دستیار هوشمند پویان هستم. چطور می‌تونم کمکتون کنم؟',
+    text: `سلام! من دستیار هوشمند ${name} هستم. چطور می‌تونم کمکتون کنم؟`,
     isUser: false,
     timestamp: new Date()
   }
@@ -90,7 +90,7 @@ export default function ChatbotDemoPage() {
                 <Bot class="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 class="text-xl font-bold">دستیار هوشمند پویان</h2>
+                <h2 class="text-xl font-bold">دستیار هوشمند {name}</h2>
                 <div class="text-sm text-muted-foreground flex items-center gap-2">
                   <div class="h-2 w-2 bg-green-500 rounded-full"></div>
                   آنلاین و آماده پاسخگویی

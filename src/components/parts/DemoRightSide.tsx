@@ -1,18 +1,14 @@
 import { A } from '@solidjs/router'
-import { ArrowLeft, MessageSquare, Zap, Users, Clock } from 'lucide-solid'
+import { MessageSquare, Zap, Users, Clock } from 'lucide-solid'
 import { Button } from '../ui/button'
+import { info } from '../../../config/config'
+import { callModal } from '../layout/Modal'
+import ContactInfo from './ContactInfo'
+import TA from './TA'
 
 export default function RightSide() {
   return (
-    <div class="w-96 bg-background p-8 flex flex-col">
-      <A
-        href="/ai-chatbot"
-        class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
-      >
-        <ArrowLeft class="ml-2 h-4 w-4" />
-        بازگشت به صفحه چت‌بات
-      </A>
-
+    <div class="w-96 bg-background p-8 pt-3 flex flex-col">
       <div class="flex-1">
         <div class="text-center mb-8">
           <div class="h-16 w-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -56,25 +52,28 @@ export default function RightSide() {
       </div>
 
       <div class="space-y-3">
-        <Button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3">
+        <Button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3"
+          onclick={() => callModal(() => <ContactInfo/>)}
+        >
           درخواست مشاوره رایگان
         </Button>
         <Button
           variant="outline"
           class="w-full border-primary text-primary hover:bg-primary/10 bg-transparent py-3"
+          as={TA} href="/Pricing/Chat-Bot"
         >
           مشاهده قیمت‌های کامل
         </Button>
         <A href="/order">
           <Button variant="ghost" class="w-full text-muted-foreground hover:text-primary py-3">
-            سفارش پروژه
+             ثبت سفارش
           </Button>
         </A>
       </div>
 
       <div class="mt-6 pt-6 border-t text-center">
         <p class="text-xs text-muted-foreground mb-2">برای مشاوره تخصصی تماس بگیرید</p>
-        <p class="text-sm font-medium">۰۲۱-۱۲۳۴۵۶۷</p>
+        <p class="text-sm font-medium">{info.phone}</p>
       </div>
     </div>
   )
