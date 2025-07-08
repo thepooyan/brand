@@ -53,24 +53,6 @@ export default function RightSide() {
             </div>
           </div>
         </div>
-
-        <div class="bg-card p-6 rounded-lg border mb-6">
-          <h3 class="font-bold mb-4">قیمت‌گذاری</h3>
-          <div class="space-y-3">
-            <div class="flex justify-between items-center">
-              <span class="text-sm">چت‌بات پایه</span>
-              <span class="font-medium">از ۵ میلیون تومان</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-sm">چت‌بات پیشرفته</span>
-              <span class="font-medium">از ۱۰ میلیون تومان</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-sm">چت‌بات سازمانی</span>
-              <span class="font-medium">قیمت‌گذاری سفارشی</span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="space-y-3">
