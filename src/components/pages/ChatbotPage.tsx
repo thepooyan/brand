@@ -10,8 +10,6 @@ import { features, integrationOptions } from "~/data/abstract"
 
 export default function ChatbotPage() {
 
-  let chatboxRef!: HTMLDivElement
-
   return (
     <main {...pageMarker()}>
       <div class="container mx-auto px-4 py-8">
@@ -45,7 +43,7 @@ export default function ChatbotPage() {
               درخواست مشاوره رایگان
             </Button>
             <Button class="px-8 py-6 text-lg"
-              variant="secondary" onclick={() => chatboxRef.scrollIntoView({behavior: "smooth"})}
+              variant="secondary" as={TA} href="Demo"
             >
               امتحان کنید!
             </Button>
@@ -103,15 +101,7 @@ export default function ChatbotPage() {
           </div>
         </div>
 
-        <div ref={chatboxRef}>
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">تست کنید</h2>
-            <p class="text-muted-foreground max-w-2xl mx-auto">
-              با چت‌بات نمونه ما صحبت کنید و سرعت و کیفیت پاسخ‌ها را تجربه کنید
-            </p>
-          </div>
-          <MinimalChat/>
-        </div>
+        <MinimalChat/>
 
         {/* CTA Section */}
         <div class="bg-card p-8 rounded-lg border text-center">
