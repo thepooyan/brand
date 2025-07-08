@@ -16,7 +16,7 @@ const initialMessages = [
 export default function ChatbotDemoPage() {
   const [messages, setMessages] = createStore(initialMessages)
   const [inputMessage, setInputMessage] = createSignal('')
-  const [isTyping, setIsTyping] = createSignal(true)
+  const [isTyping, setIsTyping] = createSignal(false)
   let messagesRailRef!:HTMLDivElement
 
   const scrollToBottom = () => {
