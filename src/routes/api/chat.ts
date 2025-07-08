@@ -10,7 +10,7 @@ export async function POST({request}:{request: Request}) {
 
   const result = streamText({
     model: google('gemini-2.5-flash'),
-    system: sp.content,
+    // system: sp.content,
     messages,
   });
 

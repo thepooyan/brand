@@ -36,22 +36,41 @@ export const useChat = () => {
       if (done) break;
 
       buffer += decoder.decode(value, { stream: true });
-
       const lines = buffer.split("\n");
       buffer = lines.pop()!;
 
       for (const line of lines) {
         if (line.startsWith("0:")) {
-          const chunk = line.slice(2);
+          let chunk = line.slice(2).trim();
+
+          // remove wrapping quotes if present
+          if (chunk.startsWith('"') && chunk.endsWith('"')) {
+            chunk = chunk.slice(1, -1);
+          }
+
+          // decode escaped characters like \n, \"
+          try {
+            chunk = JSON.parse(`"${chunk}"`);
+          } catch {
+            // fallback: use raw if JSON decoding fails
+          }
+
           setResponse(prev => prev + chunk);
         }
       }
 
-      await new Promise(r => setTimeout(r, 0));
     }
 
     if (buffer.startsWith("0:")) {
-      setResponse(prev => prev + buffer.slice(2));
+      let chunk = buffer.slice(2).trim();
+      if (chunk.startsWith('"') && chunk.endsWith('"')) {
+        chunk = chunk.slice(1, -1);
+      }
+      try {
+        chunk = JSON.parse(`"${chunk}"`);
+      } catch {}
+
+      setResponse(prev => prev + chunk);
     }
 
     const final = response();
