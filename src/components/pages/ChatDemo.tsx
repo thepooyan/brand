@@ -148,7 +148,7 @@ export default function ChatbotDemoPage() {
           </div>
 
           <div class="p-6 border-t">
-            <div class="flex gap-3">
+            <div class="flex gap-3 items-center">
               <input
                 type="text"
                 value={inputMessage()}
