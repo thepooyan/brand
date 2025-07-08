@@ -27,7 +27,7 @@ export default function ChatbotDemoPage() {
   }
 
   createEffect(() => {
-    messages.at(0)
+    isTyping()
     scrollToBottom()
   })
 
