@@ -18,7 +18,7 @@ export default function ChatbotDemoPage() {
     hour12: false
   });
 
-  const streamChat = (chunk: string) => {streamElementRef.innerText = chunk}
+  const streamChat = (chunk: string) => {streamElementRef.innerText = chunk; scrollToBottom()}
 
   const {messages, pending, streaming, send} = useChat(streamChat)
 
