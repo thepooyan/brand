@@ -16,7 +16,7 @@ const initialMessages = [
 export default function ChatbotDemoPage() {
   const [messages, setMessages] = createStore(initialMessages)
   const [inputMessage, setInputMessage] = createSignal('')
-  const [isTyping, setIsTyping] = createSignal(false)
+  const [isTyping, setIsTyping] = createSignal(true)
   let messagesRailRef!:HTMLDivElement
 
   const scrollToBottom = () => {
@@ -121,7 +121,7 @@ export default function ChatbotDemoPage() {
             )}</For>
             <Show when={isTyping()}>
               <div class="flex justify-end">
-                <div class="bg-muted text-foreground px-4 py-3 rounded-lg rounded-bl-sm">
+                <div class="bg-muted text-foreground px-4 py-4 rounded-lg rounded-bl-sm">
                   <div class="flex space-x-1">
                     <div class="w-2 h-2 bg-current rounded-full animate-bounce"></div>
                     <div class="w-2 h-2 bg-current rounded-full animate-bounce" style="animation-delay:0.1s"></div>
