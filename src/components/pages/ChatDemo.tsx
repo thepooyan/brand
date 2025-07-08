@@ -1,4 +1,4 @@
-import { createSignal, onMount, For, Show } from 'solid-js'
+import { createSignal, For, Show, createEffect } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { Send, Bot } from 'lucide-solid'
 import { Button } from '../ui/button'
@@ -17,14 +17,18 @@ export default function ChatbotDemoPage() {
   const [messages, setMessages] = createStore(initialMessages)
   const [inputMessage, setInputMessage] = createSignal('')
   const [isTyping, setIsTyping] = createSignal(false)
-  let messagesEndRef!:HTMLDivElement
+  let messagesRailRef!:HTMLDivElement
 
   const scrollToBottom = () => {
-    messagesEndRef?.scrollIntoView({ behavior: 'smooth' })
+    messagesRailRef.scrollTo({
+      top: messagesRailRef.scrollHeight,
+      behavior: "smooth"
+    })
   }
 
-  onMount(() => {
-    // scrollToBottom()
+  createEffect(() => {
+    messages.at(0)
+    scrollToBottom()
   })
 
   const handleSendMessage = () => {
@@ -63,8 +67,7 @@ export default function ChatbotDemoPage() {
 
       setMessages([...messages, aiMessage])
       setIsTyping(false)
-      scrollToBottom()
-    }, 800 + Math.random() * 1500)
+    }, 500)
   }
 
   const handleQuickQuestion = (q:string) => setInputMessage(q)
@@ -96,7 +99,7 @@ export default function ChatbotDemoPage() {
             </div>
           </div>
 
-          <div class="flex-1 overflow-y-auto p-6 space-y-4">
+          <div class="flex-1 overflow-y-auto p-6 space-y-4" ref={messagesRailRef}>
             <For each={messages}>{(message) => (
               <div class={`flex ${message.isUser ? 'justify-start' : 'justify-end'}`}>
                 <div
@@ -127,7 +130,6 @@ export default function ChatbotDemoPage() {
                 </div>
               </div>
             </Show>
-            <div ref={messagesEndRef}></div>
           </div>
 
           <div class="px-6 py-4 border-t">
