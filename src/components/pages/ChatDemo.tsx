@@ -92,6 +92,7 @@ export default function ChatbotDemoPage() {
                 <h2 class="text-xl font-bold">دستیار هوشمند {name}</h2>
                 <div class="text-sm text-muted-foreground flex items-center gap-2">
                   <div class="h-2 w-2 bg-green-500 rounded-full"></div>
+                  <div class="h-2 w-2 bg-green-500 rounded-full absolute animate-ping duration-2000"></div>
                   آنلاین و آماده پاسخگویی
                 </div>
               </div>
