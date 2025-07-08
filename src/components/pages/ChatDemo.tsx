@@ -5,6 +5,7 @@ import RightSide from '../parts/DemoRightSide'
 import { name } from '../../../config/config'
 import { useChat } from '~/lib/chatUtil'
 import Message from '../parts/chat/Message'
+import { pageMarker } from '~/lib/routeChangeTransition'
 
 export default function ChatbotDemoPage() {
   const [inputMessage, setInputMessage] = createSignal('')
@@ -51,7 +52,7 @@ export default function ChatbotDemoPage() {
   ]
 
   return (
-    <div class="min-h-screen bg-background" dir="rtl">
+    <div class="min-h-screen bg-background" dir="rtl" {...pageMarker()}>
       <div class="flex h-dvh ">
         <div class="flex-1 flex flex-col bg-card border-l">
           <div class="bg-primary/10 p-6 border-b">

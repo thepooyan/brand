@@ -5,10 +5,16 @@ import { info } from '../../../config/config'
 import { callModal } from '../layout/Modal'
 import ContactInfo from './ContactInfo'
 import TA from './TA'
+import { FiArrowLeft } from 'solid-icons/fi'
 
 export default function RightSide() {
   return (
     <div class="w-96 bg-background p-8 pt-3 md:flex flex-col hidden">
+      <TA class=" inline-flex items-center text-muted-foreground hover:text-primary transition-colors absolute left-2
+        top-5 cursor-pointer gap-3 " href="/Services/Chat-Bot">
+        بازگشت
+        <FiArrowLeft/>
+      </TA>
       <div class="flex-1">
         <div class="text-center mb-8">
           <div class="h-16 w-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
