@@ -8,7 +8,7 @@ import TA from './TA'
 
 export default function RightSide() {
   return (
-    <div class="w-96 bg-background p-8 pt-3 flex flex-col">
+    <div class="w-96 bg-background p-8 pt-3 md:flex flex-col hidden">
       <div class="flex-1">
         <div class="text-center mb-8">
           <div class="h-16 w-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
