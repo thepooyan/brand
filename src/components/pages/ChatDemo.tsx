@@ -81,8 +81,7 @@ export default function ChatbotDemoPage() {
 
   return (
     <div class="min-h-screen bg-background" dir="rtl">
-
-      <div class="flex h-[calc(100vh-73px)]">
+      <div class="flex h-dvh ">
         <div class="flex-1 flex flex-col bg-card border-l">
           <div class="bg-primary/10 p-6 border-b">
             <div class="flex items-center gap-4">
