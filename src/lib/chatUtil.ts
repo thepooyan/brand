@@ -9,6 +9,7 @@ export const useChat = () => {
   const [response, setResponse] = createSignal("");
   const [messages, setMessages] = createSignal<message[]>([]);
   const [pending, setPending] = createSignal(false);
+  const [streaming, setStreaming] = createSignal(false);
 
   const send = async (message: string) => {
     setPending(true);
@@ -22,11 +23,11 @@ export const useChat = () => {
       body: JSON.stringify({ messages: updated }),
     });
 
+    setPending(false);
+    setStreaming(true)
+
     const reader = res.body?.getReader();
-    if (!reader) {
-      setPending(false);
-      return;
-    }
+    if (!reader) { return }
 
     const decoder = new TextDecoder();
     let buffer = "";
@@ -56,6 +57,7 @@ export const useChat = () => {
           }
 
           setResponse(prev => prev + chunk);
+
         }
       }
 
@@ -76,9 +78,8 @@ export const useChat = () => {
     const final = response();
     setMessages(prev => [...prev, { role: "assistant", content: final }]);
     setResponse("");
-    setPending(false);
+    setStreaming(false)
   };
 
-  return { response, send, messages, pending };
+  return { response, send, messages, pending, streaming };
 };
-
