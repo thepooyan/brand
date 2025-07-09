@@ -42,7 +42,7 @@ export default function ChatbotDemoPage() {
     setInputMessage('')
   }
 
-  const handleQuickQuestion = (q:string) => setInputMessage(q)
+  const handleQuickQuestion = (q:string) => send(q)
 
   const quickQuestions = [
     'چت‌بات چقدر قیمت داره؟',
