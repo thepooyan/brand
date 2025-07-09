@@ -6,7 +6,6 @@ import { name } from '../../../config/config'
 import { useChat } from '~/lib/chatUtil'
 import Message from '../parts/chat/Message'
 import { pageMarker } from '~/lib/routeChangeTransition'
-import { buffer } from '~/lib/utils'
 
 export default function ChatbotDemoPage() {
   const [inputMessage, setInputMessage] = createSignal('')
@@ -20,7 +19,10 @@ export default function ChatbotDemoPage() {
     hour12: false
   });
 
-  const {messages, pending, streaming, send} = useChat(() => streamElementRef)
+  const {messages, pending, streaming, send} = useChat(() => {
+    scrollToBottom()
+    return streamElementRef
+  })
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({
