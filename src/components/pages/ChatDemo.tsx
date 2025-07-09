@@ -6,6 +6,7 @@ import { name } from '../../../config/config'
 import { useChat } from '~/lib/chatUtil'
 import Message from '../parts/chat/Message'
 import { pageMarker } from '~/lib/routeChangeTransition'
+import { buffer } from '~/lib/utils'
 
 export default function ChatbotDemoPage() {
   const [inputMessage, setInputMessage] = createSignal('')
@@ -19,7 +20,11 @@ export default function ChatbotDemoPage() {
     hour12: false
   });
 
-  const streamChat = (chunk: string) => {streamElementRef.innerText = chunk; scrollToBottom()}
+  const {init} = buffer()
+  const streamChat = async (chunk: string) => {
+    init(chunk, streamElementRef)
+    // scrollToBottom()
+  }
 
   const {messages, pending, streaming, send} = useChat(streamChat)
 

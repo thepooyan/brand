@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { Accessor, createSignal, Setter } from "solid-js"
+import { memo } from "solid-js/web"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -75,3 +76,40 @@ export class CallbackStore {
     this.no = null
   }
 }
+
+export const buffer = () => {
+  let isTyping = false;
+  const queue: string[] = [];
+
+  const processQueue = (element: HTMLDivElement) => {
+    if (queue.length === 0 || isTyping) return;
+    
+    const str = queue.shift();
+    if (!str) return;
+
+    let index = 0;
+    isTyping = true;
+
+    const type = () => {
+      if (index < str.length) {
+        element.textContent += str[index];
+        index++;
+        setTimeout(type, 10);
+      } else {
+        isTyping = false;
+        processQueue(element);
+      }
+    };
+
+    type();
+  };
+
+  const init = (str: string, element: HTMLDivElement) => {
+    if (typeof str !== 'string' || str.length === 0) return;
+    
+    queue.push(str);
+    processQueue(element);
+  };
+
+  return { init };
+};

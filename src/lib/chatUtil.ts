@@ -56,7 +56,7 @@ export const useChat = (valueSetter: (chunk: string) => void) => {
           }
 
           response += chunk
-          valueSetter(response)
+          valueSetter(chunk)
         }
       }
 
@@ -72,12 +72,11 @@ export const useChat = (valueSetter: (chunk: string) => void) => {
       } catch {}
 
       response += chunk
-      valueSetter(response)
+      valueSetter(chunk)
     }
 
     setMessages(prev => [...prev, { role: "assistant", content: response }]);
     response = ""
-    valueSetter(response)
     setStreaming(false)
   };
 
