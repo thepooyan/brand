@@ -36,7 +36,11 @@ export const useChat = (getAnchor: () => HTMLElement) => {
 
     while (true) {
       const { value, done } = await reader.read();
-      if (done) break;
+      if (done) {
+        streamDone = true
+        console.log("stream done")
+        break
+      }
 
       buffer += decoder.decode(value, { stream: true });
       const lines = buffer.split("\n");
@@ -61,7 +65,6 @@ export const useChat = (getAnchor: () => HTMLElement) => {
           response += chunk
           pushToBuffer(chunk, getAnchor())
         }
-        streamDone = true
       }
     }
 
