@@ -1,5 +1,4 @@
 import { createSignal } from "solid-js";
-import { buffer } from "./utils";
 
 export type message = {
   role: "user" | "assistant" | "system",
@@ -7,7 +6,7 @@ export type message = {
 };
 
 export const useChat = (getAnchor: () => HTMLElement) => {
-  const {init, onCleanup} = buffer()
+  const {pushToBuffer, onCleanup} = buffer()
   const [messages, setMessages] = createSignal<message[]>([]);
   const [pending, setPending] = createSignal(false);
   const [streaming, setStreaming] = createSignal(false);
@@ -58,7 +57,7 @@ export const useChat = (getAnchor: () => HTMLElement) => {
           }
 
           response += chunk
-          init(chunk, getAnchor())
+          pushToBuffer(chunk, getAnchor())
         }
       }
 
@@ -74,7 +73,7 @@ export const useChat = (getAnchor: () => HTMLElement) => {
       } catch {}
 
       response += chunk
-      init(chunk, getAnchor())
+      pushToBuffer(chunk, getAnchor())
     }
 
     onCleanup(() => {
@@ -85,4 +84,51 @@ export const useChat = (getAnchor: () => HTMLElement) => {
   };
 
   return { send, messages, pending, streaming };
+};
+
+const buffer = () => {
+  let isTyping = false;
+  const queue: string[] = [];
+  let cleanupCallback: (() => void) | null = null;
+
+  const processQueue = (element: HTMLElement) => {
+    if (queue.length === 0) {
+      if (cleanupCallback) cleanupCallback();
+      return;
+    }
+    
+    if (isTyping) return;
+
+    const str = queue.shift();
+    if (!str) return;
+
+    let index = 0;
+    isTyping = true;
+
+    const type = () => {
+      if (index < str.length) {
+        element.textContent += str[index];
+        index++;
+        setTimeout(type, 10);
+      } else {
+        isTyping = false;
+        processQueue(element); // Process next item in queue
+      }
+    };
+
+    type();
+  };
+
+  const pushToBuffer = (str: string, el: HTMLElement) => {
+    if (typeof str !== 'string' || str.length === 0) return;
+    
+    queue.push(str);
+    processQueue(el);
+  };
+
+  const onCleanup = (callback: () => void) => {
+    cleanupCallback = callback;
+  };
+
+  return { pushToBuffer, onCleanup };
 };
