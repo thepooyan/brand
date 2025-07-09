@@ -61,22 +61,8 @@ export const useChat = (getAnchor: () => HTMLElement) => {
           response += chunk
           pushToBuffer(chunk, getAnchor())
         }
+        streamDone = true
       }
-
-    }
-
-    if (buffer.startsWith("0:")) {
-      let chunk = buffer.slice(2).trim();
-      if (chunk.startsWith('"') && chunk.endsWith('"')) {
-        chunk = chunk.slice(1, -1);
-      }
-      try {
-        chunk = JSON.parse(`"${chunk}"`);
-      } catch {}
-
-      response += chunk
-      pushToBuffer(chunk, getAnchor())
-      streamDone = true
     }
 
     onCleanup(() => {
