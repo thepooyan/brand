@@ -20,13 +20,7 @@ export default function ChatbotDemoPage() {
     hour12: false
   });
 
-  const {init} = buffer()
-  const streamChat = async (chunk: string) => {
-    init(chunk, streamElementRef)
-    // scrollToBottom()
-  }
-
-  const {messages, pending, streaming, send} = useChat(streamChat)
+  const {messages, pending, streaming, send} = useChat(() => streamElementRef)
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({

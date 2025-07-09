@@ -80,10 +80,16 @@ export class CallbackStore {
 export const buffer = () => {
   let isTyping = false;
   const queue: string[] = [];
+  let cleanupCallback: (() => void) | null = null;
 
-  const processQueue = (element: HTMLDivElement) => {
-    if (queue.length === 0 || isTyping) return;
+  const processQueue = (element: HTMLElement) => {
+    if (queue.length === 0) {
+      if (cleanupCallback) cleanupCallback();
+      return;
+    }
     
+    if (isTyping) return;
+
     const str = queue.shift();
     if (!str) return;
 
@@ -97,19 +103,23 @@ export const buffer = () => {
         setTimeout(type, 10);
       } else {
         isTyping = false;
-        processQueue(element);
+        processQueue(element); // Process next item in queue
       }
     };
 
     type();
   };
 
-  const init = (str: string, element: HTMLDivElement) => {
+  const init = (str: string, el: HTMLElement) => {
     if (typeof str !== 'string' || str.length === 0) return;
     
     queue.push(str);
-    processQueue(element);
+    processQueue(el);
   };
 
-  return { init };
+  const onCleanup = (callback: () => void) => {
+    cleanupCallback = callback;
+  };
+
+  return { init, onCleanup };
 };

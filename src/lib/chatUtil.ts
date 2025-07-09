@@ -1,11 +1,13 @@
 import { createSignal } from "solid-js";
+import { buffer } from "./utils";
 
 export type message = {
   role: "user" | "assistant" | "system",
   content: string
 };
 
-export const useChat = (valueSetter: (chunk: string) => void) => {
+export const useChat = (getAnchor: () => HTMLElement) => {
+  const {init, onCleanup} = buffer()
   const [messages, setMessages] = createSignal<message[]>([]);
   const [pending, setPending] = createSignal(false);
   const [streaming, setStreaming] = createSignal(false);
@@ -56,7 +58,7 @@ export const useChat = (valueSetter: (chunk: string) => void) => {
           }
 
           response += chunk
-          valueSetter(chunk)
+          init(chunk, getAnchor())
         }
       }
 
@@ -72,12 +74,14 @@ export const useChat = (valueSetter: (chunk: string) => void) => {
       } catch {}
 
       response += chunk
-      valueSetter(chunk)
+      init(chunk, getAnchor())
     }
 
-    setMessages(prev => [...prev, { role: "assistant", content: response }]);
-    response = ""
-    setStreaming(false)
+    onCleanup(() => {
+      setMessages(prev => [...prev, { role: "assistant", content: response }]);
+      setStreaming(false)
+      response = ""
+    })
   };
 
   return { send, messages, pending, streaming };
