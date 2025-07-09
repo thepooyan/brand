@@ -10,6 +10,7 @@ export const useChat = (getAnchor: () => HTMLElement) => {
   const [messages, setMessages] = createSignal<message[]>([]);
   const [pending, setPending] = createSignal(false);
   const [streaming, setStreaming] = createSignal(false);
+  let streamDone = true
   let response = ""
 
   const send = async (message: string) => {
@@ -25,6 +26,7 @@ export const useChat = (getAnchor: () => HTMLElement) => {
 
     setPending(false);
     setStreaming(true)
+    streamDone = false
 
     const reader = res.body?.getReader();
     if (!reader) { return }
@@ -74,9 +76,11 @@ export const useChat = (getAnchor: () => HTMLElement) => {
 
       response += chunk
       pushToBuffer(chunk, getAnchor())
+      streamDone = true
     }
 
     onCleanup(() => {
+      if (!streamDone) return
       setMessages(prev => [...prev, { role: "assistant", content: response }]);
       setStreaming(false)
       response = ""
