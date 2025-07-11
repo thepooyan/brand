@@ -20,7 +20,7 @@ const TA = (props: any):JSXElement => {
   }
 
   const handleHover = () => {
-    pr(props.href)
+    pr(props.href, {preloadData: true})
   }
 
   return (
