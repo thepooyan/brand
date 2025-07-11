@@ -1,5 +1,5 @@
 import { pageMarker } from "~/lib/routeChangeTransition";
-import { ArrowLeft } from "lucide-solid";
+import { ArrowRight } from "lucide-solid";
 import TA from "~/components/parts/TA";
 import { Button } from "~/components/ui/button";
 import { benefits, services } from "~/data/abstract";
@@ -15,7 +15,7 @@ const AI = () => {
             href="/"
             class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
           >
-            <ArrowLeft class="ml-2 h-4 w-4" />
+            <ArrowRight class="ml-2 h-4 w-4" />
             بازگشت به صفحه اصلی
           </TA>
 
