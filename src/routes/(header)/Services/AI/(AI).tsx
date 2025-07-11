@@ -3,6 +3,8 @@ import { ArrowLeft } from "lucide-solid";
 import TA from "~/components/parts/TA";
 import { Button } from "~/components/ui/button";
 import { benefits, services } from "~/data/abstract";
+import { callModal } from "~/components/layout/Modal";
+import ContactInfo from "~/components/parts/ContactInfo";
 
 const AI = () => {
   return (
@@ -27,14 +29,10 @@ const AI = () => {
               و هوشمندسازی کسب‌وکار شما
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg">
+              <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg"
+              onclick={() => callModal(() => <ContactInfo/>)}
+            >
                 مشاوره رایگان
-              </Button>
-              <Button
-                variant="outline"
-                class="border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg bg-transparent"
-              >
-                مشاهده نمونه کارها
               </Button>
             </div>
           </div>
