@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button";
 import { benefits, services } from "~/data/abstract";
 import { callModal } from "~/components/layout/Modal";
 import ContactInfo from "~/components/parts/ContactInfo";
+import { name } from "../../../../../config/config";
 
 const AI = () => {
   return (
@@ -92,13 +93,16 @@ const AI = () => {
                         </Button>
                       </TA>
                     ) : (
-                      <Button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                      <Button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                        onclick={() => callModal(() => <ContactInfo/>)}
+                      >
                         درخواست مشاوره
                       </Button>
                     )}
                     <Button
                       variant="outline"
                       class="w-full border-primary text-primary hover:bg-primary/10 bg-transparent"
+                      as={TA} href={service.link}
                     >
                       اطلاعات بیشتر
                     </Button>
@@ -112,7 +116,7 @@ const AI = () => {
           <div class="mb-16">
             <div class="text-center mb-12">
               <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                چرا هوش مصنوعی پویان؟
+                چرا هوش مصنوعی {name}؟
               </h2>
               <p class="text-muted-foreground max-w-2xl mx-auto">
                 مزایای استفاده از راه‌حل‌های هوش مصنوعی ما برای کسب‌وکار شما

@@ -87,6 +87,7 @@ export const services = [
     price: "از ۵ میلیون تومان",
     popular: false,
     demoLink: "Chat-Bot/Demo",
+    link: "Chat-Bot"
   },
   {
     id: "business-agent",
@@ -104,6 +105,7 @@ export const services = [
     price: "از ۱۵ میلیون تومان",
     popular: true,
     demoLink: null,
+    link: ""
   },
   {
     id: "automation-agent",
@@ -121,6 +123,7 @@ export const services = [
     price: "از ۲۵ میلیون تومان",
     popular: false,
     demoLink: null,
+    link: ""
   },
   {
     id: "content-generator",
@@ -138,6 +141,7 @@ export const services = [
     price: "از ۸ میلیون تومان",
     popular: false,
     demoLink: null,
+    link: ""
   },
   {
     id: "voice-assistant",
@@ -155,6 +159,7 @@ export const services = [
     price: "از ۲۰ میلیون تومان",
     popular: false,
     demoLink: null,
+    link: ""
   },
   {
     id: "document-processor",
@@ -172,6 +177,7 @@ export const services = [
     price: "از ۱۲ میلیون تومان",
     popular: false,
     demoLink: null,
+    link: ""
   },
   {
     id: "analytics-ai",
@@ -189,6 +195,7 @@ export const services = [
     price: "از ۳۰ میلیون تومان",
     popular: false,
     demoLink: null,
+    link: ""
   },
   {
     id: "image-recognition",
@@ -206,6 +213,7 @@ export const services = [
     price: "از ۱۸ میلیون تومان",
     popular: false,
     demoLink: null,
+    link: ""
   },
 ];
 
