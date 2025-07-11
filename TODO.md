@@ -1,6 +1,7 @@
 cron cleaner for otp
 check why view transition is not reliable (login and home button)
 ?buffer que breaks if there is delay between streamed responsed
+compelete order website
 
 services: {
     AI 

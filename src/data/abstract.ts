@@ -7,6 +7,20 @@ import {
   FiShield,
   FiClock,
 } from "solid-icons/fi";
+import {
+  MessageSquare,
+  Bot,
+  Eye,
+  PenTool,
+  Mic,
+  FileText,
+  TrendingUp,
+  Camera,
+  Zap,
+  Shield,
+  Clock,
+  CheckCircle,
+} from "lucide-solid";
 
 export const integrationOptions = [
   {
@@ -53,5 +67,167 @@ export const features = [
     icon: FiClock,
     title: "دسترسی ۲۴/۷",
     description: "خدمات بدون وقفه در تمام ساعات",
+  },
+];
+
+export const services = [
+  {
+    id: "smart-assistant",
+    icon: MessageSquare,
+    title: "دستیار هوشمند مشتری",
+    subtitle: "Smart Customer Assistant",
+    description:
+      "چت‌بات هوشمند که در وب‌سایت، تلگرام و سایر پلتفرم‌ها پاسخگوی مشتریان شماست",
+    features: [
+      "پاسخ‌دهی ۲۴ ساعته",
+      "ادغام با وب‌سایت و تلگرام",
+      "پشتیبانی چندزبانه",
+      "تنظیمات شخصی‌سازی کامل",
+    ],
+    price: "از ۵ میلیون تومان",
+    popular: false,
+    demoLink: "/chatbot-demo",
+  },
+  {
+    id: "business-agent",
+    icon: Bot,
+    title: "نماینده کسب‌وکار هوشمند",
+    subtitle: "Intelligent Business Agent",
+    description:
+      "ربات پیشرفته با قابلیت ذخیره اطلاعات، رزرو بلیط، ارسال ایمیل و انجام کارهای پیچیده",
+    features: [
+      "مدیریت اطلاعات مشتریان",
+      "رزرو و خرید آنلاین",
+      "ارسال ایمیل و پیامک",
+      "ادغام با سیستم‌های CRM",
+    ],
+    price: "از ۱۵ میلیون تومان",
+    popular: true,
+    demoLink: null,
+  },
+  {
+    id: "automation-agent",
+    icon: Eye,
+    title: "سیستم نظارت هوشمند",
+    subtitle: "Smart Monitoring System",
+    description:
+      "عامل هوشمند برای خودکارسازی کارهای روزانه از نظارت بر دوربین‌ها تا تشخیص پلاک خودرو",
+    features: [
+      "نظارت بر دوربین‌های امنیتی",
+      "تشخیص پلاک خودرو",
+      "هشدار خودکار",
+      "گزارش‌دهی هوشمند",
+    ],
+    price: "از ۲۵ میلیون تومان",
+    popular: false,
+    demoLink: null,
+  },
+  {
+    id: "content-generator",
+    icon: PenTool,
+    title: "تولیدکننده محتوای هوشمند",
+    subtitle: "AI Content Generator",
+    description:
+      "سیستم هوشمند برای تولید محتوا، نوشتن مقالات، پست‌های شبکه‌های اجتماعی و متن‌های تبلیغاتی",
+    features: [
+      "نوشتن مقالات و بلاگ",
+      "تولید محتوای شبکه‌های اجتماعی",
+      "متن‌های تبلیغاتی",
+      "ترجمه و ویرایش متن",
+    ],
+    price: "از ۸ میلیون تومان",
+    popular: false,
+    demoLink: null,
+  },
+  {
+    id: "voice-assistant",
+    icon: Mic,
+    title: "دستیار صوتی هوشمند",
+    subtitle: "Voice AI Assistant",
+    description:
+      "سیستم تشخیص و پردازش گفتار برای ایجاد تعامل صوتی با مشتریان و کاربران",
+    features: [
+      "تشخیص گفتار فارسی",
+      "پاسخ صوتی طبیعی",
+      "ادغام با تلفن و کال سنتر",
+      "فرمان‌های صوتی",
+    ],
+    price: "از ۲۰ میلیون تومان",
+    popular: false,
+    demoLink: null,
+  },
+  {
+    id: "document-processor",
+    icon: FileText,
+    title: "پردازشگر اسناد هوشمند",
+    subtitle: "Smart Document Processor",
+    description:
+      "سیستم هوشمند برای استخراج اطلاعات از اسناد، OCR و پردازش خودکار فایل‌ها",
+    features: [
+      "تشخیص متن از تصاویر (OCR)",
+      "استخراج اطلاعات از اسناد",
+      "طبقه‌بندی خودکار فایل‌ها",
+      "تبدیل فرمت‌های مختلف",
+    ],
+    price: "از ۱۲ میلیون تومان",
+    popular: false,
+    demoLink: null,
+  },
+  {
+    id: "analytics-ai",
+    icon: TrendingUp,
+    title: "تحلیلگر پیش‌بینی هوشمند",
+    subtitle: "Predictive Analytics AI",
+    description:
+      "سیستم هوشمند برای تحلیل داده‌ها، پیش‌بینی روندها و ارائه بینش‌های کسب‌وکار",
+    features: [
+      "تحلیل داده‌های فروش",
+      "پیش‌بینی روندهای بازار",
+      "گزارش‌های هوشمند",
+      "داشبورد تعاملی",
+    ],
+    price: "از ۳۰ میلیون تومان",
+    popular: false,
+    demoLink: null,
+  },
+  {
+    id: "image-recognition",
+    icon: Camera,
+    title: "تشخیص تصویر هوشمند",
+    subtitle: "AI Image Recognition",
+    description:
+      "سیستم تشخیص و تحلیل تصاویر برای کاربردهای مختلف از امنیت تا کنترل کیفیت",
+    features: [
+      "تشخیص چهره و اشیاء",
+      "کنترل کیفیت محصولات",
+      "تحلیل تصاویر پزشکی",
+      "طبقه‌بندی خودکار تصاویر",
+    ],
+    price: "از ۱۸ میلیون تومان",
+    popular: false,
+    demoLink: null,
+  },
+];
+
+export const benefits = [
+  {
+    icon: Zap,
+    title: "سرعت بالا",
+    description: "پردازش و پاسخ‌دهی در کسری از ثانیه",
+  },
+  {
+    icon: Shield,
+    title: "امنیت تضمینی",
+    description: "حفاظت کامل از اطلاعات و داده‌های شما",
+  },
+  {
+    icon: Clock,
+    title: "دسترسی ۲۴/۷",
+    description: "خدمات بدون وقفه در تمام ساعات شبانه‌روز",
+  },
+  {
+    icon: CheckCircle,
+    title: "پشتیبانی کامل",
+    description: "راهنمایی و نگهداری مستمر سیستم‌ها",
   },
 ];

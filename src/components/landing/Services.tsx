@@ -22,7 +22,7 @@ const Services = () => {
               <p class="text-muted-foreground mb-6">
                 از قدرت هوش مصنوعی برای خودکارسازی فرآیندها، کسب بینش و بهبود تجربه مشتری استفاده کنید.
               </p>
-              <TA href="/Services" class="text-primary font-medium flex items-center">
+              <TA href="/Services/AI" class="text-primary font-medium flex items-center">
                 بیشتر بدانید <ChevronLeft class="mr-1 h-4 w-4" />
               </TA>
             </div>
