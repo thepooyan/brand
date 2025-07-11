@@ -6,9 +6,12 @@ import { callModal } from "../layout/Modal"
 import ContactInfo from "../parts/ContactInfo"
 import MinimalChat from "../parts/chat/MinimalChat"
 import { features, integrationOptions } from "~/data/abstract"
+import { preload } from "~/lib/hooks"
 
 
 export default function ChatbotPage() {
+
+  preload("/Services/Chat-Bot/Demo")
 
   return (
     <main {...pageMarker()}>
