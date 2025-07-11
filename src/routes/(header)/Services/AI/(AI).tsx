@@ -87,7 +87,7 @@ const AI = () => {
 
                   <div class="space-y-2">
                     {service.demoLink ? (
-                      <TA href={service.demoLink}>
+                      <TA href={service.demoLink} class="block">
                         <Button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                           تست رایگان
                         </Button>
