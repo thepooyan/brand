@@ -11,7 +11,7 @@ export default function RightSide() {
   return (
     <div class="w-96 bg-background p-8 pt-3 md:flex flex-col hidden">
       <TA class=" inline-flex items-center text-muted-foreground hover:text-primary transition-colors absolute left-2
-        top-5 cursor-pointer gap-3 " href="/Services/Chat-Bot">
+        top-5 cursor-pointer gap-3 " href="/Services/AI/Chat-Bot">
         بازگشت
         <FiArrowLeft/>
       </TA>
