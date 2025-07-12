@@ -10,7 +10,7 @@ import { getUser } from "~/lib/signal"
 
 export default function OrderWebsite() {
 
-  let user = getUser("/Login?back=/Place-Order/Website")
+  let user = getUser()
   let [p] = useSearchParams()
   const nv = useNavigate()
 
