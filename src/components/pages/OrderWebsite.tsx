@@ -3,16 +3,16 @@ import { createEffect, createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
-import { createAsync, useSearchParams } from "@solidjs/router"
+import { createAsync, useNavigate, useSearchParams } from "@solidjs/router"
 import { callModal } from "../layout/Modal"
 import Spinner from "../parts/Spinner"
 import { userQueryRedirect } from "~/lib/signal"
-
 
 export default function OrderWebsite() {
 
   let user = createAsync(() => userQueryRedirect("/Login?back=/Place-Order/Website"))
   let [p] = useSearchParams()
+  const nv = useNavigate()
 
   createEffect(() => {
     setFormData(prev => ({...prev, name: user()?.name || "",
@@ -58,7 +58,8 @@ export default function OrderWebsite() {
     console.log(formData())
 
     setIsSubmitting(false)
-    callModal.success("سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.")
+    callModal.success(" سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت. جهت مطلع شدن از وضعیت سفارش خود، میتواند به پنل کاربری مراجعه کنید ")
+    // nv("/panel/Order-status")
   }
 
   const websiteTypes = [
