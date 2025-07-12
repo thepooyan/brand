@@ -94,7 +94,7 @@ export default function LoginPage() {
   const [step, setStep, markElement] = useViewTransition<"phone" | "otp">("step", "phone")
 
   return (
-    <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-[url('/wave.png')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
+    <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-[url('/wave.webp')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
       <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...markElement("card")}>
         <CardHeader class="text-center">
           <CardTitle class="text-2xl font-bold text-primary">ورود به حساب کاربری</CardTitle>
