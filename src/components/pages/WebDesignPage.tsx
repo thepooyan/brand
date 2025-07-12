@@ -79,7 +79,7 @@ export default function WebDesign() {
             </p>
           </div>
           <div class="flex gap-2 justify-center mt-10">
-            <Button>همین حالا سفارش دهید</Button>
+            <Button as={TA} href="/Place-order/Website">همین حالا سفارش دهید</Button>
             <Consult/>
           </div>
         </div>
