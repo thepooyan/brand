@@ -23,7 +23,7 @@ export const getUser = () => {
 export const logUserOut = async () => {
   await clearAuthSession()
   revalidate("user")
-  revalidate("userRedirect")
+  revalidate("isLoggedIn")
 }
 
 export const updateUserSession = async (name: string, email: string) => {
