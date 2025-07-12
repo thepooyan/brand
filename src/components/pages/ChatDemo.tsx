@@ -126,6 +126,7 @@ export default function ChatbotDemoPage() {
                 onClick={handleSendMessage}
                 disabled={!inputMessage().trim() || pending()}
                 class="bg-primary hover:bg-primary/90 text-primary-foreground px-6"
+                aria-label='ارسال'
               >
                 <Send class="h-4 w-4" />
               </Button>
