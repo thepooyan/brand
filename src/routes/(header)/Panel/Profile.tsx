@@ -1,5 +1,4 @@
 import { action, redirect, useSubmission } from "@solidjs/router"
-import { useQueryClient } from "@tanstack/solid-query"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
@@ -31,14 +30,12 @@ const handleSubmit = action(async (formData:FormData) => {
 const Profile = () => {
   const user = getUser()
   const submission = useSubmission(handleSubmit)
-  const qc = useQueryClient()
 
   createEffect(() => {
     if (submission.error) {
       callModal.fail()
     } else if (submission.result) {
       callModal.success()
-      qc.invalidateQueries({queryKey: ["profile"]})
     } 
   })
 
