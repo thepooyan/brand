@@ -12,7 +12,7 @@ const isLoggedInQuery = query(async () => {
 }, "isLoggedIn")
 
 export const useIsLoggedIn = () => {
-  return createAsync(() => isLoggedInQuery())
+  return createAsync(() => isLoggedInQuery(), {deferStream: true})
 }
 
 export const getUser = () => {
