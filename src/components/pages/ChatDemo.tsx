@@ -6,9 +6,11 @@ import { name } from '../../../config/config'
 import { useChat } from '~/lib/chatUtil'
 import Message from '../parts/chat/Message'
 import { pageMarker } from '~/lib/routeChangeTransition'
+import { preload } from '~/lib/hooks'
 
 export default function ChatbotDemoPage() {
   const [inputMessage, setInputMessage] = createSignal('')
+  preload("/Services/AI/Chat-Bot")
 
   let messagesRailRef!:HTMLDivElement
   let streamElementRef!:HTMLDivElement
