@@ -1,5 +1,5 @@
 import { FiArrowRight, FiCode } from "solid-icons/fi"
-import { createSignal } from "solid-js"
+import { createEffect, createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
@@ -13,6 +13,12 @@ export default function OrderWebsite() {
 
   let user = createAsync(() => getUser())
   let [p] = useSearchParams()
+
+  createEffect(() => {
+    setFormData(prev => ({...prev, name: user()?.name || "",
+      email: user()?.email || ""
+    }))
+  })
   
   const [formData, setFormData] = createSignal({
     name: user()?.name || "",
