@@ -10,6 +10,7 @@
     "@ai-sdk/google": "^1.2.22",
     "@kobalte/core": "^0.13.10",
     "@libsql/client": "^0.15.9",
+    "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.1.0",
     "@tanstack/solid-query": "^5.81.2",

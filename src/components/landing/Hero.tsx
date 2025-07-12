@@ -4,10 +4,17 @@ import { ChangeColor } from "~/animation/ChangeColor"
 import { Wiggle } from "~/animation/Wiggle"
 import IntroStagger from "~/animation/IntroStagger"
 import TA from "../parts/TA"
+import { Link } from "@solidjs/meta"
 
 const Hero = () => {
   return (
     <>
+      <Link
+        rel="preload"
+        as="image"
+        href="/wave.webp"
+        type="image/jpeg"
+      />
       <IntroStagger>
         <section class="py-20 md:py-32 bg-[url('/wave.webp')] infiniteRotate
           !pt-10  bg-repeat-x sm:bg-position-[0_-1rem] bg-position-[0_-10rem] sm:!pt-45 ">

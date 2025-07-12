@@ -6,6 +6,8 @@ import Modal from "./components/layout/Modal";
 import {QueryClient, QueryClientProvider} from "@tanstack/solid-query"
 import { queryConfig } from "./lib/queries";
 import FallbackPage from "./components/pages/FallbackPage";
+import {MetaProvider, Title} from "@solidjs/meta"
+import { nameEn } from "../config/config";
 
 export default function App() {
 
@@ -13,18 +15,19 @@ export default function App() {
 
   return (
     <>
-      <QueryClientProvider client={qc}>
-        <Modal/>
-        <Router
-          root={props => (
-            <>
-              <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
-            </>
-          )}
-        >
-          <FileRoutes />
-        </Router>
-      </QueryClientProvider>
+        <QueryClientProvider client={qc}>
+          <Modal/>
+          <Router
+            root={props => (
+              <MetaProvider>
+              <Title>{nameEn}</Title>
+                <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
+              </MetaProvider>
+            )}
+          >
+            <FileRoutes />
+          </Router>
+        </QueryClientProvider>
     </>
   );
 }
