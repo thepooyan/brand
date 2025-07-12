@@ -3,14 +3,14 @@ import { createEffect, createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
-import { createAsync, useNavigate, useSearchParams } from "@solidjs/router"
+import { useNavigate, useSearchParams } from "@solidjs/router"
 import { callModal } from "../layout/Modal"
 import Spinner from "../parts/Spinner"
-import { userQueryRedirect } from "~/lib/signal"
+import { getUser } from "~/lib/signal"
 
 export default function OrderWebsite() {
 
-  let user = createAsync(() => userQueryRedirect("/Login?back=/Place-Order/Website"))
+  let user = getUser("/Login?back=/Place-Order/Website")
   let [p] = useSearchParams()
   const nv = useNavigate()
 

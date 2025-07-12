@@ -4,12 +4,11 @@ import MobileMenu from "../parts/MobileMenu"
 import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
-import { createAsync } from "@solidjs/router"
-import { userQuery, logUserOut } from "~/lib/signal"
+import { logUserOut, useIsLoggedIn } from "~/lib/signal"
 
 const Header = () => {
 
-  const user = createAsync(() => userQuery(), {deferStream: true})
+  const isLoggedIn = useIsLoggedIn()
   const [isOpen, setOpen] = createSignal(false)
 
   const logout = () => {
@@ -37,13 +36,13 @@ const Header = () => {
             <TA href="/ContactUs" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </TA>
-            <Show when={user() !== undefined}>
+            <Show when={isLoggedIn() !== undefined}>
               <div class="space-x-2">
                 <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
                 <Button as={TA} href="/Panel">پنل کاربری</Button>
               </div>
             </Show>
-            <Show when={user() === undefined}>
+            <Show when={isLoggedIn() === undefined}>
               <div class="space-x-2">
                 <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
                   ورود
@@ -57,12 +56,12 @@ const Header = () => {
               <span class="sr-only">تغییر منو</span>
               <FiMenu/>
             </Button>
-            <Show when={user() === undefined}>
+            <Show when={isLoggedIn() === undefined}>
               <Button as={TA} href="/Login">
                 <FiLogIn/>
               </Button>
             </Show>
-            <Show when={user() !== undefined}>
+            <Show when={isLoggedIn() !== undefined}>
               <Button as={TA} href="/Panel">
                 <FiUser/>
               </Button>

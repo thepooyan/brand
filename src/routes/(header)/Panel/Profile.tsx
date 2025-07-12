@@ -1,4 +1,4 @@
-import { action, createAsync, redirect, useSubmission } from "@solidjs/router"
+import { action, redirect, useSubmission } from "@solidjs/router"
 import { useQueryClient } from "@tanstack/solid-query"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
@@ -12,7 +12,7 @@ import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
 import { pageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { updateUserSession, userQueryRedirect } from "~/lib/signal"
+import { getUser, updateUserSession } from "~/lib/signal"
 
 const handleSubmit = action(async (formData:FormData) => {
   "use server"
@@ -29,7 +29,7 @@ const handleSubmit = action(async (formData:FormData) => {
 
 
 const Profile = () => {
-  const user = createAsync(() => userQueryRedirect(), {deferStream: true})
+  const user = getUser()
   const submission = useSubmission(handleSubmit)
   const qc = useQueryClient()
 

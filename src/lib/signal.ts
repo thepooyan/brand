@@ -1,15 +1,23 @@
-import { query, redirect, revalidate } from "@solidjs/router";
+import { createAsync, query, redirect, revalidate } from "@solidjs/router";
 import { clearAuthSession, getAuthSession, updateAuthSession } from "./session";
 
-export const userQueryRedirect = query(async (to?: string) => {
+const userQuery = query(async (to?: string) => {
   let user = await getAuthSession()
   if (!user) throw redirect(to ? to : "/Login")
   return user
-}, "userRedirect")
-
-export const userQuery = query(async () => {
-  return await getAuthSession()
 }, "user")
+
+const isLoggedInQuery = query(async () => {
+  return await getAuthSession()
+}, "isLoggedIn")
+
+export const useIsLoggedIn = () => {
+  return createAsync(() => isLoggedInQuery())
+}
+
+export const getUser = (redirect?: string) => {
+  return createAsync(() => userQuery(redirect), {deferStream: true})
+}
 
 export const logUserOut = async () => {
   await clearAuthSession()

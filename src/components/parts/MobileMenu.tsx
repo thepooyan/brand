@@ -1,9 +1,9 @@
 import { Accessor, ParentProps, Setter, Show } from "solid-js"
-import { A, createAsync } from "@solidjs/router"
+import { A } from "@solidjs/router"
 import clsx from "clsx"
 import { Button } from "../ui/button"
 import TA from "./TA"
-import { userQuery, logUserOut } from "~/lib/signal"
+import { logUserOut, useIsLoggedIn } from "~/lib/signal"
 
 interface props {
   isOpen: Accessor<boolean>,
@@ -11,7 +11,7 @@ interface props {
 }
 const MobileMenu = ({isOpen, setOpen}:props) => {
 
-  const user = createAsync(() => userQuery(), {deferStream: true})
+  const isLoggedIn = useIsLoggedIn()
 
   let menuRef!: HTMLDivElement
   let backdropRef!: HTMLDivElement
@@ -30,14 +30,14 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
           <L href="#contact">
             تماس با ما
           </L>
-        <Show when={user() !== undefined}>
+        <Show when={isLoggedIn() !== undefined}>
           <div class="flex gap-2 mx-auto mt-auto mb-5">
 
             <Button class="bg-red-700 text-white hover:bg-red-900" onclick={() => {logUserOut();setOpen(false)}}>خروج</Button>
             <Button as={TA} href="/Panel" onclick={()=> {setOpen(false)} } >پنل کاربری</Button>
           </div>
         </Show>
-        <Show when={user() === undefined}>
+        <Show when={isLoggedIn() === undefined}>
           <Button as={TA} href="/Login" class="w-max mx-auto mt-auto mb-5">
             ورود
           </Button>
