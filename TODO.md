@@ -2,6 +2,7 @@ cron cleaner for otp
 check why view transition is not reliable (login and home button)
 ?buffer que breaks if there is delay between streamed responsed
 compelete order website
+updating profile name two times breaks the app
 -pend-review chatbot page
 -pend-make chatbot stuff
 
