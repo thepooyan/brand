@@ -25,16 +25,9 @@ export default function OrderWebsite() {
     email: user()?.email || "",
     phone: "",
     websiteType: p?.type || "",
-    needsDatabase: "",
     pageCount: "",
     isMarketplace: "",
-    designLevel: "",
-    hasLogo: "",
     contentReady: "",
-    hostingNeeded: "",
-    domainNeeded: "",
-    seoNeeded: "",
-    maintenanceNeeded: "",
     timeline: "",
     budget: "",
     description: "",
@@ -74,7 +67,6 @@ export default function OrderWebsite() {
   ]
 
   const additionalFeatures = [
-    "سیستم مدیریت محتوا (CMS)",
     "پنل مدیریت کاربران",
     "سیستم پرداخت آنلاین",
     "چت آنلاین",
@@ -84,7 +76,6 @@ export default function OrderWebsite() {
     "فرم‌های پیشرفته",
     "نقشه و موقعیت مکانی",
     "چندزبانه بودن",
-    "اپلیکیشن موبایل",
     "API و وب سرویس",
   ]
 
