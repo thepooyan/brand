@@ -11,7 +11,7 @@ import { userQueryRedirect } from "~/lib/signal"
 
 export default function OrderWebsite() {
 
-  let user = createAsync(() => userQueryRedirect())
+  let user = createAsync(() => userQueryRedirect("/Login?back=/Place-Order/Website"))
   let [p] = useSearchParams()
 
   createEffect(() => {

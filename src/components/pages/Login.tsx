@@ -11,6 +11,7 @@ import TA from "../parts/TA"
 import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { callModal } from "../layout/Modal"
 import { sendOTP, verifyOTP } from "~/server/actions"
+import { useSearchParams } from "@solidjs/router"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -23,6 +24,7 @@ export default function LoginPage() {
   const timerSignal = timer.getAccessor()
 
   const navigate = useTransitiveNavigate()
+  const [s] = useSearchParams()
 
   const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()
@@ -52,6 +54,9 @@ export default function LoginPage() {
     setIsOtpWaiting(true)
     let res = await verifyOTP(phoneNumber(), getOtpValue().join(""))
     if (res.ok) {
+      if (s.back && typeof s.back === "string") {
+        return navigate(s.back)
+      }
       navigate("/");
       callModal.success("خوش آمدید!")
     } else {
