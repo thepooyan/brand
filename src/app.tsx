@@ -6,8 +6,8 @@ import Modal from "./components/layout/Modal";
 import {QueryClient, QueryClientProvider} from "@tanstack/solid-query"
 import { queryConfig } from "./lib/queries";
 import FallbackPage from "./components/pages/FallbackPage";
-import {MetaProvider, Title} from "@solidjs/meta"
-import { nameEn } from "../config/config";
+import {Meta, MetaProvider, Title} from "@solidjs/meta"
+import { description, nameEn } from "../config/config";
 
 export default function App() {
 
@@ -20,7 +20,8 @@ export default function App() {
           <Router
             root={props => (
               <MetaProvider>
-              <Title>{nameEn}</Title>
+                <Title>{nameEn}</Title>
+                <Meta name="description" content={description}/>
                 <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
               </MetaProvider>
             )}
