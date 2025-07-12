@@ -1,5 +1,5 @@
 import { Button } from "../ui/button"
-import { name } from "../../../config/config"
+import { name, nameEn } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
 import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
@@ -22,7 +22,7 @@ const Header = () => {
           <div class="flex items-center gap-2">
             <div class="relative w-13 flex justify-center ">
               <div class="h-10 w-10 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
-              <img src="/logo.webp" class="absolute -top-1 rounded-full w-13 "/>
+              <img src="/logo.webp" class="absolute -top-1 rounded-full w-13 " alt={`${nameEn}'s logo`}/>
             </div>
             <TA class="text-xl font-bold" href="/">{name}</TA>
           </div>

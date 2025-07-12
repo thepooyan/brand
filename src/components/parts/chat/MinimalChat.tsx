@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { name } from "../../../../config/config";
+import { name, nameEn } from "../../../../config/config";
 import TA from "../TA";
 
 const MinimalChat = () => {
@@ -36,7 +36,7 @@ const MinimalChat = () => {
             <div class="bg-primary/10 p-4 border-b">
               <div class="flex items-center gap-3">
                 <div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-                  <img src="/mini-logo.webp" alt="Hooshban's logo" />
+                  <img src="/mini-logo.webp" alt={`${nameEn}'s logo` }/>
                 </div>
                 <div>
                   <h3 class="font-medium">دستیار هوشمند {name}</h3>
