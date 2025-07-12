@@ -7,6 +7,7 @@ import { pageMarker } from "~/lib/routeChangeTransition"
 import TA from "../parts/TA"
 import { callModal } from "../layout/Modal"
 import ContactInfo from "../parts/ContactInfo"
+import Consult from "../parts/Consult"
 
 export default function WebDesign() {
   const comparisonData = [
@@ -76,6 +77,10 @@ export default function WebDesign() {
               بهینه‌سازی شده‌اند، و راه‌حل‌های وردپرس که سریع و مقرون به صرفه هستند. هر دو گزینه برای نیازهای مختلف کسب و
               کار طراحی شده‌اند تا بهترین تجربه کاربری و نتایج را برای شما فراهم کنند.
             </p>
+          </div>
+          <div class="flex gap-2 justify-center mt-10">
+            <Button>همین حالا سفارش دهید</Button>
+            <Consult/>
           </div>
         </div>
       </section>
