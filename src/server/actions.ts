@@ -55,9 +55,3 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     return {ok: true}
   }) 
 }
-
-export const getUser = query(async () => {
-  let auth = await getAuthSession()
-  if (!auth) throw redirect("/Login")
-  return auth
-}, "user")

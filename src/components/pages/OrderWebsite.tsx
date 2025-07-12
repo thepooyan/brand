@@ -4,14 +4,14 @@ import { Button } from "../ui/button"
 import TA from '../parts/TA'
 import RedStar from '../parts/RedStar'
 import { createAsync, useSearchParams } from "@solidjs/router"
-import { getUser } from "~/server/actions"
 import { callModal } from "../layout/Modal"
 import Spinner from "../parts/Spinner"
+import { userQueryRedirect } from "~/lib/signal"
 
 
 export default function OrderWebsite() {
 
-  let user = createAsync(() => getUser())
+  let user = createAsync(() => userQueryRedirect())
   let [p] = useSearchParams()
 
   createEffect(() => {
