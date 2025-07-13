@@ -3,8 +3,7 @@ import { db } from "~/db/db"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
 import { otpTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
-import { getAuthSession, updateAuthSession } from "~/lib/session"
-import { query, redirect } from "@solidjs/router"
+import { updateAuthSession } from "~/lib/session"
 
 
 export const sendOTP = async (number: string):Response => {
