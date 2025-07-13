@@ -3,8 +3,8 @@
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
 
-const adminToken = process.env.ADMIN_BOT!
-const supportToken = process.env.SUPPORT_BOT!
+const getadminToken = () => process.env.ADMIN_BOT!
+const getsupportToken = () => process.env.SUPPORT_BOT!
 
 const send = (token: string, text: string, chat_id: string) => {
   const url = `https://api.telegram.org/bot${token}/sendMessage`
@@ -17,11 +17,11 @@ const send = (token: string, text: string, chat_id: string) => {
 
 const sendToAdmin = async (text: string) => {
   let admins = await db.select().from(adminsTable)
-  admins.forEach(a => send(adminToken, text, a.chat_id))
+  admins.forEach(a => send(getadminToken(), text, a.chat_id))
 }
 
 const sendToSupport = (text: string, chat_id: string) => {
-  return send(supportToken, text, chat_id)
+  return send(getsupportToken(), text, chat_id)
 }
 
 export const telegram = {
