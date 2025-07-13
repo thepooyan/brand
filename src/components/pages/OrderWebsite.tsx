@@ -8,6 +8,20 @@ import { callModal } from "../layout/Modal"
 import Spinner from "../parts/Spinner"
 import { getUser } from "~/lib/signal"
 
+export interface websiteOrder {
+  budget: string,
+  contentReady: string,
+  description: string,
+  email: string,
+  features: string[],
+  isMarketplace: string,
+  name: string,
+  pageCount: string,
+  phone: string,
+  timeline: string,
+  websiteType: string,
+}
+
 export default function OrderWebsite() {
 
   let user = getUser()
@@ -15,16 +29,18 @@ export default function OrderWebsite() {
   const nv = useNavigate()
 
   createEffect(() => {
-    setFormData(prev => ({...prev, name: user()?.name || "",
-      email: user()?.email || ""
+    setFormData(prev => ({...prev,
+      name: String(user()?.name),
+      email: String(user()?.email),
+      phone: String(user()?.number),
     }))
   })
   
-  const [formData, setFormData] = createSignal({
-    name: user()?.name || "",
-    email: user()?.email || "",
-    phone: "",
-    websiteType: p?.type || "",
+  const [formData, setFormData] = createSignal<websiteOrder>({
+    name: String(user()?.name),
+    email: String(user()?.email),
+    phone: String(user()?.number),
+    websiteType: String(p?.type),
     pageCount: "",
     isMarketplace: "",
     contentReady: "",
@@ -36,7 +52,6 @@ export default function OrderWebsite() {
 
   const [isSubmitting, setIsSubmitting] = createSignal(false)
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
   const handleInputChange = (e: any) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
