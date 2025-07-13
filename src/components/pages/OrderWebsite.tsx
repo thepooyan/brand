@@ -41,7 +41,7 @@ export default function OrderWebsite() {
     name: String(user()?.name),
     email: String(user()?.email),
     phone: String(user()?.number),
-    websiteType: String(p?.type),
+    websiteType: typeof p.type === "string" ? p.type : "wordpress",
     pageCount: "",
     isMarketplace: "",
     contentReady: "",
