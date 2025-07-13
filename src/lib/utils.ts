@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
 import { Accessor, createSignal, Setter } from "solid-js"
-import { memo } from "solid-js/web"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {

@@ -1,4 +1,4 @@
-import { proccessMessage } from '~/server/actions';
+import { replyWithAI } from '~/server/actions';
 import { telegram } from '~/server/telegram';
 
 interface telegramEvent {
@@ -30,7 +30,7 @@ export const POST = async ({request}:{request: Request}) => {
   const msg = body.message.text
   const chat_id = body.message.from.id
 
-  const response = await proccessMessage(msg)
+  const response = await replyWithAI(msg)
 
   await telegram.support.send(response, String(chat_id))
   return "ok"

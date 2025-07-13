@@ -75,7 +75,7 @@ export const saveWebsiteOrder = async (order: websiteOrder) => {
   }
 }
 
-export const proccessMessage = async (message: string) => {
+export const replyWithAI = async (message: string) => {
   const result = await generateText({
     model: google('gemini-2.5-flash'),
     system: prompt.telegram,
