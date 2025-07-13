@@ -77,7 +77,7 @@ export default function OrderWebsite() {
 
     if (ok) {
       callModal.success(" سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت. جهت مطلع شدن از وضعیت سفارش خود، میتواند به پنل کاربری مراجعه کنید ")
-      nv("/panel/Order-status")
+      nv("/Panel/Order-status")
     } else {
       callModal.fail()
     }
