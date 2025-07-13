@@ -2,7 +2,7 @@
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { otpTable, usersTable } from "~/db/schema"
+import { otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/components/pages/OrderWebsite"
@@ -59,5 +59,15 @@ export const verifyOTP = async (number: string, otp: string):Response => {
 }
 
 export const saveWebsiteOrder = async (order: websiteOrder) => {
-  await telegram.sendToAdmin(`سفارش سایت \n\n${yaml.dump(order)}`)
+  try {
+    let values:typeof websiteOrders.$inferInsert = {
+      ...order,
+      features: JSON.stringify(order.features)
+    }
+    await db.insert(websiteOrders).values(values)
+    await telegram.sendToAdmin(`سفارش سایت \n\n${yaml.dump(order)}`)
+    return {ok: true}
+  } catch(_) {
+    return {ok: false}
+  }
 }

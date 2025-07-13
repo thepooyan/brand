@@ -71,11 +71,16 @@ export default function OrderWebsite() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    await saveWebsiteOrder(formData())
+    let {ok} = await saveWebsiteOrder(formData())
 
     setIsSubmitting(false)
-    callModal.success(" سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت. جهت مطلع شدن از وضعیت سفارش خود، میتواند به پنل کاربری مراجعه کنید ")
-    // nv("/panel/Order-status")
+
+    if (ok) {
+      callModal.success(" سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت. جهت مطلع شدن از وضعیت سفارش خود، میتواند به پنل کاربری مراجعه کنید ")
+      nv("/panel/Order-status")
+    } else {
+      callModal.fail()
+    }
   }
 
   const websiteTypes = [
