@@ -1,6 +1,6 @@
 import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
-import sp from "./systemPrompt.json"
+import prompt from "~/data/llm-prompt.json"
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -10,7 +10,7 @@ export async function POST({request}:{request: Request}) {
 
   const result = streamText({
     model: google('gemini-2.5-flash'),
-    system: sp.content,
+    system: prompt.website,
     messages,
   });
 

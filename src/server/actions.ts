@@ -1,5 +1,5 @@
 "use server"
-import sp from "../routes/api/systemPrompt.json"
+import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
@@ -78,7 +78,7 @@ export const saveWebsiteOrder = async (order: websiteOrder) => {
 export const proccessMessage = async (message: string) => {
   const result = await generateText({
     model: google('gemini-2.5-flash'),
-    system: sp.content,
+    system: prompt.telegram,
     prompt: message
   });
   return result.text
