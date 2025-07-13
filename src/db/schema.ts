@@ -1,6 +1,11 @@
 import { sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+export const adminsTable = sqliteTable("admins_table", {
+  id: int().primaryKey({autoIncrement: true}),
+  chat_id: text().notNull()
+})
+
 export const usersTable = sqliteTable("users_table", {
   id: int().primaryKey({ autoIncrement: true }),
   name: text(),
