@@ -36,7 +36,7 @@ const contactAction = action(async (formData:FormData) => {
   }
   try {
     await db.insert(messagesTable).values(values)
-    await telegram.sendToAdmin(`پیام \n\n${dump(values)}`)
+    await telegram.admin.send(`پیام \n\n${dump(values)}`)
   } catch(_) {
     return {ok: false, msg: "خطایی در ثبت اطلاعات رخ داد. لطفا مجددا تلاش کنید"}
   }

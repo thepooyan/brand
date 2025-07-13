@@ -1,4 +1,5 @@
 "use server"
+import sp from "../routes/api/systemPrompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
@@ -7,6 +8,8 @@ import { eq } from "drizzle-orm"
 import { updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/components/pages/OrderWebsite"
 import { telegram } from "./telegram"
+import { generateText } from "ai"
+import { google } from "@ai-sdk/google"
 
 
 export const sendOTP = async (number: string):Response => {
@@ -65,9 +68,18 @@ export const saveWebsiteOrder = async (order: websiteOrder) => {
       features: JSON.stringify(order.features)
     }
     await db.insert(websiteOrders).values(values)
-    await telegram.sendToAdmin(`سفارش سایت \n\n${yaml.dump(order)}`)
+    await telegram.admin.send(`سفارش سایت \n\n${yaml.dump(order)}`)
     return {ok: true}
   } catch(_) {
     return {ok: false}
   }
+}
+
+export const proccessMessage = async (message: string) => {
+  const result = await generateText({
+    model: google('gemini-2.5-flash'),
+    system: sp.content,
+    prompt: message
+  });
+  return result.text
 }
