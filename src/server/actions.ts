@@ -1,9 +1,12 @@
 "use server"
 import { db } from "~/db/db"
+import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
 import { otpTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { updateAuthSession } from "~/lib/session"
+import { websiteOrder } from "~/components/pages/OrderWebsite"
+import { telegram } from "./telegram"
 
 
 export const sendOTP = async (number: string):Response => {
@@ -53,4 +56,8 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     await updateAuthSession({user: user})
     return {ok: true}
   }) 
+}
+
+export const saveWebsiteOrder = async (order: websiteOrder) => {
+  await telegram.sendToAdmin(`سفارش سایت \n\n${yaml.dump(order)}`)
 }

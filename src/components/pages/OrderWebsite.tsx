@@ -7,6 +7,7 @@ import { useNavigate, useSearchParams } from "@solidjs/router"
 import { callModal } from "../layout/Modal"
 import Spinner from "../parts/Spinner"
 import { getUser } from "~/lib/signal"
+import { saveWebsiteOrder } from "~/server/actions"
 
 export interface websiteOrder {
   budget: string,
@@ -70,7 +71,7 @@ export default function OrderWebsite() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    console.log(formData())
+    await saveWebsiteOrder(formData())
 
     setIsSubmitting(false)
     callModal.success(" سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت. جهت مطلع شدن از وضعیت سفارش خود، میتواند به پنل کاربری مراجعه کنید ")
