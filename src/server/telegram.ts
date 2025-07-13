@@ -3,7 +3,7 @@
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
 
-export const sendTelegramMessage = async (text: string) => {
+const sendToAdmin = async (text: string) => {
 
   const token = process.env.BOT
   let admins = await db.select().from(adminsTable)
@@ -20,3 +20,6 @@ export const sendTelegramMessage = async (text: string) => {
   admins.forEach(a => send(text, a.chat_id))
 }
 
+export const telegram = {
+  sendToAdmin
+}
