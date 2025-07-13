@@ -5,7 +5,7 @@ import { adminsTable } from "~/db/schema"
 
 const sendToAdmin = async (text: string) => {
 
-  const token = process.env.BOT
+  const token = process.env.ADMIN_BOT
   let admins = await db.select().from(adminsTable)
   const url = `https://api.telegram.org/bot${token}/sendMessage`
 
