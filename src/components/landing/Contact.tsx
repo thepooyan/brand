@@ -5,6 +5,8 @@ import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
 import { messagesTable } from "~/db/schema"
 import { validateEmail, validateMobileNumber } from "~/lib/validation"
+import { telegram } from "~/server/telegram"
+import { dump } from "js-yaml"
 
 const contactAction = action(async (formData:FormData) => {
   "use server"
@@ -25,15 +27,19 @@ const contactAction = action(async (formData:FormData) => {
   if (email)
     if (!validateEmail(email)) return {ok: false, msg: "ایمیل وارد شده صحیح نمیباشد"}
 
-  await db.insert(messagesTable).values({
+  const values = {
     name: name,
     email: email,
     message: msg,
     subject: sub,
     number: num
-  }).catch(() => {
+  }
+  try {
+    await db.insert(messagesTable).values(values)
+    await telegram.sendToAdmin(`پیام \n\n${dump(values)}`)
+  } catch(_) {
     return {ok: false, msg: "خطایی در ثبت اطلاعات رخ داد. لطفا مجددا تلاش کنید"}
-  })
+  }
   return {ok: true}
 })
 
@@ -80,7 +86,7 @@ export const Contact = () => {
                     موضوع
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     name="subject"
                     class="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="موضوع"
