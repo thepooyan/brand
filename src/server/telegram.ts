@@ -10,12 +10,11 @@ export const sendTelegramMessage = async (text: string) => {
   const url = `https://api.telegram.org/bot${token}/sendMessage`
 
   const send = async (t: string, id: string) => {
-     let a = await fetch(url, {
+     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chat_id: id, text: t }),
     })
-    console.log(a)
   }
 
   admins.forEach(a => send(text, a.chat_id))
