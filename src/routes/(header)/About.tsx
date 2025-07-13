@@ -1,8 +1,11 @@
-import AboutPage from "~/components/pages/AboutPage"
+import { pageMarker } from "~/lib/routeChangeTransition"
+import AboutSection from "~/components/landing/About"
 
 const About = () => {
   return (
-    <AboutPage/>
+    <main {...pageMarker()}>
+      <AboutSection/>
+    </main>
   )
 }
 

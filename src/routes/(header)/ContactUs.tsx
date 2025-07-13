@@ -1,8 +1,11 @@
-import ContactUsPage from "~/components/pages/ContactUs"
+import { pageMarker } from "~/lib/routeChangeTransition"
+import { Contact } from "~/components/landing/Contact"
 
 const ContactUs = () => {
   return (
-    <ContactUsPage/>
+    <main {...pageMarker()}>
+      <Contact/>
+    </main>
   )
 }
 

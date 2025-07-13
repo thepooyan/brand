@@ -6,7 +6,7 @@ import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } 
 import { otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { updateAuthSession } from "~/lib/session"
-import { websiteOrder } from "~/components/pages/OrderWebsite"
+import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"

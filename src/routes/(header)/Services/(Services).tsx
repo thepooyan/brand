@@ -1,8 +1,11 @@
-import ServicesPage from "~/components/pages/ServicesPage"
+import { pageMarker } from "~/lib/routeChangeTransition"
+import ServicesSection from "~/components/landing/Services"
 
 const Services = () => {
   return (
-    <ServicesPage/>
+    <main {...pageMarker()}>
+      <ServicesSection/>
+    </main>
   )
 }
 
