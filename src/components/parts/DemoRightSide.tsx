@@ -1,5 +1,5 @@
 import { A } from '@solidjs/router'
-import { MessageSquare, Zap, Users, Clock } from 'lucide-solid'
+import { FiMessageSquare, FiZap, FiUsers, FiClock } from 'solid-icons/fi'
 import { Button } from '../ui/button'
 import { info } from '../../../config/config'
 import { callModal } from '../layout/Modal'
@@ -18,7 +18,7 @@ export default function RightSide() {
       <div class="flex-1">
         <div class="text-center mb-8">
           <div class="h-16 w-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <MessageSquare class="h-8 w-8 text-primary" />
+            <FiMessageSquare class="h-8 w-8 text-primary" />
           </div>
           <h1 class="text-2xl font-bold mb-3">تست چت‌بات هوشمند</h1>
           <p class="text-muted-foreground text-sm leading-relaxed">
@@ -29,7 +29,7 @@ export default function RightSide() {
         <div class="space-y-4 mb-8">
           <div class="flex items-center gap-3">
             <div class="h-8 w-8 bg-primary/20 rounded-lg flex items-center justify-center">
-              <Zap class="h-4 w-4 text-primary" />
+              <FiZap class="h-4 w-4 text-primary" />
             </div>
             <div>
               <p class="font-medium text-sm">پاسخ سریع</p>
@@ -38,7 +38,7 @@ export default function RightSide() {
           </div>
           <div class="flex items-center gap-3">
             <div class="h-8 w-8 bg-primary/20 rounded-lg flex items-center justify-center">
-              <Users class="h-4 w-4 text-primary" />
+              <FiUsers class="h-4 w-4 text-primary" />
             </div>
             <div>
               <p class="font-medium text-sm">پشتیبانی چندزبانه</p>
@@ -47,7 +47,7 @@ export default function RightSide() {
           </div>
           <div class="flex items-center gap-3">
             <div class="h-8 w-8 bg-primary/20 rounded-lg flex items-center justify-center">
-              <Clock class="h-4 w-4 text-primary" />
+              <FiClock class="h-4 w-4 text-primary" />
             </div>
             <div>
               <p class="font-medium text-sm">دسترسی ۲۴/۷</p>

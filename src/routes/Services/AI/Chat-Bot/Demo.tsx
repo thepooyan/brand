@@ -1,5 +1,5 @@
 import { createSignal, For, Show, createEffect } from 'solid-js'
-import { Send, Bot } from 'lucide-solid'
+import { FiSend, FiBox } from 'solid-icons/fi'
 import { Button } from '~/components/ui/button'
 import RightSide from '~/components/parts/DemoRightSide'
 import { useChat } from '~/lib/chatUtil'
@@ -61,7 +61,7 @@ export default function Demo() {
           <div class="bg-primary/10 p-6 border-b">
             <div class="flex items-center gap-4">
               <div class="h-12 w-12 bg-primary/20 rounded-full flex items-center justify-center">
-                <Bot class="h-6 w-6 text-primary" />
+                <FiBox class="h-6 w-6 text-primary" />
               </div>
               <div>
                 <h2 class="text-xl font-bold">دستیار هوشمند {name}</h2>
@@ -130,7 +130,7 @@ export default function Demo() {
                 class="bg-primary hover:bg-primary/90 text-primary-foreground px-6"
                 aria-label='ارسال'
               >
-                <Send class="h-4 w-4" />
+                <FiSend class="h-4 w-4" />
               </Button>
             </div>
           </div>
