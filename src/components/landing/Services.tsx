@@ -1,4 +1,4 @@
-import { FiChevronLeft as ChevronLeft, FiCode as Code, FiGlobe as Globe, FiMessageSquare as MessageSquare } from "solid-icons/fi"
+import { FiChevronLeft as ChevronLeft, FiCode as Code, FiMessageSquare as MessageSquare } from "solid-icons/fi"
 import TA from "../parts/TA"
 
 const Services = () => {
