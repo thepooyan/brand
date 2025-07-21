@@ -118,7 +118,8 @@ export const services = [
     price: "از ۲۵ میلیون تومان",
     popular: false,
     demoLink: null,
-    link: ""
+    link: "",
+    comingSoon: true
   },
   {
     id: "content-generator",
@@ -136,62 +137,63 @@ export const services = [
     price: "از ۸ میلیون تومان",
     popular: false,
     demoLink: null,
-    link: ""
+    link: "",
+    comingSoon: true
   },
-  {
-    id: "voice-assistant",
-    icon: FiMic,
-    title: "دستیار صوتی هوشمند",
-    subtitle: "Voice AI Assistant",
-    description:
-      "سیستم تشخیص و پردازش گفتار برای ایجاد تعامل صوتی با مشتریان و کاربران",
-    features: [
-      "تشخیص گفتار فارسی",
-      "پاسخ صوتی طبیعی",
-      "ادغام با تلفن و کال سنتر",
-      "فرمان‌های صوتی",
-    ],
-    price: "از ۲۰ میلیون تومان",
-    popular: false,
-    demoLink: null,
-    link: ""
-  },
-  {
-    id: "document-processor",
-    icon: FiFileText,
-    title: "پردازشگر اسناد هوشمند",
-    subtitle: "Smart Document Processor",
-    description:
-      "سیستم هوشمند برای استخراج اطلاعات از اسناد، OCR و پردازش خودکار فایل‌ها",
-    features: [
-      "تشخیص متن از تصاویر (OCR)",
-      "استخراج اطلاعات از اسناد",
-      "طبقه‌بندی خودکار فایل‌ها",
-      "تبدیل فرمت‌های مختلف",
-    ],
-    price: "از ۱۲ میلیون تومان",
-    popular: false,
-    demoLink: null,
-    link: ""
-  },
-  {
-    id: "analytics-ai",
-    icon: FiTrendingUp,
-    title: "تحلیلگر پیش‌بینی هوشمند",
-    subtitle: "Predictive Analytics AI",
-    description:
-      "سیستم هوشمند برای تحلیل داده‌ها، پیش‌بینی روندها و ارائه بینش‌های کسب‌وکار",
-    features: [
-      "تحلیل داده‌های فروش",
-      "پیش‌بینی روندهای بازار",
-      "گزارش‌های هوشمند",
-      "داشبورد تعاملی",
-    ],
-    price: "از ۳۰ میلیون تومان",
-    popular: false,
-    demoLink: null,
-    link: ""
-  },
+  // {
+  //   id: "voice-assistant",
+  //   icon: FiMic,
+  //   title: "دستیار صوتی هوشمند",
+  //   subtitle: "Voice AI Assistant",
+  //   description:
+  //     "سیستم تشخیص و پردازش گفتار برای ایجاد تعامل صوتی با مشتریان و کاربران",
+  //   features: [
+  //     "تشخیص گفتار فارسی",
+  //     "پاسخ صوتی طبیعی",
+  //     "ادغام با تلفن و کال سنتر",
+  //     "فرمان‌های صوتی",
+  //   ],
+  //   price: "از ۲۰ میلیون تومان",
+  //   popular: false,
+  //   demoLink: null,
+  //   link: ""
+  // },
+  // {
+  //   id: "document-processor",
+  //   icon: FiFileText,
+  //   title: "پردازشگر اسناد هوشمند",
+  //   subtitle: "Smart Document Processor",
+  //   description:
+  //     "سیستم هوشمند برای استخراج اطلاعات از اسناد، OCR و پردازش خودکار فایل‌ها",
+  //   features: [
+  //     "تشخیص متن از تصاویر (OCR)",
+  //     "استخراج اطلاعات از اسناد",
+  //     "طبقه‌بندی خودکار فایل‌ها",
+  //     "تبدیل فرمت‌های مختلف",
+  //   ],
+  //   price: "از ۱۲ میلیون تومان",
+  //   popular: false,
+  //   demoLink: null,
+  //   link: ""
+  // },
+  // {
+  //   id: "analytics-ai",
+  //   icon: FiTrendingUp,
+  //   title: "تحلیلگر پیش‌بینی هوشمند",
+  //   subtitle: "Predictive Analytics AI",
+  //   description:
+  //     "سیستم هوشمند برای تحلیل داده‌ها، پیش‌بینی روندها و ارائه بینش‌های کسب‌وکار",
+  //   features: [
+  //     "تحلیل داده‌های فروش",
+  //     "پیش‌بینی روندهای بازار",
+  //     "گزارش‌های هوشمند",
+  //     "داشبورد تعاملی",
+  //   ],
+  //   price: "از ۳۰ میلیون تومان",
+  //   popular: false,
+  //   demoLink: null,
+  //   link: ""
+  // },
   {
     id: "image-recognition",
     icon: FiCamera,
@@ -208,7 +210,8 @@ export const services = [
     price: "از ۱۸ میلیون تومان",
     popular: false,
     demoLink: null,
-    link: ""
+    link: "",
+    comingSoon: true
   },
 ];
 
