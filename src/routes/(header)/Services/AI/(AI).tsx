@@ -121,7 +121,7 @@ const AI = () => {
             </div>
           </div>
 
-          {/* Benefits Section */}
+          {/* Benefits Section 
           <div class="mb-16">
             <div class="text-center mb-12">
               <h2 class="text-3xl md:text-4xl font-bold mb-4">
@@ -145,7 +145,7 @@ const AI = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div>*/}
 
           {/* Process Section */}
           <div class="mb-16">
