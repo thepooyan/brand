@@ -6,21 +6,9 @@ import {
   FiZap,
   FiShield,
   FiClock,
+  FiMessageSquare,
+  FiCheckCircle,
 } from "solid-icons/fi";
-import {
-  MessageSquare,
-  Bot,
-  Eye,
-  PenTool,
-  Mic,
-  FileText,
-  TrendingUp,
-  Camera,
-  Zap,
-  Shield,
-  Clock,
-  CheckCircle,
-} from "lucide-solid";
 
 export const integrationOptions = [
   {
@@ -73,7 +61,7 @@ export const features = [
 export const services = [
   {
     id: "smart-assistant",
-    icon: MessageSquare,
+    icon: FiMessageSquare,
     title: "دستیار هوشمند مشتری",
     subtitle: "Smart Customer Assistant",
     description:
@@ -91,7 +79,7 @@ export const services = [
   },
   {
     id: "business-agent",
-    icon: Bot,
+    icon: AiFillRobot,
     title: "نماینده کسب‌وکار هوشمند",
     subtitle: "Intelligent Business Agent",
     description:
@@ -220,22 +208,22 @@ export const services = [
 
 export const benefits = [
   {
-    icon: Zap,
+    icon: FiZap,
     title: "سرعت بالا",
     description: "پردازش و پاسخ‌دهی در کسری از ثانیه",
   },
   {
-    icon: Shield,
+    icon: FiShield,
     title: "امنیت تضمینی",
     description: "حفاظت کامل از اطلاعات و داده‌های شما",
   },
   {
-    icon: Clock,
+    icon: FiClock,
     title: "دسترسی ۲۴/۷",
     description: "خدمات بدون وقفه در تمام ساعات شبانه‌روز",
   },
   {
-    icon: CheckCircle,
+    icon: FiCheckCircle,
     title: "پشتیبانی کامل",
     description: "راهنمایی و نگهداری مستمر سیستم‌ها",
   },

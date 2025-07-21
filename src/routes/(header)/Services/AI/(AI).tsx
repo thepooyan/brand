@@ -1,11 +1,11 @@
 import { pageMarker } from "~/lib/routeChangeTransition";
-import { ArrowRight } from "lucide-solid";
 import TA from "~/components/parts/TA";
 import { Button } from "~/components/ui/button";
 import { services } from "~/data/abstract";
 import { callModal } from "~/components/layout/Modal";
 import ContactInfo from "~/components/parts/ContactInfo";
 import { cn } from "~/lib/utils";
+import { FiArrowRight } from "solid-icons/fi";
 
 const AI = () => {
   return (
@@ -16,7 +16,7 @@ const AI = () => {
             href="/"
             class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
           >
-            <ArrowRight class="ml-2 h-4 w-4" />
+            <FiArrowRight class="ml-2 h-4 w-4" />
             بازگشت به صفحه اصلی
           </TA>
 
