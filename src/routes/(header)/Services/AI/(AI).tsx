@@ -6,6 +6,7 @@ import { benefits, services } from "~/data/abstract";
 import { callModal } from "~/components/layout/Modal";
 import ContactInfo from "~/components/parts/ContactInfo";
 import { name } from "../../../../../config/config";
+import { cn } from "~/lib/utils";
 
 const AI = () => {
   return (
@@ -51,9 +52,13 @@ const AI = () => {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((service) => (
                 <div
-                  class={`bg-card p-6 rounded-lg border hover:shadow-lg transition-all relative ${service.popular ? "ring-2 ring-primary" : ""
-                    }`}
+                  class={cn(`bg-card p-6 rounded-lg border hover:shadow-lg transition-all relative`,
+                  service.popular && "ring-2 ring-primary",
+                )}
                 >
+                {service.comingSoon && <div class="absolute bg-secondary w-full right-0 h-full top-0 rounded opacity-75
+                  flex justify-center items-center font-bold
+                  ">به زودی!...</div>}
                   {service.popular && (
                     <div class="absolute -top-3 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
                       محبوب‌ترین
