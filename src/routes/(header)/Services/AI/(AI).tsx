@@ -1,11 +1,12 @@
 import { pageMarker } from "~/lib/routeChangeTransition";
 import TA from "~/components/parts/TA";
 import { Button } from "~/components/ui/button";
-import { services } from "~/data/abstract";
+import { benefits, services } from "~/data/abstract";
 import { callModal } from "~/components/layout/Modal";
 import ContactInfo from "~/components/parts/ContactInfo";
 import { cn } from "~/lib/utils";
 import { FiArrowRight } from "solid-icons/fi";
+import { name } from "../../../../../config/config";
 
 const AI = () => {
   return (
@@ -120,7 +121,7 @@ const AI = () => {
             </div>
           </div>
 
-          {/* Benefits Section 
+          {/* Benefits Section */}
           <div class="mb-16">
             <div class="text-center mb-12">
               <h2 class="text-3xl md:text-4xl font-bold mb-4">
@@ -144,7 +145,7 @@ const AI = () => {
                 </div>
               ))}
             </div>
-          </div>*/}
+          </div>
 
           {/* Process Section */}
           <div class="mb-16">
