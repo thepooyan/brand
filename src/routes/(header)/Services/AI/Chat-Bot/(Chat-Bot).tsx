@@ -23,7 +23,7 @@ export default function ChatBot() {
           class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
         >
           <FiArrowRight class="ml-2 h-4 w-4" />
-          ��ازگشت به صفحه اصلی
+          بازگشت به صفحه اصلی
         </TA>
 
         {/* Hero Section */}
@@ -44,7 +44,7 @@ export default function ChatBot() {
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg"
               onclick={() => callModal(() => <ContactInfo/>)}
             >
-              د��خواست مشاوره رایگان
+              درخواست مشاوره رایگان
             </Button>
             <Button class="px-8 py-6 text-lg"
               variant="secondary" as={TA} href="Demo"
