@@ -12,7 +12,7 @@ const Services = () => {
               ما راه‌حل‌های جامع دیجیتال برای کمک به رشد و موفقیت کسب و کار شما ارائه می‌دهیم.
             </p>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* AI Services */}
             <div class="bg-background p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
               <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
@@ -27,7 +27,7 @@ const Services = () => {
               </TA>
             </div>
 
-            {/* Online Marketing */}
+            {/* Online Marketing 
             <div class="bg-background p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
               <div class="h-12 w-12 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
                 <Globe class="h-6 w-6 text-primary" />
@@ -40,7 +40,7 @@ const Services = () => {
               <TA href="/Services" class="text-primary font-medium flex items-center">
                 بیشتر بدانید <ChevronLeft class="mr-1 h-4 w-4" />
               </TA>
-            </div>
+            </div> */}
 
             {/* Website Development */}
             <div class="bg-background p-8 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
