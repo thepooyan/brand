@@ -2,10 +2,9 @@ import { pageMarker } from "~/lib/routeChangeTransition";
 import { ArrowRight } from "lucide-solid";
 import TA from "~/components/parts/TA";
 import { Button } from "~/components/ui/button";
-import { benefits, services } from "~/data/abstract";
+import { services } from "~/data/abstract";
 import { callModal } from "~/components/layout/Modal";
 import ContactInfo from "~/components/parts/ContactInfo";
-import { name } from "../../../../../config/config";
 import { cn } from "~/lib/utils";
 
 const AI = () => {
