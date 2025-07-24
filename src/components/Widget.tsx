@@ -1,9 +1,10 @@
-import { createEffect, createSignal } from "solid-js"
+import { createEffect, createSignal, Show } from "solid-js"
 import Input from "./ui/input"
 import { Card } from "./ui/card"
 import { FiMessageCircle, FiMoon, FiSend, FiSun, FiX } from "solid-icons/fi"
 import { Button } from "./ui/button"
 import { cn } from "~/lib/utils"
+import PendingMsg from "./parts/chat/PendingMsg"
 
 interface Message {
   id: string
@@ -28,6 +29,7 @@ export function Widget({ className }: ChatWidgetProps) {
     },
   ])
   const [inputValue, setInputValue] = createSignal("")
+  const [pending, setPending] = createSignal(false)
   let messagesEndRef!:HTMLDivElement  
 
   const scrollToBottom = () => {
@@ -38,6 +40,7 @@ export function Widget({ className }: ChatWidgetProps) {
     scrollToBottom()
     messages()
     isOpen()
+    pending()
   })
 
   const toggleWidget = () => {
@@ -60,6 +63,7 @@ export function Widget({ className }: ChatWidgetProps) {
 
     setMessages((prev) => [...prev, newMessage])
     setInputValue("")
+    setPending(true)
 
     // Simulate support response
     setTimeout(() => {
@@ -70,7 +74,8 @@ export function Widget({ className }: ChatWidgetProps) {
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, supportMessage])
-    }, 1000)
+      setPending(false)
+    }, 4000)
   }
 
   const handleKeyPress = (e: any) => {
@@ -124,6 +129,9 @@ export function Widget({ className }: ChatWidgetProps) {
                     </div>
                   </div>
                 ))}
+                <Show when={pending()}>
+                  <PendingMsg size="sm"/>
+                </Show>
                 <div ref={messagesEndRef} />
               </div>
 
