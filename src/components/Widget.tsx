@@ -19,10 +19,7 @@ export function Widget({ className }: ChatWidgetProps) {
   let streamRef!:HTMLDivElement  
   let messagesEndRef!:HTMLDivElement  
 
-  const {messages, pending, streaming, send} = useChat(() => {
-    scrollToBottom()
-    return streamRef
-  })
+  const {messages, pending, streaming, send} = useChat(() => streamRef)
 
   const scrollToBottom = () => {
     messagesEndRef?.scrollIntoView({ behavior: "smooth" })
