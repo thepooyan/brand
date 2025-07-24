@@ -5,13 +5,7 @@ import { FiMessageCircle, FiMoon, FiSend, FiSun, FiX } from "solid-icons/fi"
 import { Button } from "./ui/button"
 import { cn } from "~/lib/utils"
 import PendingMsg from "./parts/chat/PendingMsg"
-
-interface Message {
-  id: string
-  text: string
-  sender: "user" | "support"
-  timestamp: Date
-}
+import { useChat } from "~/lib/chatUtil"
 
 interface ChatWidgetProps {
   className?: string
@@ -20,17 +14,15 @@ interface ChatWidgetProps {
 export function Widget({ className }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = createSignal(true)
   const [isDark, setIsDark] = createSignal(false)
-  const [messages, setMessages] = createSignal<Message[]>([
-    {
-      id: "1",
-      text: "سلام، چطور میتونم کمکتون کنم؟",
-      sender: "support",
-      timestamp: new Date(),
-    },
-  ])
   const [inputValue, setInputValue] = createSignal("")
-  const [pending, setPending] = createSignal(false)
+
+  let streamRef!:HTMLDivElement  
   let messagesEndRef!:HTMLDivElement  
+
+  const {messages, pending, streaming, send} = useChat(() => {
+    scrollToBottom()
+    return streamRef
+  })
 
   const scrollToBottom = () => {
     messagesEndRef?.scrollIntoView({ behavior: "smooth" })
@@ -54,28 +46,10 @@ export function Widget({ className }: ChatWidgetProps) {
   const sendMessage = () => {
     if (!inputValue().trim()) return
 
-    const newMessage: Message = {
-      id: Date.now().toString(),
-      text: inputValue(),
-      sender: "user",
-      timestamp: new Date(),
-    }
 
-    setMessages((prev) => [...prev, newMessage])
+    send(inputValue().trim())
     setInputValue("")
-    setPending(true)
 
-    // Simulate support response
-    setTimeout(() => {
-      const supportMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "متشکر از پیام شما! به زودی جواب میدم کسکش",
-        sender: "support",
-        timestamp: new Date(),
-      }
-      setMessages((prev) => [...prev, supportMessage])
-      setPending(false)
-    }, 4000)
   }
 
   const handleKeyPress = (e: any) => {
@@ -116,21 +90,24 @@ export function Widget({ className }: ChatWidgetProps) {
               <div class="flex-1 p-4 overflow-y-auto space-y-3">
                 {messages().map((message) => (
                   <div
-                    class={`flex ${message.sender !== "user" ? "justify-end" : "justify-start"}`}
+                    class={`flex ${message.role !== "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
                       class={`max-w-[80%] p-3 rounded-lg text-sm ${
-                        message.sender === "user"
+                        message.role === "user"
                           ? "bg-primary text-primary-foreground"
                           : "bg-muted text-muted-foreground"
                       }`}
                     >
-                      {message.text}
+                      {message.content}
                     </div>
                   </div>
                 ))}
                 <Show when={pending()}>
                   <PendingMsg size="sm"/>
+                </Show>
+                <Show when={streaming()}>
+                  <div ref={streamRef} class={`max-w-[80%] p-3 rounded-lg text-sm bg-muted text-muted-foreground mr-auto`}/>
                 </Show>
                 <div ref={messagesEndRef} />
               </div>
