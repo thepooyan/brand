@@ -36,7 +36,9 @@ export function Widget({ className }: ChatWidgetProps) {
 
   createEffect(() => {
     scrollToBottom()
-  }, [messages()])
+    messages()
+    isOpen()
+  })
 
   const toggleWidget = () => {
     setIsOpen(!isOpen())
@@ -63,7 +65,7 @@ export function Widget({ className }: ChatWidgetProps) {
     setTimeout(() => {
       const supportMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Thanks for your message! Our team will get back to you shortly.",
+        text: "متشکر از پیام شما! به زودی جواب میدم کسکش",
         sender: "support",
         timestamp: new Date(),
       }
