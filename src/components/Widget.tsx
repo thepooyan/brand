@@ -95,9 +95,12 @@ export function Widget({ className }: ChatWidgetProps) {
               ">
               {/* Header */}
               <div class="flex items-center justify-between p-4 border-b border-border">
-                <div>
-                  <h3 class="font-semibold text-foreground">پشتیبانی هوشمند</h3>
-                  <p class="text-sm text-muted-foreground">آماده پاسخگویی</p>
+                <div class="flex items-center">
+                  <img src="/logo.webp" alt="Hooshban's logo" class="h-15"/>
+                  <div>
+                    <h3 class="font-semibold text-foreground">پشتیبانی هوشمند</h3>
+                    <p class="text-sm text-muted-foreground">آماده پاسخگویی</p>
+                  </div>
                 </div>
                 <Button variant="ghost" size="sm" onClick={toggleWidget} class="h-8 w-8 p-0 hover:bg-muted">
                   <FiX class="h-4 w-4" />
