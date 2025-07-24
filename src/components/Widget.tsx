@@ -87,9 +87,9 @@ export function Widget({ className }: ChatWidgetProps) {
       <div class={cn("fixed bottom-6 right-6 z-50 ", className)}>
         {/* Chat Window */}
         {isOpen() && (
-          <div class="mb-4 shadow-lg">
+          <div class="mb-4 shadow-lg  ">
             <Card class="w-90 h-[80dvh] shadow-2xl  bg-background/95 backdrop-blur-sm flex flex-col
-              absolute bottom-0 z-20 right-0 border-1
+              absolute bottom-0 z-20 right-0 border-1 animate-content-show 
               ">
               {/* Header */}
               <div class="flex items-center justify-between p-4 border-b border-border">
