@@ -117,6 +117,7 @@ export function Widget({ className }: ChatWidgetProps) {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     class="flex-1"
+                    placeholder="سوالتون رو بفرمایید..."
                   />
                   <Button onClick={sendMessage} size="sm" class="px-3">
                     <FiSend class="h-4 w-4" />
