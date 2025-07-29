@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router"
-import { info, name, socialLinks } from "../../../config/config"
+import { info, name, nameEn, socialLinks } from "../../../config/config"
 import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "solid-icons/fi"
 
 const Footer = () => {
@@ -10,7 +10,12 @@ const Footer = () => {
           <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div class="flex items-center gap-2 mb-4">
-                <div class="h-8 w-8 rounded-full bg-primary"></div>
+                <div class="w-15 relative">
+                  <img src="/logo.webp" alt={`${nameEn}'s logo`} class="" />
+                  <div class="bg-primary w-15 h-15 rounded-full animate-ping absolute top-0 duration-2000
+                    opacity-65
+                    "></div>
+                </div>
                 <span class="text-xl font-bold">{name}</span>
               </div>
               <p class="text-muted-foreground">تبدیل ایده‌ها به واقعیت دیجیتال با راه‌حل‌های نوآورانه.</p>
