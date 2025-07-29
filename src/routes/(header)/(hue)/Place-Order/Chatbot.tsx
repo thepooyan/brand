@@ -3,6 +3,7 @@ import { FiUpload, FiGlobe,
   FiFileText, FiMessageSquare, FiSettings, 
   FiArrowRight} from "solid-icons/fi"
 import { createSignal } from "solid-js"
+import RedStar from "~/components/parts/RedStar"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 
@@ -115,7 +116,8 @@ export default function OrderChatbotPage() {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label for="name" class="block text-sm font-medium mb-2">
-                    نام و نام خانوادگی *
+                    <RedStar/>
+                    نام و نام خانوادگی 
                   </label>
                   <input
                     type="text"
@@ -130,7 +132,8 @@ export default function OrderChatbotPage() {
                 </div>
                 <div>
                   <label for="businessName" class="block text-sm font-medium mb-2">
-                    نام کسب‌وکار *
+                    <RedStar/>
+                    نام کسب‌وکار
                   </label>
                   <input
                     type="text"
@@ -145,7 +148,8 @@ export default function OrderChatbotPage() {
                 </div>
                 <div>
                   <label for="email" class="block text-sm font-medium mb-2">
-                    ایمیل *
+                    <RedStar/>
+                    ایمیل
                   </label>
                   <input
                     type="email"
@@ -160,7 +164,8 @@ export default function OrderChatbotPage() {
                 </div>
                 <div>
                   <label for="phone" class="block text-sm font-medium mb-2">
-                    شماره تماس *
+                    <RedStar/>
+                    شماره تماس
                   </label>
                   <input
                     type="tel"
