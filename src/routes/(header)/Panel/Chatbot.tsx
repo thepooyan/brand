@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
-import { FiPlus, FiTrash2, FiPower, FiEdit, FiMessageCircle, FiKey, FiSend, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
+import { FiPlus, FiTrash2, FiEdit, FiKey, FiSend, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
 import { bots as dummy } from "~/data/dummy"
 import { createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
+import { ImTelegram } from "solid-icons/im"
 
 export default function Component() {
 
@@ -133,7 +134,7 @@ export default function Component() {
                       variant="outline"
                       class="flex-1 text-primary-300 border-primary-800 hover:bg-primary-950 hover:text-primary-200 bg-gray-800"
                     >
-                      <FiMessageCircle class="w-3 h-3 ml-1" />
+                      <ImTelegram class="w-3 h-3 ml-1" />
                       اتصال به تلگرام
                     </Button>
                     <Button
