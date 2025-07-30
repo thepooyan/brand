@@ -193,7 +193,7 @@ export default function OrderChatbotPage() {
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {toneOptions.map((tone) => (
                     <label
-                      class={`flex flex-col p-4 border rounded-lg cursor-pointer transition-all ${
+                      class={`flex gap-3 p-4 border rounded-lg cursor-pointer transition-all ${
                         formData().tone === tone.value
                           ? "border-primary bg-primary/5"
                           : "border-border hover:border-primary/50"
@@ -207,8 +207,10 @@ export default function OrderChatbotPage() {
                         onChange={handleInputChange}
                         class="mb-2"
                       />
-                      <span class="font-medium mb-1">{tone.label}</span>
-                      <span class="text-xs text-muted-foreground">{tone.description}</span>
+                      <div>
+                        <p class="font-medium mb-1">{tone.label}</p>
+                        <p class="text-xs text-muted-foreground">{tone.description}</p>
+                      </div>
                     </label>
                   ))}
                 </div>
