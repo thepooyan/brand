@@ -12,8 +12,8 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 
 
-export const sendOTP = async (number: string):Response => {
-  return warpResponse(async ():Promise<Response> => {
+export const sendOTP = async (number: string):Response<string> => {
+  return warpResponse(async ():Promise<Response<string>> => {
     if (!validatePhone(number)) return {ok: false, msg: "شماره تلفن وارد شده صحیح نمیباشد"}
 
     let newOtp = generateOTP()
@@ -28,7 +28,8 @@ export const sendOTP = async (number: string):Response => {
     await db.delete(otpTable).where(eq(otpTable.number, number))
     await db.insert(otpTable).values(value)
     
-    return {ok: true}
+    //REMOVE THIS
+    return {ok: true, data: newOtp}
   })
 }
 

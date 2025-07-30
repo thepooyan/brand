@@ -20,6 +20,7 @@ export default function Login() {
   const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
   const [isOtpWaiting, setIsOtpWaiting] = createSignal(false)
   const [isResendWaiting, setIsResendWaiting] = createSignal(false)
+  const [tempOtp, setTempOtp] = createSignal("")
   const timer = new Timer(30)
   const timerSignal = timer.getAccessor()
 
@@ -34,6 +35,7 @@ export default function Login() {
     let res = await sendOTP(phoneNumber())
     if (res.ok) {
       setStep("otp"); 
+      setTempOtp(res.data)
       timer.restart()
     } else {
       callModal.fail(res.msg)
@@ -151,7 +153,7 @@ export default function Login() {
                   ))}
                 </div>
                 <p class="text-sm text-muted-foreground text-center mt-2">
-                  کد تایید به شماره {phoneNumber()} ارسال شد
+                  کد تایید به شماره {phoneNumber()} ارسال شد ({tempOtp()})
                 </p>
                 <p class="text-sm text-muted-foreground text-center mt-2">
                     {timerSignal() === 0 ? <>
