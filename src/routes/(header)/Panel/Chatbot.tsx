@@ -108,14 +108,6 @@ export default function Component() {
                     <Button
                       size="sm"
                       variant="outline"
-                      class="flex-1 text-orange-400 border-orange-800 hover:bg-orange-950 hover:text-orange-300 bg-gray-800"
-                    >
-                      <FiPower class="w-3 h-3 ml-1" />
-                      غیرفعال
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
                       class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
                     >
                       <FiEdit class="w-3 h-3 ml-1" />
