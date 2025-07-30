@@ -1,6 +1,6 @@
 import { AiFillRobot } from "solid-icons/ai"
 import { FiUpload, FiGlobe,
-  FiFileText, FiMessageSquare, FiSettings, 
+  FiFileText,
   FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
 import RedStar from "~/components/parts/RedStar"
@@ -9,10 +9,13 @@ import { Button } from "~/components/ui/button"
 import { getUser } from "~/lib/signal"
 
 export default function OrderChatbotPage() {
+
+  const user = getUser()
+
   const [formData, setFormData] = createSignal({
-    name: "",
-    email: "",
-    phone: "",
+    name: String(user()?.name),
+    email: String(user()?.email),
+    phone: String(user()?.number),
     businessName: "",
     tone: "",
     language: "",
@@ -27,7 +30,6 @@ export default function OrderChatbotPage() {
     description: "",
   })
 
-  const user = getUser()
   createEffect(() => {
     setFormData(prev => ({...prev,
       name: String(user()?.name),
