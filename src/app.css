@@ -18,3 +18,11 @@ body {
 .ltr {
   direction: ltr;
 }
+
+input::placeholder {
+  @apply text-zinc-500
+}
+
+textarea::placeholder {
+  @apply text-zinc-500
+}
