@@ -304,9 +304,11 @@ export default function OrderChatbotPage() {
               {/* Additional Information */}
               <div>
                 <label for="additionalInfo" class="block text-sm font-medium mb-2">
+                  <RedStar/>
                   آموزش چت‌بات توسط متن
                 </label>
                 <textarea
+                  required
                   id="trainingText"
                   name="trainingText"
                   value={formData().trainingText}
