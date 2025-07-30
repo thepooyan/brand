@@ -1,3 +1,18 @@
+export interface chatbotOrder {
+  name: string,
+  email: string,
+  phone: string,
+  botName: string,
+  businessName: string,
+  tone: string,
+  language: string,
+  pdfFiles: File[],
+  websiteUrl: string,
+  trainingText: string,
+  maxResponseLength: string,
+  customization: string,
+  description: string,
+}
 export interface websiteOrder {
   budget: string,
   contentReady: string,

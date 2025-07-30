@@ -5,7 +5,7 @@ export const chatbot = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),
   botName: text().notNull(),
-  business: text().notNull(),
+  businessName: text().notNull(),
   tone: text().notNull(),
   language: text().notNull(),
   maxResponseLength: text().notNull(),

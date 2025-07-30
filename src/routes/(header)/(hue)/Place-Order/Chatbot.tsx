@@ -3,16 +3,21 @@ import { FiUpload, FiGlobe,
   FiFileText,
   FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
+import { callModal } from "~/components/layout/Modal"
 import RedStar from "~/components/parts/RedStar"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
+import { db } from "~/db/db"
+import { chatbot } from "~/db/schema"
+import { chatbotOrder } from "~/lib/interface"
+import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
 
 export default function OrderChatbotPage() {
 
   const user = getUser()
 
-  const [formData, setFormData] = createSignal({
+  const [formData, setFormData] = createSignal<chatbotOrder>({
     name: String(user()?.name),
     email: String(user()?.email),
     phone: String(user()?.number),
@@ -53,10 +58,14 @@ export default function OrderChatbotPage() {
     setIsSubmitting(true)
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    let result = await saveOrder(formData())
+    if (result.ok) {
+      callModal.success()
+    } else {
+      callModal.fail()
+    }
 
     setIsSubmitting(false)
-    alert("سفارش چت‌بات شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت.")
   }
 
   const toneOptions = [
@@ -425,3 +434,21 @@ export default function OrderChatbotPage() {
   )
 }
 
+const saveOrder = async (order: chatbotOrder) => {
+  "use server"
+  try {
+
+    let user = await getAuthSession()
+    if (!user) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+    let values: typeof chatbot.$inferInsert = {
+      ...order,
+      userId: user.id
+    }
+    await db.insert(chatbot).values(values)
+    return {ok: true}
+
+  } catch(e) {
+    console.log(e)
+    return {ok: false, msg: "متسافنه خطایی پیش آمد. طلفا مجددا تلاش کنید"}
+  }
+}
