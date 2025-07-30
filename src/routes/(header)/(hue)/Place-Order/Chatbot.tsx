@@ -218,7 +218,7 @@ export default function OrderChatbotPage() {
 
               {/* Language Selection */}
               <div class="mb-6">
-                <label class="block text-sm font-medium mb-3">
+                <label class="block text-sm font-medium mb-3 mt-15">
                   <RedStar/>
                   انتخاب زبان چت‌بات
                 </label>
@@ -247,14 +247,14 @@ export default function OrderChatbotPage() {
 
               {/* Response Length */}
               <div>
-                <label class="block text-sm font-medium mb-3">
+                <label class="block text-sm font-medium mb-3 mt-15">
                   <RedStar/>
                   حداکثر طول پاسخ
                 </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {responseLengthOptions.map((option) => (
                     <label
-                      class={`flex flex-col p-4 border rounded-lg cursor-pointer transition-all ${
+                      class={`flex gap-3 p-4 border rounded-lg cursor-pointer transition-all ${
                         formData().maxResponseLength === option.value
                           ? "border-primary bg-primary/5"
                           : "border-border hover:border-primary/50"
@@ -268,8 +268,10 @@ export default function OrderChatbotPage() {
                         onChange={handleInputChange}
                         class="mb-2"
                       />
-                      <span class="font-medium mb-1">{option.label}</span>
-                      <span class="text-xs text-muted-foreground">{option.description}</span>
+                      <div>
+                        <p class="font-medium mb-1">{option.label}</p>
+                        <p class="text-xs text-muted-foreground">{option.description}</p>
+                      </div>
                     </label>
                   ))}
                 </div>
