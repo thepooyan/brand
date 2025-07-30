@@ -63,7 +63,6 @@ export default function OrderChatbotPage() {
     { value: "formal", label: "رسمی", description: "مناسب برای کسب‌وکارهای جدی و حرفه‌ای" },
     { value: "friendly", label: "دوستانه", description: "صمیمی و گرم برای ارتباط نزدیک با مشتریان" },
     { value: "professional", label: "حرفه‌ای", description: "متعادل بین رسمی و دوستانه" },
-    { value: "casual", label: "غیررسمی", description: "راحت و طبیعی برای مخاطبان جوان" },
     { value: "enthusiastic", label: "پرانرژی", description: "مثبت و انگیزه‌بخش" },
     { value: "helpful", label: "کمک‌کننده", description: "متمرکز بر حل مشکل و راهنمایی" },
   ]
@@ -72,7 +71,6 @@ export default function OrderChatbotPage() {
     { value: "persian", label: "فارسی", flag: "🇮🇷" },
     { value: "english", label: "انگلیسی", flag: "🇺🇸" },
     { value: "bilingual", label: "دوزبانه (فارسی + انگلیسی)", flag: "🌐" },
-    { value: "arabic", label: "عربی", flag: "🇸🇦" },
   ]
 
   const responseLengthOptions = [
@@ -82,16 +80,8 @@ export default function OrderChatbotPage() {
     { value: "detailed", label: "تفصیلی", description: "بیش از ۶ جمله (۲۰۰+ کلمه)" },
   ]
 
-  const integrationOptions = [
-    { value: "website", label: "وب‌سایت", icon: FiGlobe, description: "ویجت چت در وب‌سایت" },
-    { value: "telegram", label: "تلگرام", icon: FiMessageSquare, description: "ربات تلگرام" },
-    { value: "api", label: "API", icon: FiSettings, description: "ادغام با سیستم موجود" },
-    { value: "multiple", label: "چندپلتفرمه", icon: AiFillRobot, description: "همه پلتفرم‌ها" },
-  ]
-
   return (
     <>
-
       <div class="container mx-auto px-4 py-8">
         {/* Back Button */}
         <TA
@@ -344,7 +334,7 @@ export default function OrderChatbotPage() {
               {/* Additional Information */}
               <div>
                 <label for="additionalInfo" class="block text-sm font-medium mb-2">
-                  اطلاعات اضافی برای آموزش چت‌بات
+                  آموزش دستی چت‌بات
                 </label>
                 <textarea
                   id="additionalInfo"
