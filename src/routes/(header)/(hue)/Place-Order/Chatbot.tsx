@@ -48,9 +48,9 @@ export default function OrderChatbotPage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleFileUpload = (e: any) => {
-    const files = Array.from(e.target.files || [])
-    // setFormData((prev) => ({ ...prev, pdfFiles: files }))
+  const handleFileUpload = (files: FileList | null) => {
+    const f = Array.from(files || [])
+    setFormData((prev) => ({ ...prev, pdfFiles: f }))
   }
 
   const handleSubmit = async (e: any) => {
@@ -315,7 +315,7 @@ export default function OrderChatbotPage() {
                     name="pdfFiles"
                     multiple
                     accept=".pdf"
-                    onChange={handleFileUpload}
+                    onChange={e => handleFileUpload(e.currentTarget.files)}
                     class="hidden"
                   />
                   <label for="pdfFiles" class="cursor-pointer">
