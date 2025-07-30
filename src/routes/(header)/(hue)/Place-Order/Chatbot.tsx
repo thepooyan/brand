@@ -16,6 +16,7 @@ export default function OrderChatbotPage() {
     name: String(user()?.name),
     email: String(user()?.email),
     phone: String(user()?.number),
+    botName: "",
     businessName: "",
     tone: "",
     language: "",
@@ -161,6 +162,22 @@ export default function OrderChatbotPage() {
                     onChange={handleInputChange}
                     class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="example@email.com"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="name" class="block text-sm font-medium mb-2">
+                    <RedStar/>
+                    نام ربات
+                  </label>
+                  <input
+                    type="text"
+                    id="botName"
+                    name="botName"
+                    value={formData().botName}
+                    onChange={handleInputChange}
+                    class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    placeholder="یک نام برای ربات خود انتخاب کنید"
                     required
                   />
                 </div>
