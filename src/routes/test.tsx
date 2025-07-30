@@ -1,9 +1,9 @@
-import { Widget } from "~/components/Widget"
+import { Button } from "~/components/ui/button"
 
 const test = () => {
   return (
     <div>
-      <Widget/>
+      <Button as="A" href="/place-order/chatbot">سفارش چتبات</Button>
     </div>
   )
 }
