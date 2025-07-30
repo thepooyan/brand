@@ -315,12 +315,12 @@ export default function OrderChatbotPage() {
                   class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="اطلاعات مهم درباره کسب‌وکار، محصولات، خدمات، سوالات متداول و هر چیزی که می‌خواهید چت‌بات درباره آن بداند را اینجا بنویسید..."
                 />
-                <p class="text-xs text-muted-foreground mt-1 mb-10">
+                <p class="text-xs text-muted-foreground mt-1 ">
                   هر چه اطلاعات بیشتری ارائه دهید، چت‌بات دقیق‌تر و مفیدتر خواهد بود
                 </p>
               </div>
 
-              {/* PDF Upload */}
+              {/* PDF Upload 
               <div class="mb-6">
                 <label class="block text-sm font-medium mb-3">
                   <FiUpload class="inline h-4 w-4 ml-1" />
@@ -354,7 +354,7 @@ export default function OrderChatbotPage() {
                 </div>
               </div>
 
-              {/* Website URL */}
+              {/* Website URL 
               <div class="mb-6">
                 <label for="websiteUrl" class="block text-sm font-medium mb-2">
                   <FiGlobe class="inline h-4 w-4 ml-1" />
@@ -372,7 +372,7 @@ export default function OrderChatbotPage() {
                 <p class="text-xs text-muted-foreground mt-1">
                   چت‌بات تمام صفحات وب‌سایت شما را بررسی کرده و از محتوای آن یاد می‌گیرد
                 </p>
-              </div>
+              </div>*/}
 
             </div>
 
