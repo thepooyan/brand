@@ -403,47 +403,6 @@ export default function OrderChatbotPage() {
                 جزئیات پروژه
               </h2>
               <div class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="timeline" class="block text-sm font-medium mb-2">
-                      زمان مورد نیاز *
-                    </label>
-                    <select
-                      id="timeline"
-                      name="timeline"
-                      value={formData().timeline}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      required
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="urgent">فوری (کمتر از ۱ هفته)</option>
-                      <option value="fast">سریع (۱-۲ هفته)</option>
-                      <option value="normal">عادی (۲-۴ هفته)</option>
-                      <option value="flexible">انعطاف‌پذیر (بیش از ۱ ماه)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label for="budget" class="block text-sm font-medium mb-2">
-                      بودجه تقریبی (تومان)
-                    </label>
-                    <select
-                      id="budget"
-                      name="budget"
-                      value={formData().budget}
-                      onChange={handleInputChange}
-                      class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    >
-                      <option value="">انتخاب کنید</option>
-                      <option value="basic">پایه (۵-۱۰ میلیون)</option>
-                      <option value="standard">استاندارد (۱۰-۲۰ میلیون)</option>
-                      <option value="premium">پریمیوم (۲۰-۵۰ میلیون)</option>
-                      <option value="enterprise">سازمانی (بیش از ۵۰ میلیون)</option>
-                      <option value="discuss">ترجیح می‌دهم بحث کنیم</option>
-                    </select>
-                  </div>
-                </div>
-
                 <div>
                   <label for="customization" class="block text-sm font-medium mb-2">
                     سفارشی‌سازی‌های خاص
