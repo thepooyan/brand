@@ -357,43 +357,6 @@ export default function OrderChatbotPage() {
               </div>
             </div>
 
-            {/* Integration Platform */}
-            <div class="bg-card p-6 rounded-lg border">
-              <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <div class="h-6 w-6 bg-primary/20 rounded flex items-center justify-center">
-                  <span class="text-primary text-sm font-bold">۴</span>
-                </div>
-                پلتفرم ادغام
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {integrationOptions.map((option) => (
-                  <label
-                    class={`flex items-start gap-4 p-4 border rounded-lg cursor-pointer transition-all ${
-                      formData().integrationPlatform === option.value
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/50"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="integrationPlatform"
-                      value={option.value}
-                      checked={formData().integrationPlatform === option.value}
-                      onChange={handleInputChange}
-                      class="mt-1"
-                    />
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2 mb-2">
-                        <option.icon class="h-5 w-5 text-primary" />
-                        <span class="font-medium">{option.label}</span>
-                      </div>
-                      <p class="text-sm text-muted-foreground">{option.description}</p>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
             {/* Project Details */}
             <div class="bg-card p-6 rounded-lg border">
               <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
