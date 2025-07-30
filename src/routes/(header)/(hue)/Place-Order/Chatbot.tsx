@@ -186,7 +186,10 @@ export default function OrderChatbotPage() {
 
               {/* Tone Selection */}
               <div class="mb-6">
-                <label class="block text-sm font-medium mb-3">انتخاب لحن چت‌بات *</label>
+                <label class="block text-sm font-medium mb-3">
+                  <RedStar/>
+                  انتخاب لحن چت‌بات
+                </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {toneOptions.map((tone) => (
                     <label
@@ -213,7 +216,10 @@ export default function OrderChatbotPage() {
 
               {/* Language Selection */}
               <div class="mb-6">
-                <label class="block text-sm font-medium mb-3">انتخاب زبان چت‌بات *</label>
+                <label class="block text-sm font-medium mb-3">
+                  <RedStar/>
+                  انتخاب زبان چت‌بات
+                </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {languageOptions.map((lang) => (
                     <label
@@ -239,7 +245,10 @@ export default function OrderChatbotPage() {
 
               {/* Response Length */}
               <div>
-                <label class="block text-sm font-medium mb-3">حداکثر طول پاسخ *</label>
+                <label class="block text-sm font-medium mb-3">
+                  <RedStar/>
+                  حداکثر طول پاسخ
+                </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {responseLengthOptions.map((option) => (
                     <label
