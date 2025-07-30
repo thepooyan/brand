@@ -4,6 +4,7 @@ check why view transition is not reliable (login and home button)
 compelete order status
 updating profile name two times breaks the app & profile does not work on could?
 put telegram bot somewhere
+save personal info on order requests
 
 -pend-review chatbot page
 -pend-make chatbot stuff

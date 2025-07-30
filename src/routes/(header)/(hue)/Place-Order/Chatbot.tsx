@@ -2,10 +2,11 @@ import { AiFillRobot } from "solid-icons/ai"
 import { FiUpload, FiGlobe,
   FiFileText, FiMessageSquare, FiSettings, 
   FiArrowRight} from "solid-icons/fi"
-import { createSignal } from "solid-js"
+import { createEffect, createSignal } from "solid-js"
 import RedStar from "~/components/parts/RedStar"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
+import { getUser } from "~/lib/signal"
 
 export default function OrderChatbotPage() {
   const [formData, setFormData] = createSignal({
@@ -24,6 +25,15 @@ export default function OrderChatbotPage() {
     budget: "",
     timeline: "",
     description: "",
+  })
+
+  const user = getUser()
+  createEffect(() => {
+    setFormData(prev => ({...prev,
+      name: String(user()?.name),
+      email: String(user()?.email),
+      phone: String(user()?.number),
+    }))
   })
 
   const [isSubmitting, setIsSubmitting] = createSignal(false)
@@ -159,22 +169,6 @@ export default function OrderChatbotPage() {
                     onChange={handleInputChange}
                     class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="example@email.com"
-                    required
-                  />
-                </div>
-                <div>
-                  <label for="phone" class="block text-sm font-medium mb-2">
-                    <RedStar/>
-                    شماره تماس
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData().phone}
-                    onChange={handleInputChange}
-                    class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-left"
-                    placeholder="09123456789"
                     required
                   />
                 </div>
