@@ -22,12 +22,9 @@ export default function OrderChatbotPage() {
     language: "",
     pdfFiles: [] as File[],
     websiteUrl: "",
-    additionalInfo: "",
+    trainingText: "",
     maxResponseLength: "medium",
-    integrationPlatform: "",
     customization: "",
-    budget: "",
-    timeline: "",
     description: "",
   })
 
@@ -356,9 +353,9 @@ export default function OrderChatbotPage() {
                   آموزش دستی چت‌بات
                 </label>
                 <textarea
-                  id="additionalInfo"
-                  name="additionalInfo"
-                  value={formData().additionalInfo}
+                  id="trainingText"
+                  name="trainingText"
+                  value={formData().trainingText}
                   onChange={handleInputChange}
                   rows={6}
                   class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"

@@ -1,6 +1,20 @@
 import { sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+export const chatbot = sqliteTable("chatbot", {
+  id: int().primaryKey({autoIncrement: true}),
+  userId: int().notNull().references(() => usersTable.id),
+  botName: text().notNull(),
+  business: text().notNull(),
+  tone: text().notNull(),
+  language: text().notNull(),
+  maxResponseLength: text().notNull(),
+  websiteUrl: text(),
+  trainingText: text(),
+  customization: text(),
+  description: text(),
+})
+
 export const websiteOrders = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
   budget: text(),
