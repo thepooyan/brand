@@ -36,3 +36,9 @@ export interface chatbotStatus {
   expirationDate: string,
   isActive: boolean,
 }
+
+export type ChangeEvent<T extends EventTarget> =
+  T extends EventTarget
+    ? Event & { currentTarget: T }
+    : Event
+

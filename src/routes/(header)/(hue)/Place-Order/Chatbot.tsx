@@ -1,7 +1,5 @@
 import { AiFillRobot } from "solid-icons/ai"
-import { FiUpload, FiGlobe,
-  FiFileText,
-  FiArrowRight} from "solid-icons/fi"
+import { FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import RedStar from "~/components/parts/RedStar"
@@ -9,7 +7,7 @@ import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { chatbot } from "~/db/schema"
-import { chatbotOrder } from "~/lib/interface"
+import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
 
@@ -43,8 +41,8 @@ export default function OrderChatbotPage() {
 
   const [isSubmitting, setIsSubmitting] = createSignal(false)
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
