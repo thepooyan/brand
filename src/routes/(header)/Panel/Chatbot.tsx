@@ -4,10 +4,19 @@ import { Button } from "~/components/ui/button"
 import { FiPlus, FiTrash2, FiPower, FiEdit, FiMessageCircle, FiKey, FiSend, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
 import { bots as dummy } from "~/data/dummy"
 import { createSignal } from "solid-js"
+import { callModal } from "~/components/layout/Modal"
+import { chatbotStatus } from "~/lib/interface"
 
 export default function Component() {
 
   const [bots, setBots] = createSignal(dummy)
+
+  const deleteBot = (bot: chatbotStatus) => {
+    callModal.prompt(`آیا مایل به حذف ربات "${bot.name}" هستید؟`)
+    .yes(() => {
+
+      })
+  }
 
   return (
     <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 " dir="rtl">
@@ -101,6 +110,8 @@ export default function Component() {
                       size="sm"
                       variant="outline"
                       class="flex-1 text-red-400 border-red-800 hover:bg-red-950 hover:text-red-300 bg-gray-800"
+                      onclick={() => deleteBot(bot)}
+
                     >
                       <FiTrash2 class="w-3 h-3 ml-1" />
                       حذف
