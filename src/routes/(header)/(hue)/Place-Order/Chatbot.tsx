@@ -57,12 +57,11 @@ export default function OrderChatbotPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call
     let result = await saveOrder(formData())
     if (result.ok) {
       callModal.success()
     } else {
-      callModal.fail()
+      callModal.fail(result.msg || "متسفانه خطایی رخ داده. لطفا مجددا تلاش کنید")
     }
 
     setIsSubmitting(false)
@@ -302,6 +301,25 @@ export default function OrderChatbotPage() {
                 منابع یادگیری چت‌بات
               </h2>
 
+              {/* Additional Information */}
+              <div>
+                <label for="additionalInfo" class="block text-sm font-medium mb-2">
+                  آموزش چت‌بات توسط متن
+                </label>
+                <textarea
+                  id="trainingText"
+                  name="trainingText"
+                  value={formData().trainingText}
+                  onChange={handleInputChange}
+                  rows={6}
+                  class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  placeholder="اطلاعات مهم درباره کسب‌وکار، محصولات، خدمات، سوالات متداول و هر چیزی که می‌خواهید چت‌بات درباره آن بداند را اینجا بنویسید..."
+                />
+                <p class="text-xs text-muted-foreground mt-1 mb-10">
+                  هر چه اطلاعات بیشتری ارائه دهید، چت‌بات دقیق‌تر و مفیدتر خواهد بود
+                </p>
+              </div>
+
               {/* PDF Upload */}
               <div class="mb-6">
                 <label class="block text-sm font-medium mb-3">
@@ -356,24 +374,6 @@ export default function OrderChatbotPage() {
                 </p>
               </div>
 
-              {/* Additional Information */}
-              <div>
-                <label for="additionalInfo" class="block text-sm font-medium mb-2">
-                  آموزش دستی چت‌بات
-                </label>
-                <textarea
-                  id="trainingText"
-                  name="trainingText"
-                  value={formData().trainingText}
-                  onChange={handleInputChange}
-                  rows={6}
-                  class="w-full px-4 py-3 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="اطلاعات مهم درباره کسب‌وکار، محصولات، خدمات، سوالات متداول و هر چیزی که می‌خواهید چت‌بات درباره آن بداند را اینجا بنویسید..."
-                />
-                <p class="text-xs text-muted-foreground mt-1">
-                  هر چه اطلاعات بیشتری ارائه دهید، چت‌بات دقیق‌تر و مفیدتر خواهد بود
-                </p>
-              </div>
             </div>
 
             {/* Project Details */}
