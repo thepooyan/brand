@@ -2,62 +2,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { FiPlus, FiTrash2, FiPower, FiEdit, FiMessageCircle, FiKey, FiSend, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
+import { bots as dummy } from "~/data/dummy"
+import { createSignal } from "solid-js"
 
 export default function Component() {
-  const bots = [
-    {
-      id: 1,
-      name: "پشتیبانی مشتریان",
-      plan: "حرفه ای",
-      messageCount: 15420,
-      remainingMessages: 4580,
-      expirationDate: "1403/08/15",
-      isActive: true,
-    },
-    {
-      id: 2,
-      name: "فروش محصولات",
-      plan: "استارتاپ",
-      messageCount: 8750,
-      remainingMessages: 1250,
-      expirationDate: "1403/07/22",
-      isActive: true,
-    },
-    {
-      id: 3,
-      name: "راهنمای تکنیکی",
-      plan: "رایگان",
-      messageCount: 450,
-      remainingMessages: 50,
-      expirationDate: "1403/06/30",
-      isActive: false,
-    },
-    {
-      id: 4,
-      name: "اطلاعات عمومی",
-      plan: "استارتاپ",
-      messageCount: 6200,
-      remainingMessages: 3800,
-      expirationDate: "1403/09/10",
-      isActive: true,
-    },
-  ]
 
-  const getPlanColor = (plan: string) => {
-    switch (plan) {
-      case "رایگان":
-        return "bg-gray-800 text-gray-200 border border-gray-700"
-      case "استارتاپ":
-        return "bg-primary-900 text-primary-200 border border-primary-800"
-      case "حرفه ای":
-        return "bg-primary text-white border border-primary-600"
-      default:
-        return "bg-gray-800 text-gray-200"
-    }
-  }
+  const [bots, setBots] = createSignal(dummy)
 
   return (
-    <div class="min-h-screen bg-black p-6" dir="rtl">
+    <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 " dir="rtl">
       <div class="max-w-7xl mx-auto">
         {/* Header */}
         <div class="flex items-center justify-between mb-8">
@@ -79,7 +32,7 @@ export default function Component() {
               class="gap-2 border-primary-700 text-primary-300 hover:bg-primary-950 hover:text-primary-200 bg-gray-900"
             >
               <FiGlobe class="w-4 h-4" />
-              ویجت سایت
+              آموزش استفاده به عنوان ویجت
             </Button>
             <Button
               variant="outline"
@@ -93,8 +46,8 @@ export default function Component() {
         </div>
 
         {/* Bots Grid */}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {bots.map((bot) => (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-10">
+          {bots().map((bot) => (
             <Card
               class="hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 border-gray-800 bg-gray-900 hover:border-primary-700"
             >
@@ -102,7 +55,6 @@ export default function Component() {
                 <div class="flex items-center justify-between">
                   <CardTitle class="text-lg text-white">{bot.name}</CardTitle>
                   <div class="flex items-center gap-2">
-                    <Badge class={getPlanColor(bot.plan)}>{bot.plan}</Badge>
                     <Badge class={bot.isActive ? "bg-green-600 text-white" : "bg-red-600 text-white"}>
                       {bot.isActive ? "فعال" : "غیرفعال"}
                     </Badge>

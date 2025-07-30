@@ -11,3 +11,13 @@ export interface websiteOrder {
   timeline: string,
   websiteType: string,
 }
+
+export interface chatbotStatus {
+  id: number,
+  name: string,
+  plan: string,
+  messageCount: number,
+  remainingMessages: number,
+  expirationDate: string,
+  isActive: boolean,
+}
