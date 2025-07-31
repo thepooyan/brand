@@ -1,3 +1,4 @@
+import { useNavigate } from "@solidjs/router"
 import { AiFillRobot } from "solid-icons/ai"
 import { FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
@@ -41,15 +42,17 @@ export default function OrderChatbotPage() {
 
   const [isSubmitting, setIsSubmitting] = createSignal(false)
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleFileUpload = (files: FileList | null) => {
-    const f = Array.from(files || [])
-    setFormData((prev) => ({ ...prev, pdfFiles: f }))
-  }
+  // const handleFileUpload = (files: FileList | null) => {
+  //   const f = Array.from(files || [])
+  //   setFormData((prev) => ({ ...prev, pdfFiles: f }))
+  // }
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -58,8 +61,9 @@ export default function OrderChatbotPage() {
     let result = await saveOrder(formData())
     if (result.ok) {
       callModal.success()
+      navigate(`/panel/Testbot/${result.data}`)
     } else {
-      callModal.fail(result.msg || "متسفانه خطایی رخ داده. لطفا مجددا تلاش کنید")
+      callModal.fail(result.msg)
     }
 
     setIsSubmitting(false)
@@ -434,7 +438,12 @@ export default function OrderChatbotPage() {
   )
 }
 
-const saveOrder = async (order: chatbotOrder) => {
+type success<T> = {ok: true, data: T}
+type fail = {ok: false, msg: string}
+type result<T> = success<T> | fail
+type response<T> = Promise<result<T>>
+
+const saveOrder = async (order: chatbotOrder):response<number> => {
   "use server"
   try {
 
@@ -444,8 +453,10 @@ const saveOrder = async (order: chatbotOrder) => {
       ...order,
       userId: user.id
     }
-    await db.insert(chatbot).values(values)
-    return {ok: true}
+
+    let [row] = await db.insert(chatbot).values(values).returning({id: chatbot.id})
+
+    return {ok: true, data: row.id}
 
   } catch(e) {
     console.log(e)
