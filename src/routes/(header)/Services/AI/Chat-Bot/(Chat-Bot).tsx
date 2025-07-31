@@ -13,6 +13,8 @@ export default function ChatBot() {
 
   preload("/Services/Chat-Bot/Demo")
 
+  let chatboxRef!: HTMLDivElement
+
   return (
     <main {...pageMarker()}>
       <div class="container mx-auto px-4 py-8">
@@ -46,7 +48,7 @@ export default function ChatBot() {
               درخواست مشاوره رایگان
             </Button>
             <Button class="px-8 py-6 text-lg"
-              variant="secondary" as={TA} href="Demo"
+              variant="secondary" onclick={() => chatboxRef.scrollIntoView({behavior: "smooth"})}
             >
               امتحان کنید!
             </Button>
