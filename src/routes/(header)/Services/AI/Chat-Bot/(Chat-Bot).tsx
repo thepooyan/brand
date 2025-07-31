@@ -1,13 +1,12 @@
-
 import { pageMarker } from "~/lib/routeChangeTransition"
 import { FiMessageSquare, FiArrowRight} from "solid-icons/fi"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { callModal } from "~/components/layout/Modal"
 import ContactInfo from "~/components/parts/ContactInfo"
-import MinimalChat from "~/components/parts/chat/MinimalChat"
 import { features, integrationOptions } from "~/data/abstract"
 import { preload } from "~/lib/hooks"
+import ChatSample from "~/components/parts/chat/ChatSample"
 
 
 export default function ChatBot() {
@@ -105,7 +104,7 @@ export default function ChatBot() {
           </div>
         </div>
 
-        <MinimalChat/>
+        <ChatSample/>
 
         {/* CTA Section */}
         <div class="bg-card p-8 rounded-lg border text-center">
