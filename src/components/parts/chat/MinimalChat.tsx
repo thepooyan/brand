@@ -6,31 +6,18 @@ import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
 import { getUser } from "~/lib/signal";
 
-interface Message {
-  id: string
-  text: string
-  isUser: boolean
-  timestamp: Date
-}
-
 const MinimalChat = () => {
   const {id} = useParams()
   const user = getUser()
   let anchor!: HTMLDivElement
-
-  // const {messages, send, pending, streaming} = useUserChat( String(user()?.id), id )(() => anchor)
-
-  const [messages, setMessages] = createSignal<Message[]>([
-    {
-      id: "1",
-      text: `سلام! من دستیار هوشمند ${name} هستم. چطور می‌تونم کمکتون کنم؟`,
-      isUser: false,
-      timestamp: new Date(),
-    },
-  ])
-  const [inputMessage, setInputMessage] = createSignal("")
-  const [isTyping, setIsTyping] = createSignal(false)
   let messagesRailRef!: HTMLDivElement
+
+  const {messages, send, pending, streaming} = useUserChat( String(user()?.id), id )(() => anchor)
+  const [inputMessage, setInputMessage] = createSignal("")
+
+  const proccessing = () => {
+    return pending() || streaming()
+  }
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({
@@ -46,43 +33,8 @@ const MinimalChat = () => {
 
   const handleSendMessage = async () => {
     if (!inputMessage().trim()) return
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: inputMessage(),
-      isUser: true,
-      timestamp: new Date(),
-    }
-
-    setMessages((prev) => [...prev, userMessage])
+    send(inputMessage().trim())
     setInputMessage("")
-    setIsTyping(true)
-
-    // Simulate AI response
-    setTimeout(
-      () => {
-        const responses = [
-          "بله، ما می‌تونیم چت‌بات هوشمند برای کسب و کار شما طراحی کنیم که در تلگرام، وب‌سایت و از طریق API قابل استفاده باشه.",
-          "چت‌بات‌های ما با هوش مصنوعی پیشرفته کار می‌کنن و می‌تونن به سوالات مشتریان شما پاسخ بدن.",
-          "ما چت‌بات‌هایی طراحی می‌کنیم که ۲۴ ساعته در دسترس هستن و می‌تونن حجم زیادی از درخواست‌ها رو مدیریت کنن.",
-          "قیمت چت‌بات بستگی به پیچیدگی و ویژگی‌هاش داره. می‌تونیم یه جلسه مشاوره رایگان داشته باشیم.",
-          "چت‌بات‌های ما قابلیت یادگیری دارن و با گذشت زمان بهتر عمل می‌کنن.",
-        ]
-
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)]
-
-        const aiMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: randomResponse,
-          isUser: false,
-          timestamp: new Date(),
-        }
-
-        setMessages((prev) => [...prev, aiMessage])
-        setIsTyping(false)
-      },
-      1000 + Math.random() * 2000,
-    )
   }
 
   const handleKeyPress = (e: any) => {
@@ -111,24 +63,26 @@ const MinimalChat = () => {
           {/* Chat Messages */}
           <div class="h-96 overflow-y-auto p-4 space-y-4" ref={messagesRailRef}>
             {messages().map((message) => (
-              <div  class={`flex ${message.isUser ? "justify-start" : "justify-end"}`}>
+              <div  class={`flex ${message.role === "user" ? "justify-start" : "justify-end"}`}>
                 <div
                   class={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                    message.isUser ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                    message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                   }`}
                 >
-                  <p class="text-sm">{message.text}</p>
-                  <p class="text-xs opacity-70 mt-1">
+                  <p class="text-sm">{message.content}</p>
+                  {/*<p class="text-xs opacity-70 mt-1">
                     {message.timestamp.toLocaleTimeString("fa-IR", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
-                  </p>
+                  </p>*/}
                 </div>
               </div>
             ))}
 
-            {isTyping() && (
+            <div ref={anchor}></div>
+
+            {pending() && (
               <div class="flex justify-end">
                 <div class="bg-muted text-muted-foreground px-4 py-2 rounded-lg">
                   <div class="flex space-x-1 py-2">
@@ -157,11 +111,11 @@ const MinimalChat = () => {
                 onKeyPress={handleKeyPress}
                 placeholder="پیام خود را بنویسید..."
                 class="flex-1 px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                disabled={isTyping()}
+                disabled={proccessing()}
               />
               <Button
                 onClick={handleSendMessage}
-                disabled={!inputMessage().trim() || isTyping()}
+                disabled={!inputMessage().trim() || proccessing()}
                 class="bg-primary hover:bg-primary/90 text-primary-foreground"
               >
                 <FiSend class="h-4 w-4" />
