@@ -10,7 +10,7 @@ export const chatbot = sqliteTable("chatbot", {
   language: text().notNull(),
   maxResponseLength: text().notNull(),
   websiteUrl: text(),
-  trainingText: text(),
+  trainingText: text().notNull(),
   customization: text(),
   description: text(),
 })

@@ -5,79 +5,87 @@ export type message = {
   content: string
 };
 
-export const useChat = (getAnchor: () => HTMLElement) => {
-  const {pushToBuffer, onCleanup} = buffer()
-  const [messages, setMessages] = createSignal<message[]>([]);
-  const [pending, setPending] = createSignal(false);
-  const [streaming, setStreaming] = createSignal(false);
-  let streamDone = true
-  let response = ""
 
-  const send = async (message: string) => {
-    setPending(true);
-    const updated = [...messages(), { role: "user", content: message } as message];
-    setMessages(updated);
+const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: updated }),
-    });
+  return (getAnchor: () => HTMLElement) => {
+    const {pushToBuffer, onCleanup} = buffer()
+    const [messages, setMessages] = createSignal<message[]>([]);
+    const [pending, setPending] = createSignal(false);
+    const [streaming, setStreaming] = createSignal(false);
+    let streamDone = true
+    let response = ""
 
-    setPending(false);
-    setStreaming(true)
-    streamDone = false
+    const send = async (message: string) => {
+      setPending(true);
+      const updated = [...messages(), { role: "user", content: message } as message];
+      setMessages(updated);
 
-    const reader = res.body?.getReader();
-    if (!reader) { return }
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: updated, ...args }),
+      });
 
-    const decoder = new TextDecoder();
-    let buffer = "";
+      setPending(false);
+      setStreaming(true)
+      streamDone = false
 
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) {
-        streamDone = true
-        console.log("stream done")
-        break
-      }
+      const reader = res.body?.getReader();
+      if (!reader) { return }
 
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop()!;
+      const decoder = new TextDecoder();
+      let buffer = "";
 
-      for (const line of lines) {
-        if (line.startsWith("0:")) {
-          let chunk = line.slice(2).trim();
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) {
+          streamDone = true
+          console.log("stream done")
+          break
+        }
 
-          // remove wrapping quotes if present
-          if (chunk.startsWith('"') && chunk.endsWith('"')) {
-            chunk = chunk.slice(1, -1);
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop()!;
+
+        for (const line of lines) {
+          if (line.startsWith("0:")) {
+            let chunk = line.slice(2).trim();
+
+            // remove wrapping quotes if present
+            if (chunk.startsWith('"') && chunk.endsWith('"')) {
+              chunk = chunk.slice(1, -1);
+            }
+
+            // decode escaped characters like \n, \"
+            try {
+              chunk = JSON.parse(`"${chunk}"`);
+            } catch {
+              // fallback: use raw if JSON decoding fails
+            }
+
+            response += chunk
+            pushToBuffer(chunk, getAnchor())
           }
-
-          // decode escaped characters like \n, \"
-          try {
-            chunk = JSON.parse(`"${chunk}"`);
-          } catch {
-            // fallback: use raw if JSON decoding fails
-          }
-
-          response += chunk
-          pushToBuffer(chunk, getAnchor())
         }
       }
-    }
 
-    onCleanup(() => {
-      if (!streamDone) return
-      setMessages(prev => [...prev, { role: "assistant", content: response }]);
-      setStreaming(false)
-      response = ""
-    })
+      onCleanup(() => {
+        if (!streamDone) return
+        setMessages(prev => [...prev, { role: "assistant", content: response }]);
+        setStreaming(false)
+        response = ""
+      })
+    };
+
+    return { send, messages, pending, streaming };
   };
+}
 
-  return { send, messages, pending, streaming };
-};
+export const useChat = getUseChat("/api/chat")
+
+export const useUserChat = (userId: string, botId: string) => getUseChat("/api/UserChat", {userId, botId})
 
 const buffer = () => {
   let isTyping = false;
