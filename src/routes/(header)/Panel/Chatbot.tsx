@@ -10,6 +10,7 @@ import { getAuthSession } from "~/lib/session"
 import { Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
+import { pageMarker } from "~/lib/routeChangeTransition"
 
 const getBots = query(async () => {
   "use server"
@@ -39,7 +40,7 @@ export default function Component() {
   }
 
   return (
-    <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 " dir="rtl">
+    <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 " {...pageMarker()} >
       <div class="max-w-7xl mx-auto">
         {/* Header */}
         <div class="flex items-center justify-between mb-8">
