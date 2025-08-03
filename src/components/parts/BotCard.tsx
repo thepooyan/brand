@@ -58,7 +58,7 @@ const BotCard = ({bot}:props) => {
           <div
             class="bg-primary h-2 rounded-full transition-all duration-300"
             style={{
-              width: `${(bot.remainingMessages / (bot.messageCount + bot.remainingMessages)) * 100}%`,
+              width: `${(bot.remainingMessages / bot.messageCount ) * 100}%`,
             }}
           />
         </div>
