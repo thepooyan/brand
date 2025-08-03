@@ -1,6 +1,6 @@
 import { name, nameEn } from "../../../../config/config";
 import { FiSend } from "solid-icons/fi"
-import { createEffect, createSignal } from "solid-js"
+import { createEffect, createSignal, ParentProps, Show } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
 import { usersTable } from "~/db/schema";
@@ -10,6 +10,21 @@ interface props {
   user: typeof usersTable.$inferSelect,
   botId: string
 }
+
+const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) => {
+  return (
+    <div class={`flex ${props.right === true ? "justify-start" : "justify-end"}`}>
+      <div
+        class={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+          props.right === true ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+        }`}
+      >
+        <p class="text-sm" ref={props.ref}>{props.children}</p>
+      </div>
+    </div>
+  )
+}
+
 const MinimalChat = ({user, botId}:props) => {
   let anchor!: HTMLDivElement
   let messagesRailRef!: HTMLDivElement
@@ -73,24 +88,10 @@ const MinimalChat = ({user, botId}:props) => {
           {/* Chat Messages */}
           <div class="h-96 overflow-y-auto p-4 space-y-4" ref={messagesRailRef}>
             {messages().map((message) => (
-              <div  class={`flex ${message.role === "user" ? "justify-start" : "justify-end"}`}>
-                <div
-                  class={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                    message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  <p class="text-sm">{message.content}</p>
-                  {/*<p class="text-xs opacity-70 mt-1">
-                    {message.timestamp.toLocaleTimeString("fa-IR", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>*/}
-                </div>
-              </div>
+              <Message right={message.role === "user"}>
+                {message.content}
+              </Message>
             ))}
-
-            <div ref={anchor}></div>
 
             {pending() && (
               <div class="flex justify-end">
@@ -109,6 +110,10 @@ const MinimalChat = ({user, botId}:props) => {
                 </div>
               </div>
             )}
+
+            <Show when={streaming()}>
+              <Message ref={anchor}></Message>
+            </Show>
           </div>
 
           {/* Chat Input */}
