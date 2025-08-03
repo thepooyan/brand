@@ -57,6 +57,7 @@ export default function OrderChatbotPage() {
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setIsSubmitting(true)
+    callModal.wait()
 
     let result = await saveOrder(formData())
     if (result.ok) {
