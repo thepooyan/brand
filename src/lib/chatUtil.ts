@@ -30,6 +30,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
       setPending(false);
       if (res.status === 404) return setErrorMsg("متاسفانه ربات مورد نظر پیدا نشد!")
+      if (res.status === 402) return setErrorMsg("متاسفانه اعتبار شما به پایان رسیده است.")
       setStreaming(true)
       streamDone = false
 

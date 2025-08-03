@@ -1,8 +1,8 @@
 import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import { db } from '~/db/db';
-import { chatbot } from '~/db/schema';
+import { chatbot, chatbot_status } from '~/db/schema';
 import { getSystemPrompt } from '~/server/util';
 
 // Allow streaming responses up to 30 seconds
@@ -13,8 +13,11 @@ export async function POST({request}:{request: Request}) {
 
   const bot = await getUserBot(userId, botId)
 
-  if (!bot)
+  if (bot === "404")
     return new Response("Not found", {status: 404})
+
+  if (bot === "empty")
+    return new Response("No credit left", {status: 402})
 
   const result = streamText({
     model: google('gemini-2.5-flash'),
@@ -25,13 +28,26 @@ export async function POST({request}:{request: Request}) {
   return result.toDataStreamResponse()
 }
 
-const getUserBot = async (userId:string, botId:string) => {
-  return (await db.select()
+const getUserBot = async (userId: string, botId: string) => {
+  const bot = (await db.select()
     .from(chatbot)
+    .leftJoin(chatbot_status, eq(chatbot.id, chatbot_status.id))
     .where(
       and(
-        eq(chatbot.userId, parseInt(userId)), 
+        eq(chatbot.userId, parseInt(userId)),
         eq(chatbot.id, parseInt(botId))
       )
     )).at(0)
+
+  if (!bot) return "404"
+  if (bot.chatbot_status?.remainingMessages !> 0) return "empty"
+
+  await db.update(chatbot_status)
+    .set({
+      remainingMessages: sql`${chatbot_status.remainingMessages} - 1`
+    })
+    .where(eq(chatbot_status.id, bot.chatbot.id))
+
+  return bot.chatbot
 }
+
