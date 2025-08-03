@@ -11,6 +11,7 @@ import { chatbot } from "~/db/schema"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
+import { ToneOptions } from "~/server/llm-generation"
 
 export default function OrderChatbotPage() {
 
@@ -70,13 +71,6 @@ export default function OrderChatbotPage() {
     setIsSubmitting(false)
   }
 
-  const toneOptions = [
-    { value: "formal", label: "رسمی", description: "مناسب برای کسب‌وکارهای جدی و حرفه‌ای" },
-    { value: "friendly", label: "دوستانه", description: "صمیمی و گرم برای ارتباط نزدیک با مشتریان" },
-    { value: "professional", label: "حرفه‌ای", description: "متعادل بین رسمی و دوستانه" },
-    { value: "enthusiastic", label: "پرانرژی", description: "مثبت و انگیزه‌بخش" },
-    { value: "helpful", label: "کمک‌کننده", description: "متمرکز بر حل مشکل و راهنمایی" },
-  ]
 
   const languageOptions = [
     { value: "persian", label: "فارسی", flag: "🇮🇷" },
@@ -208,10 +202,10 @@ export default function OrderChatbotPage() {
                   انتخاب لحن چت‌بات
                 </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {toneOptions.map((tone) => (
+                  {Object.entries(ToneOptions).map(([name, tone]) => (
                     <label
                       class={`flex gap-3 p-4 border rounded-lg cursor-pointer transition-all ${
-                        formData().tone === tone.value
+                        formData().tone === name
                           ? "border-primary bg-primary/5"
                           : "border-border hover:border-primary/50"
                       }`}
@@ -219,8 +213,8 @@ export default function OrderChatbotPage() {
                       <input
                         type="radio"
                         name="tone"
-                        value={tone.value}
-                        checked={formData().tone === tone.value}
+                        value={name}
+                        checked={formData().tone === name}
                         onChange={handleInputChange}
                         class="mb-2"
                       />
