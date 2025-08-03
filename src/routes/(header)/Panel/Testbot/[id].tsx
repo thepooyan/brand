@@ -1,6 +1,7 @@
 import { useParams } from "@solidjs/router"
 import { Show } from "solid-js"
 import MinimalChat from "~/components/parts/chat/MinimalChat"
+import Spinner from "~/components/parts/Spinner"
 import { getUser } from "~/lib/signal"
 
 const testbot = () => {
@@ -8,7 +9,7 @@ const testbot = () => {
   const user = getUser()
   return (
     <>
-      <Show when={user()} fallback="loading...">
+      <Show when={user()} fallback={<Spinner/>}>
         {u => <MinimalChat botId={params.id} user={u()}/>}
       </Show>
     </>
