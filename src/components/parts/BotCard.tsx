@@ -5,17 +5,20 @@ import { Button } from "~/components/ui/button"
 import { FiTrash2, FiEdit, FiKey, FiSend } from "solid-icons/fi"
 import { ImTelegram } from "solid-icons/im"
 import { chatbotStatus } from "~/lib/interface"
+import { callModal } from "../layout/Modal"
 
 interface props {
   bot: chatbotStatus
 }
 const BotCard = ({bot}:props) => {
 
-  const deleteBot = () => {}
+  const deleteBot = () => {
+    callModal.prompt(`ربات "${bot.botName}" حذف شود؟`)
+  }
 
   return (
     <Card
-      class="hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 border-gray-800 bg-gray-900 hover:border-primary-700"
+      class=" border-gray-800 bg-gray-900 "
     >
       <CardHeader class="pb-4">
         <div class="flex items-center justify-between">
