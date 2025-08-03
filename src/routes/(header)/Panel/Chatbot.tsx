@@ -2,15 +2,45 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { FiPlus, FiTrash2, FiEdit, FiKey, FiSend, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
-import { bots as dummy } from "~/data/dummy"
-import { createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
 import { ImTelegram } from "solid-icons/im"
+import { createAsync, query, redirect } from "@solidjs/router"
+import { db } from "~/db/db"
+import { chatbot, chatbot_status } from "~/db/schema"
+import { eq } from "drizzle-orm"
+import { getAuthSession } from "~/lib/session"
+import { createEffect } from "solid-js"
+
+const getBots = query(async () => {
+  "use server"
+  const user = await getAuthSession()
+  if (!user) throw redirect("/Login?back=/panel/ChatBot")
+
+  return await db
+  .select({
+    id: chatbot_status.id,
+    plan: chatbot_status.plan,
+    messageCount: chatbot_status.messageCount,
+    remainingMessages: chatbot_status.remainingMessages,
+    expirationDate: chatbot_status.expirationDate,
+    botName: chatbot.botName,
+  })
+  .from(chatbot_status)
+  .innerJoin(chatbot, eq(chatbot_status.id, chatbot.id))
+  .where(eq(chatbot.id, user.id))
+
+}, "bots")
 
 export default function Component() {
 
-  const [bots, setBots] = createSignal(dummy)
+  const bot = createAsync(() => getBots())
+  
+  createEffect(() => {
+    console.log(bot())
+  })
+
+  let bots= () => []
 
   const deleteBot = (bot: chatbotStatus) => {
     callModal.prompt(`آیا مایل به حذف ربات "${bot.name}" هستید؟`)
@@ -57,7 +87,7 @@ export default function Component() {
 
         {/* Bots Grid */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-10">
-          {bots().map((bot) => (
+          {bots()?.map((bot) => (
             <Card
               class="hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 border-gray-800 bg-gray-900 hover:border-primary-700"
             >
