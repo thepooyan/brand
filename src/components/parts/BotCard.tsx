@@ -6,6 +6,7 @@ import { FiTrash2, FiEdit, FiKey, FiSend } from "solid-icons/fi"
 import { ImTelegram } from "solid-icons/im"
 import { chatbotStatus } from "~/lib/interface"
 import { callModal } from "../layout/Modal"
+import TA from "./TA"
 
 interface props {
   bot: chatbotStatus
@@ -110,6 +111,7 @@ const BotCard = ({bot}:props) => {
           <Button
             size="sm"
             class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
+            as={TA} href={`/Panel/Testbot/${bot.id}`}
           >
             <FiSend class="w-3 h-3 ml-1" />
             ارسال پیام
