@@ -1,18 +1,19 @@
-import { useParams } from "@solidjs/router";
 import { name, nameEn } from "../../../../config/config";
 import { FiSend } from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
-import { getUser } from "~/lib/signal";
+import { usersTable } from "~/db/schema";
 
-const MinimalChat = () => {
-  const {id} = useParams()
-  const user = getUser()
+interface props {
+  user: typeof usersTable.$inferSelect,
+  botId: string
+}
+const MinimalChat = ({user, botId}:props) => {
   let anchor!: HTMLDivElement
   let messagesRailRef!: HTMLDivElement
 
-  const {messages, send, pending, streaming} = useUserChat( String(user()?.id), id )(() => anchor)
+  const {messages, send, pending, streaming} = useUserChat( String(user.id), botId )(() => anchor)
   const [inputMessage, setInputMessage] = createSignal("")
 
   const proccessing = () => {
