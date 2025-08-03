@@ -80,7 +80,7 @@ export default function Component() {
             {pBots()?.map((bot) => <BotCard bot={bot} />)}
           </Suspense>
           {/* Add New Bot Card */}
-          <Card class="hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 border-gray-800 bg-gray-900 hover:border-primary-700 border-dashed border-2">
+          <Card class="border-gray-800 bg-gray-900 border-dashed border-2">
             <CardContent class="flex flex-col items-center justify-center h-full py-12">
               <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
                 <FiPlus class="w-6 h-6 text-primary" />

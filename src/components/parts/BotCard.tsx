@@ -124,7 +124,7 @@ export default BotCard
 
 export const BotCardFallback = () => {
   return <div
-    class=" h-97 w-97 rounded-md bg-gray-900 animate-pulse flex justify-center"
+    class=" h-97 w-96 rounded-md bg-gray-900 animate-pulse flex justify-center border-2 border-dashed border-gray-800"
   >
     <Spinner reverse/>
   </div>
