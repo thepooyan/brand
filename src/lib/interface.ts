@@ -29,12 +29,12 @@ export interface websiteOrder {
 
 export interface chatbotStatus {
   id: number,
-  name: string,
+  botName: string,
   plan: string,
   messageCount: number,
   remainingMessages: number,
-  expirationDate: string,
-  isActive: boolean,
+  expirationDate: Date,
+  isActive: boolean
 }
 
 export type ChangeEvent<T extends EventTarget> =

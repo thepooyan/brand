@@ -1,25 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
-import { Badge } from "~/components/ui/badge"
+import { Card, CardContent,  } from "~/components/ui/card"
 import { Button } from "~/components/ui/button"
-import { FiPlus, FiTrash2, FiEdit, FiKey, FiSend, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
-import { callModal } from "~/components/layout/Modal"
+import { FiPlus, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
 import { chatbotStatus } from "~/lib/interface"
-import { ImTelegram } from "solid-icons/im"
 import { createAsync, query, redirect } from "@solidjs/router"
 import { db } from "~/db/db"
 import { chatbot, chatbot_status } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
-import { createEffect, Suspense } from "solid-js"
+import { Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
-import { BotCardFallback } from "~/components/parts/BotCard"
+import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
 
 const getBots = query(async () => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")
 
-  return await db
+  return (await db
   .select({
     id: chatbot_status.id,
     plan: chatbot_status.plan,
@@ -30,22 +27,15 @@ const getBots = query(async () => {
   })
   .from(chatbot_status)
   .innerJoin(chatbot, eq(chatbot_status.id, chatbot.id))
-  .where(eq(chatbot.userId, user.id))
+  .where(eq(chatbot.userId, user.id)))
 }, "bots")
 
 export default function Component() {
 
   const bots = createAsync(() => getBots())
 
-  const pBots = () => {
-    return bots()?.map((b) => ({...b, isActive: b.remainingMessages !== 0 }))
-  }
-
-  const deleteBot = (bot: typeof chatbot_status.$inferSelect & {botName: string}) => {
-    callModal.prompt(`آیا مایل به حذف ربات "${bot.botName}" هستید؟`)
-    .yes(() => {
-
-      })
+  const pBots = ():chatbotStatus[] => {
+    return bots()?.map((b) => ({...b, isActive: b.remainingMessages !== 0 })) || []
   }
 
   return (
@@ -87,108 +77,7 @@ export default function Component() {
         {/* Bots Grid */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-10">
           <Suspense fallback={<BotCardFallback/>}>
-            {pBots()?.map((bot) => (
-              <Card
-                class="hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 border-gray-800 bg-gray-900 hover:border-primary-700"
-              >
-                <CardHeader class="pb-4">
-                  <div class="flex items-center justify-between">
-                    <CardTitle class="text-lg text-white">{bot.botName}</CardTitle>
-                    <div class="flex items-center gap-2">
-                      <Badge class={bot.isActive ? "bg-green-600 text-white" : "bg-red-600 text-white"}>
-                        {bot.isActive ? "فعال" : "غیرفعال"}
-                      </Badge>
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent class="space-y-4">
-                  {/* Bot Info */}
-                  <div class="space-y-3 text-sm">
-                    <div class="flex justify-between">
-                      <span class="text-gray-400">پلن:</span>
-                      <span class="font-medium text-white">{bot.plan}</span>
-                    </div>
-                    <div class="flex justify-between">
-                      <span class="text-gray-400">تعداد پیام:</span>
-                      <span class="font-medium text-white">{bot.messageCount.toLocaleString("fa-IR")}</span>
-                    </div>
-                    <div class="flex justify-between">
-                      <span class="text-gray-400">تعداد پیام باقی مانده:</span>
-                      <span class="font-medium text-white">{bot.remainingMessages.toLocaleString("fa-IR")}</span>
-                    </div>
-                    <div class="flex justify-between">
-                      <span class="text-gray-400">تاریخ انقضا:</span>
-                      <span class="font-medium text-white">{bot.expirationDate.getDate()}</span>
-                    </div>
-                  </div>
-
-                  {/* Progress Bar for Remaining Messages */}
-                  <div class="w-full bg-gray-800 rounded-full h-2">
-                    <div
-                      class="bg-primary h-2 rounded-full transition-all duration-300"
-                      style={{
-                        width: `${(bot.remainingMessages / (bot.messageCount + bot.remainingMessages)) * 100}%`,
-                      }}
-                    />
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div class="space-y-3 pt-2">
-                    {/* First Group: Delete, Deactivate, Edit */}
-                    <div class="flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        class="flex-1 text-red-400 border-red-800 hover:bg-red-950 hover:text-red-300 bg-gray-800"
-                        onclick={() => deleteBot(bot)}
-
-                      >
-                        <FiTrash2 class="w-3 h-3 ml-1" />
-                        حذف
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
-                      >
-                        <FiEdit class="w-3 h-3 ml-1" />
-                        ویرایش
-                      </Button>
-                    </div>
-
-                    {/* Second Group: Connect to Telegram, Switch Token */}
-                    <div class="flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        class="flex-1 text-primary-300 border-primary-800 hover:bg-primary-950 hover:text-primary-200 bg-gray-800"
-                      >
-                        <ImTelegram class="w-3 h-3 ml-1" />
-                        اتصال به تلگرام
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
-                      >
-                        <FiKey class="w-3 h-3 ml-1" />
-                        تغییر توکن
-                      </Button>
-                    </div>
-
-                    {/* Third Group: Send Message (Separate) */}
-                    <Button
-                      size="sm"
-                      class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
-                    >
-                      <FiSend class="w-3 h-3 ml-1" />
-                      ارسال پیام
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {pBots()?.map((bot) => <BotCard bot={bot} />)}
           </Suspense>
           {/* Add New Bot Card */}
           <Card class="hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 border-gray-800 bg-gray-900 hover:border-primary-700 border-dashed border-2">
