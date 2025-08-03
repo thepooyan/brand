@@ -3,6 +3,7 @@ import { streamText } from 'ai';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { chatbot } from '~/db/schema';
+import { getSystemPrompt } from '~/server/util';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -17,7 +18,7 @@ export async function POST({request}:{request: Request}) {
 
   const result = streamText({
     model: google('gemini-2.5-flash'),
-    system: bot.trainingText,
+    system: getSystemPrompt(bot),
     messages,
   });
 
