@@ -11,6 +11,7 @@ import { chatbot, chatbot_status } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { createEffect } from "solid-js"
+import TA from "~/components/parts/TA"
 
 const getBots = query(async () => {
   "use server"
@@ -197,7 +198,9 @@ export default function Component() {
               </div>
               <h3 class="text-lg font-medium mb-2 text-white">افزودن ربات جدید</h3>
               <p class="text-sm text-gray-400 text-center mb-4">یک چت بات جدید برای کسب و کار خود ایجاد کنید</p>
-              <Button class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300">
+              <Button class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
+                as={TA} href="/Place-Order/Chatbot"
+              >
                 <FiPlus class="w-4 h-4 ml-1" />
                 ایجاد چت بات
               </Button>
