@@ -7,6 +7,7 @@ import { ImTelegram } from "solid-icons/im"
 import { chatbotStatus } from "~/lib/interface"
 import { callModal } from "../layout/Modal"
 import TA from "./TA"
+import { cn } from "~/lib/utils"
 
 interface props {
   bot: chatbotStatus
@@ -110,7 +111,9 @@ const BotCard = ({bot}:props) => {
           {/* Third Group: Send Message (Separate) */}
           <Button
             size="sm"
-            class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
+            class={cn("w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300",
+              !bot.isActive && "opacity-30 pointer-events-none "
+            )}
             as={TA} href={`/Panel/Testbot/${bot.id}`}
           >
             <FiSend class="w-3 h-3 ml-1" />
