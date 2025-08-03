@@ -11,7 +11,7 @@ import { chatbot } from "~/db/schema"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
-import { ToneOptions } from "~/server/llm-generation"
+import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llm-generation"
 
 export default function OrderChatbotPage() {
 
@@ -70,20 +70,6 @@ export default function OrderChatbotPage() {
 
     setIsSubmitting(false)
   }
-
-
-  const languageOptions = [
-    { value: "persian", label: "فارسی", flag: "🇮🇷" },
-    { value: "english", label: "انگلیسی", flag: "🇺🇸" },
-    { value: "bilingual", label: "دوزبانه (فارسی + انگلیسی)", flag: "🌐" },
-  ]
-
-  const responseLengthOptions = [
-    { value: "short", label: "کوتاه", description: "۱-۲ جمله (تا ۵۰ کلمه)" },
-    { value: "medium", label: "متوسط", description: "۲-۴ جمله (۵۰-۱۰۰ کلمه)" },
-    { value: "long", label: "بلند", description: "۴-۶ جمله (۱۰۰-۲۰۰ کلمه)" },
-    { value: "detailed", label: "تفصیلی", description: "بیش از ۶ جمله (۲۰۰+ کلمه)" },
-  ]
 
   return (
     <>
@@ -234,10 +220,10 @@ export default function OrderChatbotPage() {
                   انتخاب زبان چت‌بات
                 </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {languageOptions.map((lang) => (
+                  {Object.entries(LanguageOptions).map(([value, lang]) => (
                     <label
                       class={`flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-all ${
-                        formData().language === lang.value
+                        formData().language === value
                           ? "border-primary bg-primary/5"
                           : "border-border hover:border-primary/50"
                       }`}
@@ -245,8 +231,8 @@ export default function OrderChatbotPage() {
                       <input
                         type="radio"
                         name="language"
-                        value={lang.value}
-                        checked={formData().language === lang.value}
+                        value={value}
+                        checked={formData().language === value}
                         onChange={handleInputChange}
                       />
                       <span class="text-2xl">{lang.flag}</span>
@@ -263,10 +249,10 @@ export default function OrderChatbotPage() {
                   حداکثر طول پاسخ
                 </label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {responseLengthOptions.map((option) => (
+                  {Object.entries(ResponseLengthOptions).map(([value, option]) => (
                     <label
                       class={`flex gap-3 p-4 border rounded-lg cursor-pointer transition-all ${
-                        formData().maxResponseLength === option.value
+                        formData().maxResponseLength === value
                           ? "border-primary bg-primary/5"
                           : "border-border hover:border-primary/50"
                       }`}
@@ -274,8 +260,8 @@ export default function OrderChatbotPage() {
                       <input
                         type="radio"
                         name="maxResponseLength"
-                        value={option.value}
-                        checked={formData().maxResponseLength === option.value}
+                        value={value}
+                        checked={formData().maxResponseLength === value}
                         onChange={handleInputChange}
                         class="mb-2"
                       />

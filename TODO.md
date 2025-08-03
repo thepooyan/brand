@@ -1,4 +1,3 @@
-replace tone options
 fix mini chat
 
 cron cleaner for otp
