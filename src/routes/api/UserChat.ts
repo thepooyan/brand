@@ -40,7 +40,9 @@ const getUserBot = async (userId: string, botId: string) => {
     )).at(0)
 
   if (!bot) return "404"
-  if (bot.chatbot_status?.remainingMessages !> 0) return "empty"
+
+  let remaining = bot.chatbot_status?.remainingMessages!
+  if (remaining <= 0) return "empty"
 
   await db.update(chatbot_status)
     .set({
