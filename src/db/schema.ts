@@ -6,7 +6,7 @@ export const chatbot_status = sqliteTable("chatbot_status", {
   plan: text({enum: ["free"]}).notNull(),
   messageCount: integer().notNull(),
   remainingMessages: integer().notNull(),
-  expirationDate: text().notNull(),
+  expirationDate: integer({mode: "timestamp"}).notNull(),
 })
 
 export const chatbot = sqliteTable("chatbot", {

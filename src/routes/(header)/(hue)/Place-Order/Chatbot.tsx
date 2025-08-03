@@ -7,7 +7,7 @@ import RedStar from "~/components/parts/RedStar"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
-import { chatbot } from "~/db/schema"
+import { chatbot, chatbot_status } from "~/db/schema"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
@@ -63,7 +63,7 @@ export default function OrderChatbotPage() {
     let result = await saveOrder(formData())
     if (result.ok) {
       callModal.success()
-      navigate(`/panel/Testbot/${result.data}`)
+      navigate(`/Panel/Chatbot`)
     } else {
       callModal.fail(result.msg)
     }
@@ -435,7 +435,18 @@ const saveOrder = async (order: chatbotOrder):response<number> => {
       userId: user.id
     }
 
+    let date = new Date()
+    date.setDate(date.getDate() + 7)
+
     let [row] = await db.insert(chatbot).values(values).returning({id: chatbot.id})
+
+    await db.insert(chatbot_status).values({
+      plan: "free",
+      messageCount: 10,
+      remainingMessages: 10,
+      expirationDate: date, 
+      id: row.id
+    })
 
     return {ok: true, data: row.id}
 
