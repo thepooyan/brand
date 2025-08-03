@@ -1,5 +1,4 @@
 import { google } from '@ai-sdk/google';
-import { json } from '@solidjs/router';
 import { streamText } from 'ai';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
@@ -14,7 +13,7 @@ export async function POST({request}:{request: Request}) {
   const bot = await getUserBot(userId, botId)
 
   if (!bot)
-    throw json({ error: "Not found" }, { status: 404 });
+    return new Response("Not found", {status: 404})
 
   const result = streamText({
     model: google('gemini-2.5-flash'),

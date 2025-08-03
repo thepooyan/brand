@@ -13,6 +13,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
     const [messages, setMessages] = createSignal<message[]>([]);
     const [pending, setPending] = createSignal(false);
     const [streaming, setStreaming] = createSignal(false);
+    const [errorMsg, setErrorMsg] = createSignal<string | null>(null);
     let streamDone = true
     let response = ""
 
@@ -28,6 +29,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
       });
 
       setPending(false);
+      if (res.status === 404) return setErrorMsg("متاسفانه ربات مورد نظر پیدا نشد!")
       setStreaming(true)
       streamDone = false
 
@@ -69,7 +71,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
             pushToBuffer(chunk, getAnchor())
           }
         }
-      }
+      } 
 
       onCleanup(() => {
         if (!streamDone) return
@@ -79,7 +81,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
       })
     };
 
-    return { send, messages, pending, streaming };
+    return { send, messages, pending, streaming, errorMsg };
   };
 }
 

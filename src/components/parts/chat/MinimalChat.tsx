@@ -4,6 +4,7 @@ import { createEffect, createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
 import { usersTable } from "~/db/schema";
+import { callModal } from "~/components/layout/Modal";
 
 interface props {
   user: typeof usersTable.$inferSelect,
@@ -13,12 +14,18 @@ const MinimalChat = ({user, botId}:props) => {
   let anchor!: HTMLDivElement
   let messagesRailRef!: HTMLDivElement
 
-  const {messages, send, pending, streaming} = useUserChat( String(user.id), botId )(() => anchor)
+  const {messages, send, pending, streaming, errorMsg} = useUserChat( String(user.id), botId )(() => anchor)
   const [inputMessage, setInputMessage] = createSignal("")
 
   const proccessing = () => {
     return pending() || streaming()
   }
+
+  createEffect(() => {
+    let a = errorMsg()
+    if (a !== null)
+    callModal.fail(a)
+  })
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({
@@ -34,7 +41,9 @@ const MinimalChat = ({user, botId}:props) => {
 
   const handleSendMessage = async () => {
     if (!inputMessage().trim()) return
+
     send(inputMessage().trim())
+
     setInputMessage("")
   }
 
