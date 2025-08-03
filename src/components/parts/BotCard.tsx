@@ -67,7 +67,7 @@ const BotCard = ({bot}:props) => {
               size="sm"
               variant="outline"
               class="flex-1 text-red-400 border-red-800 hover:bg-red-950 hover:text-red-300 bg-gray-800"
-              onclick={() => deleteBot(bot)}
+              onclick={() => deleteBot()}
 
             >
               <FiTrash2 class="w-3 h-3 ml-1" />
