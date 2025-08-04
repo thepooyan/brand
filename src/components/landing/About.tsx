@@ -25,9 +25,9 @@ const About = () => {
             <div class="order-1 md:order-2">
               <div class="h-64 md:h-96 bg-muted rounded-lg">
                 <img
-                  src="https://kzmlol28vglran1olwzq.lite.vusercontent.net/placeholder.svg?height=384&width=576"
+                  src="/logo.webp"
                   alt={`درباره ${name}`}
-                  class="w-full h-full object-cover rounded-lg"
+                  class="w-full h-full rounded-lg bg-white  "
                 />
               </div>
             </div>
