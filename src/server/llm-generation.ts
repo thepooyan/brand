@@ -1,3 +1,21 @@
+import { planEnum } from "~/db/schema"
+
+const daysFromNow = (days: number) => {
+  let date = new Date()
+  date.setDate(date.getDate() + days)
+  return date
+}
+
+export const newPlan = {
+  free: (id: number) => ({
+    plan: planEnum.free,
+    messageCount: 10,
+    remainingMessages: 10,
+    expirationDate: daysFromNow(7),
+    id: id
+  }),
+}
+
 export const ToneOptions = {
   formal: {
     label: "رسمی",
