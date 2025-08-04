@@ -9,7 +9,7 @@ export const socialLinks = {
 }
 export const info = {
   address: "خیابان دیجیتال، شهر فناوری، ایران",
-  phone: "021-11223344",
+  phone: "0902-7766926",
 }
 export const support = {
   telegram: "https://t.me/thepooyan",
