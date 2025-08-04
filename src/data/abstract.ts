@@ -81,7 +81,8 @@ export const services = [
     price: "از ۵ میلیون تومان",
     popular: false,
     demoLink: "Chat-Bot/Demo",
-    link: "Chat-Bot"
+    link: "Chat-Bot",
+    comingSoon: true
   },
   {
     id: "business-agent",
