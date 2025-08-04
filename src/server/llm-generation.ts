@@ -1,4 +1,15 @@
-import { planEnum } from "~/db/schema"
+export const PlanOptions = {
+  free: {
+    value: "free",
+    label: "رایگان",
+    description: "پلن رایگان هوشبان، برای تست ساخت ربات!",
+    time: 7,
+    messages: 10
+  }
+} as const
+
+type PlanKey = keyof typeof PlanOptions
+type Plan = (typeof PlanOptions)[PlanKey]
 
 const daysFromNow = (days: number) => {
   let date = new Date()
@@ -6,15 +17,13 @@ const daysFromNow = (days: number) => {
   return date
 }
 
-export const newPlan = {
-  free: (id: number) => ({
-    plan: planEnum.free,
-    messageCount: 10,
-    remainingMessages: 10,
-    expirationDate: daysFromNow(7),
+export const newPlan =(id: number, plan: Plan) => ({
+    plan: plan.value,
+    messageCount: plan.messages,
+    remainingMessages: plan.messages,
+    expirationDate: daysFromNow(plan.time),
     id: id
-  }),
-}
+})
 
 export const ToneOptions = {
   formal: {

@@ -1,13 +1,10 @@
 import { sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-
-export const planEnum = {
-  free: "free"
-}
+import { PlanOptions } from "~/server/llm-generation";
 
 export const chatbot_status = sqliteTable("chatbot_status", {
   id: int().notNull().references(() => chatbot.id),
-  plan: text({enum: [planEnum.free]}).notNull(),
+  plan: text({enum: [PlanOptions.free.value]}).notNull(),
   messageCount: integer().notNull(),
   remainingMessages: integer().notNull(),
   expirationDate: integer({mode: "timestamp"}).notNull(),
