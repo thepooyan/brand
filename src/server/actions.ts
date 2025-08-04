@@ -3,13 +3,14 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { otpTable, usersTable, websiteOrders } from "~/db/schema"
-import { eq } from "drizzle-orm"
-import { updateAuthSession } from "~/lib/session"
+import { chatbot, chatbot_status, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import { and, eq } from "drizzle-orm"
+import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
+import { revalidate } from "@solidjs/router"
 
 
 export const sendOTP = async (number: string):Response<string> => {
@@ -83,4 +84,27 @@ export const replyWithAI = async (message: string) => {
     prompt: message
   });
   return result.text
+}
+
+export const deleteChatbot = async (botId: number) => {
+  try {
+    const user = await getAuthSession()
+    if (!user) return {ok: false, msg: "لطفا ابتدا لاگین کنید"}
+
+    await db.transaction(async tx => {
+      await tx.delete(chatbot_status).where(
+        eq(chatbot_status.id, botId),
+      )
+      await tx.delete(chatbot).where(
+        and(
+          eq(chatbot.id, botId),
+          eq(chatbot.userId, user.id)
+        )
+      )
+    })
+    return {ok: true}
+  } catch(e) {
+    console.log(e)
+    return {ok: false, msg: "مشکلی پیش آمد. لطفا مجددا تلاش کنید"}
+  }
 }

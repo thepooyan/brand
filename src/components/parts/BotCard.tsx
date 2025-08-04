@@ -8,14 +8,25 @@ import { chatbotStatus } from "~/lib/interface"
 import { callModal } from "../layout/Modal"
 import TA from "./TA"
 import { cn } from "~/lib/utils"
+import { deleteChatbot } from "~/server/actions"
+import { revalidate } from "@solidjs/router"
 
 interface props {
   bot: chatbotStatus
 }
 const BotCard = ({bot}:props) => {
 
-  const deleteBot = () => {
+  const deleteBot = async () => {
     callModal.prompt(`ربات "${bot.botName}" حذف شود؟`)
+    .yes(async () => {
+        callModal.wait()
+        let response = await deleteChatbot(bot.id)
+        if (response.ok) {
+          callModal.success()
+          await revalidate("bots")
+        }
+        else callModal.fail(response.msg)
+      })
   }
 
   return (
