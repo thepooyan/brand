@@ -8,7 +8,7 @@ export const socialLinks = {
   linkedin: "",
 }
 export const info = {
-  address: "خیابان دیجیتال، شهر فناوری، ایران",
+  address: "پارک نوآوری، تهران",
   phone: "0902-7766926",
 }
 export const support = {
