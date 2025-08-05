@@ -1,6 +1,10 @@
+export const plansEnum = {
+  free: "free"
+} as const
+
 export const PlanOptions = {
   free: {
-    value: "free",
+    value: plansEnum.free,
     label: "رایگان",
     description: "پلن رایگان هوشبان، برای تست ساخت ربات!",
     time: 7,
