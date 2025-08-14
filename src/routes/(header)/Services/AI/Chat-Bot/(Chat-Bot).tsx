@@ -48,7 +48,7 @@ export default function ChatBot() {
               درخواست مشاوره رایگان
             </Button>
             <Button class="px-8 py-6 text-lg"
-              variant="secondary" onclick={() => chatboxRef.scrollIntoView({behavior: "smooth"})}
+              variant="secondary" as={TA} href="Demo"
             >
               امتحان کنید!
             </Button>
