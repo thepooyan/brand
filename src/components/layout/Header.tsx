@@ -36,6 +36,9 @@ const Header = () => {
             <TA href="/ContactUs" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </TA>
+            <TA href="/Weblog" class="text-sm font-medium hover:text-primary transition-colors">
+              وبلاگ
+            </TA>
             <Show when={isLoggedIn() !== undefined}>
               <div class="space-x-2">
                 <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
