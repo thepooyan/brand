@@ -11,6 +11,7 @@ import { createSignal } from "solid-js"
 import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
 import { TextFieldTextArea as Textarea, TextField } from "~/components/ui/text-field"
+import { createStore } from "solid-js/store"
 
 interface BlogPost {
   title: string
@@ -24,7 +25,7 @@ interface BlogPost {
 }
 
 export default function BlogEditor() {
-  const [blogPost, setBlogPost] = createSignal<BlogPost>({
+  const [blogPost, setBlogPost] = createStore<BlogPost>({
     title: "",
     slug: "",
     excerpt: "",
@@ -36,7 +37,7 @@ export default function BlogEditor() {
     image: "",
   })
 
-  const goodToSend = () => blogPost().title && blogPost().excerpt && blogPost().content && blogPost().tags.length > 0 && blogPost().image && blogPost().readTime
+  const goodToSend = () => blogPost.title && blogPost.excerpt && blogPost.content && blogPost.tags.length > 0 && blogPost.image && blogPost.readTime
 
   const [tagInput, setTagInput] = createSignal("")
   const [isSending, setIsSending] = createSignal(false)
@@ -54,7 +55,7 @@ export default function BlogEditor() {
   }
 
   const addTag = () => {
-    if (tagInput().trim() && !blogPost().tags.includes(tagInput().trim())) {
+    if (tagInput().trim() && !blogPost.tags.includes(tagInput().trim())) {
       setBlogPost((prev) => ({
         ...prev,
         tags: [...prev.tags, tagInput().trim()],
@@ -79,7 +80,7 @@ export default function BlogEditor() {
 
   const saveBlogPost = async () => {
     setIsSending(true)
-    let {ok} = await newPost(blogPost())
+    let {ok} = await newPost(blogPost)
     if (ok) return router("/")
     callModal.fail("Something went wrong. please try again.")
     setIsSending(false)
@@ -108,7 +109,7 @@ export default function BlogEditor() {
             <Input
               id="title"
               placeholder="Enter blog post title..."
-              value={blogPost().title}
+              value={blogPost.title}
               onChange={(e) => setBlogPost((prev) => ({ ...prev, title: e.target.value }))}
               class="bg-input border-border"
             />
@@ -124,7 +125,7 @@ export default function BlogEditor() {
               id="readTime"
               type="number"
               min="1"
-              value={blogPost().readTime}
+              value={blogPost.readTime}
               onChange={(e) => setBlogPost((prev) => ({ ...prev, readTime: Number.parseInt(e.target.value) || 1 }))}
               class="bg-input border-border"
             />
@@ -138,7 +139,7 @@ export default function BlogEditor() {
             <Input
               id="image"
               placeholder="https://example.com/image.jpg"
-              value={blogPost().image}
+              value={blogPost.image}
               onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
               class="bg-input border-border"
             />
@@ -153,7 +154,7 @@ export default function BlogEditor() {
             <Textarea
               id="excerpt"
               placeholder="Write a brief excerpt for your blog post..."
-              value={blogPost().excerpt}
+              value={blogPost.excerpt}
               onChange={(e:any) => setBlogPost((prev) => ({ ...prev, excerpt: e.target.value }))}
               class="bg-input border-border resize-none"
               rows={2}
@@ -178,9 +179,9 @@ export default function BlogEditor() {
               Add
             </Button>
           </div>
-          {blogPost().tags.length > 0 && (
+          {blogPost.tags.length > 0 && (
             <div class="flex flex-wrap gap-2 mt-3">
-              {blogPost().tags.map((tag) => (
+              {blogPost.tags.map((tag) => (
                 <Badge
                   variant="secondary"
                   class="cursor-pointer bg-accent text-accent-foreground hover:bg-accent/80"
@@ -207,7 +208,7 @@ export default function BlogEditor() {
             <Textarea
               id="content"
               placeholder="Write your markdown content here..."
-              value={blogPost().content}
+              value={blogPost.content}
               onChange={(e:any) => handleContentChange(e.target.value)}
               class="h-[calc(100%-2rem)] bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
@@ -221,7 +222,7 @@ export default function BlogEditor() {
             <Label class="text-sm font-medium text-card-foreground mb-3 block">Live Preview</Label>
             <Card class="h-[calc(100%-2rem)] overflow-auto bg-card border-border">
               <div class="p-6">
-                <MarkdownPreview content={blogPost().content} />
+                <MarkdownPreview content={blogPost.content} />
               </div>
             </Card>
           </div>
