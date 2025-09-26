@@ -10,8 +10,8 @@ import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
 import { createSignal } from "solid-js"
 import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
-import { TextFieldTextArea as Textarea, TextField } from "~/components/ui/text-field"
 import { createStore } from "solid-js/store"
+import Textarea from "~/components/ui/Textarea"
 
 interface BlogPost {
   title: string
@@ -150,7 +150,6 @@ export default function BlogEditor() {
           <Label for="excerpt" class="text-sm font-medium text-foreground">
             Excerpt
           </Label>
-          <TextField>
             <Textarea
               id="excerpt"
               placeholder="Write a brief excerpt for your blog post..."
@@ -159,7 +158,6 @@ export default function BlogEditor() {
               class="bg-input border-border resize-none"
               rows={2}
             />
-          </TextField>
         </div>
 
         <div class="mt-6 space-y-2">
@@ -203,7 +201,6 @@ export default function BlogEditor() {
             <Label for="content" class="text-sm font-medium text-foreground mb-3 block">
               Markdown Content
             </Label>
-            <TextField>
 
             <Textarea
               id="content"
@@ -212,7 +209,6 @@ export default function BlogEditor() {
               onChange={(e:any) => handleContentChange(e.target.value)}
               class="h-[calc(100%-2rem)] bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
-            </TextField>
           </div>
         </div>
 
