@@ -67,6 +67,7 @@ export const messagesTable = sqliteTable("messages_table", {
 export const blogsTable = sqliteTable("blogs_table", {
   id: int().primaryKey({ autoIncrement: true }),
   title: text().notNull(),
+  slug: text().notNull(),
   excerpt: text().notNull(),
   content: text().notNull(),
   date: text().notNull(),
@@ -75,3 +76,6 @@ export const blogsTable = sqliteTable("blogs_table", {
   tags: text({ mode: "json" }).$type<string[]>(),
   likeCount: integer().default(0).notNull()
 })
+
+export type IPost = typeof blogsTable.$inferSelect
+export type INewPost = typeof blogsTable.$inferInsert

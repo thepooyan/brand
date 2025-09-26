@@ -3,7 +3,7 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { chatbot, chatbot_status, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import { blogsTable, chatbot, chatbot_status, INewPost, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -106,5 +106,14 @@ export const deleteChatbot = async (botId: number) => {
   } catch(e) {
     console.log(e)
     return {ok: false, msg: "مشکلی پیش آمد. لطفا مجددا تلاش کنید"}
+  }
+}
+
+export const newPost = async (post: INewPost) => {
+  try {
+    await db.insert(blogsTable).values(post)
+    return {ok: true}
+  } catch(e) {
+    return {ok: false, error:e}
   }
 }
