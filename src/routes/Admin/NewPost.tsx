@@ -10,6 +10,7 @@ import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
 import { createSignal } from "solid-js"
 import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
+import { TextFieldTextArea as Textarea, TextField } from "~/components/ui/text-field"
 
 interface BlogPost {
   title: string
@@ -85,7 +86,7 @@ export default function BlogEditor() {
   }
 
   return (
-    <div class="min-h-screen bg-background">
+    <div class="min-h-screen bg-background ltr">
       {/* Header */}
       <header class="border-b border-border bg-card px-6 py-4">
         <div class="flex items-center justify-between">
@@ -148,14 +149,16 @@ export default function BlogEditor() {
           <Label for="excerpt" class="text-sm font-medium text-foreground">
             Excerpt
           </Label>
-          <textarea
-            id="excerpt"
-            placeholder="Write a brief excerpt for your blog post..."
-            value={blogPost().excerpt}
-            onChange={(e:any) => setBlogPost((prev) => ({ ...prev, excerpt: e.target.value }))}
-            class="bg-input border-border resize-none"
-            rows={2}
-          />
+          <TextField>
+            <Textarea
+              id="excerpt"
+              placeholder="Write a brief excerpt for your blog post..."
+              value={blogPost().excerpt}
+              onChange={(e:any) => setBlogPost((prev) => ({ ...prev, excerpt: e.target.value }))}
+              class="bg-input border-border resize-none"
+              rows={2}
+            />
+          </TextField>
         </div>
 
         <div class="mt-6 space-y-2">
@@ -199,13 +202,16 @@ export default function BlogEditor() {
             <Label for="content" class="text-sm font-medium text-foreground mb-3 block">
               Markdown Content
             </Label>
-            <textarea
+            <TextField>
+
+            <Textarea
               id="content"
               placeholder="Write your markdown content here..."
               value={blogPost().content}
               onChange={(e:any) => handleContentChange(e.target.value)}
               class="h-[calc(100%-2rem)] bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
+            </TextField>
           </div>
         </div>
 
