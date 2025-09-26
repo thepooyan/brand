@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
-import Input from "~/components/ui/input"
 import Spinner from "~/components/parts/Spinner"
 import { newPost } from "~/server/actions"
 import { FiClock, FiImage, FiSave, FiTag } from "solid-icons/fi"
@@ -12,6 +11,7 @@ import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
 import { createStore } from "solid-js/store"
 import Textarea from "~/components/ui/Textarea"
+import Input from "~/components/ui/InputNew"
 
 interface BlogPost {
   title: string
