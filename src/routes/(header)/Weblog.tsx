@@ -1,4 +1,6 @@
 import { createAsync } from "@solidjs/router"
+import { Suspense } from "solid-js"
+import BlogCard from "~/components/parts/BlogCard"
 import { getAllBlogs } from "~/lib/queries"
 
 const Weblog = () => {
@@ -7,7 +9,9 @@ const Weblog = () => {
   
   return (
     <div>
-      {blogs()?.map(b => <>{b.title}</>)}
+      <Suspense fallback="Loading...">
+        {blogs()?.map(b => <BlogCard blog={b}/> )}
+      </Suspense>
     </div>
   )
 }
