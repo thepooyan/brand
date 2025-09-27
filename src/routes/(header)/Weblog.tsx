@@ -8,7 +8,7 @@ const Weblog = () => {
   const blogs = createAsync(() => getAllBlogs())
   
   return (
-    <div class="grid grid-cols-3 p-10">
+    <div class="grid grid-cols-3 p-10 gap-5">
       <Suspense fallback="Loading...">
         {blogs()?.map(b => <BlogCard post={b} index={0}/> )}
       </Suspense>
