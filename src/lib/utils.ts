@@ -75,3 +75,5 @@ export class CallbackStore {
     this.no = null
   }
 }
+
+export const orPlaceholder = (image: string | null | undefined) => image || "/placeholder.svg"
