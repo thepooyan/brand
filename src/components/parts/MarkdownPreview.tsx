@@ -4,8 +4,8 @@ interface MarkdownPreviewProps {
   content: string
 }
 
-export function MarkdownPreview({ content }: MarkdownPreviewProps) {
-  if (!content.trim()) {
+export function MarkdownPreview(props: MarkdownPreviewProps) {
+  if (!props.content.trim()) {
     return (
       <div class="flex items-center justify-center h-32 text-muted-foreground">
         Start typing to see your markdown preview...
@@ -14,7 +14,6 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
   }
 
   return <div class="prose prose-sm max-w-none  dark:prose-invert">
-    <SolidMarkdown children={content}/>
   </div>
 }
 
