@@ -12,6 +12,7 @@ import { callModal } from "~/components/layout/Modal"
 import { createStore } from "solid-js/store"
 import Textarea from "~/components/ui/Textarea"
 import Input from "~/components/ui/InputNew"
+import UploadBtn from "~/components/parts/UploadBtn"
 
 interface BlogPost {
   title: string
@@ -158,6 +159,7 @@ export default function BlogEditor() {
               onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
               class="bg-input border-border"
             />
+            <UploadBtn onUploaded={str => setBlogPost("image", str)}/>
           </div>
         </div>
 

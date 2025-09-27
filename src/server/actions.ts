@@ -10,7 +10,8 @@ import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
-import { clearDelegatedEvents } from "solid-js/web"
+import { s3 } from "~/s3"
+import { PutObjectCommand } from "@aws-sdk/client-s3"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -116,4 +117,20 @@ export const newPost = async (post: INewBlog) => {
     console.log(e)
     return {ok: false, error:e}
   }
+}
+
+export async function uploadToS3(file: File) {
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+
+  const key = `Hooshban/${Date.now()}-${file.name}`
+
+  await s3.send(new PutObjectCommand({
+    Bucket: process.env.BUCKET_NAME!,
+    Key: key,
+    Body: buffer,
+    ContentType: file.type,
+  }))
+
+  return `https://${process.env.BUCKET_URL}/${key}`
 }
