@@ -10,6 +10,7 @@ import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
+import { clearDelegatedEvents } from "solid-js/web"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -112,6 +113,7 @@ export const newPost = async (post: INewBlog) => {
     await db.insert(blogsTable).values(post)
     return {ok: true}
   } catch(e) {
+    console.log(e)
     return {ok: false, error:e}
   }
 }
