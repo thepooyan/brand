@@ -1,4 +1,4 @@
-import { QueryClientConfig, useQuery } from "@tanstack/solid-query";
+import { QueryClientConfig } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
 import { blogsTable, usersTable } from "~/db/schema";
@@ -23,6 +23,7 @@ export const getInitialProfile = query(async () => {
 }, "profile")
 
 export const getAllBlogs = query(async () => {
+  "use server"
     return await db.select().from(blogsTable)
 }, "blogs")
 
