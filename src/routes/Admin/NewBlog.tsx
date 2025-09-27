@@ -93,7 +93,7 @@ export default function BlogEditor() {
         <div class="flex items-center justify-between">
           <h1 class="text-2xl font-bold text-foreground">Blog Editor</h1>
           <Button onClick={saveBlogPost} disabled={!goodToSend() || isSending()}>
-            {isSending() ? <Spinner reverse/> : <FiSave class="mr-2 h-4 w-4" />}
+            {isSending() ? <Spinner reverse/> : <FiSave class="mr-1 h-4 w-4" />}
             Save Post
           </Button>
         </div>
@@ -108,8 +108,9 @@ export default function BlogEditor() {
             </Label>
             <Input
               id="title"
+              value={blogPost.title}
+              onchange={e => setBlogPost("title", e.target.value)}
               placeholder="Enter blog post title..."
-              onInput={() => console.log("ksks")}
               class="bg-input border-border"
             />
           </div>

@@ -1,4 +1,4 @@
-import {SolidMarkdown} from "solid-markdown"
+import {marked} from "marked"
 
 interface MarkdownPreviewProps {
   content: string
@@ -12,8 +12,8 @@ export function MarkdownPreview(props: MarkdownPreviewProps) {
       </div>
     )
   }
+  let content = () => marked(props.content, {async: false})
 
-  return <div class="prose prose-sm max-w-none  dark:prose-invert">
-  </div>
+  return <div class="prose prose-sm max-w-none  dark:prose-invert" innerHTML={content() || ""}/>
 }
 
