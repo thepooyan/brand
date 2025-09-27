@@ -1,7 +1,7 @@
 import { QueryClientConfig, useQuery } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
-import { usersTable } from "~/db/schema";
+import { blogsTable, usersTable } from "~/db/schema";
 import { eq } from "drizzle-orm";
 import { query } from "@solidjs/router";
 
@@ -21,6 +21,10 @@ export const getInitialProfile = query(async () => {
   if (!num) return null
   return (await db.select().from(usersTable).where(eq(usersTable.number, num))).at(0)
 }, "profile")
+
+export const getAllBlogs = query(async () => {
+    return await db.select().from(blogsTable)
+}, "blogs")
 
 // export const profileQuery = () => useQuery(() => ({
 //   queryKey: ["profile"],

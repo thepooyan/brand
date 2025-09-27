@@ -1,6 +1,14 @@
+import { createAsync } from "@solidjs/router"
+import { getAllBlogs } from "~/lib/queries"
+
 const Weblog = () => {
+
+  const blogs = createAsync(() => getAllBlogs())
+  
   return (
-    <div>Weblog</div>
+    <div>
+      {blogs()?.map(b => <>{b.title}</>)}
+    </div>
   )
 }
 
