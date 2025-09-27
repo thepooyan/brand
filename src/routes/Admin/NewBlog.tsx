@@ -207,7 +207,7 @@ export default function BlogEditor() {
               placeholder="Write your markdown content here..."
               value={blogPost.content}
               onChange={(e:any) => handleContentChange(e.target.value)}
-              class="h-[calc(100%-2rem)] bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
+              class="h-78 bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
           </div>
         </div>
