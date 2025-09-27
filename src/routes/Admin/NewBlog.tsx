@@ -147,6 +147,10 @@ export default function BlogEditor() {
             />
           </div>
 
+          <div class="row-span-2">
+            {blogPost.image && <img src={blogPost.image}/>}
+          </div>
+
           <div class="space-y-2">
             <Label for="image" class="text-sm font-medium text-foreground flex items-center gap-2">
               <FiImage class="h-4 w-4" />
