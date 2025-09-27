@@ -13,6 +13,7 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.1.0",
+    "@tailwindcss/typography": "^0.5.19",
     "@tanstack/solid-query": "^5.81.2",
     "@types/js-yaml": "^4.0.9",
     "ai": "^4.3.17",

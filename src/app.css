@@ -4,6 +4,7 @@
 @import "./styles/fonts.css";
 @import "./styles/scrollbar.css";
 @import "./styles/chadcn.css";
+@plugin "@tailwindcss/typography";
 @config "../tailwind.config.ts";
 
 html {
