@@ -6,7 +6,7 @@ import Spinner from "~/components/parts/Spinner"
 import { newPost } from "~/server/actions"
 import { FiClock, FiImage, FiSave, FiTag } from "solid-icons/fi"
 import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
-import { createSignal } from "solid-js"
+import { createEffect, createSignal } from "solid-js"
 import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
 import { createStore } from "solid-js/store"
@@ -206,7 +206,7 @@ export default function BlogEditor() {
               id="content"
               placeholder="Write your markdown content here..."
               value={blogPost.content}
-              onChange={(e:any) => handleContentChange(e.target.value)}
+              onkeyup={(e:any) => handleContentChange(e.target.value)}
               class="h-78 bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
           </div>
