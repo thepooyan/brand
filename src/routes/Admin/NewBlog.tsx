@@ -41,7 +41,7 @@ export default function BlogEditor() {
 
   const [tagInput, setTagInput] = createSignal("")
   const [isSending, setIsSending] = createSignal(false)
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   const handleContentChange = (content: string) => {
     const wordCount = content.split(/\s+/).filter((word) => word.length > 0).length
@@ -81,7 +81,7 @@ export default function BlogEditor() {
   const saveBlogPost = async () => {
     setIsSending(true)
     let {ok} = await newPost(blogPost)
-    if (ok) return router("/")
+    if (ok) return navigate("/")
     callModal.fail("Something went wrong. please try again.")
     setIsSending(false)
   }
