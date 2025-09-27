@@ -77,5 +77,5 @@ export const blogsTable = sqliteTable("blogs_table", {
   likeCount: integer().default(0).notNull()
 })
 
-export type IPost = typeof blogsTable.$inferSelect
-export type INewPost = typeof blogsTable.$inferInsert
+export type IBlog = typeof blogsTable.$inferSelect
+export type INewBlog = typeof blogsTable.$inferInsert

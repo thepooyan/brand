@@ -3,15 +3,13 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { blogsTable, chatbot, chatbot_status, INewPost, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import { blogsTable, chatbot, chatbot_status, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
-import { revalidate } from "@solidjs/router"
-
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -109,7 +107,7 @@ export const deleteChatbot = async (botId: number) => {
   }
 }
 
-export const newPost = async (post: INewPost) => {
+export const newPost = async (post: INewBlog) => {
   try {
     await db.insert(blogsTable).values(post)
     return {ok: true}
