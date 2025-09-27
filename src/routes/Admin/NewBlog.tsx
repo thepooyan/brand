@@ -4,9 +4,9 @@ import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import Spinner from "~/components/parts/Spinner"
 import { newPost } from "~/server/actions"
-import { FiClock, FiImage, FiSave, FiTag } from "solid-icons/fi"
+import { FiClock, FiGlobe, FiImage, FiSave, FiTag } from "solid-icons/fi"
 import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
-import { createEffect, createSignal } from "solid-js"
+import { createSignal } from "solid-js"
 import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
 import { createStore } from "solid-js/store"
@@ -86,6 +86,10 @@ export default function BlogEditor() {
     setIsSending(false)
   }
 
+  // createEffect(() => {
+  //   console.log({...blogPost})
+  // })
+
   return (
     <div class="min-h-screen bg-background ltr">
       {/* Header */}
@@ -116,6 +120,17 @@ export default function BlogEditor() {
           </div>
 
 
+          <div class="space-y-2">
+            <Label for="readTime" class="text-sm font-medium text-foreground flex items-center gap-2">
+              <FiGlobe class="h-4 w-4" />
+              Slug
+            </Label>
+            <Input
+              value={blogPost.slug}
+              onChange={e => setBlogPost("slug", e.target.value)}
+              class="bg-input border-border"
+            />
+          </div>
           <div class="space-y-2">
             <Label for="readTime" class="text-sm font-medium text-foreground flex items-center gap-2">
               <FiClock class="h-4 w-4" />
