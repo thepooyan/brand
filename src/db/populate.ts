@@ -1,5 +1,8 @@
+import { eq } from "drizzle-orm"
+import fs from "fs"
 import { db } from "./db"
 import { blogsTable } from "./schema"
+import { clearDelegatedEvents } from "solid-js/web"
 
 const blogs: Omit<typeof blogsTable.$inferInsert, "id">[] = [
   {
@@ -42,5 +45,9 @@ async function seedBlogs() {
   console.log("۳ پست وبلاگ با موفقیت اضافه شد")
 }
 
-seedBlogs()
+
+let c = fs.readFileSync("./src/db/test.md", "utf-8")
+
+await db.update(blogsTable).set({content:c}).where(eq(blogsTable.id,  3))
+  
 

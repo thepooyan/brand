@@ -1,11 +1,16 @@
 import {  FiCalendar, FiClock, FiHeart } from "solid-icons/fi"
+import {marked} from "marked"
 import { IBlog } from "~/db/schema"
+import { createAsync } from "@solidjs/router"
 
 interface BlogPostProps {
   blog: IBlog
 }
 
 export function BlogPage({ blog }: BlogPostProps) {
+
+  let content = createAsync(() => marked(blog.content, {async: true}))
+
   return (
     <article class="mx-auto max-w-3xl px-4 py-12 md:py-20">
       {/* Header */}
@@ -65,7 +70,7 @@ export function BlogPage({ blog }: BlogPostProps) {
 
       {/* Content */}
       <div class="prose prose-neutral dark:prose-invert prose-headings:font-sans prose-headings:font-bold prose-p:leading-relaxed prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg max-w-none">
-        <div innerHTML={blog.content} />
+        <div innerHTML={content()} />
       </div>
     </article>
   )
