@@ -39,7 +39,7 @@ export function BlogPage({ blog }: BlogPostProps) {
 
           <div class="flex items-center gap-1.5">
             <FiHeart class="h-4 w-4" />
-            <span>{blog.likeCount} likes</span>
+            <span>{blog.likeCount} لایک</span>
           </div>
         </div>
 
@@ -47,7 +47,7 @@ export function BlogPage({ blog }: BlogPostProps) {
         {blog.tags && blog.tags.length > 0 && (
           <div class="flex flex-wrap gap-2">
             {blog.tags.map((tag) => (
-              <span class="rounded-md bg-accent/10 px-3 py-1 text-sm font-medium text-accent">
+              <span class="rounded-md bg-accent/90 px-3 py-1 text-sm font-medium ">
                 {tag}
               </span>
             ))}
