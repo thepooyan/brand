@@ -42,6 +42,7 @@ export default function BlogEditor() {
 
   const [tagInput, setTagInput] = createSignal("")
   const [isSending, setIsSending] = createSignal(false)
+  const [picUploading, setPicUploading] = createSignal(false)
   const navigate = useNavigate()
 
   const handleContentChange = (content: string) => {
@@ -161,9 +162,10 @@ export default function BlogEditor() {
                 onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
                 class="bg-input border-border w-full"
               />
-              <UploadBtn onUploaded={str => setBlogPost("image", str)}/>
+              <UploadBtn onUploaded={str => setBlogPost("image", str)} setIsUploading={setPicUploading}/>
             </div>
           </div>
+          {picUploading() && "loading"}
           <div class="">
             {<img src={blogPost.image || "/placeholder.svg"} class="bg-zinc-700 h-40 w-80 rounded m-auto"/>}
           </div>
