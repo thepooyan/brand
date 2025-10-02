@@ -1,5 +1,6 @@
 import { createAsync, useParams } from "@solidjs/router"
-import { Suspense } from "solid-js"
+import { Show, Suspense } from "solid-js"
+import { BlogPage } from "~/components/pages/BlogPage"
 import { getBlogBySlug } from "~/lib/queries"
 
 const slug = () => {
@@ -10,9 +11,9 @@ const slug = () => {
   return (
     <div>
       <Suspense fallback="Loading...">
-        <div>
-          {data()?.title}
-        </div>
+        <Show when={data()} fallback="پست مورد نظر پیدا نشد">
+          {d => <BlogPage blog={d()}/>}
+        </Show>
       </Suspense>
     </div>
   )
