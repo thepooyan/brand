@@ -166,7 +166,7 @@ export default function BlogEditor() {
             </div>
           </div>
           <div class="">
-            {<img src={blogPost.image || "/placeholder.svg"} class="bg-zinc-700 h-40 w-80 rounded m-auto"/>}
+            {<img src={blogPost.image || "/placeholder.svg"} class="bg-zinc-700 h-40 w-80 rounded m-auto object-contain"/>}
           </div>
         </div>
 
