@@ -40,7 +40,7 @@ const BlogCard = (props: BlogCardProps) => {
             {new Date(props.post.date).toLocaleDateString()}
             <Separator orientation="vertical" class="h-4" />
             <FiClock class="w-4 h-4" />
-            {props.post.readTime} min read
+            {props.post.readTime} دقیقه مطالعه
           </div>
           <CardTitle class="group-hover:text-primary transition-colors line-clamp-2 h-13 text-lg">
             {props.post.title}

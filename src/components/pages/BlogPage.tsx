@@ -29,7 +29,7 @@ export function BlogPage({ blog }: BlogPostProps) {
 
           <div class="flex items-center gap-1.5">
             <FiClock class="h-4 w-4" />
-            <span>{blog.readTime} min read</span>
+            <span>{blog.readTime} دقیقه مطالعه</span>
           </div>
 
           <div class="flex items-center gap-1.5">
