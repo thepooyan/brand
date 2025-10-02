@@ -17,7 +17,7 @@ export default function BlogNotFound() {
           <Button size="lg" as={TA} href="/">
             خانه
           </Button>
-          <Button variant="outline" size="lg" as={TA} href="/blog">
+          <Button variant="outline" size="lg" as={TA} href="/Weblog">
             بازگشت به وبلاگ
           </Button>
         </div>
