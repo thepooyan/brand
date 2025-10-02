@@ -11,7 +11,7 @@ const Weblog = () => {
   return (
     <>
       <Suspense fallback={<Loading/>}>
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 p-10 gap-5 w-max m-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:p-10 pt-10 gap-5 w-max m-auto">
           {blogs()?.map(b => <BlogCard post={b} index={0}/> )}
         </div>
       </Suspense>
