@@ -153,7 +153,7 @@ export default function BlogEditor() {
               <FiImage class="h-4 w-4" />
               Featured Image URL
             </Label>
-            <div class="flex w-full">
+            <div class="flex w-full gap-3">
               <Input
                 id="image"
                 placeholder="https://example.com/image.jpg"
