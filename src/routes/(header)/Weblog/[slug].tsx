@@ -8,7 +8,7 @@ import { getBlogBySlug } from "~/lib/queries"
 const slug = () => {
   const {slug} = useParams()
 
-  const data = createAsync(() => getBlogBySlug(slug))
+  const data = createAsync(() => getBlogBySlug(decodeURIComponent(slug)))
 
   return (
     <div>

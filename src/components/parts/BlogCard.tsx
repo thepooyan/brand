@@ -21,7 +21,7 @@ interface BlogCardProps {
 
 const BlogCard = (props: BlogCardProps) => {
   return (
-    <A href={(props.post.slug)}
+    <A href={encodeURIComponent(props.post.slug)}
       class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer pt-0 w-85 block "
       style={{ "animation-delay": `${props.index * 100}ms` }}
     >
