@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router"
-import { FiCalendar,  FiClock,  FiTag, FiArrowRight } from "solid-icons/fi"
+import { FiCalendar,  FiClock,  FiTag, FiArrowLeft } from "solid-icons/fi"
 import {
   Card,
   CardContent,
@@ -21,11 +21,11 @@ interface BlogCardProps {
 
 const BlogCard = (props: BlogCardProps) => {
   return (
-    <A href={(props.post.slug)}>
-      <Card
-        class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer pt-0 ltr"
-        style={{ "animation-delay": `${props.index * 100}ms` }}
-      >
+    <A href={(props.post.slug)}
+      class="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer pt-0 w-85 block "
+      style={{ "animation-delay": `${props.index * 100}ms` }}
+    >
+      <Card>
         <div class="relative overflow-hidden rounded-t-lg">
           <img
             src={orPlaceholder(props.post.image)}
@@ -42,7 +42,7 @@ const BlogCard = (props: BlogCardProps) => {
             <FiClock class="w-4 h-4" />
             {props.post.readTime} min read
           </div>
-          <CardTitle class="group-hover:text-primary transition-colors line-clamp-2">
+          <CardTitle class="group-hover:text-primary transition-colors line-clamp-2 h-13 text-lg">
             {props.post.title}
           </CardTitle>
           <CardDescription class="line-clamp-3 h-10">
@@ -54,7 +54,7 @@ const BlogCard = (props: BlogCardProps) => {
           <div class="flex flex-wrap gap-2 mb-4">
             {props.post.tags?.slice(0, 3).map(tag => (
               <Badge variant="outline" class="text-xs">
-                <FiTag class="w-3 h-3 mr-1" />
+                <FiTag class="w-3 h-3 ml-2" />
                 {tag}
               </Badge>
             ))}
@@ -65,12 +65,10 @@ const BlogCard = (props: BlogCardProps) => {
           <Button
             variant="ghost"
             size="sm"
-            class="group-hover:text-primary ml-auto"
+            class="group-hover:text-primary mr-auto"
           >
-            <span>
-              Read More
-              <FiArrowRight class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </span>
+            بیشتر بخوانید
+            <FiArrowLeft class="ml-2 w-4 h-4 transition-transform group-hover:-translate-x-1" />
           </Button>
         </CardFooter>
       </Card>
