@@ -165,7 +165,6 @@ export default function BlogEditor() {
               <UploadBtn onUploaded={str => setBlogPost("image", str)} setIsUploading={setPicUploading}/>
             </div>
           </div>
-          {picUploading() && "loading"}
           <div class="">
             {<img src={blogPost.image || "/placeholder.svg"} class="bg-zinc-700 h-40 w-80 rounded m-auto"/>}
           </div>
