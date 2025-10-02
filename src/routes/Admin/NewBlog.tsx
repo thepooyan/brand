@@ -147,23 +147,25 @@ export default function BlogEditor() {
             />
           </div>
 
-          <div class="row-span-2">
-            {blogPost.image && <img src={blogPost.image}/>}
-          </div>
 
           <div class="space-y-2">
             <Label for="image" class="text-sm font-medium text-foreground flex items-center gap-2">
               <FiImage class="h-4 w-4" />
               Featured Image URL
             </Label>
-            <Input
-              id="image"
-              placeholder="https://example.com/image.jpg"
-              value={blogPost.image}
-              onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
-              class="bg-input border-border"
-            />
-            <UploadBtn onUploaded={str => setBlogPost("image", str)}/>
+            <div class="flex w-full">
+              <Input
+                id="image"
+                placeholder="https://example.com/image.jpg"
+                value={blogPost.image}
+                onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
+                class="bg-input border-border w-full"
+              />
+              <UploadBtn onUploaded={str => setBlogPost("image", str)}/>
+            </div>
+          </div>
+          <div class="">
+            {<img src={blogPost.image || "/placeholder.svg"} class="bg-zinc-700 h-40 w-80 rounded m-auto"/>}
           </div>
         </div>
 
