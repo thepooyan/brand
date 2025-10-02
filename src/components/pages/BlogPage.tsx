@@ -37,10 +37,10 @@ export function BlogPage({ blog }: BlogPostProps) {
             <span>{blog.readTime} دقیقه مطالعه</span>
           </div>
 
-          <div class="flex items-center gap-1.5">
+          {/*<div class="flex items-center gap-1.5">
             <FiHeart class="h-4 w-4" />
             <span>{blog.likeCount} لایک</span>
-          </div>
+          </div>*/}
         </div>
 
         {/* Tags */}

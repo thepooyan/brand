@@ -2,7 +2,6 @@ import { eq } from "drizzle-orm"
 import fs from "fs"
 import { db } from "./db"
 import { blogsTable } from "./schema"
-import { clearDelegatedEvents } from "solid-js/web"
 
 const blogs: Omit<typeof blogsTable.$inferInsert, "id">[] = [
   {
