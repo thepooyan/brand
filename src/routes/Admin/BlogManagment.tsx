@@ -15,12 +15,22 @@ import TA from "~/components/parts/TA";
 import { IBlog } from "~/db/schema";
 import { getAllBlogs } from "~/lib/queries";
 import { limitChar, readableDate } from "~/lib/utils";
+import { deletePost } from "~/server/actions";
 
 export default function WeblogPanel() {
   const posts = createAsync(() => getAllBlogs());
 
-  const deletePost = (post: IBlog) => {
+  const handleDelete = (post: IBlog) => {
     callModal.prompt(`"${limitChar(post.title, 40)}" حذف شود؟`)
+    .yes(async () => {
+        callModal.wait()
+        let {ok} = await deletePost(post.id)
+        if (ok) {
+          callModal.success("با موفقیت حذف شد!")
+          //revalidate posts
+        }
+        else callModal.fail("خطایی پیش آمده. لطفا مجددا تلاش کنید")
+      })
   }
 
   return (
@@ -97,7 +107,7 @@ export default function WeblogPanel() {
                         size="sm"
                         variant="ghost"
                         class="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                        onclick={() => deletePost(post)}
+                        onclick={() => handleDelete(post)}
                       >
                         <FiTrash2 class="h-4 w-4" />
                       </Button>

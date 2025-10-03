@@ -121,6 +121,15 @@ export const newPost = async (post: INewBlog) => {
   }
 }
 
+export const deletePost = async (id: number) => {
+  try {
+    await db.delete(blogsTable).where(eq(blogsTable.id, id))
+    return {ok: true}
+  } catch(e) {
+    return {ok: false, error: e}
+  }
+}
+
 export async function uploadToS3(file: File) {
   const arrayBuffer = await file.arrayBuffer()
   const buffer = Buffer.from(arrayBuffer)
