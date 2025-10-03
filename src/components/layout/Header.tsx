@@ -1,4 +1,5 @@
 import { Button } from "../ui/button"
+import { FaSolidUserGear } from 'solid-icons/fa'
 import { name, nameEn } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
 import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
@@ -71,9 +72,14 @@ const Header = () => {
                 <FiLogIn/>
               </Button>
             </Show>
-            <Show when={isLoggedIn() !== undefined}>
+            <Show when={isLoggedIn()?.role === ROLES.USER}>
               <Button as={TA} href="/Panel">
                 <FiUser/>
+              </Button>
+            </Show>
+            <Show when={isLoggedIn()?.role === ROLES.ADMIN}>
+              <Button as={TA} href="/Admin">
+                <FaSolidUserGear/>
               </Button>
             </Show>
           </div>
