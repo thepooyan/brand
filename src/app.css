@@ -8,6 +8,7 @@
 @config "../tailwind.config.ts";
 
 html {
+  /* always show scrollbar so width does not jump */
   overflow-y: scroll;
 }
 
