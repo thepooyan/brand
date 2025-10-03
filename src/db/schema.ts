@@ -49,7 +49,6 @@ export const usersTable = sqliteTable("users_table", {
   name: text(),
   email: text().unique(),
   number: text({length: 11}).unique().notNull(),
-  role: text({enum: ["USER", "ADMIN"]}).notNull().default("USER")
 });
 
 export const otpTable = sqliteTable("otp_table", {

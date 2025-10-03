@@ -5,7 +5,7 @@ import yaml from "js-yaml"
 import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
 import { blogsTable, chatbot, chatbot_status, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
-import { getAuthSession, updateAuthSession } from "~/lib/session"
+import { getAuthSession, ROLES, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
@@ -55,10 +55,10 @@ export const verifyOTP = async (number: string, otp: string):Response => {
       }
       let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
       if (!result) throw new Error()
-      await updateAuthSession({user: result})
+      await updateAuthSession({user: {...result, role: ROLES.USER}})
       return {ok: true}
     }
-    await updateAuthSession({user: user})
+    await updateAuthSession({user: {...user, role: ROLES.USER}})
     return {ok: true}
   }) 
 }
