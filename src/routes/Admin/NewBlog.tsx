@@ -228,16 +228,16 @@ export default function BlogEditor() {
               id="content"
               value={blogPost.content}
               onkeyup={(e:any) => handleContentChange(e.target.value)}
-              class="h-78 bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
+              class="h-93 bg-input border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
           </div>
         </div>
 
         {/* Preview Pane */}
         <div class="flex-1">
-          <div class="h-full p-6 bg-card">
+          <div class="h-full p-6  ">
             <Label class="text-sm font-medium text-card-foreground mb-3 block">پیش نمایش</Label>
-            <Card class="h-[calc(100%-2rem)] overflow-auto bg-card border-border">
+            <Card class="h-[calc(100%-2rem)] overflow-auto bg-input border-border">
               <div class="p-6">
                 <MarkdownPreview content={blogPost.content} />
               </div>
