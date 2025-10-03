@@ -15,6 +15,7 @@ import Textarea from "~/components/ui/Textarea"
 import Input from "~/components/ui/InputNew"
 import UploadBtn from "~/components/parts/UploadBtn"
 import { cn } from "~/lib/utils"
+import { IBlog } from "~/db/schema"
 
 interface BlogPost {
   title: string
@@ -39,7 +40,7 @@ const newEmptyBlog: BlogPost = {
 }
 
 interface props {
-  editData?: BlogPost
+  editData?: IBlog
 }
 export default function BlogEditor({editData}:props) {
   const [blogPost, setBlogPost] = createStore<BlogPost>(editData ? editData : newEmptyBlog)
@@ -94,12 +95,12 @@ export default function BlogEditor({editData}:props) {
   const decideAction = (post: BlogPost) => {
     if (editData === undefined)
       return newPost(post)
-      else return editPost({...post, id: 0, likeCount: 0})
+      else return editPost({...post, id: editData.id, likeCount: editData.likeCount})
   }
 
   const saveBlogPost = async () => {
     setIsSending(true)
-    let {ok} = await newPost(blogPost)
+    let {ok} = await decideAction(blogPost)
     if (ok) {
       navigate("/admin/BlogManagment")
       revalidate("blogs")
