@@ -1,8 +1,13 @@
 import { useSession } from "vinxi/http";
 import { usersTable } from "~/db/schema";
 
+export enum ROLES {
+  USER,
+  ADMIN
+}
+
 type SessionData = {
-  user?: typeof usersTable.$inferSelect
+  user?: typeof usersTable.$inferSelect & {role: ROLES}
 };
 
 async function useAuthSession() {

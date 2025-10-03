@@ -1,13 +1,9 @@
 import { sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const planEnum = {
-  free: "free"
-}
-
 export const chatbot_status = sqliteTable("chatbot_status", {
   id: int().notNull().references(() => chatbot.id),
-  plan: text({enum: [planEnum.free]}).notNull(),
+  plan: text({enum: ["free"]}).notNull(),
   messageCount: integer().notNull(),
   remainingMessages: integer().notNull(),
   expirationDate: integer({mode: "timestamp"}).notNull(),
@@ -44,7 +40,8 @@ export const websiteOrders = sqliteTable("website_orders", {
 
 export const adminsTable = sqliteTable("admins_table", {
   id: int().primaryKey({autoIncrement: true}),
-  chat_id: text().notNull()
+  chat_id: text().notNull(),
+  number: text().notNull()
 })
 
 export const usersTable = sqliteTable("users_table", {
@@ -67,3 +64,19 @@ export const messagesTable = sqliteTable("messages_table", {
   subject: text(),
   message: text().notNull()
 })
+
+export const blogsTable = sqliteTable("blogs_table", {
+  id: int().primaryKey({ autoIncrement: true }),
+  title: text().notNull(),
+  slug: text().notNull(),
+  excerpt: text().notNull(),
+  content: text().notNull(),
+  date: text().notNull(),
+  readTime: int().notNull(),
+  image: text().notNull(),
+  tags: text({ mode: "json" }).$type<string[]>().default([]).notNull(),
+  likeCount: integer().default(0).notNull()
+})
+
+export type IBlog = typeof blogsTable.$inferSelect
+export type INewBlog = typeof blogsTable.$inferInsert

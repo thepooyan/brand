@@ -1,5 +1,8 @@
-import { chatbot } from "~/db/schema";
+import { adminsTable, chatbot } from "~/db/schema";
 import { LanguageValue, LlmBuilder, ResponseLengthValue, ToneValue } from "./llm-generation";
+import { db } from "~/db/db";
+import { eq } from "drizzle-orm";
+import { ROLES } from "~/lib/session";
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -39,4 +42,13 @@ export const getSystemPrompt = (bot: typeof chatbot.$inferSelect):string => {
   .setResponseLength(bot.maxResponseLength as ResponseLengthValue)
   .setTrainingText(bot.trainingText)
   .buildPrompt()
+}
+
+export const isNumberAdmin = async (num: string) => {
+  return (await db.select().from(adminsTable).where(eq(adminsTable.number, num)).limit(1)).length > 0;
+}
+
+export const findoutRole = async (num: string) => {
+  let a = await isNumberAdmin(num)
+  return a ? ROLES.ADMIN : ROLES.USER
 }

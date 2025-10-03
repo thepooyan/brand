@@ -21,14 +21,17 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
       <div class={clsx("fixed bg-secondary -left-100 h-dvh top-0 flex flex-col w-3/5 z-100 invisible transition-all duration-200",
         isOpen() && "left-0 visible"
       )} ref={menuRef}>
-          <L href="#services">
+          <L href="/Services">
             خدمات
           </L>
-          <L href="#about">
+          <L href="/About">
             درباره ما
           </L>
-          <L href="#contact">
+          <L href="/ContactUs">
             تماس با ما
+          </L>
+          <L href="/Weblog">
+            وبلاگ
           </L>
         <Show when={isLoggedIn() !== undefined}>
           <div class="flex gap-2 mx-auto mt-auto mb-5">

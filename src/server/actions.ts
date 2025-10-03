@@ -2,16 +2,16 @@
 import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
-import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { chatbot, chatbot_status, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./util"
+import {  blogsTable, chatbot, chatbot_status, IBlog, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
-import { revalidate } from "@solidjs/router"
-
+import { s3 } from "~/s3"
+import { PutObjectCommand } from "@aws-sdk/client-s3"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -55,10 +55,12 @@ export const verifyOTP = async (number: string, otp: string):Response => {
       }
       let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
       if (!result) throw new Error()
-      await updateAuthSession({user: result})
+      const role = await findoutRole(result.number)
+      await updateAuthSession({user: {...result, role: role }})
       return {ok: true}
     }
-    await updateAuthSession({user: user})
+    const role = await findoutRole(user.number)
+    await updateAuthSession({user: {...user, role: role }})
     return {ok: true}
   }) 
 }
@@ -107,4 +109,49 @@ export const deleteChatbot = async (botId: number) => {
     console.log(e)
     return {ok: false, msg: "مشکلی پیش آمد. لطفا مجددا تلاش کنید"}
   }
+}
+
+export const newPost = async (post: INewBlog) => {
+  try {
+    await db.insert(blogsTable).values(post)
+    return {ok: true}
+  } catch(e) {
+    console.log(e)
+    return {ok: false, error:e}
+  }
+}
+
+export const deletePost = async (id: number) => {
+  try {
+    await db.delete(blogsTable).where(eq(blogsTable.id, id))
+    return {ok: true}
+  } catch(e) {
+    return {ok: false, error: e}
+  }
+}
+
+export const editPost = async (post: IBlog) => {
+  try {
+    await db.update(blogsTable).set(post).where(eq(blogsTable.id, post.id))
+    return {ok: true}
+  } catch(e) {
+    console.log(e)
+    return {ok: false, error:e}
+  }
+}
+
+export async function uploadToS3(file: File) {
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+
+  const key = `Hooshban/${Date.now()}-${file.name}`
+
+  await s3.send(new PutObjectCommand({
+    Bucket: process.env.BUCKET_NAME!,
+    Key: key,
+    Body: buffer,
+    ContentType: file.type,
+  }))
+
+  return `https://${process.env.BUCKET_URL}/${key}`
 }

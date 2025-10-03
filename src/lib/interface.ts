@@ -1,3 +1,5 @@
+import { plansEnum } from "~/server/llm-generation"
+
 export interface chatbotOrder {
   name: string,
   email: string,
@@ -30,7 +32,7 @@ export interface websiteOrder {
 export interface chatbotStatus {
   id: number,
   botName: string,
-  plan: string,
+  plan: keyof typeof plansEnum,
   messageCount: number,
   remainingMessages: number,
   expirationDate: Date,

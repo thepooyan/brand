@@ -10,7 +10,7 @@ const TA = (props: any):JSXElement => {
   const location = useLocation()
   
   const isActive = () => {
-    return location.pathname === props.href
+    return location.pathname.endsWith(props.href)
   }
 
   const handleClick = (e:MouseEvent) => {

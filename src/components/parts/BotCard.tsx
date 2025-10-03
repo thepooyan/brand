@@ -10,6 +10,7 @@ import TA from "./TA"
 import { cn } from "~/lib/utils"
 import { deleteChatbot } from "~/server/actions"
 import { revalidate } from "@solidjs/router"
+import { PlanOptions } from "~/server/llm-generation"
 
 interface props {
   bot: chatbotStatus
@@ -49,7 +50,7 @@ const BotCard = ({bot}:props) => {
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
             <span class="text-gray-400">پلن:</span>
-            <span class="font-medium text-white">{bot.plan}</span>
+            <span class="font-medium text-white">{PlanOptions[bot.plan].label}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-400">تعداد پیام:</span>
