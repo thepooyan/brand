@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { FiArrowLeft, FiFileText } from "solid-icons/fi"
 import TA from "~/components/parts/TA"
+import { getAdminUser } from "~/lib/signal"
 
 export default function AdminLayout({children}:{children: Element}) {
+  getAdminUser()
   return (
     <div class="dark min-h-screen bg-background text-foreground">
       {/* Header */}
