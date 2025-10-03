@@ -2,7 +2,8 @@ import {  FiCalendar, FiClock } from "solid-icons/fi"
 import {marked} from "marked"
 import { IBlog } from "~/db/schema"
 import { createAsync } from "@solidjs/router"
-import { readableDate } from "~/lib/utils"
+import { createBlogFullUrl, readableDate } from "~/lib/utils"
+import { Meta, Title } from "@solidjs/meta"
 
 interface BlogPostProps {
   blog: IBlog
@@ -14,6 +15,13 @@ export function BlogPage({ blog }: BlogPostProps) {
 
   return (
     <article class="mx-auto max-w-3xl px-4 py-12 md:py-20">
+      <Title>{blog.title}</Title>
+      <Meta name="description" content={blog.excerpt}/>
+      <Meta property="og:title" content={blog.title}/>
+      <Meta property="og:description" content={blog.excerpt}/>
+      <Meta property="og:image" content={blog.image}/>
+      <Meta property="og:url" content={createBlogFullUrl(blog.slug)}/>
+
       {/* Header */}
       <header class="mb-8 space-y-4">
         <h1 class="font-sans text-4xl font-bold leading-tight text-balance md:text-5xl">{blog.title}</h1>

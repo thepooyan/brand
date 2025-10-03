@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx"
 import { Accessor, createSignal, Setter } from "solid-js"
 import { twMerge } from "tailwind-merge"
+import { blogsTable } from "~/db/schema"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -89,4 +90,8 @@ export const readableDate = (date: string) => {
 export const limitChar = (string: string, limit: number) => {
   if (string.length < limit) return string
   return string.substring(0, limit-3) + "..."
+}
+
+export const createBlogFullUrl = (blogSlug: string) => {
+  return `https://Hooshbaan.com/Blog/${encodeURIComponent(blogSlug)}`
 }
