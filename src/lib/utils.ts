@@ -85,3 +85,8 @@ export const readableDate = (date: string) => {
     day: "numeric",
   })
 }
+
+export const limitChar = (string: string, limit: number) => {
+  if (string.length < limit) return string
+  return string.substring(0, limit-3) + "..."
+}

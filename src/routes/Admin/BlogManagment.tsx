@@ -9,13 +9,19 @@ import {
 import { createAsync } from "@solidjs/router";
 import { FiPlus, FiEdit, FiTrash2, FiCalendar, FiEye } from "solid-icons/fi";
 import { Suspense } from "solid-js";
+import { callModal } from "~/components/layout/Modal";
 import { Loading } from "~/components/parts/Loading";
 import TA from "~/components/parts/TA";
+import { IBlog } from "~/db/schema";
 import { getAllBlogs } from "~/lib/queries";
-import { readableDate } from "~/lib/utils";
+import { limitChar, readableDate } from "~/lib/utils";
 
 export default function WeblogPanel() {
   const posts = createAsync(() => getAllBlogs());
+
+  const deletePost = (post: IBlog) => {
+    callModal.prompt(`"${limitChar(post.title, 40)}" حذف شود؟`)
+  }
 
   return (
     <div class="space-y-6">
@@ -91,6 +97,7 @@ export default function WeblogPanel() {
                         size="sm"
                         variant="ghost"
                         class="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                        onclick={() => deletePost(post)}
                       >
                         <FiTrash2 class="h-4 w-4" />
                       </Button>
