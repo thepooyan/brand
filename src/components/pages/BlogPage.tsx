@@ -4,6 +4,7 @@ import { IBlog } from "~/db/schema"
 import { createAsync } from "@solidjs/router"
 import { createBlogFullUrl, readableDate } from "~/lib/utils"
 import { Meta, Title } from "@solidjs/meta"
+import BlogSchema from "../jsonSchema/BlogSchema"
 
 interface BlogPostProps {
   blog: IBlog
@@ -21,6 +22,7 @@ export function BlogPage({ blog }: BlogPostProps) {
       <Meta property="og:description" content={blog.excerpt}/>
       <Meta property="og:image" content={blog.image}/>
       <Meta property="og:url" content={createBlogFullUrl(blog.slug)}/>
+      <BlogSchema blog={blog}/>
 
       {/* Header */}
       <header class="mb-8 space-y-4">
