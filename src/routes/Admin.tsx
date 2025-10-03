@@ -26,7 +26,7 @@ export default function AdminLayout({children}:{children: Element}) {
       {/* Main Content Area */}
       <div class="flex h-[calc(100vh-4rem)]">
         {/* Left Content Area */}
-        <main class="flex-1 overflow-auto p-6">{children}</main>
+        <main class="flex-1 overflow-auto ">{children}</main>
 
         {/* Right Sidebar */}
         <aside class="w-64 border-l border-border bg-card">

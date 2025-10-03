@@ -88,16 +88,12 @@ export default function BlogEditor() {
     setIsSending(false)
   }
 
-  // createEffect(() => {
-  //   console.log({...blogPost})
-  // })
-
   return (
     <div class="min-h-screen bg-background ltr">
       {/* Header */}
       <header class="border-b border-border bg-card px-6 py-4">
         <div class="flex items-center justify-between">
-          <h1 class="text-2xl font-bold text-foreground">Blog Editor</h1>
+          <h1 class="text-2xl font-bold text-foreground">بلاگ جدید</h1>
           <Button onClick={saveBlogPost} disabled={!goodToSend() || isSending()}>
             {isSending() ? <Spinner reverse/> : <FiSave class="mr-1 h-4 w-4" />}
             Save Post
