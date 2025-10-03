@@ -33,6 +33,12 @@ export const getBlogBySlug = query(async (slug: string) => {
   return blog
 }, "blog")
 
+export const getBlogById = query(async (id: number) => {
+  "use server"
+  const [blog] = await db.select().from(blogsTable).where(eq(blogsTable.id, id))
+  return blog
+}, "blog")
+
 // export const profileQuery = () => useQuery(() => ({
 //   queryKey: ["profile"],
 //   queryFn: getInitialProfile

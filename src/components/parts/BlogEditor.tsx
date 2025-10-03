@@ -27,8 +27,7 @@ interface BlogPost {
   image: string
 }
 
-export default function BlogEditor() {
-  const [blogPost, setBlogPost] = createStore<BlogPost>({
+const newEmptyBlog: BlogPost = {
     title: "",
     slug: "",
     excerpt: "",
@@ -37,7 +36,13 @@ export default function BlogEditor() {
     date: new Date().toISOString(),
     readTime: 1,
     image: "",
-  })
+}
+
+interface props {
+  editData?: BlogPost
+}
+export default function BlogEditor({editData}:props) {
+  const [blogPost, setBlogPost] = createStore<BlogPost>(editData ? editData : newEmptyBlog)
 
   const goodToSend = () => blogPost.title && blogPost.excerpt && blogPost.content && blogPost.tags.length > 0 && blogPost.image && blogPost.readTime
 
