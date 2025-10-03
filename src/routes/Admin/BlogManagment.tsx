@@ -25,7 +25,7 @@ export default function WeblogPanel() {
           <h2 class="text-3xl font-bold tracking-tight">مدیریت وبلاگ</h2>
           <p class="text-muted-foreground">مدیریت و ایجاد بلاگ ها</p>
         </div>
-        <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+        <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90" as={TA} href="/Admin/NewBlog">
           پست جدید
           <FiPlus class="h-4 w-4" />
         </Button>
