@@ -6,6 +6,8 @@ import { getAdminUser } from "~/lib/signal"
 export default function AdminLayout({children}:{children: Element}) {
   getAdminUser()
   return (
+    <>
+    <style>{`html {overflow: hidden}`}</style>
     <div class="dark min-h-screen bg-background text-foreground">
       {/* Header */}
       <header class="border-b border-border bg-card">
@@ -45,6 +47,7 @@ export default function AdminLayout({children}:{children: Element}) {
         </aside>
       </div>
     </div>
+    </>
   )
 }
 
