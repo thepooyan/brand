@@ -52,13 +52,21 @@ export default function WeblogPanel() {
         <Card class="bg-card">
           <CardHeader class="pb-3">
             <CardDescription>تعداد پست ها</CardDescription>
-            <CardTitle class="text-3xl font-bold text-primary">{posts()?.length}</CardTitle>
+            <CardTitle class="text-3xl font-bold text-primary">
+              <Suspense fallback="0">
+                {posts()?.length}
+              </Suspense>
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card class="bg-card">
           <CardHeader class="pb-3">
             <CardDescription>تاریخ آخرین پست</CardDescription>
-            <CardTitle class="text-3xl font-bold text-primary">{readableDate(posts()?.at(0)?.date || "")}</CardTitle>
+            <CardTitle class="text-3xl font-bold text-primary">
+              <Suspense fallback="-----">
+                {readableDate(posts()?.at(0)?.date || "")}
+              </Suspense>
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card class="bg-card">
