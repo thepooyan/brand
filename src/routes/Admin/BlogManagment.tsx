@@ -85,7 +85,7 @@ export default function WeblogPanel() {
             {posts()?.map((post) => (
               <Card class="bg-card transition-colors hover:bg-accent/50">
                 <CardContent class="p-4">
-                  <div class="flex items-start justify-between gap-4">
+                  <div class="flex justify-between gap-4 items-center">
                     <div class="flex-1 space-y-1">
                       <div class="flex items-center gap-2">
                         <h4 class="font-semibold text-card-foreground">
@@ -100,7 +100,7 @@ export default function WeblogPanel() {
                         {readableDate(post.date)}
                       </div>
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 items-center">
                       <Button
                         size="sm"
                         variant="ghost"
