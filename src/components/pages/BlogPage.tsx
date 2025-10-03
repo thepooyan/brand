@@ -1,4 +1,4 @@
-import {  FiCalendar, FiClock, FiHeart } from "solid-icons/fi"
+import {  FiCalendar, FiClock } from "solid-icons/fi"
 import {marked} from "marked"
 import { IBlog } from "~/db/schema"
 import { createAsync } from "@solidjs/router"
