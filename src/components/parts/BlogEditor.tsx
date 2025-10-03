@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import Spinner from "~/components/parts/Spinner"
-import { newPost } from "~/server/actions"
+import { editPost, newPost } from "~/server/actions"
 import { FiClock, FiGlobe, FiImage, FiSave, FiTag } from "solid-icons/fi"
 import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
 import { createSignal, Match, Switch } from "solid-js"
@@ -89,6 +89,12 @@ export default function BlogEditor({editData}:props) {
       e.preventDefault()
       addTag()
     }
+  }
+
+  const decideAction = (post: BlogPost) => {
+    if (editData === undefined)
+      return newPost(post)
+      else return editPost({...post, id: 0, likeCount: 0})
   }
 
   const saveBlogPost = async () => {
