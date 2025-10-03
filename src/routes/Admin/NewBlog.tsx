@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import md from "./sampleMD.md?raw"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
@@ -30,7 +31,7 @@ export default function BlogEditor() {
     title: "",
     slug: "",
     excerpt: "",
- content: '# خوش آمدید به پست وبلاگ شما\n\nنوشتن محتوای **مارک‌داون** خود را از اینجا شروع کنید...\n\n- از لیست‌ها استفاده کنید\n- لینک‌ها اضافه کنید\n- بلاک‌های کد قرار دهید\n\n```javascript\nconsole.log("سلام دنیا!");\n```' ,
+    content: md,
     tags: [],
     date: new Date().toISOString().split("T")[0],
     readTime: 1,
@@ -88,9 +89,9 @@ export default function BlogEditor() {
   }
 
   return (
-    <div class="min-h-screen bg-background ">
+    <div class="min-h-screen">
       {/* Header */}
-      <header class="border-b border-border bg-card px-6 py-4">
+      <header class="border-b border-border  px-6 py-4">
         <div class="flex items-center justify-between">
           <h1 class="text-2xl font-bold text-foreground">بلاگ جدید</h1>
           <Button onClick={saveBlogPost} disabled={!goodToSend() || isSending()}>
@@ -101,7 +102,7 @@ export default function BlogEditor() {
       </header>
 
       {/* Metadata Section */}
-      <div class="border-b border-border bg-card px-6 py-6">
+      <div class="border-b border-border  px-6 py-6">
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div class="space-y-2">
             <Label for="title" class="text-sm font-medium text-foreground">
@@ -163,7 +164,7 @@ export default function BlogEditor() {
           </div>
           <div class="">
             <p class="mb-1">پیش نمایش تصویر</p>
-            {<img src={blogPost.image} class="bg-zinc-700 h-40 w-80 rounded m-auto object-contain text-center pt-[22%]" alt="تصویر یافت نشد"/>}
+            {<img src={blogPost.image} class=" bg-input text-muted-foreground/50 text-sm h-40 w-80 rounded-lg m-auto object-contain text-center pt-[22%]" alt="تصویر یافت نشد"/>}
           </div>
         </div>
 
