@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vinxi dev --host",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "vinxi start",
+    "db": "bunx drizzle-kit push"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",
