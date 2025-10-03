@@ -58,7 +58,7 @@ export default function WeblogPanel() {
         <Card class="bg-card">
           <CardHeader class="pb-3">
             <CardDescription>تاریخ آخرین پست</CardDescription>
-            <CardTitle class="text-3xl font-bold text-primary">{readableDate(posts()?.at(-1)?.date || "")}</CardTitle>
+            <CardTitle class="text-3xl font-bold text-primary">{readableDate(posts()?.at(0)?.date || "")}</CardTitle>
           </CardHeader>
         </Card>
         <Card class="bg-card">

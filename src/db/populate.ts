@@ -45,8 +45,9 @@ async function seedBlogs() {
 }
 
 
-let c = fs.readFileSync("./src/db/test.md", "utf-8")
+// let c = fs.readFileSync("./src/db/test.md", "utf-8")
 
-await db.update(blogsTable).set({content:c}).where(eq(blogsTable.id,  3))
+// await db.update(blogsTable).set({content:c}).where(eq(blogsTable.id,  3))
   
+seedBlogs()
 

@@ -2,7 +2,7 @@ import { QueryClientConfig } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
 import { blogsTable, usersTable } from "~/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { query } from "@solidjs/router";
 
 export const queryConfig:QueryClientConfig = {
@@ -24,7 +24,7 @@ export const getInitialProfile = query(async () => {
 
 export const getAllBlogs = query(async () => {
   "use server"
-    return await db.select().from(blogsTable)
+    return await db.select().from(blogsTable).orderBy(desc(blogsTable.date))
 }, "blogs")
 
 export const getBlogBySlug = query(async (slug: string) => {
