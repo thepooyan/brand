@@ -1,4 +1,7 @@
-ksk
+seo:
+check gsc
+expland author => add authors table
+
 handle error in usechat
 fix mini chat
 
