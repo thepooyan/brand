@@ -30,8 +30,7 @@ export default function BlogEditor() {
     title: "",
     slug: "",
     excerpt: "",
-    content:
-      '# Welcome to your blog post\n\nStart writing your **markdown** content here...\n\n- Use lists\n- Add links\n- Include code blocks\n\n```javascript\nconsole.log("Hello, world!");\n```',
+ content: '# خوش آمدید به پست وبلاگ شما\n\nنوشتن محتوای **مارک‌داون** خود را از اینجا شروع کنید...\n\n- از لیست‌ها استفاده کنید\n- لینک‌ها اضافه کنید\n- بلاک‌های کد قرار دهید\n\n```javascript\nconsole.log("سلام دنیا!");\n```' ,
     tags: [],
     date: new Date().toISOString().split("T")[0],
     readTime: 1,
@@ -170,11 +169,11 @@ export default function BlogEditor() {
 
         <div class="mt-6 space-y-2">
           <Label for="excerpt" class="text-sm font-medium text-foreground">
-            Excerpt
+            خلاصه
           </Label>
             <Textarea
               id="excerpt"
-              placeholder="Write a brief excerpt for your blog post..."
+              placeholder="توضیحی کوتاه در مورد بلاگ..."
               value={blogPost.excerpt}
               onChange={(e:any) => setBlogPost((prev) => ({ ...prev, excerpt: e.target.value }))}
               class="bg-input border-border resize-none"
@@ -185,18 +184,18 @@ export default function BlogEditor() {
         <div class="mt-6 space-y-2">
           <Label class="text-sm font-medium text-foreground flex items-center gap-2">
             <FiTag class="h-4 w-4" />
-            Tags
+            تگ  ها
           </Label>
           <div class="flex gap-2">
             <Input
-              placeholder="Add a tag..."
+              placeholder="یک تگ اضافه کنید..."
               value={tagInput()}
               onChange={(e) => setTagInput(e.target.value)}
               onKeyPress={handleKeyPress}
               class="bg-input border-border"
             />
             <Button onClick={addTag} variant="outline" size="sm">
-              Add
+              افزودن
             </Button>
           </div>
           {blogPost.tags.length > 0 && (
@@ -221,12 +220,11 @@ export default function BlogEditor() {
         <div class="flex-1 border-r border-border">
           <div class="h-full p-6">
             <Label for="content" class="text-sm font-medium text-foreground mb-3 block">
-              Markdown Content
+              محتوای بلاگ
             </Label>
 
             <Textarea
               id="content"
-              placeholder="Write your markdown content here..."
               value={blogPost.content}
               onkeyup={(e:any) => handleContentChange(e.target.value)}
               class="h-78 bg-background border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
@@ -237,7 +235,7 @@ export default function BlogEditor() {
         {/* Preview Pane */}
         <div class="flex-1">
           <div class="h-full p-6 bg-card">
-            <Label class="text-sm font-medium text-card-foreground mb-3 block">Live Preview</Label>
+            <Label class="text-sm font-medium text-card-foreground mb-3 block">پیش نمایش</Label>
             <Card class="h-[calc(100%-2rem)] overflow-auto bg-card border-border">
               <div class="p-6">
                 <MarkdownPreview content={blogPost.content} />
