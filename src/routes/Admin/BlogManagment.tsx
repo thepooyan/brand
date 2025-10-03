@@ -64,7 +64,7 @@ export default function WeblogPanel() {
             <CardDescription>تاریخ آخرین پست</CardDescription>
             <CardTitle class="text-3xl font-bold text-primary">
               <Suspense fallback="-----">
-                {readableDate(posts()?.at(0)?.date || "")}
+                {posts()?.at(0)?.date ? readableDate(posts()?.at(0)?.date || "") : "موجود نیست"}
               </Suspense>
             </CardTitle>
           </CardHeader>
@@ -82,6 +82,14 @@ export default function WeblogPanel() {
         <h3 class="text-xl font-semibold">آخرین بلاگ ها</h3>
         <div class="space-y-3">
           <Suspense fallback={<Loading />}>
+            {posts()?.length === 0 && <>
+              <div class="bg-card rounded-md p-5 text-center flex flex-col gap-3 items-center">
+                بلاگی یافت نشد!
+                <Button as={TA} href="/Admin/NewBlog">
+                  اضافه کردن
+                </Button>
+              </div>
+            </>}
             {posts()?.map((post) => (
               <Card class="bg-card transition-colors hover:bg-accent/50">
                 <CardContent class="p-4">
