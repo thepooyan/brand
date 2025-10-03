@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createAsync } from "@solidjs/router";
-import { FiPlus, FiEdit, FiTrash2, FiCalendar } from "solid-icons/fi";
+import { FiPlus, FiEdit, FiTrash2, FiCalendar, FiEye } from "solid-icons/fi";
 import { Suspense } from "solid-js";
 import { Loading } from "~/components/parts/Loading";
+import TA from "~/components/parts/TA";
 import { getAllBlogs } from "~/lib/queries";
 
 export default function WeblogPanel() {
@@ -75,6 +76,13 @@ export default function WeblogPanel() {
                       </div>
                     </div>
                     <div class="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        as={TA} href={`/Weblog/${encodeURIComponent(post.slug)}`}
+                      >
+                        <FiEye class="h-4 w-4" />
+                      </Button>
                       <Button size="sm" variant="ghost" class="h-8 w-8 p-0">
                         <FiEdit class="h-4 w-4" />
                       </Button>
