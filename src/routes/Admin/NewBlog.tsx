@@ -7,7 +7,7 @@ import Spinner from "~/components/parts/Spinner"
 import { newPost } from "~/server/actions"
 import { FiClock, FiGlobe, FiImage, FiSave, FiTag } from "solid-icons/fi"
 import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
-import { createSignal } from "solid-js"
+import { createSignal, Match, Switch } from "solid-js"
 import { useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
 import { createStore } from "solid-js/store"
@@ -43,8 +43,12 @@ export default function BlogEditor() {
 
   const [tagInput, setTagInput] = createSignal("")
   const [isSending, setIsSending] = createSignal(false)
-  const [_, setPicUploading] = createSignal(false)
-  const [invalidImage, setInvalidImage] = createSignal(true)
+  enum imgState {
+    loading,
+    invalid,
+    valid
+  }
+  const [imageState, setImageState] = createSignal(imgState.invalid)
   const navigate = useNavigate()
 
   const handleContentChange = (content: string) => {
@@ -161,19 +165,26 @@ export default function BlogEditor() {
                 onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
                 class="bg-input border-border w-full"
               />
-              <UploadBtn onUploaded={str => setBlogPost("image", str)} setIsUploading={setPicUploading}/>
+              <UploadBtn onUploaded={str => setBlogPost("image", str)} setIsUploading={() => setImageState(imgState.loading)}/>
             </div>
           </div>
           <div class="">
             <p class="mb-1">پیش نمایش تصویر</p>
-            <p class={cn("bg-input w-80 h-40 rounded-lg flex justify-center items-center text-muted-foreground/50"
-              , !invalidImage() && "hidden"
-            )}
-            >تصویر یافت نشد</p>
+            <Switch>
+              <Match when={imageState() === imgState.loading}>
+                <p class="bg-input w-80 h-40 rounded-lg flex justify-center items-center text-muted-foreground/50 ">
+                  لطفا صبر کنید
+                  <Spinner reverse class="mr-2"/>
+                </p>
+              </Match>
+              <Match when={imageState() === imgState.invalid}>
+                <p class="bg-input w-80 h-40 rounded-lg flex justify-center items-center text-muted-foreground/50">تصویر یافت نشد</p>
+              </Match>
+            </Switch>
             <img src={blogPost.image}
-              onerror={() => setInvalidImage(true)}
-              onload={() => setInvalidImage(false)}
-              class={cn(" bg-input  h-40 w-80 rounded-lg object-contain", invalidImage() && "hidden")}
+              onerror={() => setImageState(imgState.invalid)}
+              onload={() => setImageState(imgState.valid)}
+              class={cn(" bg-input  h-40 w-80 rounded-lg object-contain", imageState() !== imgState.valid && "hidden")}
               alt=""/>
           </div>
         </div>
