@@ -77,3 +77,11 @@ export class CallbackStore {
 }
 
 export const orPlaceholder = (image: string | null | undefined) => image || "/placeholder.svg"
+
+export const readableDate = (date: string) => {
+  return new Date(date).toLocaleDateString("fa", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
+}

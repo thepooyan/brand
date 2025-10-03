@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { blogsTable } from "@/db/schema"
 import { Button } from "@/components/ui/button"
-import { orPlaceholder } from "~/lib/utils"
+import { orPlaceholder, readableDate } from "~/lib/utils"
 
 interface BlogCardProps {
   post: typeof blogsTable.$inferSelect
@@ -37,7 +37,7 @@ const BlogCard = (props: BlogCardProps) => {
         <CardHeader>
           <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
             <FiCalendar class="w-4 h-4" />
-            {new Date(props.post.date).toLocaleDateString()}
+            {readableDate(props.post.date)}
             <Separator orientation="vertical" class="h-4" />
             <FiClock class="w-4 h-4" />
             {props.post.readTime} دقیقه مطالعه

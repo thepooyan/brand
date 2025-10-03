@@ -12,6 +12,7 @@ import { Suspense } from "solid-js";
 import { Loading } from "~/components/parts/Loading";
 import TA from "~/components/parts/TA";
 import { getAllBlogs } from "~/lib/queries";
+import { readableDate } from "~/lib/utils";
 
 export default function WeblogPanel() {
   const posts = createAsync(() => getAllBlogs());
@@ -40,8 +41,8 @@ export default function WeblogPanel() {
         </Card>
         <Card class="bg-card">
           <CardHeader class="pb-3">
-            <CardDescription></CardDescription>
-            <CardTitle class="text-3xl font-bold text-primary"></CardTitle>
+            <CardDescription>تاریخ آخرین پست</CardDescription>
+            <CardTitle class="text-3xl font-bold text-primary">{readableDate(posts()?.at(-1)?.date || "")}</CardTitle>
           </CardHeader>
         </Card>
         <Card class="bg-card">
@@ -72,7 +73,7 @@ export default function WeblogPanel() {
                       </p>
                       <div class="flex items-center gap-1 text-xs text-muted-foreground">
                         <FiCalendar class="h-3 w-3" />
-                        {post.date}
+                        {readableDate(post.date)}
                       </div>
                     </div>
                     <div class="flex gap-2">

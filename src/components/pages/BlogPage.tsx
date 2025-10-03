@@ -2,6 +2,7 @@ import {  FiCalendar, FiClock, FiHeart } from "solid-icons/fi"
 import {marked} from "marked"
 import { IBlog } from "~/db/schema"
 import { createAsync } from "@solidjs/router"
+import { readableDate } from "~/lib/utils"
 
 interface BlogPostProps {
   blog: IBlog
@@ -24,11 +25,7 @@ export function BlogPage({ blog }: BlogPostProps) {
           <div class="flex items-center gap-1.5">
             <FiCalendar class="h-4 w-4" />
             <time dateTime={blog.date}>
-              {new Date(blog.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {readableDate(blog.date)}
             </time>
           </div>
 
