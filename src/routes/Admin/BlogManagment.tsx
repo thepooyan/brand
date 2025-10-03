@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createAsync } from "@solidjs/router";
+import { createAsync, revalidate } from "@solidjs/router";
 import { FiPlus, FiEdit, FiTrash2, FiCalendar, FiEye } from "solid-icons/fi";
 import { Suspense } from "solid-js";
 import { callModal } from "~/components/layout/Modal";
@@ -27,7 +27,7 @@ export default function WeblogPanel() {
         let {ok} = await deletePost(post.id)
         if (ok) {
           callModal.success("با موفقیت حذف شد!")
-          //revalidate posts
+          revalidate("blogs")
         }
         else callModal.fail("خطایی پیش آمده. لطفا مجددا تلاش کنید")
       })
