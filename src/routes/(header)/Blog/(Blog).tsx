@@ -6,7 +6,7 @@ import BlogCard from "~/components/parts/BlogCard"
 import { Loading } from "~/components/parts/Loading"
 import { getAllBlogs } from "~/lib/queries"
 
-const Weblog = () => {
+const Blog = () => {
 
   const blogs = createAsync(() => getAllBlogs())
   
@@ -22,4 +22,4 @@ const Weblog = () => {
   )
 }
 
-export default Weblog
+export default Blog

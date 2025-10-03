@@ -65,7 +65,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
-                    وبلاگ
+                    بلاگ
                   </A>
                 </li>
               </ul>

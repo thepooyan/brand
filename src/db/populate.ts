@@ -41,7 +41,7 @@ const blogs: Omit<typeof blogsTable.$inferInsert, "id">[] = [
 
 async function seedBlogs() {
   await db.insert(blogsTable).values(blogs)
-  console.log("۳ پست وبلاگ با موفقیت اضافه شد")
+  console.log("۳ پست بلاگ با موفقیت اضافه شد")
 }
 
 

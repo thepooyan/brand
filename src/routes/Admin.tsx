@@ -40,7 +40,7 @@ export default function AdminLayout({children}:{children: Element}) {
                 
                 class={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors text-muted-foreground hover:bg-accent hover:text-accent-foreground`}>
                 <FiFileText class="h-5 w-5" />
-                وبلاگ
+                بلاگ
               </TA>
             </div>
           </nav>

@@ -246,7 +246,7 @@ export default function Website() {
                       <option value="yes">بله، فروشگاه آنلاین</option>
                       <option value="no">خیر، وب‌سایت معرفی</option>
                       <option value="portfolio">نمونه کار و پورتفولیو</option>
-                      <option value="blog">وبلاگ و محتوا</option>
+                      <option value="blog">بلاگ و محتوا</option>
                       <option value="service">ارائه خدمات</option>
                     </select>
                   </div>

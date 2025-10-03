@@ -38,8 +38,8 @@ const Header = () => {
             <TA href="/ContactUs" class="text-sm font-medium hover:text-primary transition-colors">
               تماس با ما
             </TA>
-            <TA href="/Weblog" class="text-sm font-medium hover:text-primary transition-colors">
-              وبلاگ
+            <TA href="/Blog" class="text-sm font-medium hover:text-primary transition-colors">
+              بلاگ
             </TA>
             <Show when={isLoggedIn()?.role === ROLES.ADMIN}>
               <div class="space-x-2">

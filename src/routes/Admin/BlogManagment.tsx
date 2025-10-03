@@ -17,7 +17,7 @@ import { getAllBlogs } from "~/lib/queries";
 import { limitChar, readableDate } from "~/lib/utils";
 import { deletePost } from "~/server/actions";
 
-export default function WeblogPanel() {
+export default function BlogPanel() {
   const posts = createAsync(() => getAllBlogs());
 
   const handleDelete = (post: IBlog) => {
@@ -38,7 +38,7 @@ export default function WeblogPanel() {
       {/* Header Section */}
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-3xl font-bold tracking-tight">مدیریت وبلاگ</h2>
+          <h2 class="text-3xl font-bold tracking-tight">مدیریت بلاگ</h2>
           <p class="text-muted-foreground">مدیریت و ایجاد بلاگ ها</p>
         </div>
         <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90" as={TA} href="/Admin/NewBlog">
@@ -112,7 +112,7 @@ export default function WeblogPanel() {
                       <Button
                         size="sm"
                         variant="ghost"
-                        as={TA} href={`/Weblog/${encodeURIComponent(post.slug)}`}
+                        as={TA} href={`/Blog/${encodeURIComponent(post.slug)}`}
                       >
                         <FiEye class="h-4 w-4" />
                       </Button>

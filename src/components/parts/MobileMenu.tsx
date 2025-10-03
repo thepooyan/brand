@@ -30,8 +30,8 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
           <L href="/ContactUs">
             تماس با ما
           </L>
-          <L href="/Weblog">
-            وبلاگ
+          <L href="/Blog">
+            بلاگ
           </L>
         <Show when={isLoggedIn() !== undefined}>
           <div class="flex gap-2 mx-auto mt-auto mb-5">
