@@ -40,7 +40,8 @@ export const websiteOrders = sqliteTable("website_orders", {
 
 export const adminsTable = sqliteTable("admins_table", {
   id: int().primaryKey({autoIncrement: true}),
-  chat_id: text().notNull()
+  chat_id: text().notNull(),
+  number: text().notNull()
 })
 
 export const usersTable = sqliteTable("users_table", {
