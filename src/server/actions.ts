@@ -2,8 +2,8 @@
 import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
-import { compareEpochTime, generateOTP, Response, validatePhone, warpResponse } from "./util"
-import { blogsTable, chatbot, chatbot_status, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import { compareEpochTime, findoutRole, generateOTP, isNumberAdmin, Response, validatePhone, warpResponse } from "./util"
+import { adminsTable, blogsTable, chatbot, chatbot_status, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, ROLES, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -12,6 +12,7 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { s3 } from "~/s3"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { isatty } from "tty"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -55,10 +56,12 @@ export const verifyOTP = async (number: string, otp: string):Response => {
       }
       let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
       if (!result) throw new Error()
-      await updateAuthSession({user: {...result, role: ROLES.USER}})
+      const role = await findoutRole(result.number)
+      await updateAuthSession({user: {...result, role: role }})
       return {ok: true}
     }
-    await updateAuthSession({user: {...user, role: ROLES.USER}})
+    const role = await findoutRole(user.number)
+    await updateAuthSession({user: {...user, role: role }})
     return {ok: true}
   }) 
 }
