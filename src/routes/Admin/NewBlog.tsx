@@ -8,7 +8,7 @@ import { newPost } from "~/server/actions"
 import { FiClock, FiGlobe, FiImage, FiSave, FiTag } from "solid-icons/fi"
 import { MarkdownPreview } from "~/components/parts/MarkdownPreview"
 import { createSignal, Match, Switch } from "solid-js"
-import { useNavigate } from "@solidjs/router"
+import { revalidate, useNavigate } from "@solidjs/router"
 import { callModal } from "~/components/layout/Modal"
 import { createStore } from "solid-js/store"
 import Textarea from "~/components/ui/Textarea"
@@ -89,7 +89,11 @@ export default function BlogEditor() {
   const saveBlogPost = async () => {
     setIsSending(true)
     let {ok} = await newPost(blogPost)
-    if (ok) return navigate("/")
+    if (ok) {
+      navigate("/admin/BlogManagment")
+      revalidate("blogs")
+      return
+    }
     callModal.fail("Something went wrong. please try again.")
     setIsSending(false)
   }
