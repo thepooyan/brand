@@ -5,6 +5,7 @@ import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
 import { logUserOut, useIsLoggedIn } from "~/lib/signal"
+import { ROLES } from "~/lib/session"
 
 const Header = () => {
 
@@ -39,7 +40,13 @@ const Header = () => {
             <TA href="/Weblog" class="text-sm font-medium hover:text-primary transition-colors">
               وبلاگ
             </TA>
-            <Show when={isLoggedIn() !== undefined}>
+            <Show when={isLoggedIn()?.role === ROLES.ADMIN}>
+              <div class="space-x-2">
+                <Button as={TA} href="/Admin">ادمین</Button>
+                <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
+              </div>
+            </Show>
+            <Show when={isLoggedIn()?.role === ROLES.USER}>
               <div class="space-x-2">
                 <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
                 <Button as={TA} href="/Panel">پنل کاربری</Button>
