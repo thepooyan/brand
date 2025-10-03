@@ -89,14 +89,14 @@ export default function BlogEditor() {
   }
 
   return (
-    <div class="min-h-screen bg-background ltr">
+    <div class="min-h-screen bg-background ">
       {/* Header */}
       <header class="border-b border-border bg-card px-6 py-4">
         <div class="flex items-center justify-between">
           <h1 class="text-2xl font-bold text-foreground">بلاگ جدید</h1>
           <Button onClick={saveBlogPost} disabled={!goodToSend() || isSending()}>
             {isSending() ? <Spinner reverse/> : <FiSave class="mr-1 h-4 w-4" />}
-            Save Post
+            ذخیره
           </Button>
         </div>
       </header>
@@ -106,13 +106,13 @@ export default function BlogEditor() {
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div class="space-y-2">
             <Label for="title" class="text-sm font-medium text-foreground">
-              Title
+              عنوان
             </Label>
             <Input
               id="title"
               value={blogPost.title}
               onchange={e => setBlogPost("title", e.target.value)}
-              placeholder="Enter blog post title..."
+              placeholder="عنوان بلاگ را وارد کنید..."
               class="bg-input border-border"
             />
           </div>
@@ -121,18 +121,19 @@ export default function BlogEditor() {
           <div class="space-y-2">
             <Label for="readTime" class="text-sm font-medium text-foreground flex items-center gap-2">
               <FiGlobe class="h-4 w-4" />
-              Slug
+              اسلاگ
             </Label>
             <Input
               value={blogPost.slug}
               onChange={e => setBlogPost("slug", e.target.value)}
+              placeholder="اسلاگ-نمونه"
               class="bg-input border-border"
             />
           </div>
           <div class="space-y-2">
             <Label for="readTime" class="text-sm font-medium text-foreground flex items-center gap-2">
               <FiClock class="h-4 w-4" />
-              Read Time (min)
+              زمان مطالعه (دقیقه)
             </Label>
             <Input
               id="readTime"
@@ -148,7 +149,7 @@ export default function BlogEditor() {
           <div class="space-y-2">
             <Label for="image" class="text-sm font-medium text-foreground flex items-center gap-2">
               <FiImage class="h-4 w-4" />
-              Featured Image URL
+              آدرس تصویر اصلی
             </Label>
             <div class="flex w-full gap-3">
               <Input
@@ -162,7 +163,8 @@ export default function BlogEditor() {
             </div>
           </div>
           <div class="">
-            {<img src={blogPost.image || "/placeholder.svg"} class="bg-zinc-700 h-40 w-80 rounded m-auto object-contain"/>}
+            <p class="mb-1">پیش نمایش تصویر</p>
+            {<img src={blogPost.image} class="bg-zinc-700 h-40 w-80 rounded m-auto object-contain text-center pt-[22%]" alt="تصویر یافت نشد"/>}
           </div>
         </div>
 
