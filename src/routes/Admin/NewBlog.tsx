@@ -14,6 +14,7 @@ import { createStore } from "solid-js/store"
 import Textarea from "~/components/ui/Textarea"
 import Input from "~/components/ui/InputNew"
 import UploadBtn from "~/components/parts/UploadBtn"
+import { cn } from "~/lib/utils"
 
 interface BlogPost {
   title: string
@@ -42,7 +43,8 @@ export default function BlogEditor() {
 
   const [tagInput, setTagInput] = createSignal("")
   const [isSending, setIsSending] = createSignal(false)
-  const [picUploading, setPicUploading] = createSignal(false)
+  const [_, setPicUploading] = createSignal(false)
+  const [invalidImage, setInvalidImage] = createSignal(true)
   const navigate = useNavigate()
 
   const handleContentChange = (content: string) => {
@@ -164,7 +166,15 @@ export default function BlogEditor() {
           </div>
           <div class="">
             <p class="mb-1">پیش نمایش تصویر</p>
-            {<img src={blogPost.image} class=" bg-input text-muted-foreground/50 text-sm h-40 w-80 rounded-lg m-auto object-contain text-center pt-[22%]" alt="تصویر یافت نشد"/>}
+            <p class={cn("bg-input w-80 h-40 rounded-lg flex justify-center items-center text-muted-foreground/50"
+              , !invalidImage() && "hidden"
+            )}
+            >تصویر یافت نشد</p>
+            <img src={blogPost.image}
+              onerror={() => setInvalidImage(true)}
+              onload={() => setInvalidImage(false)}
+              class={cn(" bg-input  h-40 w-80 rounded-lg object-contain", invalidImage() && "hidden")}
+              alt=""/>
           </div>
         </div>
 
