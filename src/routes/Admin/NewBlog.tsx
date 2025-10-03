@@ -34,7 +34,7 @@ export default function BlogEditor() {
     excerpt: "",
     content: md,
     tags: [],
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString(),
     readTime: 1,
     image: "",
   })
@@ -105,7 +105,7 @@ export default function BlogEditor() {
         <div class="flex items-center justify-between">
           <h1 class="text-2xl font-bold text-foreground">بلاگ جدید</h1>
           <Button onClick={saveBlogPost} disabled={!goodToSend() || isSending()}>
-            {isSending() ? <Spinner reverse/> : <FiSave class="mr-1 h-4 w-4" />}
+            {isSending() ? <Spinner/> : <FiSave class="mr-1 h-4 w-4" />}
             ذخیره
           </Button>
         </div>
