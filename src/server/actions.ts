@@ -2,8 +2,8 @@
 import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
-import { compareEpochTime, findoutRole, generateOTP, isNumberAdmin, Response, validatePhone, warpResponse } from "./util"
-import { adminsTable, blogsTable, chatbot, chatbot_status, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./util"
+import {  blogsTable, chatbot, chatbot_status, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, ROLES, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -12,7 +12,6 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { s3 } from "~/s3"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
-import { isatty } from "tty"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
