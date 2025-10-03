@@ -6,13 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { createAsync } from "@solidjs/router";
 import { FiPlus, FiEdit, FiTrash2, FiCalendar } from "solid-icons/fi";
 import { Suspense } from "solid-js";
 import { Loading } from "~/components/parts/Loading";
-import Input from "~/components/ui/InputNew";
-import Textarea from "~/components/ui/Textarea";
 import { getAllBlogs } from "~/lib/queries";
 
 export default function WeblogPanel() {
@@ -23,12 +20,12 @@ export default function WeblogPanel() {
       {/* Header Section */}
       <div class="flex items-center justify-between">
         <div>
-          <h2 class="text-3xl font-bold tracking-tight">Weblog Management</h2>
-          <p class="text-muted-foreground">Create and manage your blog posts</p>
+          <h2 class="text-3xl font-bold tracking-tight">مدیریت وبلاگ</h2>
+          <p class="text-muted-foreground">مدیریت و ایجاد بلاگ ها</p>
         </div>
         <Button class="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+          پست جدید
           <FiPlus class="h-4 w-4" />
-          New Post
         </Button>
       </div>
 
@@ -36,64 +33,27 @@ export default function WeblogPanel() {
       <div class="grid gap-4 md:grid-cols-3">
         <Card class="bg-card">
           <CardHeader class="pb-3">
-            <CardDescription>Total Posts</CardDescription>
-            <CardTitle class="text-3xl font-bold text-primary">12</CardTitle>
+            <CardDescription>تعداد پست ها</CardDescription>
+            <CardTitle class="text-3xl font-bold text-primary">{posts()?.length}</CardTitle>
           </CardHeader>
         </Card>
         <Card class="bg-card">
           <CardHeader class="pb-3">
-            <CardDescription>Published</CardDescription>
-            <CardTitle class="text-3xl font-bold text-primary">8</CardTitle>
+            <CardDescription></CardDescription>
+            <CardTitle class="text-3xl font-bold text-primary"></CardTitle>
           </CardHeader>
         </Card>
         <Card class="bg-card">
           <CardHeader class="pb-3">
-            <CardDescription>Drafts</CardDescription>
-            <CardTitle class="text-3xl font-bold text-muted-foreground">
-              4
-            </CardTitle>
+            <CardDescription></CardDescription>
+            <CardTitle class="text-3xl font-bold text-muted-foreground"></CardTitle>
           </CardHeader>
         </Card>
       </div>
 
-      {/* Quick Create Form */}
-      <Card class="bg-card">
-        <CardHeader>
-          <CardTitle>Quick Create</CardTitle>
-          <CardDescription>Quickly draft a new blog post</CardDescription>
-        </CardHeader>
-        <CardContent class="space-y-4">
-          <div class="space-y-2">
-            <Label for="title">Post Title</Label>
-            <Input
-              id="title"
-              placeholder="Enter post title..."
-              class="bg-background"
-            />
-          </div>
-          <div class="space-y-2">
-            <Label for="excerpt">Excerpt</Label>
-            <Textarea
-              id="excerpt"
-              placeholder="Write a brief excerpt..."
-              rows={3}
-              class="bg-background"
-            />
-          </div>
-          <div class="flex gap-2">
-            <Button variant="outline" class="flex-1 bg-transparent">
-              Save as Draft
-            </Button>
-            <Button class="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">
-              Publish Now
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Posts List */}
       <div class="space-y-4">
-        <h3 class="text-xl font-semibold">Recent Posts</h3>
+        <h3 class="text-xl font-semibold">آخرین بلاگ ها</h3>
         <div class="space-y-3">
           <Suspense fallback={<Loading />}>
             {posts()?.map((post) => (
