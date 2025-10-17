@@ -23,7 +23,6 @@ export default function App() {
                 <Title>{nameEn}</Title>
                 <Meta name="description" content={description}/>
                 <Meta name="samandehi" content="339513635"/>
-                <Meta name="enamad" content="56869699" />
                 <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
               </MetaProvider>
             )}
