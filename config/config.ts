@@ -5,7 +5,7 @@ export const socialLinks = {
   X: "",
   instagram: "",
   facebook: "",
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/company/hooshbaan/",
 }
 export const info = {
   address: "پارک نوآوری، تهران",
