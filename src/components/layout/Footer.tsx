@@ -1,13 +1,14 @@
 import { A } from "@solidjs/router"
 import { info, name, nameEn, socialLinks } from "../../../config/config"
 import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "solid-icons/fi"
+import Enamad from "../parts/Enamad"
 
 const Footer = () => {
   return (
     <>
       <footer class="bg-black py-12">
         <div class="container mx-auto px-4">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div>
               <div class="flex items-center gap-2 mb-4">
                 <div class="w-15 relative">
@@ -78,6 +79,7 @@ const Footer = () => {
                 <li class="text-muted-foreground">{info.address}</li>
               </ul>
             </div>
+            <Enamad/>
           </div>
           <div class="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p class="text-muted-foreground text-sm">© ۱۴۰۴ {name}. تمامی حقوق محفوظ است.</p>
