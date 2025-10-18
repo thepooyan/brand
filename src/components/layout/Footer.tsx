@@ -1,8 +1,9 @@
 import { A } from "@solidjs/router"
-import { info, name, nameEn, socialLinks } from "../../../config/config"
+import { info, name, nameEn, socialLinks, support } from "../../../config/config"
 import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "solid-icons/fi"
 import Enamad from "../parts/Enamad"
 import { Show } from "solid-js"
+import { ImTelegram, ImWhatsapp } from "solid-icons/im"
 
 const Footer = () => {
   return (
@@ -59,6 +60,11 @@ const Footer = () => {
                     درباره ما
                   </A>
                 </li>
+                <li>
+                  <A href="/ContactUs" class="text-muted-foreground hover:text-primary transition-colors">
+                    تماس با ما
+                  </A>
+                </li>
                 <Show when={false}>
                 <li>
                   <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
@@ -112,6 +118,14 @@ const Footer = () => {
               <A href={socialLinks.linkedin} class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">لینکدین</span>
                 <FiLinkedin/>
+              </A>
+              <A href={`https://wa.me/${support.whatsapp}`} class="text-muted-foreground hover:text-primary transition-colors">
+                <span class="sr-only">واتساپ</span>
+                <ImWhatsapp/>
+              </A>
+              <A href={support.telegram} class="text-muted-foreground hover:text-primary transition-colors">
+                <span class="sr-only">تلگرام</span>
+                <ImTelegram/>
               </A>
             </div>
           </div>
