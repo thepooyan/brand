@@ -2,6 +2,7 @@ import { A } from "@solidjs/router"
 import { info, name, nameEn, socialLinks } from "../../../config/config"
 import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "solid-icons/fi"
 import Enamad from "../parts/Enamad"
+import { Show } from "solid-js"
 
 const Footer = () => {
   return (
@@ -84,18 +85,24 @@ const Footer = () => {
           <div class="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p class="text-muted-foreground text-sm">© ۱۴۰۴ {name}. تمامی حقوق محفوظ است.</p>
             <div class="flex space-x-6 mt-4 md:mt-0">
+              <Show when={socialLinks.facebook}>
               <A href={socialLinks.facebook} class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">فیسبوک</span>
                 <FiFacebook/>
               </A>
+              </Show>
+              <Show when={socialLinks.instagram}>
               <A href={socialLinks.instagram} class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">اینستاگرام</span>
                 <FiInstagram/>
               </A>
+              </Show>
+              <Show when={socialLinks.X}>
               <A href={socialLinks.X} class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">توییتر</span>
                 <FiTwitter/>
               </A>
+              </Show>
               <A href={socialLinks.linkedin} class="text-muted-foreground hover:text-primary transition-colors">
                 <span class="sr-only">لینکدین</span>
                 <FiLinkedin/>
