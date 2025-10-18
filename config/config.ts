@@ -1,7 +1,7 @@
 export const name = "هوش‌بان"
 export const nameEn = "Hooshbaan"
 export const socialLinks = {
-  email: "info@Hooshban.com",
+  email: "hooshbaan@gmail.com",
   X: "",
   instagram: "",
   facebook: "",
