@@ -26,35 +26,40 @@ const Footer = () => {
               <h3 class="text-lg font-semibold mb-4">خدمات</h3>
               <ul class="space-y-2">
                 <li>
-                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                  <A href="/Services/AI" class="text-muted-foreground hover:text-primary transition-colors">
                     خدمات هوش مصنوعی
                   </A>
                 </li>
+                <Show when={false}>
                 <li>
                   <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     بازاریابی آنلاین
                   </A>
                 </li>
+                </Show>
                 <li>
-                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                  <A href="/Services/Web-design" class="text-muted-foreground hover:text-primary transition-colors">
                     توسعه وب‌سایت
                   </A>
                 </li>
+                <Show when={false}>
                 <li>
                   <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     استراتژی دیجیتال
                   </A>
                 </li>
+                </Show>
               </ul>
             </div>
             <div>
               <h3 class="text-lg font-semibold mb-4">شرکت</h3>
               <ul class="space-y-2">
                 <li>
-                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                  <A href="/About" class="text-muted-foreground hover:text-primary transition-colors">
                     درباره ما
                   </A>
                 </li>
+                <Show when={false}>
                 <li>
                   <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
                     تیم ما
@@ -65,8 +70,9 @@ const Footer = () => {
                     فرصت‌های شغلی
                   </A>
                 </li>
+                </Show>
                 <li>
-                  <A href="#" class="text-muted-foreground hover:text-primary transition-colors">
+                  <A href="/Blog" class="text-muted-foreground hover:text-primary transition-colors">
                     بلاگ
                   </A>
                 </li>
