@@ -119,7 +119,7 @@ const Footer = () => {
                 <span class="sr-only">لینکدین</span>
                 <FiLinkedin/>
               </A>
-              <A href={`https://wa.me/${support.whatsapp}`} class="text-muted-foreground hover:text-primary transition-colors">
+              <A href={`https://wa.me/${support.whatsapp}`} class="text-muted-foreground hover:text-green-600 transition-colors">
                 <span class="sr-only">واتساپ</span>
                 <ImWhatsapp/>
               </A>
