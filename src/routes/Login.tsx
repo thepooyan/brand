@@ -12,6 +12,7 @@ import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { callModal } from "~/components/layout/Modal"
 import { sendOTP, verifyOTP } from "~/server/actions"
 import { useSearchParams } from "@solidjs/router"
+import { Link } from "@solidjs/meta"
 
 export default function Login() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -97,6 +98,7 @@ export default function Login() {
 
   return (
     <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-[url('/wave.webp')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
+      <Link rel="canonical" href="https://hooshbaan.com/Login"/>
       <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...markElement("card")}>
         <CardHeader class="text-center">
           <CardTitle class="text-2xl font-bold text-primary">ورود به حساب کاربری</CardTitle>

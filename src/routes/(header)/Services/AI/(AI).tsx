@@ -7,10 +7,12 @@ import ContactInfo from "~/components/parts/ContactInfo";
 import { cn } from "~/lib/utils";
 import { FiArrowRight } from "solid-icons/fi";
 import { name } from "../../../../../config/config";
+import { Link } from "@solidjs/meta";
 
 const AI = () => {
   return (
     <main {...pageMarker()}>
+        <Link rel="canonical" href="https://hooshbaan.com/Services/AI" />
         <div class="container mx-auto px-4 py-8">
           {/* Back Button */}
           <TA

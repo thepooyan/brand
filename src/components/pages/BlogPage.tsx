@@ -3,7 +3,7 @@ import {marked} from "marked"
 import { IBlog } from "~/db/schema"
 import { createAsync } from "@solidjs/router"
 import { createBlogFullUrl, readableDate } from "~/lib/utils"
-import { Meta, Title } from "@solidjs/meta"
+import { Link, Meta, Title } from "@solidjs/meta"
 import BlogSchema from "../jsonSchema/BlogSchema"
 
 interface BlogPostProps {
@@ -17,6 +17,7 @@ export function BlogPage({ blog }: BlogPostProps) {
   return (
     <article class="mx-auto max-w-3xl px-4 py-12 md:py-20">
       <Title>{blog.title}</Title>
+      <Link rel="canonical" href={createBlogFullUrl(blog.slug)}/>
       <Meta name="description" content={blog.excerpt}/>
       <Meta property="og:title" content={blog.title}/>
       <Meta property="og:description" content={blog.excerpt}/>
