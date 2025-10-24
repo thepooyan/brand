@@ -16,7 +16,6 @@ const envSchema = z.object({
   SESSION_SECRET: pre(z.string().min(1)),
   TURSO_DATABASE_URL: pre(z.string().min(1)),
   TURSO_AUTH_TOKEN: pre(z.string().min(1)),
-  GEMINI_API_KEY: pre(z.string().min(1)),
   GOOGLE_GENERATIVE_AI_API_KEY: pre(z.string().min(1)),
   ADMIN_BOT: pre(z.string().min(1)),
   SUPPORT_BOT: pre(z.string().min(1)),
