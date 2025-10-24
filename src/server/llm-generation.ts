@@ -1,3 +1,5 @@
+import { generateToken } from "./util"
+
 export const plansEnum = {
   free: "free"
 } as const
@@ -26,7 +28,8 @@ export const newPlan =(id: number, plan: Plan) => ({
     messageCount: plan.messages,
     remainingMessages: plan.messages,
     expirationDate: daysFromNow(plan.time),
-    id: id
+    id: id,
+    current_token: generateToken()
 })
 
 export const ToneOptions = {
