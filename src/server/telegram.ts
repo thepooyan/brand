@@ -2,9 +2,10 @@
 
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
+import { env } from "./env"
 
-const adminToken = process.env.ADMIN_BOT ?? (() => { throw new Error('Missing ADMIN_BOT') })()
-const supportToken = process.env.SUPPORT_BOT ?? (() => { throw new Error('Missing SUPPORT_BOT') })()
+const adminToken = env.ADMIN_BOT 
+const supportToken = env.SUPPORT_BOT 
 
 const send = async (token: string, text: string, chat_id: string | number) => {
   const url = `https://api.telegram.org/bot${token}/sendMessage`

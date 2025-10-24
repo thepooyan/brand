@@ -12,6 +12,7 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { s3 } from "~/s3"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { env } from "./env"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -147,11 +148,11 @@ export async function uploadToS3(file: File) {
   const key = `Hooshban/${Date.now()}-${file.name}`
 
   await s3.send(new PutObjectCommand({
-    Bucket: process.env.BUCKET_NAME!,
+    Bucket: env.BUCKET_NAME!,
     Key: key,
     Body: buffer,
     ContentType: file.type,
   }))
 
-  return `https://${process.env.BUCKET_URL}/${key}`
+  return `https://${env.BUCKET_URL}/${key}`
 }

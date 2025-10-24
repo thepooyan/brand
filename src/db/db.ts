@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/libsql';
+import { env } from '~/server/env';
 
 export const db = drizzle({connection: {
-  url: process.env.TURSO_DATABASE_URL as string,
-  authToken: process.env.TURSO_AUTH_TOKEN as string
+  url: env.TURSO_DATABASE_URL as string,
+  authToken: env.TURSO_AUTH_TOKEN as string
 }});
 
