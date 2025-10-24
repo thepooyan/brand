@@ -1,4 +1,5 @@
 import { adminsTable, chatbot } from "~/db/schema";
+import crypto from 'node:crypto'
 import { LanguageValue, LlmBuilder, ResponseLengthValue, ToneValue } from "./llm-generation";
 import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
@@ -52,3 +53,7 @@ export const findoutRole = async (num: string) => {
   let a = await isNumberAdmin(num)
   return a ? ROLES.ADMIN : ROLES.USER
 }
+
+export const generateToken = () => {
+  return crypto.randomBytes(62).toString('hex')
+} 
