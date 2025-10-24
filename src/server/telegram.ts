@@ -2,7 +2,7 @@
 
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
-import { env } from "./env"
+import { env } from "~/server/env"
 
 const adminToken = env.ADMIN_BOT 
 const supportToken = env.SUPPORT_BOT 

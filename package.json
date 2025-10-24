@@ -5,7 +5,8 @@
     "dev": "vinxi dev --host",
     "build": "vinxi build",
     "start": "vinxi start",
-    "db": "bunx drizzle-kit push"
+    "db": "bunx drizzle-kit push",
+    "env": "bun src/server/env/generateEnv.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",

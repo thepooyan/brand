@@ -12,7 +12,7 @@ const stripQuotes = (v: unknown) => {
 const pre = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess((v) => (typeof v === "string" ? stripQuotes(v) : v), schema);
 
-const envSchema = z.object({
+export const envSchema = z.object({
   SESSION_SECRET: pre(z.string().min(1)),
   TURSO_DATABASE_URL: pre(z.string().min(1)),
   TURSO_AUTH_TOKEN: pre(z.string().min(1)),
@@ -24,8 +24,3 @@ const envSchema = z.object({
   BUCKET_SECRET: pre(z.string().min(1)),
   BUCKET_NAME: pre(z.string().min(1)),
 });
-
-export type Env = z.infer<typeof envSchema>;
-
-export const env: Env = envSchema.parse(process.env);
-
