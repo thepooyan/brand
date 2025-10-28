@@ -3,7 +3,7 @@ import { streamText } from 'ai';
 import { and, eq, sql } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { chatbot, chatbot_status } from '~/db/schema';
-import { getSystemPrompt } from '~/server/util';
+import { getSystemPrompt } from '~/server/serverUtil';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

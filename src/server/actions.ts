@@ -2,7 +2,7 @@
 import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
-import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./util"
+import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
 import {  blogsTable, chatbot, chatbot_status, IBlog, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"

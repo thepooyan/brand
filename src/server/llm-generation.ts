@@ -1,5 +1,6 @@
 "use server"
-import { generateToken } from "./util"
+
+import { generateToken } from "./serverUtil"
 
 export const plansEnum = {
   free: "free"
