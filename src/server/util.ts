@@ -1,3 +1,4 @@
+"use server"
 import { adminsTable, chatbot } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LanguageValue, LlmBuilder, ResponseLengthValue, ToneValue } from "./llm-generation";

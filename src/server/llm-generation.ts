@@ -1,3 +1,4 @@
+"use server"
 import { generateToken } from "./util"
 
 export const plansEnum = {
