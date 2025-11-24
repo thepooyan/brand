@@ -89,9 +89,9 @@ export default function OrderChatbotPage() {
             <div class="h-16 w-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <AiFillRobot class="h-8 w-8 text-primary" />
             </div>
-            <h1 class="text-3xl md:text-4xl font-bold mb-4">سفارش چت‌بات هوشمند</h1>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">ساخت چت‌بات هوشمند</h1>
             <p class="text-muted-foreground text-lg">
-              فرم زیر را تکمیل کنید تا چت‌بات اختصاصی و هوشمند برای کسب‌وکار شما طراحی کنیم
+              فرم زیر را تکمیل کنید تا چت‌بات اختصاصی و هوشمند برای کسب‌وکار تان داشته باشید
             </p>
           </div>
 
@@ -409,7 +409,7 @@ export default function OrderChatbotPage() {
                 disabled={isSubmitting()}
                 class="bg-primary hover:bg-primary/90 text-primary-foreground px-12 py-4 text-lg"
               >
-                {isSubmitting() ? "در حال ارسال..." : "ثبت سفارش چت‌بات"}
+                {isSubmitting() ? "در حال ارسال..." : "ایجاد چت‌بات جدید "}
               </Button>
             </div>
           </form>

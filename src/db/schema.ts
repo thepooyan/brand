@@ -7,6 +7,7 @@ export const chatbot_status = sqliteTable("chatbot_status", {
   messageCount: integer().notNull(),
   remainingMessages: integer().notNull(),
   expirationDate: integer({mode: "timestamp"}).notNull(),
+  current_token: text({length: 62}).notNull()
 })
 
 export const chatbot = sqliteTable("chatbot", {

@@ -1,5 +1,5 @@
 import { createSignal, For, Show, createEffect } from 'solid-js'
-import { FiSend, FiBox } from 'solid-icons/fi'
+import { FiSend } from 'solid-icons/fi'
 import { Button } from '~/components/ui/button'
 import RightSide from '~/components/parts/DemoRightSide'
 import { useChat } from '~/lib/chatUtil'
@@ -7,6 +7,7 @@ import Message from '~/components/parts/chat/Message'
 import { pageMarker } from '~/lib/routeChangeTransition'
 import { preload } from '~/lib/hooks'
 import { name } from '../../../../../config/config'
+import { BiRegularBrain } from 'solid-icons/bi'
 
 export default function Demo() {
   const [inputMessage, setInputMessage] = createSignal('')
@@ -61,7 +62,7 @@ export default function Demo() {
           <div class="bg-primary/10 p-6 border-b">
             <div class="flex items-center gap-4">
               <div class="h-12 w-12 bg-primary/20 rounded-full flex items-center justify-center">
-                <FiBox class="h-6 w-6 text-primary" />
+                <BiRegularBrain class='h-6 w-6 text-primary'/>
               </div>
               <div>
                 <h2 class="text-xl font-bold">دستیار هوشمند {name}</h2>

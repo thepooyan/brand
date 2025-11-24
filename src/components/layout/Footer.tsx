@@ -4,6 +4,7 @@ import { FiFacebook, FiInstagram, FiLinkedin, FiTwitter } from "solid-icons/fi"
 import Enamad from "../parts/Enamad"
 import { Show } from "solid-js"
 import { ImTelegram, ImWhatsapp } from "solid-icons/im"
+import Samandehi from "../parts/Samandehi"
 
 const Footer = () => {
   return (
@@ -92,7 +93,10 @@ const Footer = () => {
                 <li class="text-muted-foreground">{info.address}</li>
               </ul>
             </div>
-            <Enamad/>
+            <div class="space-y-2">
+              <Enamad/>
+              <Samandehi/>
+            </div>
           </div>
           <div class="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p class="text-muted-foreground text-sm">© ۱۴۰۴ {name}. تمامی حقوق محفوظ است.</p>

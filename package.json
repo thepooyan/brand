@@ -5,12 +5,13 @@
     "dev": "vinxi dev --host",
     "build": "vinxi build",
     "start": "vinxi start",
-    "db": "bunx drizzle-kit push"
+    "db": "bunx drizzle-kit push",
+    "env": "bun src/server/env/generateEnv.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",
     "@aws-sdk/client-s3": "^3.896.0",
-    "@kobalte/core": "^0.13.10",
+    "@kobalte/core": "^0.13.11",
     "@libsql/client": "^0.15.9",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",

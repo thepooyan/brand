@@ -11,6 +11,8 @@ import { cn } from "~/lib/utils"
 import { deleteChatbot } from "~/server/actions"
 import { revalidate } from "@solidjs/router"
 import { PlanOptions } from "~/server/llm-generation"
+import { getNewToken } from "~/server/botActions"
+import NewTokenAlert from "./bot/NewTokenAlert"
 
 interface props {
   bot: chatbotStatus
@@ -27,6 +29,18 @@ const BotCard = ({bot}:props) => {
           await revalidate("bots")
         }
         else callModal.fail(response.msg)
+      })
+  }
+
+  const getToken = () => {
+    callModal.prompt("توکن جدید ایجاد شود؟ (با تولید توکن جدید توکن های قبل از بین خواهند رفت)")
+    .yes( async () => {
+        const result = await getNewToken(bot.id)
+        if (result.ok) {
+          callModal(() => <NewTokenAlert token={result.data}/>)
+        } else {
+          callModal.fail(result.msg)
+        }
       })
   }
 
@@ -114,9 +128,10 @@ const BotCard = ({bot}:props) => {
               size="sm"
               variant="outline"
               class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
+              onclick={getToken}
             >
               <FiKey class="w-3 h-3 ml-1" />
-              تغییر توکن
+              دریافت توکن
             </Button>
           </div>
 
@@ -141,7 +156,7 @@ export default BotCard
 
 export const BotCardFallback = () => {
   return <div
-    class=" h-97 w-96 rounded-md bg-gray-900 animate-pulse flex justify-center border-2 border-dashed border-gray-800"
+    class=" h-97 w-full rounded-md bg-gray-900 animate-pulse flex justify-center border-2 border-dashed border-gray-800"
   >
     <Spinner reverse/>
   </div>

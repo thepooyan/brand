@@ -95,3 +95,46 @@ export const limitChar = (string: string, limit: number) => {
 export const createBlogFullUrl = (blogSlug: string) => {
   return `https://Hooshbaan.com/Blog/${encodeURIComponent(blogSlug)}`
 }
+
+export async function copyToClipboard(text: string): Promise<void> {
+    if (!navigator.clipboard) {
+        // Fallback for browsers that do not support the Clipboard API
+        fallbackCopyTextToClipboard(text);
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch (err) {
+        console.error('Failed to copy text to clipboard:', err);
+        // Fallback in case of error
+        fallbackCopyTextToClipboard(text);
+    }
+}
+
+function fallbackCopyTextToClipboard(text: string): void {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    
+    // Avoid scrolling to bottom
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.position = 'fixed';
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            console.log('Fallback: Text copied to clipboard successfully!');
+        } else {
+            console.error('Fallback: Failed to copy text to clipboard.');
+        }
+    } catch (err) {
+        console.error('Fallback: Error copying text to clipboard:', err);
+    }
+    
+    document.body.removeChild(textArea);
+}
