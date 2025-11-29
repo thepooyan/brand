@@ -1,4 +1,4 @@
-import { env } from "."
+import { envPublic } from "."
 
 export enum Features {
   smartCustomerAssistant = "smartCustomerAssistant",
@@ -8,5 +8,5 @@ export enum Features {
 type featureSelector = (f: typeof Features) => Features
 export const featureEnabled = (f: featureSelector) => {
   const feature = f(Features)
-  return env.features.includes(feature)
+  return envPublic.VITE_features.includes(feature)
 }
