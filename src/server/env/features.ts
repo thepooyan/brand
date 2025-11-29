@@ -1,10 +1,12 @@
 import { env } from "."
 
 export enum Features {
-  smartCustomerAssistant,
-  something
+  smartCustomerAssistant = "smartCustomerAssistant",
+  something = "something"
 }
 
-export const featureEnabled = (f: Features) => {
-  return env.features.includes(f)
+type featureSelector = (f: typeof Features) => Features
+export const featureEnabled = (f: featureSelector) => {
+  const feature = f(Features)
+  return env.features.includes(feature)
 }
