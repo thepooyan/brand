@@ -6,7 +6,8 @@
     "build": "vinxi build",
     "start": "vinxi start",
     "db": "bunx drizzle-kit push",
-    "env": "bun src/server/env/generateEnv.ts"
+    "env": "bun src/server/env/generateEnv.ts",
+    "publish": "git checkout production && git pull && git merge master && git push && git checkout master"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",
