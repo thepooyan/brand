@@ -7,7 +7,7 @@ const NewTokenAlert = ({token}:p) => {
   return (
     <div>
       توکن جدید با موفقیت ایجاد شد. برای کپی کردن آن، روی کلیک کنید. توجه داشته باشید که پس از این، امکان مشاهده مجدد این توکن وجود نخواهد داشت.
-      <Copyable toCopy="token">
+      <Copyable toCopy={token}>
         <div class="bg-zinc-900 p-1 overflow-hidden w-100 rounded mt-2 mx-auto cursor-pointer">
           {token}
         </div>
