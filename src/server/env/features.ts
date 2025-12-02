@@ -1,3 +1,4 @@
+import { isServer } from "solid-js/web"
 import { envPublic } from "."
 
 export enum Features {
@@ -7,6 +8,10 @@ export enum Features {
 
 type featureSelector = (f: typeof Features) => Features
 export const featureEnabled = (f: featureSelector) => {
-  const feature = f(Features)
-  return envPublic.VITE_features.includes(feature)
+  if (isServer) {
+    const feature = f(Features)
+    return envPublic.VITE_features.includes(feature)
+  } else {
+    return false
+  }
 }

@@ -83,7 +83,7 @@ export const services = [
     popular: false,
     demoLink: "Chat-Bot/Demo",
     link: "Chat-Bot",
-    comingSoon: !featureEnabled(f => f.smartCustomerAssistant)
+    comingSoon: false
   },
   {
     id: "business-agent",
