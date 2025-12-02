@@ -9,15 +9,18 @@ import { getSystemPrompt } from '~/server/serverUtil';
 export const maxDuration = 30;
 
 export async function POST({request}:{request: Request}) {
-  const { messages, userId, botId } = await request.json();
+  const { messages, userId, botId, token } = await request.json();
 
-  const bot = await getUserBot(userId, botId)
+  const bot = await getUserBot(userId, botId, token)
 
   if (bot === "404")
     return new Response("Not found", {status: 404})
 
   if (bot === "empty")
     return new Response("No credit left", {status: 402})
+
+  if (bot === "401")
+    return new Response("Failed authentication", {status: 401})
 
   const result = streamText({
     model: google('gemini-2.5-flash'),
@@ -28,7 +31,7 @@ export async function POST({request}:{request: Request}) {
   return result.toDataStreamResponse()
 }
 
-const getUserBot = async (userId: string, botId: string) => {
+const getUserBot = async (userId: string, botId: string, token: string) => {
   const bot = (await db.select()
     .from(chatbot)
     .leftJoin(chatbot_status, eq(chatbot.id, chatbot_status.id))
@@ -40,9 +43,13 @@ const getUserBot = async (userId: string, botId: string) => {
     )).at(0)
 
   if (!bot) return "404"
+  if (!bot.chatbot_status) return "404"
 
-  let remaining = bot.chatbot_status?.remainingMessages!
+  let remaining = bot.chatbot_status.remainingMessages
   if (remaining <= 0) return "empty"
+
+  const dbToken = bot.chatbot_status.current_token
+  if (token !== dbToken) return "401"
 
   await db.update(chatbot_status)
     .set({
