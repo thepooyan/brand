@@ -17,6 +17,9 @@ const Header = () => {
     logUserOut()
   }
 
+  const logged = () => isLoggedIn() !== undefined
+  const isAdmin = () => isLoggedIn()?.role === ROLES.ADMIN
+
   return (
     <>
       <header class="border-b border-border z-10 bg-black">
@@ -41,19 +44,16 @@ const Header = () => {
             <TA href="/Blog" class="text-sm font-medium hover:text-primary transition-colors">
               بلاگ
             </TA>
-            <Show when={isLoggedIn()?.role === ROLES.ADMIN}>
+            <Show when={logged()}>
               <div class="space-x-2">
-                <Button as={TA} href="/Admin">ادمین</Button>
-                <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
-              </div>
-            </Show>
-            <Show when={isLoggedIn()?.role === ROLES.USER}>
-              <div class="space-x-2">
-                <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
                 <Button as={TA} href="/Panel">پنل کاربری</Button>
+                <Show when={isAdmin()}>
+                    <Button as={TA} href="/Admin">ادمین</Button>
+                </Show>
+                <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
               </div>
             </Show>
-            <Show when={isLoggedIn() === undefined}>
+            <Show when={!logged()}>
               <div class="space-x-2">
                 <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
                   ورود
@@ -67,17 +67,17 @@ const Header = () => {
               <span class="sr-only">تغییر منو</span>
               <FiMenu/>
             </Button>
-            <Show when={isLoggedIn() === undefined}>
+            <Show when={!logged()}>
               <Button as={TA} href="/Login">
                 <FiLogIn/>
               </Button>
             </Show>
-            <Show when={isLoggedIn()?.role === ROLES.USER}>
+            <Show when={logged()}>
               <Button as={TA} href="/Panel">
                 <FiUser/>
               </Button>
             </Show>
-            <Show when={isLoggedIn()?.role === ROLES.ADMIN}>
+            <Show when={isAdmin()}>
               <Button as={TA} href="/Admin">
                 <FaSolidUserGear/>
               </Button>
