@@ -1,6 +1,7 @@
 import { google } from '@ai-sdk/google';
 import { streamText } from 'ai';
 import { and, eq, sql } from 'drizzle-orm';
+import z from 'zod';
 import { db } from '~/db/db';
 import { chatbot, chatbot_status } from '~/db/schema';
 import { getSystemPrompt } from '~/server/serverUtil';
@@ -8,8 +9,23 @@ import { getSystemPrompt } from '~/server/serverUtil';
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
+const requestSchema = z.object({
+  messages: z.array(z.object({
+    role: z.enum(["user", "assistant", "system"]), //"user" | "assistant" | "system",
+    content: z.string()
+  })),
+  botId: z.string(),
+  userId: z.string(),
+  token: z.string(),
+})
 export async function POST({request}:{request: Request}) {
-  const { messages, userId, botId, token } = await request.json();
+  const req = await request.json();
+  let parsed = requestSchema.safeParse(req)
+
+  if (!parsed.success)
+    return new Response("Bad request", {status: 400})
+
+  const {userId, botId, token, messages} = parsed.data
 
   const bot = await getUserBot(userId, botId, token)
 
