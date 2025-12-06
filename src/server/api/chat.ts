@@ -1,5 +1,5 @@
 import { google } from "@ai-sdk/google";
-import { generateText, streamText } from "ai";
+import { streamText } from "ai";
 import { eq } from "drizzle-orm";
 import z from "zod";
 import { db } from "~/db/db";
@@ -33,15 +33,13 @@ export const chatRoute = new Elysia({ prefix: "/chat" }).post( "/",
     const bot = await getBot(headers.token);
     if (!bot) return status(403);
 
-    const result = await generateText({
+    const result = streamText({
       model: google("gemini-2.5-flash"),
       system: getSystemPrompt(bot.chatbot),
       messages: body.messages,
-    }).catch(err => {
-        console.log(err)
-      })
+    })
 
-    return result
+    return result.toDataStreamResponse()
   },
   {
     body: chatRequestSchema,
