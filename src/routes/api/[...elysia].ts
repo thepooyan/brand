@@ -1,13 +1,8 @@
-import { Elysia, t } from 'elysia'
+import { Elysia } from 'elysia'
+import { chatRequestSchema, chatHandler as chatRequestHandler } from '~/server/api/chat';
 
 const app = new Elysia({ prefix: '/api' })
-    .get('/', 'Hello Nextjs')
-    .get("/folan", "hi folan")
-    .post('/', ({ body }) => body, {
-        body: t.Object({
-            name: t.String()
-        })
-    })
+    .post('/chat', chatRequestHandler, chatRequestSchema)
 
 const handle = ({ request }: { request: Request }) => app.handle(request);
 

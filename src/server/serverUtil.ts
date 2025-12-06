@@ -1,5 +1,5 @@
 "use server"
-import { adminsTable, chatbot } from "~/db/schema";
+import { adminsTable, chatbot, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LanguageValue, LlmBuilder, ResponseLengthValue, ToneValue } from "./llm-generation";
 import { db } from "~/db/db";
@@ -56,5 +56,5 @@ export const findoutRole = async (num: string) => {
 }
 
 export const generateToken = () => {
-  return crypto.randomBytes(62).toString('hex')
+  return crypto.randomBytes(tokenLength/2).toString('hex')
 } 
