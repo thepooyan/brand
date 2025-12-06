@@ -1,8 +1,9 @@
 import { Elysia } from 'elysia'
-import { chatRequestSchema, chatHandler as chatRequestHandler } from '~/server/api/chat';
+import { chatRoute } from '~/server/api/chat';
+
 
 const app = new Elysia({ prefix: '/api' })
-    .post('/chat', chatRequestHandler, chatRequestSchema)
+.use(chatRoute)
 
 const handle = ({ request }: { request: Request }) => app.handle(request);
 

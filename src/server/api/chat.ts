@@ -1,38 +1,54 @@
+import { google } from "@ai-sdk/google";
+import { streamText } from "ai";
 import { eq } from "drizzle-orm";
-import { Context } from "elysia";
 import z from "zod";
 import { db } from "~/db/db";
 import { tokenLength } from "~/db/schema";
+import { getSystemPrompt } from "../serverUtil";
+import Elysia from "elysia";
 
-export const chatHandler = async ({request, status}:Context) => {
-
-  const auth = request.headers.get("authorization")
-  if (!auth) return status(403)
-  const valid = await isAuthHeaderValid(auth)
-  if (!valid) return status(403)
-
-  return "response";
-};
-
-export const chatRequestSchema = {
-  body: z.object({
-    messages: z.array(
+const chatRequestSchema = z.object({
+  messages: z
+    .array(
       z.object({
         role: z.enum(["user", "assistant", "system"]),
         content: z.string(),
       }),
-    ).min(1),
-    token: z.string().length(tokenLength),
-  }),
+    )
+    .min(1),
+});
+
+const AuthorizationHeader = z.object({
+  authorization: z
+    .string()
+    .toLowerCase()
+    .startsWith("bearer ")
+    .length(tokenLength + 7),
+});
+
+export const chatRoute = new Elysia({ prefix: "/chat" }).post( "/",
+  async ({ body, headers, status}) => {
+
+    const bot = await getBot(headers.authorization);
+    if (!bot) return status(403);
+
+    const result = streamText({
+      model: google("gemini-2.5-flash"),
+      system: getSystemPrompt(bot.chatbot),
+      messages: body.messages,
+    });
+
+    return "response";
+  },
+  {
+    body: chatRequestSchema,
+    headers: AuthorizationHeader,
+  },
+);
+
+const getBot = (token: string) => {
+  return db.query.chatbot_status.findFirst({
+    where: (a) => eq(a.current_token, token),
+    with: { chatbot: true },
+  });
 };
-
-const isAuthHeaderValid = async (s:string) => {
-  const token = s.substring(7)
-  if (token.length !== tokenLength) return false
-
-  const target = await db.query.chatbot_status.findFirst({
-    where: (a => eq(a.current_token, token))
-  })
-
-  return target !== undefined
-}
