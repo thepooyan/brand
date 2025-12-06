@@ -23,13 +23,15 @@ const AuthorizationHeader = z.object({
     .string()
     .toLowerCase()
     .startsWith("bearer ")
-    .length(tokenLength + 7),
-});
+    .length(tokenLength + 7)
+})
+.transform(val => ({token: val.authorization.slice(7)}))
 
 export const chatRoute = new Elysia({ prefix: "/chat" }).post( "/",
   async ({ body, headers, status}) => {
 
-    const bot = await getBot(headers.authorization);
+    console.log(headers)
+    const bot = await getBot(headers.token);
     if (!bot) return status(403);
 
     const result = streamText({
