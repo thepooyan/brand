@@ -88,7 +88,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
 export const useChat = getUseChat("/api/chat/hooshbaan")
 
-export const useUserChat = (userId: string, botId: string) => getUseChat("/api/UserChat", {userId, botId})
+export const useUserChat = (botId: string) => getUseChat(`/api/chat/session/${botId}`)
 
 const buffer = () => {
   let isTyping = false;

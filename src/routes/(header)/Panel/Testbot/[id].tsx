@@ -10,7 +10,7 @@ const testbot = () => {
   return (
     <>
       <Show when={user()} fallback={<Spinner/>}>
-        {u => <MinimalChat botId={params.id} user={u()}/>}
+        <MinimalChat botId={params.id}/>
       </Show>
     </>
   )

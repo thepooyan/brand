@@ -3,11 +3,9 @@ import { FiSend } from "solid-icons/fi"
 import { createEffect, createSignal, ParentProps, Show } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
-import { usersTable } from "~/db/schema";
 import { callModal } from "~/components/layout/Modal";
 
 interface props {
-  user: typeof usersTable.$inferSelect,
   botId: string
 }
 
@@ -25,11 +23,11 @@ const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) 
   )
 }
 
-const MinimalChat = ({user, botId}:props) => {
+const MinimalChat = ({botId}:props) => {
   let anchor!: HTMLDivElement
   let messagesRailRef!: HTMLDivElement
 
-  const {messages, send, pending, streaming, errorMsg} = useUserChat( String(user.id), botId )(() => anchor)
+  const {messages, send, pending, streaming, errorMsg} = useUserChat( botId )(() => anchor)
   const [inputMessage, setInputMessage] = createSignal("")
 
   const proccessing = () => {

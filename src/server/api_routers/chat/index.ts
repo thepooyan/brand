@@ -5,10 +5,12 @@ import Elysia from "elysia";
 import { hooshbaan } from "./hooshbaan";
 import { botAuthGuard } from "./botAuthGuard";
 import { chatGaurd } from "./chatGuard";
+import { sessionChatRouter } from "./sessionChat";
 
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(chatGaurd)
+.use(sessionChatRouter)
 .use(hooshbaan)
 .use(botAuthGuard)
 .post( "/",
