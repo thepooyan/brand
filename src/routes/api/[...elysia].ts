@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia'
-import { chatRoute } from '~/server/api/chat';
+import { chatRoute } from '@/server/api_routers/chat';
 import { openapi } from '@elysiajs/openapi'
 
 

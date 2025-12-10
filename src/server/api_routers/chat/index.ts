@@ -4,8 +4,9 @@ import { eq } from "drizzle-orm";
 import z from "zod";
 import { db } from "~/db/db";
 import { tokenLength } from "~/db/schema";
-import { getSystemPrompt } from "../serverUtil";
+import { getSystemPrompt } from "@/server/serverUtil";
 import Elysia from "elysia";
+import { hooshbaan } from "./hooshbaan";
 
 const chatRequestSchema = z.object({
   messages: z
@@ -27,7 +28,9 @@ const AuthorizationHeader = z.object({
 })
 .transform(val => ({token: val.authorization.slice(7)}))
 
-export const chatRoute = new Elysia({ prefix: "/chat" }).post( "/",
+export const chatRoute = new Elysia({ prefix: "/chat" })
+.use(hooshbaan)
+.post( "/",
   async ({ body, headers, status}) => {
 
     const bot = await getBot(headers.token);
