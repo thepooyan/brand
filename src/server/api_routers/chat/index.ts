@@ -29,12 +29,22 @@ const AuthorizationHeader = z.object({
 .transform(val => ({token: val.authorization.slice(7)}))
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
+.guard({
+  schema: "standalone",
+  body: chatRequestSchema,
+})
 .use(hooshbaan)
+.guard({
+  schema: "standalone",
+  headers: AuthorizationHeader,
+})
+.resolve(async ({headers, status}) => {
+  const bot = await getBot(headers.token);
+  if (!bot) return status(403);
+  return {bot: bot}
+})
 .post( "/",
-  async ({ body, headers, status}) => {
-
-    const bot = await getBot(headers.token);
-    if (!bot) return status(403);
+  async ({ body, bot }) => {
 
     const result = streamText({
       model: google("gemini-2.5-flash"),
@@ -43,11 +53,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
     })
 
     return result.toDataStreamResponse()
-  },
-  {
-    body: chatRequestSchema,
-    headers: AuthorizationHeader,
-  },
+  }
 );
 
 const getBot = (token: string) => {
