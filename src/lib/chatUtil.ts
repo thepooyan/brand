@@ -86,7 +86,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
   };
 }
 
-export const useChat = getUseChat("/api/oldchat")
+export const useChat = getUseChat("/api/chat/hooshbaan")
 
 export const useUserChat = (userId: string, botId: string) => getUseChat("/api/UserChat", {userId, botId})
 

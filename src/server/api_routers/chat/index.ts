@@ -1,27 +1,14 @@
 import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
-import z from "zod";
 import { getSystemPrompt } from "@/server/serverUtil";
 import Elysia from "elysia";
 import { hooshbaan } from "./hooshbaan";
 import { botAuthGuard } from "./botAuthGuard";
+import { chatGaurd } from "./chatGuard";
 
-const chatRequestSchema = z.object({
-  messages: z
-    .array(
-      z.object({
-        role: z.enum(["user", "assistant"]),
-        content: z.string(),
-      }),
-    )
-    .min(1),
-});
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
-.guard({
-  schema: "standalone",
-  body: chatRequestSchema,
-})
+.use(chatGaurd)
 .use(hooshbaan)
 .use(botAuthGuard)
 .post( "/",
