@@ -36,7 +36,8 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "vinxi": "^0.5.3",
-    "zod": "^4.1.13"
+    "zod": "^4.1.13",
+    "@elysiajs/openapi": "^1.4.11"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.7",
