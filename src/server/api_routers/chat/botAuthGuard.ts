@@ -1,5 +1,7 @@
+import { eq } from "drizzle-orm";
 import Elysia from "elysia";
 import z from "zod";
+import { db } from "~/db/db";
 import { tokenLength } from "~/db/schema";
 
 const AuthorizationHeader = z.object({
@@ -13,6 +15,19 @@ const AuthorizationHeader = z.object({
 
 export const botAuthGuard = new Elysia()
 .guard({
+  as: "scoped",
   schema: "standalone",
   headers: AuthorizationHeader,
 })
+.resolve({as: "scoped"}, async ({headers, status}) => {
+  const bot = await getBot(headers.token || "");
+  if (!bot) return status(403);
+  return {bot: bot}
+})
+
+const getBot = (token: string) => {
+  return db.query.chatbot_status.findFirst({
+    where: (a) => eq(a.current_token, token),
+    with: { chatbot: true },
+  });
+};
