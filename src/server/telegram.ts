@@ -1,5 +1,6 @@
 "use server"
 
+import axios from "axios"
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
 import {  getEnv } from "~/server/env"
@@ -7,16 +8,12 @@ import {  getEnv } from "~/server/env"
 const adminToken = getEnv().ADMIN_BOT 
 const supportToken = getEnv().SUPPORT_BOT 
 
-const send = async (token: string, text: string, chat_id: string | number) => {
-  const url = `https://api.telegram.org/bot${token}/sendMessage`
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id, text }),
-  })
+const send = async (botToken: string, text: string, chat_id: string | number) => {
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`
+  const res = await axios.post(url, { chat_id, text })
 
-  if (!res.ok) {
-    console.error(`Telegram error: ${res.statusText}`, await res.text())
+  if (res.status !== 200) {
+    console.error(`Telegram error: ${res.statusText}`, await res.data)
   }
 
   return res
