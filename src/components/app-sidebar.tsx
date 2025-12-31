@@ -1,5 +1,3 @@
-// import { GalleryVerticalEnd } from "lucide-react"
-
 import {
   Sidebar,
   SidebarContent,
@@ -15,8 +13,13 @@ import {
 import { FiBook } from "solid-icons/fi"
 import { ComponentProps } from "solid-js"
 
-const data = {
-  navMain: [
+type nav = {
+  title: string
+  url: string
+  isActive?: boolean
+  items?: nav[]
+}
+const navMain:nav[] = [
     {
       title: "چت بات",
       url: "/Docs/chatbot",
@@ -35,8 +38,7 @@ const data = {
         },
       ],
     },
-  ],
-}
+  ]
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
@@ -59,7 +61,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       <SidebarContent class="rtl">
         <SidebarGroup>
           <SidebarMenu class="gap-2">
-            {data.navMain.map((item) => (
+            {navMain.map((item) => (
               <SidebarMenuItem >
                 <SidebarMenuButton>
                   <a href={item.url} class="font-medium">
