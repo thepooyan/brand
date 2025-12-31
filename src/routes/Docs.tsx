@@ -12,9 +12,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useLocation } from "@solidjs/router"
 import { ParentProps } from "solid-js"
 
 const Docs = ({children}:ParentProps) => {
+
+  const location = useLocation()
+
   return (
     <SidebarProvider
       style={
@@ -33,14 +37,17 @@ const Docs = ({children}:ParentProps) => {
           />
           <Breadcrumb>
             <BreadcrumbList>
-              <BreadcrumbItem class="hidden md:block">
-                <BreadcrumbLink href="#">
-                  Building Your Application
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator class="hidden md:block" />
+              {location.pathname.split("/").slice(0, -1).map(s => <>
+                <BreadcrumbItem class="hidden md:block">
+                  <BreadcrumbLink href={"/" + s}>
+                    {s}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator class="hidden md:block" />
+              </>)}
+
               <BreadcrumbItem>
-                Data Fetching
+                {location.pathname.split("/").at(-1)}
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -48,7 +55,6 @@ const Docs = ({children}:ParentProps) => {
         {children}
       </SidebarInset>
     </SidebarProvider>
-)
-}
+)}
 
 export default Docs
