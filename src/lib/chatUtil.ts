@@ -71,6 +71,13 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
             response += chunk
             pushToBuffer(chunk, getAnchor())
           }
+          if (line.startsWith("3:")) { // Response is error?
+            if (line.startsWith('3:"An error occurred."')) {
+              setStreaming(false)
+              setErrorMsg("خطایی پیش آمد. لطفا مجددا تلاش کنید.")
+              return
+            }
+          }
         }
       } 
 
