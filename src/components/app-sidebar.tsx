@@ -46,9 +46,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
                 <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <div class="bg-zinc-900 p-3 rounded-full flex items-center justify-center mr-3">
-                    <FiBook/>
-                  </div>
+                  <FiBook/>
                 </div>
                 <div class="flex flex-col gap-0.5 leading-none">
                   <span class="font-medium">Documentation</span>
@@ -58,7 +56,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent class="rtl">
         <SidebarGroup>
           <SidebarMenu class="gap-2">
             {data.navMain.map((item) => (

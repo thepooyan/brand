@@ -14,7 +14,7 @@ export default createHandler(() => (
           <TagManagerHead/>
           {assets}
         </head>
-        <body data-kb-theme="dark">
+        <body class="dark">
           <TagManagerBody/>
           <div id="app">{children}</div>
           {scripts}
