@@ -21,6 +21,10 @@ body {
   direction: ltr;
 }
 
+.rtl {
+  direction: rtl;
+}
+
 input::placeholder {
   @apply text-zinc-500
 }

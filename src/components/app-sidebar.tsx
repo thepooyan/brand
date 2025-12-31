@@ -39,7 +39,7 @@ const data = {
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar variant="floating" {...props} side="right">
+    <Sidebar variant="floating" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -69,7 +69,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <SidebarMenuSub class="ml-0 border-l-0 px-1.5">
-                    {item.items.map((item) => (
+                    {item.items.length > 0 && item.items.map((item) => (
                       <SidebarMenuSubItem >
                         <SidebarMenuSubButton isActive={item.isActive}>
                           <a href={item.url}>{item.title}</a>

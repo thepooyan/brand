@@ -26,6 +26,7 @@ const Docs = ({children}:ParentProps) => {
           "--sidebar-width": "19rem",
         }
       }
+      class="ltr"
     >
       <AppSidebar />
       <SidebarInset>
@@ -33,7 +34,7 @@ const Docs = ({children}:ParentProps) => {
           <SidebarTrigger class="-ml-1" />
           <Separator
             orientation="vertical"
-            class="mr-2 data-[orientation=vertical]:h-4"
+            class="!h-8 mx-4"
           />
           <Breadcrumb>
             <BreadcrumbList>
@@ -52,7 +53,9 @@ const Docs = ({children}:ParentProps) => {
             </BreadcrumbList>
           </Breadcrumb>
         </header>
-        {children}
+        <div class="prose dark:prose-invert mx-auto p-8 rtl">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
 )}
