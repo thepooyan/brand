@@ -12,6 +12,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { FiBook } from "solid-icons/fi"
 import { ComponentProps } from "solid-js"
 
 const data = {
@@ -44,15 +45,15 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <a href="#">
                 <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-
+                  <div class="bg-zinc-900 p-3 rounded-full flex items-center justify-center mr-3">
+                    <FiBook/>
+                  </div>
                 </div>
                 <div class="flex flex-col gap-0.5 leading-none">
                   <span class="font-medium">Documentation</span>
                   <span class="">v1.0.0</span>
                 </div>
-              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
