@@ -1,0 +1,5 @@
+.prose {
+  a {
+    @apply text-primary;
+  }
+}
