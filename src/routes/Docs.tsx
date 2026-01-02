@@ -38,9 +38,9 @@ const Docs = ({children}:ParentProps) => {
           />
           <Breadcrumb>
             <BreadcrumbList>
-              {location.pathname.split("/").slice(0, -1).map(s => <>
+              {location.pathname.split("/").slice(0, -1).map((s,i) => <>
                 <BreadcrumbItem class="hidden md:block">
-                  <BreadcrumbLink href={"/" + s}>
+                  <BreadcrumbLink href={`${location.pathname.split("/").slice(0, i+1).join("/")}`}>
                     {s}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
