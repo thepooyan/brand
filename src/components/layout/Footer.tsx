@@ -93,7 +93,7 @@ const Footer = () => {
                 <li class="text-muted-foreground">{info.address}</li>
               </ul>
             </div>
-            <div class="space-y-2">
+            <div class="space-y-2 flex flex-col items-center gap-5">
               <Enamad/>
               <Samandehi/>
             </div>
