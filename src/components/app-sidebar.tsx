@@ -22,19 +22,19 @@ type nav = {
 const navMain:nav[] = [
     {
       title: "چت بات",
-      url: "/Docs/chatbot",
+      url: "/docs/chat-bot",
       items: [
         {
           title: "ساخت چت بات جدید",
-          url: "/Docs/chatbot/create",
+          url: "/docs/chat-bot/create",
         },
         {
           title: "دریافت توکن",
-          url: "/Docs/chatbot/token",
+          url: "/docs/chat-bot/token",
         },
         {
           title: "استفاده از توکن",
-          url: "/Docs/chatbot/api",
+          url: "/docs/chat-bot/api",
         },
       ],
     },
