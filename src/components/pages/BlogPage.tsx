@@ -27,9 +27,9 @@ export function BlogPage({ blog }: BlogPostProps) {
 
       {/* Header */}
       <header class="mb-8 space-y-4">
-        <h1 class="font-sans text-4xl font-bold leading-tight text-balance md:text-5xl">{blog.title}</h1>
+        <h1 class=" text-4xl font-bold leading-tight text-balance md:text-5xl">{blog.title}</h1>
 
-        <p class="text-lg text-muted-foreground text-pretty leading-relaxed">{blog.excerpt}</p>
+        <p class="text-lg text-muted-foreground text-pretty leading-relaxed text-justify">{blog.excerpt}</p>
 
         {/* Metadata */}
         <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ export function BlogPage({ blog }: BlogPostProps) {
       )}
 
       {/* Content */}
-      <div class="prose prose-neutral dark:prose-invert prose-headings:font-sans prose-headings:font-bold prose-p:leading-relaxed prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg max-w-none">
+      <div class="prose prose-neutral dark:prose-invert prose-headings:font-bold prose-p:leading-relaxed prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg max-w-none">
         <div innerHTML={content()} />
       </div>
     </article>
