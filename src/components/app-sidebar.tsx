@@ -46,13 +46,13 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
+            <SidebarMenuButton size="lg" class="rtl">
                 <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <FiBook/>
                 </div>
-                <div class="flex flex-col gap-0.5 leading-none">
-                  <span class="font-medium">Documentation</span>
-                  <span class="">v1.0.0</span>
+                <div class="flex flex-col gap-0.5 leading-none text-right">
+                  <span class="font-medium">مستندات</span>
+                  <span class="text-muted-foreground text-sm">نسخه ۱.۰.۰</span>
                 </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
