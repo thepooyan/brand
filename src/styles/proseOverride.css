@@ -5,4 +5,8 @@
   p {
     text-align: justify;
   }
+  pre, code {
+    direction: ltr;
+    @apply bg-accent text-accent-foreground;
+  }
 }

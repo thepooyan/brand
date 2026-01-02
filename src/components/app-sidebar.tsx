@@ -28,11 +28,7 @@ const navMain:nav[] = [
           title: "ساخت چت بات جدید",
           url: "/docs/chat-bot/create",
         },
-        {
-          title: "دریافت توکن",
-          url: "/docs/chat-bot/token",
-        },
-        {
+       {
           title: "استفاده از توکن",
           url: "/docs/chat-bot/api",
         },
