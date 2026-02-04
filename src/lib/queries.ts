@@ -1,9 +1,9 @@
 import { QueryClientConfig } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
-import { blogsTable, usersTable } from "~/db/schema";
-import { desc, eq } from "drizzle-orm";
-import { query } from "@solidjs/router";
+import { blogsTable, chatbot, usersTable } from "~/db/schema";
+import { and, desc, eq } from "drizzle-orm";
+import { query, redirect } from "@solidjs/router";
 
 export const queryConfig:QueryClientConfig = {
   defaultOptions: {
@@ -38,6 +38,20 @@ export const getBlogById = query(async (id: number) => {
   const [blog] = await db.select().from(blogsTable).where(eq(blogsTable.id, id))
   return blog
 }, "blog")
+
+export const getBotById = query(async (id: number) => {
+  "use server"
+  const user = await getAuthSession()
+  if (!user) throw redirect("/Login")
+  return db.query.chatbot.findFirst(
+    {
+      where: and(
+        eq(chatbot.id , id),
+        eq(chatbot.userId, user.id)
+      )
+    }
+  )
+}, "botById")
 
 // export const profileQuery = () => useQuery(() => ({
 //   queryKey: ["profile"],

@@ -1,16 +1,24 @@
-import { useParams } from "@solidjs/router"
-import { Show } from "solid-js"
-import Spinner from "~/components/parts/Spinner"
-import { getUser } from "~/lib/signal"
+import { createAsync, useParams } from "@solidjs/router"
+import { Show, Suspense } from "solid-js"
+import { Loading } from "~/components/parts/Loading"
+import { getBotById } from "~/lib/queries"
 
 const testbot = () => {
   const params = useParams()
-  const user = getUser()
+  const bot = createAsync(() => getBotById(parseInt(params.id)))
+
   return (
     <>
-      <Show when={user()} fallback={<Spinner/>}>
-        You are logged in and allowed to access the bot number {params.id}!
+      <Suspense fallback={<Loading />}>
+      <Show when={bot()}>
+        {
+          presentBot => <>
+            You are logged in and allowed to access the bot number {presentBot().id}!
+            {JSON.stringify(bot())}
+          </>
+        }
       </Show>
+      </Suspense>
     </>
   )
 }
