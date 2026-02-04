@@ -109,6 +109,8 @@ const BotCard = ({bot}:props) => {
               size="sm"
               variant="outline"
               class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
+              as="A"
+              href={`Edit-Bot/${bot.id}`}
             >
               <FiEdit class="w-3 h-3 ml-1" />
               ویرایش
