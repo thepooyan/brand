@@ -10,14 +10,14 @@ const testbot = () => {
   return (
     <>
       <Suspense fallback={<Loading />}>
-      <Show when={bot()}>
-        {
-          presentBot => <>
-            You are logged in and allowed to access the bot number {presentBot().id}!
-            {JSON.stringify(bot())}
-          </>
-        }
-      </Show>
+        <Show when={bot()}>
+          {
+            presentBot => <>
+              You are logged in and allowed to access the bot number {presentBot().id}!
+              {JSON.stringify(bot())}
+            </>
+          }
+        </Show>
       </Suspense>
     </>
   )
