@@ -1,5 +1,6 @@
 import { createAsync, useParams } from "@solidjs/router"
 import { Show, Suspense } from "solid-js"
+import EditBotPage from "~/components/pages/EditBotPage"
 import { Loading } from "~/components/parts/Loading"
 import { getBotById } from "~/lib/queries"
 
@@ -12,10 +13,7 @@ const testbot = () => {
       <Suspense fallback={<Loading />}>
         <Show when={bot()}>
           {
-            presentBot => <>
-              You are logged in and allowed to access the bot number {presentBot().id}!
-              {JSON.stringify(bot(), null, 0).replaceAll(",","\n")}
-            </>
+            presentBot => <EditBotPage bot={presentBot()}/>
           }
         </Show>
       </Suspense>
