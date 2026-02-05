@@ -3,7 +3,7 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
-import {  blogsTable, chatbotTable, chatbotStatusTable, IBlog, INewBlog, otpTable, usersTable, websiteOrdersTable } from "~/db/schema"
+import {  blogsTable, chatbotTable, chatbotStatusTable, I_Blog, I_NewBlog, otpTable, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -112,7 +112,7 @@ export const deleteChatbot = async (botId: number) => {
   }
 }
 
-export const newPost = async (post: INewBlog) => {
+export const newPost = async (post: I_NewBlog) => {
   try {
     await db.insert(blogsTable).values(post)
     return {ok: true}
@@ -131,7 +131,7 @@ export const deletePost = async (id: number) => {
   }
 }
 
-export const editPost = async (post: IBlog) => {
+export const editPost = async (post: I_Blog) => {
   try {
     await db.update(blogsTable).set(post).where(eq(blogsTable.id, post.id))
     return {ok: true}

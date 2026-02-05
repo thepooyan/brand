@@ -14,7 +14,7 @@ const testbot = () => {
           {
             presentBot => <>
               You are logged in and allowed to access the bot number {presentBot().id}!
-              {JSON.stringify(bot())}
+              {JSON.stringify(bot(), null, 0).replaceAll(",","\n")}
             </>
           }
         </Show>

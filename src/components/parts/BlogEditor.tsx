@@ -15,7 +15,7 @@ import Textarea from "~/components/ui/Textarea"
 import Input from "~/components/ui/InputNew"
 import UploadBtn from "~/components/parts/UploadBtn"
 import { cn } from "~/lib/utils"
-import { IBlog } from "~/db/schema"
+import { I_Blog } from "~/db/schema"
 
 interface BlogPost {
   title: string
@@ -40,7 +40,7 @@ const newEmptyBlog: BlogPost = {
 }
 
 interface props {
-  editData?: IBlog
+  editData?: I_Blog
 }
 export default function BlogEditor({editData}:props) {
   const [blogPost, setBlogPost] = createStore<BlogPost>(editData ? editData : newEmptyBlog)

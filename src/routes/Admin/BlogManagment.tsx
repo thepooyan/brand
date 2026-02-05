@@ -12,7 +12,7 @@ import { Suspense } from "solid-js";
 import { callModal } from "~/components/layout/Modal";
 import { Loading } from "~/components/parts/Loading";
 import TA from "~/components/parts/TA";
-import { IBlog } from "~/db/schema";
+import { I_Blog } from "~/db/schema";
 import { getAllBlogs } from "~/lib/queries";
 import { limitChar, readableDate } from "~/lib/utils";
 import { deletePost } from "~/server/actions";
@@ -20,7 +20,7 @@ import { deletePost } from "~/server/actions";
 export default function BlogPanel() {
   const posts = createAsync(() => getAllBlogs());
 
-  const handleDelete = (post: IBlog) => {
+  const handleDelete = (post: I_Blog) => {
     callModal.prompt(`"${limitChar(post.title, 40)}" حذف شود؟`)
     .yes(async () => {
         callModal.wait()

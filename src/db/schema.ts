@@ -29,6 +29,9 @@ export const chatbotTable = sqliteTable("chatbot", {
   description: text(),
 })
 
+export type I_Bot = typeof chatbotTable.$inferSelect
+export type I_NewBot = typeof chatbotTable.$inferInsert
+
 export const websiteOrdersTable = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
   budget: text(),
@@ -84,5 +87,5 @@ export const blogsTable = sqliteTable("blogs_table", {
   likeCount: integer().default(0).notNull()
 })
 
-export type IBlog = typeof blogsTable.$inferSelect
-export type INewBlog = typeof blogsTable.$inferInsert
+export type I_Blog = typeof blogsTable.$inferSelect
+export type I_NewBlog = typeof blogsTable.$inferInsert

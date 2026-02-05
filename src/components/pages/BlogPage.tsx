@@ -1,13 +1,13 @@
 import {  FiCalendar, FiClock } from "solid-icons/fi"
 import {marked} from "marked"
-import { IBlog } from "~/db/schema"
+import { I_Blog } from "~/db/schema"
 import { createAsync } from "@solidjs/router"
 import { createBlogFullUrl, readableDate } from "~/lib/utils"
 import { Link, Meta, Title } from "@solidjs/meta"
 import BlogSchema from "../jsonSchema/BlogSchema"
 
 interface BlogPostProps {
-  blog: IBlog
+  blog: I_Blog
 }
 
 export function BlogPage({ blog }: BlogPostProps) {

@@ -1,6 +1,6 @@
-import { IBlog } from "~/db/schema";
+import { I_Blog } from "~/db/schema";
 
-const BlogSchema = ({ blog }: { blog: IBlog }) => {
+const BlogSchema = ({ blog }: { blog: I_Blog }) => {
   return (
     <script type="application/ld+json">
       {JSON.stringify({
