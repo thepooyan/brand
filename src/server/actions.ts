@@ -3,7 +3,7 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
-import {  blogsTable, chatbot, chatbot_status, IBlog, INewBlog, otpTable, usersTable, websiteOrders } from "~/db/schema"
+import {  blogsTable, chatbotTable, chatbotStatusTable, IBlog, INewBlog, otpTable, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -68,11 +68,11 @@ export const verifyOTP = async (number: string, otp: string):Response => {
 
 export const saveWebsiteOrder = async (order: websiteOrder) => {
   try {
-    let values:typeof websiteOrders.$inferInsert = {
+    let values:typeof websiteOrdersTable.$inferInsert = {
       ...order,
       features: JSON.stringify(order.features)
     }
-    await db.insert(websiteOrders).values(values)
+    await db.insert(websiteOrdersTable).values(values)
     await telegram.admin.send(`سفارش سایت \n\n${yaml.dump(order)}`)
     return {ok: true}
   } catch(_) {
@@ -95,13 +95,13 @@ export const deleteChatbot = async (botId: number) => {
     if (!user) return {ok: false, msg: "لطفا ابتدا لاگین کنید"}
 
     await db.transaction(async tx => {
-      await tx.delete(chatbot_status).where(
-        eq(chatbot_status.id, botId),
+      await tx.delete(chatbotStatusTable).where(
+        eq(chatbotStatusTable.id, botId),
       )
-      await tx.delete(chatbot).where(
+      await tx.delete(chatbotTable).where(
         and(
-          eq(chatbot.id, botId),
-          eq(chatbot.userId, user.id)
+          eq(chatbotTable.id, botId),
+          eq(chatbotTable.userId, user.id)
         )
       )
     })

@@ -1,5 +1,5 @@
 "use server"
-import { adminsTable, chatbot, tokenLength } from "~/db/schema";
+import { adminsTable, chatbotTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LanguageValue, LlmBuilder, ResponseLengthValue, ToneValue } from "./llm-generation";
 import { db } from "~/db/db";
@@ -35,7 +35,7 @@ export const compareEpochTime = (then: number) => {
   return true
 }
 
-export const getSystemPrompt = (bot: typeof chatbot.$inferSelect):string => {
+export const getSystemPrompt = (bot: typeof chatbotTable.$inferSelect):string => {
   return new LlmBuilder()
   .setName(bot.botName)
   .setBusinessName(bot.businessName)

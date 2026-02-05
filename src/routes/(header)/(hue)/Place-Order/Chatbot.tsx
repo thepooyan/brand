@@ -7,7 +7,7 @@ import RedStar from "~/components/parts/RedStar"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
-import { chatbot, chatbot_status } from "~/db/schema"
+import { chatbotTable, chatbotStatusTable } from "~/db/schema"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
@@ -431,14 +431,14 @@ const saveOrder = async (order: chatbotOrder):response<number> => {
     let user = await getAuthSession()
     if (!user) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
 
-    let values: typeof chatbot.$inferInsert = {
+    let values: typeof chatbotTable.$inferInsert = {
       ...order,
       userId: user.id
     }
 
-    let [row] = await db.insert(chatbot).values(values).returning({id: chatbot.id})
+    let [row] = await db.insert(chatbotTable).values(values).returning({id: chatbotTable.id})
 
-    await db.insert(chatbot_status).values(newPlan(row.id, PlanOptions.free))
+    await db.insert(chatbotStatusTable).values(newPlan(row.id, PlanOptions.free))
 
     return {ok: true, data: row.id}
 

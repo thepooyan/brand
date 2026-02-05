@@ -2,7 +2,7 @@ import Elysia from "elysia";
 import { chatGaurd } from "./chatGuard";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
-import { chatbot, chatbot_status } from "~/db/schema";
+import { chatbotTable, chatbotStatusTable } from "~/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
@@ -35,12 +35,12 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
 
 const getUserBot = async (userId: string, botId: string ) => {
   const bot = (await db.select()
-    .from(chatbot)
-    .leftJoin(chatbot_status, eq(chatbot.id, chatbot_status.id))
+    .from(chatbotTable)
+    .leftJoin(chatbotStatusTable, eq(chatbotTable.id, chatbotStatusTable.id))
     .where(
       and(
-        eq(chatbot.userId, parseInt(userId)),
-        eq(chatbot.id, parseInt(botId))
+        eq(chatbotTable.userId, parseInt(userId)),
+        eq(chatbotTable.id, parseInt(botId))
       )
     )).at(0)
 
@@ -50,11 +50,11 @@ const getUserBot = async (userId: string, botId: string ) => {
   let remaining = bot.chatbot_status.remainingMessages
   if (remaining <= 0) return "empty"
 
-  await db.update(chatbot_status)
+  await db.update(chatbotStatusTable)
     .set({
-      remainingMessages: sql`${chatbot_status.remainingMessages} - 1`
+      remainingMessages: sql`${chatbotStatusTable.remainingMessages} - 1`
     })
-    .where(eq(chatbot_status.id, bot.chatbot.id))
+    .where(eq(chatbotStatusTable.id, bot.chatbot.id))
 
   return bot.chatbot
 }

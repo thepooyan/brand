@@ -1,7 +1,7 @@
 import { QueryClientConfig } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
-import { blogsTable, chatbot, usersTable } from "~/db/schema";
+import { blogsTable, chatbotTable, usersTable } from "~/db/schema";
 import { and, desc, eq } from "drizzle-orm";
 import { query, redirect } from "@solidjs/router";
 
@@ -43,11 +43,11 @@ export const getBotById = query(async (id: number) => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login")
-  return db.query.chatbot.findFirst(
+  return db.query.chatbotTable.findFirst(
     {
       where: and(
-        eq(chatbot.id , id),
-        eq(chatbot.userId, user.id)
+        eq(chatbotTable.id , id),
+        eq(chatbotTable.userId, user.id)
       )
     }
   )

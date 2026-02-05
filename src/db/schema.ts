@@ -2,8 +2,8 @@ import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const tokenLength = 62
-export const chatbot_status = sqliteTable("chatbot_status", {
-  id: int().notNull().references(() => chatbot.id),
+export const chatbotStatusTable = sqliteTable("chatbot_status", {
+  id: int().notNull().references(() => chatbotTable.id),
   plan: text({enum: ["free"]}).notNull(),
   messageCount: integer().notNull(),
   remainingMessages: integer().notNull(),
@@ -11,11 +11,11 @@ export const chatbot_status = sqliteTable("chatbot_status", {
   current_token: text({length: tokenLength}).notNull()
 })
 
-export const chatbot_status_relations = relations(chatbot_status, ({one}) => ({
-  chatbot: one(chatbot, {fields: [chatbot_status.id], references: [chatbot.id]})
+export const chatbot_status_relations = relations(chatbotStatusTable, ({one}) => ({
+  chatbot: one(chatbotTable, {fields: [chatbotStatusTable.id], references: [chatbotTable.id]})
 }))
 
-export const chatbot = sqliteTable("chatbot", {
+export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),
   botName: text().notNull(),
@@ -29,7 +29,7 @@ export const chatbot = sqliteTable("chatbot", {
   description: text(),
 })
 
-export const websiteOrders = sqliteTable("website_orders", {
+export const websiteOrdersTable = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
   budget: text(),
   contentReady: text(),

@@ -2,7 +2,7 @@
 
 import { db } from "~/db/db"
 import { generateToken } from "./serverUtil"
-import { chatbot_status } from "~/db/schema"
+import { chatbotStatusTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 
 type success<T = void> = T extends void ? {ok: true} : {ok: true, data: T}
@@ -30,7 +30,7 @@ async function safe<T>(fn: () => Promise<T>): Promise<Result<T>> {
 export const getNewToken = async (id: number):ActionResult<string> => {
   const newToken = generateToken()
   const data = await safe(
-    async () => await db.update(chatbot_status).set({current_token: newToken}).where(eq(chatbot_status.id, id))
+    async () => await db.update(chatbotStatusTable).set({current_token: newToken}).where(eq(chatbotStatusTable.id, id))
   )
   if (data.ok) {
     return {ok: true, data: newToken}

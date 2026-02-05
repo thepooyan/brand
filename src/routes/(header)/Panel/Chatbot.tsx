@@ -4,7 +4,7 @@ import { FiPlus, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
 import { chatbotStatus } from "~/lib/interface"
 import { createAsync, query, redirect } from "@solidjs/router"
 import { db } from "~/db/db"
-import { chatbot, chatbot_status } from "~/db/schema"
+import { chatbotTable, chatbotStatusTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { Suspense } from "solid-js"
@@ -19,16 +19,16 @@ const getBots = query(async () => {
 
   return (await db
   .select({
-    id: chatbot_status.id,
-    plan: chatbot_status.plan,
-    messageCount: chatbot_status.messageCount,
-    remainingMessages: chatbot_status.remainingMessages,
-    expirationDate: chatbot_status.expirationDate,
-    botName: chatbot.botName,
+    id: chatbotStatusTable.id,
+    plan: chatbotStatusTable.plan,
+    messageCount: chatbotStatusTable.messageCount,
+    remainingMessages: chatbotStatusTable.remainingMessages,
+    expirationDate: chatbotStatusTable.expirationDate,
+    botName: chatbotTable.botName,
   })
-  .from(chatbot_status)
-  .innerJoin(chatbot, eq(chatbot_status.id, chatbot.id))
-  .where(eq(chatbot.userId, user.id)))
+  .from(chatbotStatusTable)
+  .innerJoin(chatbotTable, eq(chatbotStatusTable.id, chatbotTable.id))
+  .where(eq(chatbotTable.userId, user.id)))
 }, "bots")
 
 export default function Component() {
