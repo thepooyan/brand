@@ -57,7 +57,7 @@ const EditBotPage = ({bot}:p) => {
             <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setStore("language", getLanguageKeyByLabel(e) || "")}/>
           </Seprator>
           <Seprator>
-            طول پاسخ
+            حداکثر طول پاسخ
             <ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
               onchange={(e:string) => setStore("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
           </Seprator>
