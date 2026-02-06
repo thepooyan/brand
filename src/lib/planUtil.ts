@@ -91,3 +91,34 @@ export const ResponseLengthOptions = {
 } as const
 
 export type ResponseLengthValue = keyof typeof ResponseLengthOptions
+
+const isLanguageKey = (value: string): value is LanguageValue =>
+  value in LanguageOptions
+
+export const getLanguageValue = (str: string) => {
+  if (isLanguageKey(str)) return LanguageOptions[str]
+  return null
+}
+
+export const getLanguageKeyByLabel = (label: string): LanguageValue | null => {
+  for (const key of Object.keys(LanguageOptions) as LanguageValue[]) {
+    if (LanguageOptions[key].label === label) return key
+  }
+  return null
+}
+
+const isResponseLengthKey = (value: string): value is ResponseLengthValue =>
+  value in ResponseLengthOptions
+
+export const getResponseLengthValue = (str: string) => {
+  if (isResponseLengthKey(str)) return ResponseLengthOptions[str]
+  return null
+}
+
+export const getResponseLengthKeyByLabel = (label: string): ResponseLengthValue | null => {
+  for (const key of Object.keys(ResponseLengthOptions) as ResponseLengthValue[]) {
+    if (ResponseLengthOptions[key].label === label) return key
+  }
+  return null
+}
+

@@ -6,8 +6,9 @@ import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
 import { createStore } from "solid-js/store"
 import ToneSelect from "../parts/ToneSelect"
-import { getToneKeyByLabel, getToneValue } from "~/lib/planUtil"
+import { getLanguageKeyByLabel, getLanguageValue, getToneKeyByLabel, getToneValue } from "~/lib/planUtil"
 import { ChangeEvent } from "~/lib/interface"
+import LangSelect from "../parts/LangSelect"
 
 interface p {
   bot: I_Bot
@@ -30,7 +31,7 @@ const EditBotPage = ({bot}:p) => {
     </label>
   }
   const handleSubmit = () => {
-    console.log(store)
+    console.log({...store})
   }
 
   return (
@@ -45,7 +46,10 @@ const EditBotPage = ({bot}:p) => {
             لحن
             <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setStore("tone", getToneKeyByLabel(e) || "") }/>
           </label>
-          <In key="language" name="زبان"/>
+          <label>
+            زبان
+            <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setStore("language", getLanguageKeyByLabel(e) || "")}/>
+          </label>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
