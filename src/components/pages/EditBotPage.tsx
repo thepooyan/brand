@@ -4,11 +4,15 @@ import { Component } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
+import { createStore } from "solid-js/store"
+import ToneSelect from "../parts/ToneSelect"
 
 interface p {
   bot: I_Bot
 }
 const EditBotPage = ({bot}:p) => {
+
+  const [store, setStore] = createStore<I_Bot>(bot)
 
   interface pp {
     key: keyof typeof bot
@@ -20,24 +24,32 @@ const EditBotPage = ({bot}:p) => {
     let Comp = as ? as : Input
     return <label class={cn("flex gap-2 flex-col",className)}>
       {name}
-      <Comp placeholder={name} value={bot[key] || undefined}/>
+      <Comp placeholder={name} value={store[key] || undefined} onchange={e => setStore(key, e.target.value)}/>
     </label>
+  }
+  const handleSubmit = () => {
+    console.log(store)
   }
 
   return (
     <>
-      <div class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container">
+      <form class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container"
+      onsubmit={e => {e.preventDefault(); handleSubmit()} }>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
         <div class="grid grid-cols-3 gap-4">
           <In key="botName" name="نام ربات"/>
+          <label class="flex gap-2 flex-col">
+            لحن
+            <ToneSelect/>
+          </label>
           <In key="businessName" name="نام بیزنس"/>
           <In key="language" name="زبان"/>
           <In key="tone" name="لحن"/>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
-        <Button>ویرایش</Button>
-      </div>
+        <Button type="submit">ویرایش</Button>
+      </form>
     </>
   )
 }
