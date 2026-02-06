@@ -6,18 +6,16 @@ import { Loading } from "~/components/parts/Loading"
 import { getBlogBySlug } from "~/lib/queries"
 
 const slug = () => {
-  const {slug} = useParams()
+  const params = useParams()
 
-  const data = createAsync(() => getBlogBySlug(decodeURIComponent(slug)))
+  const data = createAsync(() => getBlogBySlug(decodeURIComponent(params.slug)))
 
   return (
-    <div>
-      <Suspense fallback={<Loading/>}>
-        <Show when={data()} fallback={<BlogNotFound/>}>
-          {d => <BlogPage blog={d()}/>}
-        </Show>
-      </Suspense>
-    </div>
+    <Suspense fallback={<Loading/>}>
+      <Show when={data()} fallback={<BlogNotFound/>}>
+        {d => <BlogPage blog={d()}/>}
+      </Show>
+    </Suspense>
   )
 }
 
