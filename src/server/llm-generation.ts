@@ -1,6 +1,6 @@
 "use server"
 
-import { ToneOptions, ToneValue } from "~/lib/planUtil"
+import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/lib/planUtil"
 import { generateToken } from "./serverUtil"
 
 export const plansEnum = {
@@ -34,54 +34,6 @@ export const newPlan =(id: number, plan: Plan) => ({
     id: id,
     current_token: generateToken()
 })
-
-
-
-export const LanguageOptions = {
-  persian: {
-    label: "فارسی",
-    flag: "🇮🇷",
-    llmPrompt: "پاسخ را فقط به زبان فارسی بنویس."
-  },
-  english: {
-    label: "انگلیسی",
-    flag: "🇺🇸",
-    llmPrompt: "Write the response only in English."
-  },
-  bilingual: {
-    label: "دوزبانه (فارسی + انگلیسی)",
-    flag: "🌐",
-    llmPrompt: "پاسخ را ابتدا به فارسی و سپس به انگلیسی نیز بنویس."
-  }
-} as const
-
-export type LanguageValue = keyof typeof LanguageOptions
-
-export const ResponseLengthOptions = {
-  short: {
-    label: "کوتاه",
-    description: "۱-۲ جمله (تا ۵۰ کلمه)",
-    llmPrompt: "پاسخ را در ۱ تا ۲ جمله (حداکثر ۵۰ کلمه) بنویس."
-  },
-  medium: {
-    label: "متوسط",
-    description: "۲-۴ جمله (۵۰-۱۰۰ کلمه)",
-    llmPrompt: "پاسخ را در ۲ تا ۴ جمله (حدود ۵۰ تا ۱۰۰ کلمه) بنویس."
-  },
-  long: {
-    label: "بلند",
-    description: "۴-۶ جمله (۱۰۰-۲۰۰ کلمه)",
-    llmPrompt: "پاسخ را در ۴ تا ۶ جمله (بین ۱۰۰ تا ۲۰۰ کلمه) بنویس."
-  },
-  detailed: {
-    label: "تفصیلی",
-    description: "بیش از ۶ جمله (۲۰۰+ کلمه)",
-    llmPrompt: "پاسخ را به‌صورت کامل، بیش از ۶ جمله و بالای ۲۰۰ کلمه بنویس."
-  }
-} as const
-
-export type ResponseLengthValue = keyof typeof ResponseLengthOptions
-
 
 export class LlmBuilder {
   private name!: string

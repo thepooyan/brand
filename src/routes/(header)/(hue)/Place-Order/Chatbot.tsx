@@ -9,10 +9,10 @@ import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { chatbotTable, chatbotStatusTable } from "~/db/schema"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
-import { ToneOptions } from "~/lib/planUtil"
+import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/lib/planUtil"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
-import { LanguageOptions, newPlan, PlanOptions, ResponseLengthOptions } from "~/server/llm-generation"
+import { newPlan, PlanOptions } from "~/server/llm-generation"
 
 export default function OrderChatbotPage() {
 
