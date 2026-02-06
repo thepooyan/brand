@@ -6,6 +6,7 @@ import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
 import { createStore } from "solid-js/store"
 import ToneSelect from "../parts/ToneSelect"
+import { getToneKeyByLabel, getToneValue } from "~/lib/planUtil"
 
 interface p {
   bot: I_Bot
@@ -38,13 +39,12 @@ const EditBotPage = ({bot}:p) => {
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
         <div class="grid grid-cols-3 gap-4">
           <In key="botName" name="نام ربات"/>
+          <In key="businessName" name="نام بیزنس"/>
           <label class="flex gap-2 flex-col">
             لحن
-            <ToneSelect/>
+            <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={e => setStore("tone", getToneKeyByLabel(e) || "") }/>
           </label>
-          <In key="businessName" name="نام بیزنس"/>
           <In key="language" name="زبان"/>
-          <In key="tone" name="لحن"/>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>

@@ -1,5 +1,6 @@
 "use server"
 
+import { ToneOptions, ToneValue } from "~/lib/planUtil"
 import { generateToken } from "./serverUtil"
 
 export const plansEnum = {
@@ -34,35 +35,7 @@ export const newPlan =(id: number, plan: Plan) => ({
     current_token: generateToken()
 })
 
-export const ToneOptions = {
-  formal: {
-    label: "رسمی",
-    description: "مناسب برای کسب‌وکارهای جدی و حرفه‌ای",
-    llmPrompt: "پاسخ را به صورت رسمی و محترمانه بنویس."
-  },
-  friendly: {
-    label: "دوستانه",
-    description: "صمیمی و گرم برای ارتباط نزدیک با مشتریان",
-    llmPrompt: "پاسخ را به شکل دوستانه و صمیمی بنویس."
-  },
-  professional: {
-    label: "حرفه‌ای",
-    description: "متعادل بین رسمی و دوستانه",
-    llmPrompt: "پاسخ را با لحنی حرفه‌ای و قابل اعتماد بنویس."
-  },
-  enthusiastic: {
-    label: "پرانرژی",
-    description: "مثبت و انگیزه‌بخش",
-    llmPrompt: "پاسخ را با انرژی بالا و لحن مثبت بنویس."
-  },
-  helpful: {
-    label: "کمک‌کننده",
-    description: "متمرکز بر حل مشکل و راهنمایی",
-    llmPrompt: "پاسخ را با تمرکز بر کمک‌رسانی و راهنمایی بنویس."
-  }
-} as const
 
-export type ToneValue = keyof typeof ToneOptions
 
 export const LanguageOptions = {
   persian: {
