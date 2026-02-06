@@ -43,14 +43,15 @@ export default function ChatBot() {
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg"
+              as={TA} href="/Place-Order/Chatbot"
+            >
+              همین حالا ربات خود را بسازید!
+            </Button>
+            <Button class="px-8 py-6 text-lg"
+              variant="secondary" 
               onclick={() => callModal(() => <ContactInfo/>)}
             >
               درخواست مشاوره رایگان
-            </Button>
-            <Button class="px-8 py-6 text-lg"
-              variant="secondary" as={TA} href="Demo"
-            >
-              امتحان کنید!
             </Button>
           </div>
         </div>
@@ -80,7 +81,7 @@ export default function ChatBot() {
                   ))}
                 </ul>
                 <Button variant="secondary" class="mt-auto"
-                  as={TA} href={`/Services/Chat-Bot/${option.link}`}
+                  as={TA} href={option.link}
                 >مشاهده</Button>
               </div>
             ))}

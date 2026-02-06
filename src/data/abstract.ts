@@ -24,21 +24,21 @@ export const integrationOptions = [
     description:
       "چت‌بات هوشمند در تلگرام که مشتریان می‌تونن مستقیماً باهاش ارتباط برقرار کنن",
     features: ["پاسخ خودکار", "مدیریت سفارشات", "پشتیبانی ۲۴/۷"],
-    link: "/Telegram",
+    link: "/docs/chat-bot/telegram",
   },
   {
     icon: FiCode,
     title: "API Integration",
     description: "ادغام چت‌بات با سیستم‌های موجود شما از طریق API قدرتمند",
     features: ["RESTful API", "Webhook Support", "مستندات کامل"],
-    link: "/API",
+    link: "/docs/chat-bot/api",
   },
   {
     icon: FiGlobe,
     title: "ویجت وب‌سایت",
     description: "چت‌بات تعبیه شده در وب‌سایت شما با طراحی سفارشی",
     features: ["طراحی سفارشی", "نصب آسان", "واکنش‌گرا"],
-    link: "/Widget",
+    link: "/docs/chat-bot/widget",
   },
 ];
 
