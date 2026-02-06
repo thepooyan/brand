@@ -8,6 +8,7 @@ import {ToneValue} from "~/lib/planUtil"
 import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
 import { ROLES } from "~/lib/session";
+import { ErrorMessage } from "~/lib/const";
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -28,7 +29,7 @@ export const warpResponse = async <T>(fn: ()=>Promise<Response<T>>):Response<T> 
     return a
   } catch(e) {
     console.log(e)
-    return {ok:false, msg: "مشکلی پیش آمده، لطفا مجددا تلاش کنید"}
+    return {ok:false, msg: ErrorMessage.unknown}
   }
 }
 

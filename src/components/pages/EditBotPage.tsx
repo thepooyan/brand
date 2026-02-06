@@ -1,6 +1,6 @@
 import { I_Bot } from "~/db/schema"
 import Input from "../ui/InputNew"
-import { Component, ParentComponent } from "solid-js"
+import { Component, createSignal, ParentComponent } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
@@ -10,6 +10,9 @@ import { getLanguageKeyByLabel, getLanguageValue, getResponseLengthKeyByLabel, g
 import { ChangeEvent } from "~/lib/interface"
 import LangSelect from "../parts/LangSelect"
 import ResLengthSelect from "../parts/ResLengthSelect"
+import { editBot } from "~/server/mutation"
+import { callModal } from "../layout/Modal"
+import { useNavigate } from "@solidjs/router"
 
 interface p {
   bot: I_Bot
@@ -17,6 +20,8 @@ interface p {
 const EditBotPage = ({bot}:p) => {
 
   const [store, setStore] = createStore<I_Bot>(bot)
+  const [loading, setLoading] = createSignal(false)
+  const nv = useNavigate()
 
   interface pp {
     key: keyof typeof bot
@@ -36,8 +41,17 @@ const EditBotPage = ({bot}:p) => {
     {children}
   </label>
   
-  const handleSubmit = () => {
-    console.log({...store})
+  const handleSubmit = async () => {
+    setLoading(true)
+    callModal.wait()
+    let res = await editBot(store)
+    setLoading(false)
+    if (res.ok) {
+      nv("/Panel/Chatbot")
+      callModal.success()
+    }
+    else
+    callModal.fail(res.msg)
   }
 
   return (
@@ -67,7 +81,7 @@ const EditBotPage = ({bot}:p) => {
         <p class="text-muted-foreground text-sm">
           هرچیزی که ربات باید بداند را در قسمت بالا وارد کنید!
         </p>
-        <Button type="submit">ویرایش</Button>
+        <Button type="submit" disabled={loading()}>ویرایش</Button>
       </form>
     </>
   )
