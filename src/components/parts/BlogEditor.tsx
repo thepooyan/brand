@@ -16,6 +16,8 @@ import Input from "~/components/ui/InputNew"
 import UploadBtn from "~/components/parts/UploadBtn"
 import { cn } from "~/lib/utils"
 import { I_Blog } from "~/db/schema"
+import { ChangeEvent } from "~/lib/interface"
+import { TextareaKeyEvent } from "~/db/types"
 
 interface BlogPost {
   title: string
@@ -133,7 +135,7 @@ export default function BlogEditor({editData}:props) {
             <Input
               id="title"
               value={blogPost.title}
-              onchange={e => setBlogPost("title", e.target.value)}
+              onchange={(e:ChangeEvent<HTMLInputElement>) => setBlogPost("title", e.currentTarget.value)}
               placeholder="عنوان بلاگ را وارد کنید..."
               class="bg-input border-border"
             />
@@ -147,7 +149,7 @@ export default function BlogEditor({editData}:props) {
             </Label>
             <Input
               value={blogPost.slug}
-              onChange={e => setBlogPost("slug", e.target.value)}
+              onChange={(e:ChangeEvent<HTMLInputElement>) => setBlogPost("slug", e.currentTarget.value)}
               placeholder="اسلاگ-نمونه"
               class="bg-input border-border"
             />
@@ -162,7 +164,7 @@ export default function BlogEditor({editData}:props) {
               type="number"
               min="1"
               value={blogPost.readTime}
-              onChange={(e) => setBlogPost((prev) => ({ ...prev, readTime: Number.parseInt(e.target.value) || 1 }))}
+              onChange={(e:ChangeEvent<HTMLInputElement>) => setBlogPost((prev) => ({ ...prev, readTime: Number.parseInt(e.currentTarget.value) || 1 }))}
               class="bg-input border-border"
             />
           </div>
@@ -178,7 +180,7 @@ export default function BlogEditor({editData}:props) {
                 id="image"
                 placeholder="https://example.com/image.jpg"
                 value={blogPost.image}
-                onChange={(e) => setBlogPost((prev) => ({ ...prev, image: e.target.value }))}
+                onChange={(e:ChangeEvent<HTMLInputElement>) => setBlogPost((prev) => ({ ...prev, image: e.currentTarget.value }))}
                 class="bg-input border-border w-full"
               />
               <UploadBtn onUploaded={str => setBlogPost("image", str)} setIsUploading={() => setImageState(imgState.loading)}/>
@@ -213,7 +215,7 @@ export default function BlogEditor({editData}:props) {
               id="excerpt"
               placeholder="توضیحی کوتاه در مورد بلاگ..."
               value={blogPost.excerpt}
-              onChange={(e:any) => setBlogPost((prev) => ({ ...prev, excerpt: e.target.value }))}
+              onChange={(e:ChangeEvent<HTMLTextAreaElement>) => setBlogPost((prev) => ({ ...prev, excerpt: e.currentTarget.value }))}
               class="bg-input border-border resize-none"
               rows={2}
             />
@@ -228,7 +230,7 @@ export default function BlogEditor({editData}:props) {
             <Input
               placeholder="یک تگ اضافه کنید..."
               value={tagInput()}
-              onChange={(e) => setTagInput(e.target.value)}
+              onChange={(e:ChangeEvent<HTMLInputElement>) => setTagInput(e.currentTarget.value)}
               onKeyPress={handleKeyPress}
               class="bg-input border-border"
             />
@@ -264,7 +266,7 @@ export default function BlogEditor({editData}:props) {
             <Textarea
               id="content"
               value={blogPost.content}
-              onkeyup={(e:any) => handleContentChange(e.target.value)}
+              onkeyup={(e:TextareaKeyEvent) => handleContentChange(e.currentTarget.value)}
               class="h-93 bg-input border-border font-mono text-sm resize-none focus:ring-2 focus:ring-accent"
             />
           </div>

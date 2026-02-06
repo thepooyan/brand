@@ -7,6 +7,7 @@ import { Button } from "../ui/button"
 import { createStore } from "solid-js/store"
 import ToneSelect from "../parts/ToneSelect"
 import { getToneKeyByLabel, getToneValue } from "~/lib/planUtil"
+import { ChangeEvent } from "~/lib/interface"
 
 interface p {
   bot: I_Bot
@@ -25,7 +26,7 @@ const EditBotPage = ({bot}:p) => {
     let Comp = as ? as : Input
     return <label class={cn("flex gap-2 flex-col",className)}>
       {name}
-      <Comp placeholder={name} value={store[key] || undefined} onchange={e => setStore(key, e.target.value)}/>
+      <Comp placeholder={name} value={store[key] || undefined} onchange={(e:ChangeEvent<HTMLInputElement>) => setStore(key, e.currentTarget.value)}/>
     </label>
   }
   const handleSubmit = () => {
@@ -35,14 +36,14 @@ const EditBotPage = ({bot}:p) => {
   return (
     <>
       <form class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container"
-      onsubmit={e => {e.preventDefault(); handleSubmit()} }>
+      onsubmit={(e:SubmitEvent) => {e.preventDefault(); handleSubmit()} }>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
         <div class="grid grid-cols-3 gap-4">
           <In key="botName" name="نام ربات"/>
           <In key="businessName" name="نام بیزنس"/>
           <label class="flex gap-2 flex-col">
             لحن
-            <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={e => setStore("tone", getToneKeyByLabel(e) || "") }/>
+            <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setStore("tone", getToneKeyByLabel(e) || "") }/>
           </label>
           <In key="language" name="زبان"/>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
