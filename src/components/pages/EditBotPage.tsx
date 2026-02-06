@@ -64,6 +64,9 @@ const EditBotPage = ({bot}:p) => {
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
+        <p class="text-muted-foreground text-sm">
+          هرچیزی که ربات باید بداند را در قسمت بالا وارد کنید!
+        </p>
         <Button type="submit">ویرایش</Button>
       </form>
     </>
