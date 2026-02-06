@@ -1,6 +1,6 @@
 import { I_Bot } from "~/db/schema"
 import Input from "../ui/InputNew"
-import { Component } from "solid-js"
+import { Component, ParentComponent } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
@@ -25,11 +25,16 @@ const EditBotPage = ({bot}:p) => {
   }
   const In = ({key, name, className, as}:pp) => {
     let Comp = as ? as : Input
-    return <label class={cn("flex gap-2 flex-col",className)}>
+    return <Seprator className={className}>
       {name}
       <Comp placeholder={name} value={store[key] || undefined} onchange={(e:ChangeEvent<HTMLInputElement>) => setStore(key, e.currentTarget.value)}/>
-    </label>
+    </Seprator>
   }
+  const Seprator:ParentComponent<{className?: string}> = ({children, className}) =>
+    <label class={cn("flex gap-2 flex-col", className)}>
+    {children}
+  </label>
+  
   const handleSubmit = () => {
     console.log({...store})
   }
@@ -42,14 +47,14 @@ const EditBotPage = ({bot}:p) => {
         <div class="grid grid-cols-3 gap-4">
           <In key="botName" name="نام ربات"/>
           <In key="businessName" name="نام بیزنس"/>
-          <label class="flex gap-2 flex-col">
+          <Seprator>
             لحن
             <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setStore("tone", getToneKeyByLabel(e) || "") }/>
-          </label>
-          <label>
+          </Seprator>
+          <Seprator>
             زبان
             <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setStore("language", getLanguageKeyByLabel(e) || "")}/>
-          </label>
+          </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
