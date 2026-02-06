@@ -6,9 +6,10 @@ import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
 import { createStore } from "solid-js/store"
 import ToneSelect from "../parts/ToneSelect"
-import { getLanguageKeyByLabel, getLanguageValue, getToneKeyByLabel, getToneValue } from "~/lib/planUtil"
+import { getLanguageKeyByLabel, getLanguageValue, getResponseLengthKeyByLabel, getResponseLengthValue, getToneKeyByLabel, getToneValue } from "~/lib/planUtil"
 import { ChangeEvent } from "~/lib/interface"
 import LangSelect from "../parts/LangSelect"
+import ResLengthSelect from "../parts/ResLengthSelect"
 
 interface p {
   bot: I_Bot
@@ -54,6 +55,11 @@ const EditBotPage = ({bot}:p) => {
           <Seprator>
             زبان
             <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setStore("language", getLanguageKeyByLabel(e) || "")}/>
+          </Seprator>
+          <Seprator>
+            طول پاسخ
+            <ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
+              onchange={(e:string) => setStore("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
           </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
