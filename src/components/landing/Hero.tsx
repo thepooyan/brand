@@ -31,7 +31,9 @@ const Hero = () => {
               کنیم.
             </p>
             <div class="flex flex-col sm:flex-row gap-4">
-                <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg intro">
+                <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg intro"
+                as={TA} href="/Login?back=/Services"
+              >
                   شروع کنید
                   <Wiggle>
                     <ChevronLeft class="  h-5 w-5" />
