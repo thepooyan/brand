@@ -2,6 +2,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -64,6 +65,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent class="rtl">
         <SidebarGroup>
+          <SidebarGroupLabel>هوش مصنوعی</SidebarGroupLabel>
           <SidebarMenu class="gap-2">
             {navMain.map((item) => (
               <SidebarMenuItem >
