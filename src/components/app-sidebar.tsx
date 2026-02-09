@@ -64,7 +64,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                     {item.title}
                   </a>
                 </SidebarMenuButton>
-                {item.items?.length ? (
+                {item.items?.length && (
                   <SidebarMenuSub class="ml-0 border-l-0 px-1.5">
                     {item.items.length > 0 && item.items.map((item) => (
                       <SidebarMenuSubItem >
@@ -74,7 +74,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                       </SidebarMenuSubItem>
                     ))}
                   </SidebarMenuSub>
-                ) : null}
+                )}
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
