@@ -32,6 +32,14 @@ const navMain:nav[] = [
           title: "استفاده از توکن",
           url: "/docs/chat-bot/api",
         },
+       {
+          title: "اتصال به تلگرام",
+          url: "/docs/chat-bot/telegram",
+        },
+       {
+          title: "ویجت",
+          url: "/docs/chat-bot/widget",
+        },
       ],
     },
   ]
