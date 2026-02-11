@@ -9,15 +9,7 @@ import { sessionChatRouter } from "./sessionChat";
 import { cors } from '@elysiajs/cors'
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
-.use(
-  cors(
-    {
-      origin: false,
-      methods: "*",
-      allowedHeaders: "*"
-    }
-  )
-)
+.use( cors())
 .use(chatGaurd)
 .use(sessionChatRouter)
 .use(hooshbaan)
