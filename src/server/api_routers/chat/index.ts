@@ -12,7 +12,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(
   cors(
     {
-      origin: true,
+      origin: false,
       methods: "*",
       allowedHeaders: "*"
     }
