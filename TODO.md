@@ -1,3 +1,7 @@
+expose useChat as node package 
+useChat error handling is buggy
+
+
 seo:
 check gsc
 expland author => add authors table

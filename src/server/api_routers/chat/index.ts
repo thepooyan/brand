@@ -6,9 +6,18 @@ import { hooshbaan } from "./hooshbaan";
 import { botAuthGuard } from "./botAuthGuard";
 import { chatGaurd } from "./chatGuard";
 import { sessionChatRouter } from "./sessionChat";
-
+import { cors } from '@elysiajs/cors'
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
+.use(
+  cors(
+    {
+      origin: true,
+      methods: "*",
+      allowedHeaders: "*"
+    }
+  )
+)
 .use(chatGaurd)
 .use(sessionChatRouter)
 .use(hooshbaan)
