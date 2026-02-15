@@ -12,6 +12,7 @@ export const envSchema = z.object({
   BUCKET_KEY: z.string().min(1),
   BUCKET_SECRET: z.string().min(1),
   BUCKET_NAME: z.string().min(1),
+  SMS_PANEL: z.string().min(1),
 });
 
 export const envSchemaPublic = z.object({
