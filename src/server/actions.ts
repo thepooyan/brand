@@ -13,14 +13,15 @@ import { google } from "@ai-sdk/google"
 import { s3 } from "~/s3"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
 import {  getEnv } from "./env"
+import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
     if (!validatePhone(number)) return {ok: false, msg: "شماره تلفن وارد شده صحیح نمیباشد"}
 
     let newOtp = generateOTP()
-    console.log(newOtp)
-    //send otp to phone number
+
+    sendOtpSMS(newOtp, convertNumberToE164(number))
 
     const value: typeof otpTable.$inferInsert = {
       number: number,
