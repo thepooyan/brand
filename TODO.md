@@ -1,3 +1,4 @@
+
 expose useChat as node package 
 useChat error handling is buggy
 
