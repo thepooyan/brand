@@ -27,6 +27,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   trainingText: text().notNull(),
   customization: text(),
   description: text(),
+  color: text(),
 })
 
 export type I_Bot = typeof chatbotTable.$inferSelect

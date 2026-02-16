@@ -79,7 +79,7 @@ const EditBotPage = ({bot}:p) => {
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
           <Seprator>
             رنگ سازمانی
-            <ColorPicker initialValue="#2780d2"/>
+            <ColorPicker initialValue={bot.color || "#2780d2"} onChange={val => setStore("color", val)}/>
           </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
