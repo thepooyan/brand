@@ -21,7 +21,12 @@ export const sendOTP = async (number: string):Response<string> => {
 
     let newOtp = generateOTP()
 
-    sendOtpSMS(newOtp, convertNumberToE164(number))
+    try {
+      await sendOtpSMS(newOtp, convertNumberToE164(number))
+    } catch(e) {
+      console.log("cant send otp")
+      console.log(e)
+    }
 
     const value: typeof otpTable.$inferInsert = {
       number: number,
