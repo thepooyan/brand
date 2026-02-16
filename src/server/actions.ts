@@ -21,22 +21,17 @@ export const sendOTP = async (number: string):Response<string> => {
 
     let newOtp = generateOTP()
 
-    try {
-      await sendOtpSMS(newOtp, convertNumberToE164(number))
-    } catch(e) {
-      console.log("cant send otp")
-      console.log(e)
-    }
-
     const value: typeof otpTable.$inferInsert = {
       number: number,
       otp: newOtp
     } 
 
-    await db.delete(otpTable).where(eq(otpTable.number, number))
-    await db.insert(otpTable).values(value)
+    await Promise.all([
+      sendOtpSMS(newOtp, convertNumberToE164(number)),
+      db.delete(otpTable).where(eq(otpTable.number, number)),
+      db.insert(otpTable).values(value)
+    ])
     
-    //REMOVE THIS
     return {ok: true, data: newOtp}
   })
 }
