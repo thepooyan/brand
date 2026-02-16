@@ -17,13 +17,13 @@ export const sendOtpSMS = async (otp: string | number, recipient: string) => {
   const data = {
     "sending_type": "pattern",
     "from_number": "+983000505",
-    "code": "xxxxxxxxxxxxxxx",
+    "code": "faw7303jridd1pc",
     "recipients": [
       recipient
       // "+989120000000"
     ],
     "params": {
-      "code": otp
+      "OTP": otp
     },
   }
   return smsBase.post("api/send", data)
