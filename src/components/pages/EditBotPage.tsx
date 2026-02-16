@@ -13,6 +13,7 @@ import ResLengthSelect from "../parts/ResLengthSelect"
 import { editBot } from "~/server/mutation"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
+import ColorPicker from "../ui/color-picker"
 
 interface p {
   bot: I_Bot
@@ -76,6 +77,10 @@ const EditBotPage = ({bot}:p) => {
               onchange={(e:string) => setStore("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
           </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
+          <Seprator>
+            رنگ سازمانی
+            <ColorPicker initialValue="#2780d2"/>
+          </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
         <p class="text-muted-foreground text-sm">
