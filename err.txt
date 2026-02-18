@@ -1,0 +1,442 @@
+2026-02-17 11:52:01.509 [info] AxiosError: Request failed with status code 502
+    at settle (file:///var/task/node_modules/axios/lib/core/settle.js:19:12)
+    at IncomingMessage.handleStreamEnd (file:///var/task/node_modules/axios/lib/adapters/http.js:793:11)
+    at IncomingMessage.emit (node:events:520:35)
+    at endReadableNT (node:internal/streams/readable:1701:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+    at Axios.request (file:///var/task/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Promise.all (index 0)
+    at async file:///var/task/chunks/build/actions-58cyFBRi.mjs:44:10
+    at async file:///var/task/chunks/build/llm-generation-YeMXyIDr.mjs:14:12
+    at async Object.we$3 [as handler] (file:///var/task/chunks/nitro/nitro.mjs:5909:13)
+    at async file:///var/task/chunks/nitro/nitro.mjs:2300:19
+    at async Object.callAsync (file:///var/task/chunks/nitro/nitro.mjs:4763:16)
+    at async toNodeHandle (file:///var/task/chunks/nitro/nitro.mjs:2571:7)
+    at async Server.r (/opt/rust/nodejs.js:2:15572) {
+  code: 'ERR_BAD_RESPONSE',
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      Authorization: 'YTEwYmRjM2YtZDMwNS00ZDZlLTgyOGQtZDZlZmE3OTRhY2ZjMDIxYjNhYjExYzQ3ODI3N2ZiMTcxYjA2MGMxMGU1Mzc=',
+      'User-Agent': 'axios/1.13.2',
+      'Content-Length': '135',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    baseURL: 'https://edge.ippanel.com/v1',
+    method: 'post',
+    url: 'api/send',
+    data: '{"sending_type":"pattern","from_number":"+983000505","code":"faw7303jridd1pc","recipients":["+989399306518"],"params":{"OTP":"849493"}}',
+    allowAbsoluteUrls: true
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      error: [Array],
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      finish: [Function: requestOnFinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: true,
+    _last: false,
+    chunkedEncoding: false,
+    shouldKeepAlive: true,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: true,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    strictContentLength: false,
+    _contentLength: 135,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: true,
+    _header: 'POST /v1/api/send HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'Content-Type: application/json\r\n' +
+      'Authorization: YTEwYmRjM2YtZDMwNS00ZDZlLTgyOGQtZDZlZmE3OTRhY2ZjMDIxYjNhYjExYzQ3ODI3N2ZiMTcxYjA2MGMxMGU1Mzc=\r\n' +
+      'User-Agent: axios/1.13.2\r\n' +
+      'Content-Length: 135\r\n' +
+      'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+      'x-vercel-id: dxb1::jsc8d-1771329120498-a2108508ef93\r\n' +
+      'x-invocation-id: dxb1::jsc8d-1771329120498-a2108508ef93\r\n' +
+      'Host: edge.ippanel.com\r\n' +
+      'Connection: keep-alive\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      options: [Object: null prototype],
+      defaultPort: 443,
+      protocol: 'https:',
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype] {},
+      freeSockets: [Object: null prototype],
+      keepAliveMsecs: 1000,
+      keepAlive: true,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      agentKeepAliveTimeoutBuffer: 1000,
+      maxCachedSessions: 100,
+      _sessionCache: [Object],
+      Symbol(shapeMode): false,
+      Symbol(kCapture): false
+    },
+    socketPath: undefined,
+    method: 'POST',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    joinDuplicateHeaders: undefined,
+    path: '/v1/api/send',
+    _ended: true,
+    res: IncomingMessage {
+      _events: [Object],
+      _readableState: [ReadableState],
+      _maxListeners: undefined,
+      socket: null,
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      joinDuplicateHeaders: undefined,
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 502,
+      statusMessage: 'Bad Gateway',
+      client: [TLSSocket],
+      _consuming: false,
+      _dumped: false,
+      req: [Circular *1],
+      _eventsCount: 4,
+      responseUrl: 'https://edge.ippanel.com/v1/api/send',
+      redirects: [],
+      Symbol(shapeMode): true,
+      Symbol(kCapture): false,
+      Symbol(kHeaders): [Object],
+      Symbol(kHeadersCount): 18,
+      Symbol(kTrailers): null,
+      Symbol(kTrailersCount): 0
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'edge.ippanel.com',
+    protocol: 'https:',
+    _redirectable: Writable {
+      _events: [Object],
+      _writableState: [WritableState],
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 135,
+      _requestBodyBuffers: [],
+      _eventsCount: 3,
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'https://edge.ippanel.com/v1/api/send',
+      _timeout: null,
+      Symbol(shapeMode): true,
+      Symbol(kCapture): false
+    },
+    Symbol(shapeMode): false,
+    Symbol(kCapture): false,
+    Symbol(kBytesWritten): 0,
+    Symbol(kNeedDrain): false,
+    Symbol(corked): 0,
+    Symbol(kChunkedBuffer): [],
+    Symbol(kChunkedLength): 0,
+    Symbol(kSocket): TLSSocket {
+      _tlsOptions: [Object],
+      _secureEstablished: true,
+      _securePending: false,
+      _newSessionPending: false,
+      _controlReleased: true,
+      secureConnecting: false,
+      _SNICallback: null,
+      servername: 'edge.ippanel.com',
+      alpnProtocol: false,
+      authorized: true,
+      authorizationError: null,
+      encrypted: true,
+      _events: [Object: null prototype],
+      _eventsCount: 9,
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'edge.ippanel.com',
+      _closeAfterHandlingError: false,
+      _readableState: [ReadableState],
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _maxListeners: undefined,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: undefined,
+      _server: null,
+      ssl: [TLSWrap],
+      _requestCert: true,
+      _rejectUnauthorized: true,
+      timeout: 5000,
+      parser: null,
+      _httpMessage: null,
+      autoSelectFamilyAttemptedAddresses: [Array],
+      Symbol(alpncallback): null,
+      Symbol(res): [TLSWrap],
+      Symbol(verified): true,
+      Symbol(pendingSession): null,
+      Symbol(async_id_symbol): -1,
+      Symbol(kHandle): [TLSWrap],
+      Symbol(lastWriteQueueSize): 0,
+      Symbol(timeout): Timeout {
+        _idleTimeout: 5000,
+        _idlePrev: [TimersList],
+        _idleNext: [TimersList],
+        _idleStart: 13858,
+        _onTimeout: [Function: bound ],
+        _timerArgs: undefined,
+        _repeat: null,
+        _destroyed: false,
+        Symbol(refed): false,
+        Symbol(kHasPrimitive): false,
+        Symbol(asyncId): 224,
+        Symbol(triggerId): 222,
+        Symbol(kAsyncContextFrame): [AsyncContextFrame [Map]]
+      },
+      Symbol(kBuffer): null,
+      Symbol(kBufferCb): null,
+      Symbol(kBufferGen): null,
+      Symbol(shapeMode): true,
+      Symbol(kCapture): false,
+      Symbol(kSetNoDelay): false,
+      Symbol(kSetKeepAlive): true,
+      Symbol(kSetKeepAliveInitialDelay): 1,
+      Symbol(kBytesRead): 0,
+      Symbol(kBytesWritten): 0,
+      Symbol(connect-options): [Object],
+      Symbol(kPerfHooksNetConnectContext): [Object]
+    },
+    Symbol(kOutHeaders): [Object: null prototype] {
+      accept: [Array],
+      'content-type': [Array],
+      authorization: [Array],
+      'user-agent': [Array],
+      'content-length': [Array],
+      'accept-encoding': [Array],
+      'x-vercel-id': [Array],
+      'x-invocation-id': [Array],
+      host: [Array]
+    },
+    Symbol(errored): null,
+    Symbol(kHighWaterMark): 65536,
+    Symbol(kRejectNonStandardBodyWrites): false,
+    Symbol(kUniqueHeaders): null
+  },
+  response: {
+    status: 502,
+    statusText: 'Bad Gateway',
+    headers: Object [AxiosHeaders] {
+      date: 'Tue, 17 Feb 2026 11:52:01 GMT',
+      'content-type': 'text/html',
+      'content-length': '10939',
+      connection: 'keep-alive',
+      'keep-alive': 'timeout=65',
+      server: 'ArvanCloud',
+      'server-timing': 'total;dur=310',
+      'x-request-id': '68a8e61111f61fdb49c76be5dad3c497',
+      'x-sid': '5700'
+    },
+    config: {
+      transitional: [Object],
+      adapter: [Array],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      env: [Object],
+      validateStatus: [Function: validateStatus],
+      headers: [Object [AxiosHeaders]],
+      baseURL: 'https://edge.ippanel.com/v1',
+      method: 'post',
+      url: 'api/send',
+      data: '{"sending_type":"pattern","from_number":"+983000505","code":"faw7303jridd1pc","recipients":["+989399306518"],"params":{"OTP":"849493"}}',
+      allowAbsoluteUrls: true
+    },
+    request: <ref *1> ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: true,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 135,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: true,
+      _header: 'POST /v1/api/send HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/json\r\n' +
+        'Authorization: YTEwYmRjM2YtZDMwNS00ZDZlLTgyOGQtZDZlZmE3OTRhY2ZjMDIxYjNhYjExYzQ3ODI3N2ZiMTcxYjA2MGMxMGU1Mzc=\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Content-Length: 135\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'x-vercel-id: dxb1::jsc8d-1771329120498-a2108508ef93\r\n' +
+        'x-invocation-id: dxb1::jsc8d-1771329120498-a2108508ef93\r\n' +
+        'Host: edge.ippanel.com\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/v1/api/send',
+      _ended: true,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'edge.ippanel.com',
+      protocol: 'https:',
+      _redirectable: [Writable],
+      Symbol(shapeMode): false,
+      Symbol(kCapture): false,
+      Symbol(kBytesWritten): 0,
+      Symbol(kNeedDrain): false,
+      Symbol(corked): 0,
+      Symbol(kChunkedBuffer): [],
+      Symbol(kChunkedLength): 0,
+      Symbol(kSocket): [TLSSocket],
+      Symbol(kOutHeaders): [Object: null prototype],
+      Symbol(errored): null,
+      Symbol(kHighWaterMark): 65536,
+      Symbol(kRejectNonStandardBodyWrites): false,
+      Symbol(kUniqueHeaders): null
+    },
+    data: '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link href="/cdn-cgi/assets/css/static-pages-2.6.0.css" rel="stylesheet"><link rel="icon" type="image/x-icon" href="//edge.ippanel.com/favicon.ico"><title></title></head><body><section class="error-section error-section--ltr error-section--hide" id="en"><div class="container"><div class="error-section__wrapper"><div class="error-section__information"><h1 class="error-section__title"><span class="error-section__status">Error 502</span><span class="error-section__splitter"> &nbsp;|&nbsp;</span><span class="error-section__reason">Bad Gateway</span></h1><h2 class="error-section__subtitle">Website server is temporarily inaccessible.</h2><div class="error-section__contents"><p class="error-section__content">Please try again in a few minutes.</p><p class="error-section__content">In case the problem still exists contact <b>edge.ippanel.com</b> support.</p></div></div><div class="error-section__image"><svg width="258" height="309" viewBox="0 0 258 309" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+      '<rect x="69" y="37.6074" width="132" height="175" rx="6" fill="#D1DBE8"/>\n' +
+      '<rect x="20" y="75.6074" width="130" height="173" rx="5" stroke="#B2C2D6" stroke-width="2" stroke-dasharray="6 6"/>\n' +
+      '<rect x="37" y="57.6074" width="139" height="175" rx="6" fill="#E9EDF5"/>\n' +
+      '<g opacity="0.9">\n' +
+      '<line x1="65.0336" y1="73.5302" x2="52.6785" y2="85.375" stroke="#91A4BC" stroke-width="5"/>\n' +
+      '<line x1="65.2769" y1="85.6412" x2="53.4321" y2="73.2861" stroke="#91A4BC" stroke-width="5"/>\n' +
+      '</g>\n' +
+      '<g opacity="0.9">\n' +
+      '<path d="M93.5 138.607C93.5 138.607 94 125.107 106.5 125.107C119 125.107 119.5 138.607 119.5 138.607" stroke="#91A4BC" stroke-width="2.5"/>\n' +
+      '<circle cx="131.5" cy="117.107" r="4.5" fill="#91A4BC"/>\n' +
+      '<circle cx="82.5" cy="117.107" r="4.5" fill="#91A4BC"/>\n' +
+      '</g>\n' +
+      '<line x1="56.5" y1="159.107" x2="156.5" y2="159.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="173.107" x2="156.5" y2="173.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="201.107" x2="156.5" y2="201.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="187.107" x2="156.5" y2="187.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="215.107" x2="156.5" y2="215.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<path fill-rule="evenodd" clip-rule="evenodd" d="M177.366 192C177.015 193.482 176.58 194.767 176.049 195.553C175.356 196.579 173.643 198.386 171.678 200.459C167.973 204.368 163.376 209.218 163.049 211.54C162.738 213.753 161.262 218.724 160.073 222.73C159.353 225.154 158.738 227.226 158.549 228.119C158.383 228.908 158.383 229.303 158.383 229.61C158.383 230.224 158.383 230.487 157.049 232.855C156.349 234.099 156.201 235.343 156.067 236.46C156.045 236.643 156.024 236.824 156 237H177.549C180.863 237 183.549 234.314 183.549 231V192H177.366Z" fill="#F4FAFF"/>\n' +
+      '<circle opacity="0.05" cx="187" cy="226" r="36" fill="#050505"/>\n' +
+      '<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M212.86 215.527L172.814 251.43C171.787 250.57 170.825 249.631 169.936 248.618L210.254 212.471C211.196 213.416 212.068 214.436 212.86 215.527Z" fill="white"/>\n' +
+      '<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M216.722 226.114C216.563 225.407 216.373 224.702 216.151 223.998C215.613 222.287 214.916 220.669 214.08 219.157L176.461 253.566C178.524 254.96 180.778 256.057 183.151 256.82L216.722 226.114Z" fill="white"/>\n' +
+      '<path d="M208.879 265.049L220.193 255.201L253.119 293.03C255.775 296.081 255.733 300.466 253.025 302.823L251.517 304.136C248.809 306.492 244.46 305.929 241.804 302.877L208.879 265.049Z" fill="#B2C2D6"/>\n' +
+      '<path d="M202.263 252.878L209.052 246.969L220.89 260.571L214.101 266.479L202.263 252.878Z" fill="#B2C2D6"/>\n' +
+      '<circle cx="187" cy="226" r="31.5" stroke="#B2C2D6" stroke-width="9"/>\n' +
+      '<g opacity="0.9">\n' +
+      '<path d="M31.3174 39.8878C32.0755 41.7677 31.1664 43.9057 29.2865 44.6638C27.4075 45.4216 25.2686 44.5128 24.5105 42.6329C23.7527 40.754 24.6624 38.6147 26.5414 37.8569C28.4213 37.0988 30.5596 38.0088 31.3174 39.8878Z" fill="#91A4BC"/>\n' +
+      '<path d="M13.3067 5.04939C6.39788 7.83562 3.04842 15.6866 5.84001 22.6087L5.8418 22.6132C6.59957 24.4922 8.73723 25.4004 10.6171 24.6423C12.497 23.8842 13.4051 21.7435 12.6469 19.8636C11.378 16.7172 12.8904 13.1313 16.0563 11.8545C19.2045 10.5849 22.7989 12.1134 24.0689 15.2624C25.3385 18.4106 23.8101 22.0051 20.6619 23.2747C18.782 24.0328 17.8732 26.1717 18.631 28.0507L20.1011 31.6962C20.8592 33.576 22.9973 34.4852 24.8771 33.7271C26.7561 32.9693 27.6662 30.8309 26.908 28.951L26.621 28.2393C31.2748 24.6344 33.1834 18.2394 30.8758 12.5173C28.0921 5.61468 20.2129 2.26423 13.3067 5.04939Z" fill="#91A4BC"/>\n' +
+      '</g>\n' +
+      '</svg>\n' +
+      '</div></div></div><div class="container"><div class="error-section__details"><div class="error-section__details-content"><span class="error-section__detail-content">Time: 2026-02-17 11:52:01 UTC</span><span class="error-section__details-mobile-view">|</span><span class="error-section__detail-content">Error Code: 502</span><span class="error-section__details-mobile-view">|</span><span class="error-section__detail-content">Server Code: 5700</span><span class="error-section__details-mobile-view">|</span><span class="error-section__detail-content">Domain: edge.ippanel.com</span><span class="error-section__details-mobile-view">|</span><span class="error-section__detail-content">Your IP: 3.235.225.1</span></div></div></div></section><section class="error-section error-section--hide" id="fa"><div class="container"><div class="error-section__wrapper"><div class="error-section__information"><h1 class="error-section__title"><span class="error-section__status">خطای ۵۰۲</span><span class="error-section__splitter"> &nbsp;|&nbsp;</span><span class="error-section__reason">Bad Gateway</span></h1><h2 class="error-section__subtitle">سرور وب‌سایت به طور موقت از دسترس خارج شده است.</h2><div class="error-section__contents"><p class="error-section__content">پس از چند دقیقه دوباره امتحان کنید.</p><p class="error-section__content">اگر مشکل رفع نشد با پشتیبانی <b>edge.ippanel.com</b> تماس بگیرید.</p></div></div><div class="error-section__image"><svg width="258" height="309" viewBox="0 0 258 309" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+      '<rect x="69" y="37.6074" width="132" height="175" rx="6" fill="#D1DBE8"/>\n' +
+      '<rect x="20" y="75.6074" width="130" height="173" rx="5" stroke="#B2C2D6" stroke-width="2" stroke-dasharray="6 6"/>\n' +
+      '<rect x="37" y="57.6074" width="139" height="175" rx="6" fill="#E9EDF5"/>\n' +
+      '<g opacity="0.9">\n' +
+      '<line x1="65.0336" y1="73.5302" x2="52.6785" y2="85.375" stroke="#91A4BC" stroke-width="5"/>\n' +
+      '<line x1="65.2769" y1="85.6412" x2="53.4321" y2="73.2861" stroke="#91A4BC" stroke-width="5"/>\n' +
+      '</g>\n' +
+      '<g opacity="0.9">\n' +
+      '<path d="M93.5 138.607C93.5 138.607 94 125.107 106.5 125.107C119 125.107 119.5 138.607 119.5 138.607" stroke="#91A4BC" stroke-width="2.5"/>\n' +
+      '<circle cx="131.5" cy="117.107" r="4.5" fill="#91A4BC"/>\n' +
+      '<circle cx="82.5" cy="117.107" r="4.5" fill="#91A4BC"/>\n' +
+      '</g>\n' +
+      '<line x1="56.5" y1="159.107" x2="156.5" y2="159.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="173.107" x2="156.5" y2="173.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="201.107" x2="156.5" y2="201.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="187.107" x2="156.5" y2="187.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<line x1="56.5" y1="215.107" x2="156.5" y2="215.107" stroke="#B2C2D6" stroke-width="5" stroke-linecap="round"/>\n' +
+      '<path fill-rule="evenodd" clip-rule="evenodd" d="M177.366 192C177.015 193.482 176.58 194.767 176.049 195.553C175.356 196.579 173.643 198.386 171.678 200.459C167.973 204.368 163.376 209.218 163.049 211.54C162.738 213.753 161.262 218.724 160.073 222.73C159.353 225.154 158.738 227.226 158.549 228.119C158.383 228.908 158.383 229.303 158.383 229.61C158.383 230.224 158.383 230.487 157.049 232.855C156.349 234.099 156.201 235.343 156.067 236.46C156.045 236.643 156.024 236.824 156 237H177.549C180.863 237 183.549 234.314 183.549 231V192H177.366Z" fill="#F4FAFF"/>\n' +
+      '<circle opacity="0.05" cx="187" cy="226" r="36" fill="#050505"/>\n' +
+      '<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M212.86 215.527L172.814 251.43C171.787 250.57 170.825 249.631 169.936 248.618L210.254 212.471C211.196 213.416 212.068 214.436 212.86 215.527Z" fill="white"/>\n' +
+      '<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M216.722 226.114C216.563 225.407 216.373 224.702 216.151 223.998C215.613 222.287 214.916 220.669 214.08 219.157L176.461 253.566C178.524 254.96 180.778 256.057 183.151 256.82L216.722 226.114Z" fill="white"/>\n' +
+      '<path d="M208.879 265.049L220.193 255.201L253.119 293.03C255.775 296.081 255.733 300.466 253.025 302.823L251.517 304.136C248.809 306.492 244.46 305.929 241.804 302.877L208.879 265.049Z" fill="#B2C2D6"/>\n' +
+      '<path d="M202.263 252.878L209.052 246.969L220.89 260.571L214.101 266.479L202.263 252.878Z" fill="#B2C2D6"/>\n' +
+      '<circle cx="187" cy="226" r="31.5" stroke="#B2C2D6" stroke-width="9"/>\n' +
+      '<g opacity="0.9">\n' +
+      '<path d="M31.3174 39.8878C32.0755 41.7677 31.1664 43.9057 29.2865 44.6638C27.4075 45.4216 25.2686 44.5128 24.5105 42.6329C23.7527 40.754 24.6624 38.6147 26.5414 37.8569C28.4213 37.0988 30.5596 38.0088 31.3174 39.8878Z" fill="#91A4BC"/>\n' +
+      '<path d="M13.3067 5.04939C6.39788 7.83562 3.04842 15.6866 5.84001 22.6087L5.8418 22.6132C6.59957 24.4922 8.73723 25.4004 10.6171 24.6423C12.497 23.8842 13.4051 21.7435 12.6469 19.8636C11.378 16.7172 12.8904 13.1313 16.0563 11.8545C19.2045 10.5849 22.7989 12.1134 24.0689 15.2624C25.3385 18.4106 23.8101 22.0051 20.6619 23.2747C18.782 24.0328 17.8732 26.1717 18.631 28.0507L20.1011 31.6962C20.8592 33.576 22.9973 34.4852 24.8771 33.7271C26.7561 32.9693 27.6662 30.8309 26.908 28.951L26.621 28.2393C31.2748 24.6344 33.1834 18.2394 30.8758 12.5173C28.0921 5.61468 20.2129 2.26423 13.3067 5.04939'... 833 more characters
+  },
+  status: 502
+}

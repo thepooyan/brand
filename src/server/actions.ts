@@ -27,7 +27,7 @@ export const sendOTP = async (number: string):Response<string> => {
     } 
 
     await Promise.all([
-      sendOtpSMS(newOtp, convertNumberToE164(number)),
+      // sendOtpSMS(newOtp, convertNumberToE164(number)),
       db.delete(otpTable).where(eq(otpTable.number, number)),
       db.insert(otpTable).values(value)
     ])
