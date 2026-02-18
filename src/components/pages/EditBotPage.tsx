@@ -14,6 +14,7 @@ import { editBot } from "~/server/mutation"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
 import ColorPicker from "../ui/color-picker"
+import { ImageUploader } from "../parts/ImageUploader"
 
 interface p {
   bot: I_Bot
@@ -84,6 +85,10 @@ const EditBotPage = ({bot}:p) => {
           <Seprator>
             رنگ نوشته (معمولا سفید یا سیاه)
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setStore("color_foreground", val)}/>
+          </Seprator>
+          <Seprator>
+            لوگو
+            <ImageUploader/>
           </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
