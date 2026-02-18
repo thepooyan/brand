@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { createSignal, Show } from "solid-js"
 import { ChangeEvent } from "~/lib/interface"
 import { FiImage, FiLoader, FiUpload, FiX } from "solid-icons/fi"
-import { uploadToS3 } from "~/server/actions"
+import { deleteFileFromS3, uploadToS3 } from "~/server/actions"
 import { callModal } from "../layout/Modal"
 
 type UploadState = "idle" | "loading" | "preview"
@@ -34,7 +34,8 @@ export function ImageUploader({ name }:props) {
       const url = await uploadToS3(file)
       reader.readAsDataURL(file)
       setUploadedUrl(url)
-    } catch {
+    } catch(e) {
+      console.log(e)
       callModal.fail("متاسفانه آپلود فایل با مشکل مواجه شد. لطفا مجددا تلاش کنید.")
       setState("idle")
     }
@@ -45,11 +46,19 @@ export function ImageUploader({ name }:props) {
     if (file) processFile(file)
   }
 
-  const handleRemove = () => {
-    setState("idle")
-    setPreview(null)
-    setFileName("")
-    if (inputRef) inputRef.value = ""
+  const handleRemove = async () => {
+    const url = uploadedUrl()
+    if (!url) return 
+    try {
+      // await deleteFileFromS3(url)
+      setState("idle")
+      setPreview(null)
+      setFileName("")
+      if (inputRef) inputRef.value = ""
+    } catch(e) {
+      console.log(e)
+      callModal.fail("حذف تصویر موفقیت آمیز نبود. لطفا مجددا تلاش کنید.")
+    }
   }
 
   const handleDragOver = (e: DragEvent) => {
