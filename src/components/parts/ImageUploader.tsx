@@ -3,20 +3,22 @@ import { Button } from "@/components/ui/button"
 import { createSignal, Show } from "solid-js"
 import { ChangeEvent } from "~/lib/interface"
 import { FiImage, FiLoader, FiUpload, FiX } from "solid-icons/fi"
-import { deleteFileFromS3, uploadToS3 } from "~/server/actions"
+import { uploadToS3 } from "~/server/actions"
 import { callModal } from "../layout/Modal"
 
 type UploadState = "idle" | "loading" | "preview"
 
 interface props {
   name?: string
+  onChange?: (value: string) => void
+  initialValue?: string
 }
-export function ImageUploader({ name }:props) {
-  const [state, setState] = createSignal<UploadState>("idle")
-  const [preview, setPreview] = createSignal<string | null>(null)
+export function ImageUploader({ name, onChange, initialValue }:props) {
+  const [state, setState] = createSignal<UploadState>(initialValue ? "preview" : "idle")
+  const [preview, setPreview] = createSignal<string | null>(initialValue || null)
   const [fileName, setFileName] = createSignal<string>("")
   const [isDragging, setIsDragging] = createSignal(false)
-  const [uploadedUrl, setUploadedUrl] = createSignal<string | null>(null)
+  const [uploadedUrl, setUploadedUrl] = createSignal<string | null>(initialValue || null)
   let inputRef!:HTMLInputElement
 
   const processFile = async (file: File) => {
@@ -34,6 +36,7 @@ export function ImageUploader({ name }:props) {
       const url = await uploadToS3(file)
       reader.readAsDataURL(file)
       setUploadedUrl(url)
+      onChange && onChange(url)
     } catch(e) {
       console.log(e)
       callModal.fail("متاسفانه آپلود فایل با مشکل مواجه شد. لطفا مجددا تلاش کنید.")
@@ -54,6 +57,8 @@ export function ImageUploader({ name }:props) {
       setState("idle")
       setPreview(null)
       setFileName("")
+      setUploadedUrl("")
+      onChange && onChange("")
       if (inputRef) inputRef.value = ""
     } catch(e) {
       console.log(e)

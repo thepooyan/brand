@@ -88,7 +88,7 @@ const EditBotPage = ({bot}:p) => {
           </Seprator>
           <Seprator className="row-start-2 row-span-4 col-start-3">
             لوگو
-            <ImageUploader/>
+            <ImageUploader initialValue={bot.logo || undefined} onChange={val => setStore("logo", val)}/>
           </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
         </div>
