@@ -100,9 +100,9 @@ export function ImageUploader() {
             </div>
             <div class="flex flex-col items-center gap-1">
               <p class="text-sm font-medium text-foreground">
-                Drop an image here
+                تصویر خود را اینجا رها کنید
               </p>
-              <p class="text-xs">PNG, JPG, GIF, WebP up to 10MB</p>
+              <p class="text-xs">PNG, JPG, GIF, WebP</p>
             </div>
           </div>
         )}
@@ -113,7 +113,7 @@ export function ImageUploader() {
             <FiLoader class="size-8 animate-spin text-muted-foreground" />
             <div class="flex flex-col items-center gap-1">
               <p class="text-sm font-medium text-foreground">
-                Processing...
+                دل حال پردازش...
               </p>
               <p class="text-xs text-muted-foreground truncate max-w-[200px]">
                 {fileName()}
@@ -142,7 +142,7 @@ export function ImageUploader() {
                 class="gap-1.5"
               >
                 <FiX class="size-3.5" />
-                Remove
+                 حذف
               </Button>
             </div>
           </>
@@ -159,14 +159,14 @@ export function ImageUploader() {
               onClick={handleRemove}
             >
               <FiX class="size-4" />
-              Remove
+              حذف
             </Button>
             <Button
               class="flex-1"
               onClick={() => inputRef.click()}
             >
               <FiUpload class="size-4" />
-              Replace
+              انتخاب مجدد
             </Button>
           </>
         ) : (
@@ -178,12 +178,12 @@ export function ImageUploader() {
             {state() === "loading" ? (
               <>
                 <FiLoader class="size-4 animate-spin" />
-                Uploading...
+                  دل حال آپلود...
               </>
             ) : (
               <>
                 <FiUpload class="size-4" />
-                Upload Image
+                آپلود تصویر
               </>
             )}
           </Button>
