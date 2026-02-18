@@ -52,6 +52,7 @@ export default function Component() {
               variant="outline"
               size="sm"
               class="gap-2 border-primary-700 text-primary-300 hover:bg-primary-950 hover:text-primary-200 bg-gray-900"
+              as={TA} href="/docs/chat-bot/telegram"
             >
               <FiBookOpen class="w-4 h-4" />
               آموزش استفاده در تلگرام
@@ -60,6 +61,7 @@ export default function Component() {
               variant="outline"
               size="sm"
               class="gap-2 border-primary-700 text-primary-300 hover:bg-primary-950 hover:text-primary-200 bg-gray-900"
+              as={TA} href="/docs/chat-bot/widget"
             >
               <FiGlobe class="w-4 h-4" />
               آموزش استفاده به عنوان ویجت
@@ -68,6 +70,7 @@ export default function Component() {
               variant="outline"
               size="sm"
               class="gap-2 border-primary-700 text-primary-300 hover:bg-primary-950 hover:text-primary-200 bg-gray-900"
+              as={TA} href="/docs/chat-bot/api"
             >
               <FiCode class="w-4 h-4" />
               API
