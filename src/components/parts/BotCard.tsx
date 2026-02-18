@@ -34,7 +34,7 @@ const BotCard = ({bot}:props) => {
   }
 
   const getToken = () => {
-    callModal.prompt("توکن جدید ایجاد شود؟ (با تولید توکن جدید توکن های قبل از بین خواهند رفت)")
+    callModal.prompt("توکن جدید ایجاد شود؟ (با تولید توکن جدید توکن قبل از بین خواهد رفت)")
     .yes( async () => {
         const result = await getNewToken(bot.id)
         if (result.ok) {
