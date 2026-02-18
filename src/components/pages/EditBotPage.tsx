@@ -78,15 +78,15 @@ const EditBotPage = ({bot}:p) => {
               onchange={(e:string) => setStore("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
           </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما"/>
-          <Seprator>
+          <Seprator className="">
             رنگ سازمانی
             <ColorPicker initialValue={bot.color} onChange={val => setStore("color", val)}/>
           </Seprator>
-          <Seprator>
+          <Seprator className="">
             رنگ نوشته (معمولا سفید یا سیاه)
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setStore("color_foreground", val)}/>
           </Seprator>
-          <Seprator>
+          <Seprator className="row-start-2 row-span-4 col-start-3">
             لوگو
             <ImageUploader/>
           </Seprator>
