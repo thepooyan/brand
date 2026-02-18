@@ -1,19 +1,25 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { createSignal } from "solid-js"
+import { createSignal, Show } from "solid-js"
 import { ChangeEvent } from "~/lib/interface"
 import { FiImage, FiLoader, FiUpload, FiX } from "solid-icons/fi"
+import { uploadToS3 } from "~/server/actions"
+import { callModal } from "../layout/Modal"
 
 type UploadState = "idle" | "loading" | "preview"
 
-export function ImageUploader() {
+interface props {
+  name?: string
+}
+export function ImageUploader({ name }:props) {
   const [state, setState] = createSignal<UploadState>("idle")
   const [preview, setPreview] = createSignal<string | null>(null)
   const [fileName, setFileName] = createSignal<string>("")
   const [isDragging, setIsDragging] = createSignal(false)
+  const [uploadedUrl, setUploadedUrl] = createSignal<string | null>(null)
   let inputRef!:HTMLInputElement
 
-  const processFile = (file: File) => {
+  const processFile = async (file: File) => {
     if (!file.type.startsWith("image/")) return
 
     setState("loading")
@@ -21,13 +27,17 @@ export function ImageUploader() {
 
     const reader = new FileReader()
     reader.onload = (e) => {
-      // Simulate a slight delay for loading state visibility
-      setTimeout(() => {
-        setPreview(e.target?.result as string)
-        setState("preview")
-      }, 800)
+      setPreview(e.target?.result as string)
+      setState("preview")
     }
-    reader.readAsDataURL(file)
+    try {
+      const url = await uploadToS3(file)
+      reader.readAsDataURL(file)
+      setUploadedUrl(url)
+    } catch {
+      callModal.fail("متاسفانه آپلود فایل با مشکل مواجه شد. لطفا مجددا تلاش کنید.")
+      setState("idle")
+    }
   }
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +71,15 @@ export function ImageUploader() {
 
   return (
     <div class="flex flex-col items-center gap-4 w-full max-w-sm">
+      <Show when={uploadedUrl()}>
+        {v => 
+          <input
+            type="hidden"
+            name={name}
+            value={v()}
+          />
+        }
+      </Show>
       <input
         ref={inputRef}
         type="file"
