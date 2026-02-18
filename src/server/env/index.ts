@@ -12,5 +12,5 @@ export const getEnv = () => {
   return env
 }
 
-export const envPublic = envSchemaPublic.parse(import.meta.env)
+export const envPublic = envSchemaPublic.parse(import.meta.env || {})
 //todo: remove VITE from public env
