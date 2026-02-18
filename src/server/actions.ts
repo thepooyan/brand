@@ -11,9 +11,9 @@ import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { s3 } from "~/s3"
-import { PutObjectCommand } from "@aws-sdk/client-s3"
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3"
 import {  getEnv } from "./env"
-import { convertNumberToE164, sendOtpSMS } from "./sms"
+// import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
@@ -26,11 +26,10 @@ export const sendOTP = async (number: string):Response<string> => {
       otp: newOtp
     } 
 
-    await Promise.all([
-      // sendOtpSMS(newOtp, convertNumberToE164(number)),
-      db.delete(otpTable).where(eq(otpTable.number, number)),
-      db.insert(otpTable).values(value)
-    ])
+    await db.transaction(async (tx) => {
+      await tx.delete(otpTable).where(eq(otpTable.number, number)),
+      await tx.insert(otpTable).values(value)
+    })
     
     return {ok: true, data: newOtp}
   })
@@ -156,4 +155,9 @@ export async function uploadToS3(file: File) {
   }))
 
   return `https://${getEnv().BUCKET_URL}/${key}`
+}
+
+export async function deleteFileFromS3(key: string) {
+  const cmd = new DeleteObjectCommand({ Bucket: getEnv().BUCKET_URL, Key: key })
+  await s3.send(cmd)
 }
