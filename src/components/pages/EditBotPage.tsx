@@ -15,6 +15,7 @@ import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
 import ColorPicker from "../ui/color-picker"
 import { ImageUploader } from "../parts/ImageUploader"
+import { Dynamic } from "solid-js/web"
 
 interface p {
   bot: I_Bot
@@ -38,10 +39,13 @@ const EditBotPage = ({bot}:p) => {
       <Comp placeholder={name} value={store[key] || undefined} onchange={(e:ChangeEvent<HTMLInputElement>) => setStore(key, e.currentTarget.value)}/>
     </Seprator>
   }
-  const Seprator:ParentComponent<{className?: string}> = ({children, className}) =>
-    <label class={cn("flex gap-2 flex-col", className)}>
-    {children}
-  </label>
+  const Seprator:ParentComponent<{className?: string, as?: Component | "div"}> = ({children, className, as}) => {
+    return (
+      <Dynamic component={as ? as : "label"} class={cn("flex gap-2 flex-col", className)}>
+        {children}
+      </Dynamic>
+    )
+  }
   
   const handleSubmit = async () => {
     setLoading(true)
@@ -86,7 +90,7 @@ const EditBotPage = ({bot}:p) => {
             رنگ نوشته (معمولا سفید یا سیاه)
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setStore("color_foreground", val)}/>
           </Seprator>
-          <Seprator className="row-start-2 row-span-4 col-start-3">
+          <Seprator className="row-start-2 row-span-4 col-start-3" as="div">
             لوگو
             <ImageUploader initialValue={bot.logo || undefined} onChange={val => setStore("logo", val)}/>
           </Seprator>
