@@ -65,7 +65,7 @@ const EditBotPage = ({bot}:p) => {
       <form class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container"
       onsubmit={(e:SubmitEvent) => {e.preventDefault(); handleSubmit()} }>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <In key="botName" name="نام ربات"/>
           <In key="businessName" name="نام بیزنس"/>
           <Seprator>
@@ -90,11 +90,11 @@ const EditBotPage = ({bot}:p) => {
             رنگ نوشته (معمولا سفید یا سیاه)
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setStore("color_foreground", val)}/>
           </Seprator>
-          <Seprator className="row-start-2 row-span-4 col-start-3" as="div">
+          <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو
             <ImageUploader initialValue={bot.logo || undefined} onChange={val => setStore("logo", val)}/>
           </Seprator>
-          <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="col-span-3"/>
+          <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3"/>
         </div>
         <p class="text-muted-foreground text-sm">
           هرچیزی که ربات باید بداند را در قسمت بالا وارد کنید!
