@@ -7,8 +7,8 @@ import {QueryClient, QueryClientProvider} from "@tanstack/solid-query"
 import { queryConfig } from "./lib/queries";
 import FallbackPage from "./components/pages/FallbackPage";
 import {Meta, MetaProvider, Title} from "@solidjs/meta"
-import { description, nameEn } from "../config/config";
 import ErrorPage from "./components/pages/ErrorPage";
+import { description, name, nameEn } from "../config/config";
 
 export default function App() {
 
@@ -21,7 +21,7 @@ export default function App() {
           <Router
             root={props => (
               <MetaProvider>
-                <Title>{nameEn}</Title>
+                <Title> {name} | {nameEn} </Title>
                 <Meta name="description" content={description}/>
                 <ErrorBoundary fallback={e=> <ErrorPage error={e}/>}>
                   <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
