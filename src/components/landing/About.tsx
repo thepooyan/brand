@@ -10,7 +10,7 @@ const About = () => {
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
-              <h1 class="text-3xl md:text-4xl font-bold " > fhh </h1>
+              {/* <h1 class="text-3xl md:text-4xl font-bold " > fhh </h1> */}
               <h2 class="text-xl mb-4 text-muted-foreground">درباره {name}</h2>
               <p class="text-muted-foreground mb-6">
 در دنیای هوشمند امروزی که هر لحظه در حال تغییر و رشد است، هوش بان همراه شماست تا با تکیه بر قدرت هوش مصنوعی، مسیر رشد واقعی کسب و کار را هموار کند.
