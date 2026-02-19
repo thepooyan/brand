@@ -1,3 +1,12 @@
+for seo:
+
+Google Search Console
+Bing Webmaster Tools
+Screaming Frog (crawler)
+Ahrefs / SEMrush (analysis)
+Schema generators
+Static sitemap generators
+Framework SEO libraries
 
 expose useChat as node package 
 useChat error handling is buggy
