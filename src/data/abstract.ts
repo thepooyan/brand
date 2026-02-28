@@ -15,7 +15,7 @@ import {
   FiTrendingUp,
   FiCamera
 } from "solid-icons/fi";
-import { featureEnabled } from "~/server/env2/public";
+import { featureEnabled } from "~/server/env2/shared-env";
 
 export const integrationOptions = [
   {
