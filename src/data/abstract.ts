@@ -15,7 +15,7 @@ import {
   FiTrendingUp,
   FiCamera
 } from "solid-icons/fi";
-import { featureEnabled } from "~/server/env/features";
+import { featureEnabled } from "~/server/env2/public";
 
 export const integrationOptions = [
   {
@@ -83,7 +83,7 @@ export const services = [
     popular: false,
     demoLink: "Chat-Bot/Demo",
     link: "Chat-Bot",
-    comingSoon: true
+    comingSoon: !featureEnabled(f => f.smartCustomerAssistant)
   },
   {
     id: "business-agent",
