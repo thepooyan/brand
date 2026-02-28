@@ -5,7 +5,8 @@
     "dev": "vinxi dev --host",
     "build": "vinxi build",
     "start": "vinxi start",
-    "db": "bunx drizzle-kit push",
+    "pushdb:local": "drizzle-kit push --config drizzle.config.local.ts",
+    "pushdb:prod": "drizzle-kit push --config drizzle.config.ts",
     "env": "bun src/server/env/generateEnv.ts",
     "publish": "git checkout production && git pull && git merge master && git push && git checkout master"
   },
