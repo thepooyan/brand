@@ -10,6 +10,7 @@ export const sharedEnvSchema = z.object({
   .transform(v => v?.split(",").filter(Boolean) || []).pipe(z.array(z.nativeEnum(Features))),
 })
 
+export type sharedEnv = z.infer<typeof sharedEnvSchema>;
 export const getSharedEnv = () => sharedEnvSchema.parse(import.meta.env)
 
 type featureSelector = (f: typeof Features) => Features

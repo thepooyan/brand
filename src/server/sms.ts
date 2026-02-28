@@ -1,13 +1,13 @@
 import axios from "axios"
-import { getEnv } from "./env"
 import "@/lib/server-only"
+import { privateEnv } from "./env/private-env"
 
 const baseUrl = "https://edge.ippanel.com/v1"
 
 const smsBase = axios.create({
   baseURL:baseUrl,
   headers: {
-    Authorization: getEnv().SMS_PANEL
+    Authorization: privateEnv.SMS_PANEL
   }
 })
 

@@ -12,7 +12,7 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { s3 } from "~/s3"
 import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3"
-import {  getEnv } from "./env"
+import { privateEnv } from "./env/private-env"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const sendOTP = async (number: string):Response<string> => {
@@ -148,16 +148,16 @@ export async function uploadToS3(file: File) {
   const key = `Hooshban/${Date.now()}-${file.name}`
 
   await s3.send(new PutObjectCommand({
-    Bucket: getEnv().BUCKET_NAME!,
+    Bucket: privateEnv.BUCKET_NAME!,
     Key: key,
     Body: buffer,
     ContentType: file.type,
   }))
 
-  return `https://${getEnv().BUCKET_URL}/${key}`
+  return `https://${privateEnv.BUCKET_URL}/${key}`
 }
 
 export async function deleteFileFromS3(key: string) {
-  const cmd = new DeleteObjectCommand({ Bucket: getEnv().BUCKET_URL, Key: key })
+  const cmd = new DeleteObjectCommand({ Bucket: privateEnv.BUCKET_URL, Key: key })
   await s3.send(cmd)
 }

@@ -1,13 +1,13 @@
 import { S3Client } from "@aws-sdk/client-s3"
-import {  getEnv } from "~/server/env"
+import { privateEnv } from "~/server/env/private-env"
 
 export const s3 = new S3Client({
-  endpoint: `https://${getEnv().BUCKET_URL}`,
+  endpoint: `https://${privateEnv.BUCKET_URL}`,
   region: "a",
   forcePathStyle: true,
   credentials: {
-    accessKeyId: getEnv().BUCKET_KEY,
-    secretAccessKey: getEnv().BUCKET_SECRET
+    accessKeyId: privateEnv.BUCKET_KEY,
+    secretAccessKey: privateEnv.BUCKET_SECRET
   }
 })
 

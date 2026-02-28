@@ -1,6 +1,6 @@
 import { useSession } from "vinxi/http";
 import { usersTable } from "~/db/schema";
-import {  getEnv } from "~/server/env";
+import {  privateEnv } from "~/server/env/private-env";
 
 export enum ROLES {
   USER,
@@ -14,7 +14,7 @@ type SessionData = {
 async function useAuthSession() {
   "use server";
   const session = await useSession<SessionData>({
-    password: getEnv().SESSION_SECRET as string,
+    password: privateEnv.SESSION_SECRET as string,
     name: "auth",
   });
 

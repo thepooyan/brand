@@ -8,7 +8,6 @@ import { cn } from "~/lib/utils";
 import { FiArrowRight } from "solid-icons/fi";
 import { name } from "../../../../../config/config";
 import { Link } from "@solidjs/meta";
-import { featureEnabled } from "~/server/env2/public";
 
 const AI = () => {
   return (

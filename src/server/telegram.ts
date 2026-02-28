@@ -3,10 +3,10 @@
 import axios from "axios"
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
-import {  getEnv } from "~/server/env"
+import { privateEnv } from "./env/private-env"
 
-const adminToken = getEnv().ADMIN_BOT 
-const supportToken = getEnv().SUPPORT_BOT 
+const adminToken = privateEnv.ADMIN_BOT 
+const supportToken = privateEnv.SUPPORT_BOT 
 
 const send = async (botToken: string, text: string, chat_id: string | number) => {
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { Features } from "./features";
+import "@/lib/server-only"
 
-export const envSchema = z.object({
+export const privateEnvSchema = z.object({
   SESSION_SECRET: z.string().min(1),
   TURSO_DATABASE_URL: z.string().min(1),
   TURSO_AUTH_TOKEN: z.string().min(1),
@@ -15,7 +15,5 @@ export const envSchema = z.object({
   SMS_PANEL: z.string().min(1),
 });
 
-export const envSchemaPublic = z.object({
-  VITE_features: z.string().default("").optional()
-  .transform(v => v?.split(",").filter(Boolean) || []).pipe(z.array(z.nativeEnum(Features))),
-})
+export type PrivateEnv = z.infer<typeof privateEnvSchema>;
+export const privateEnv: PrivateEnv = privateEnvSchema.parse(process.env);
