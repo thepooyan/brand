@@ -1,7 +1,6 @@
 import axios from "axios"
 import { getEnv } from "./env"
-import { isServer } from "solid-js/web";
-if (!isServer) throw new Error("This module is server only");
+import "@/lib/server-only"
 
 const baseUrl = "https://edge.ippanel.com/v1"
 
