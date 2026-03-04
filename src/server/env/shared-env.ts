@@ -3,7 +3,8 @@ import z from "zod"
 export enum Features {
   smartCustomerAssistant = "smartCustomerAssistant",
   something = "something",
-  enamad = "enamad"
+  enamad = "enamad",
+  gtm = "gtm"
 }
 
 export const sharedEnvSchema = z.object({
