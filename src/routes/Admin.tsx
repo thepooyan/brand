@@ -1,7 +1,21 @@
 import { Button } from "@/components/ui/button"
-import { FiArrowLeft, FiFileText } from "solid-icons/fi"
+import { FiArrowLeft, FiFileText, FiImage } from "solid-icons/fi"
+import { For } from "solid-js"
 import TA from "~/components/parts/TA"
 import { getAdminUser } from "~/lib/signal"
+
+const adminMenu = [
+  {
+    label: "بلاگ",
+    href: "BlogManagment",
+    icon: FiFileText
+  },
+  {
+    label: "مدیا",
+    href: "Media",
+    icon: FiImage
+  },
+]
 
 export default function AdminLayout({children}:{children: Element}) {
   getAdminUser()
@@ -34,14 +48,17 @@ export default function AdminLayout({children}:{children: Element}) {
         <aside class="w-64 border-l border-border bg-card">
           <nav class="p-4">
             <div class="space-y-1">
-              <TA
-                href="BlogManagment"
-                activeClass="!bg-primary text-primary-foreground"
-                
-                class={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors text-muted-foreground hover:bg-accent hover:text-accent-foreground`}>
-                <FiFileText class="h-5 w-5" />
-                بلاگ
-              </TA>
+                <For each={adminMenu}>
+                  {i => 
+                    <TA
+                      href={i.href}
+                      activeClass="!bg-primary text-primary-foreground"
+                      
+                      class={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors text-muted-foreground hover:bg-accent hover:text-accent-foreground`}>
+                      <i.icon class="h-5 w-5" />
+                      {i.label}
+                    </TA>}
+                </For>
             </div>
           </nav>
         </aside>
