@@ -1,4 +1,5 @@
 "use server"
+import "@/lib/server-only";
 import { adminsTable, chatbotTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
@@ -7,7 +8,7 @@ import {ToneValue} from "~/lib/planUtil"
 
 import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
-import { ROLES } from "~/lib/session";
+import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
 
 type ErrorResponse = { ok: false; msg: string }
@@ -62,3 +63,8 @@ export const findoutRole = async (num: string) => {
 export const generateToken = () => {
   return crypto.randomBytes(tokenLength/2).toString('hex')
 } 
+
+export const isAdminLoggedIn = async () => {
+  let user = await getAuthSession()
+  return user?.role === ROLES.ADMIN
+}

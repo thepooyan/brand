@@ -1,13 +1,15 @@
 "use server"
 
-import { privateEnv } from "~/server/env/private-env"
-import { deleteFileFromS3, listFiles } from "."
+import { deleteFileFromS3, listS3Files,  } from "."
+import { isAdminLoggedIn } from "~/server/serverUtil"
 
 
 export const getAllFiles = async () => {
-  return await listFiles(privateEnv.BUCKET_NAME, "hooshbaan")
+  if (!await isAdminLoggedIn()) return null
+  return await listS3Files()
 }
 
-export const deleteFile = async (file: string) => {
-  return deleteFileFromS3(privateEnv.BUCKET_NAME, file)
+export const deleteFile = async (filename: string) => {
+  if (!await isAdminLoggedIn()) return null
+  return deleteFileFromS3(filename)
 }
