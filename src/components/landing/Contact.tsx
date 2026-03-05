@@ -7,6 +7,11 @@ import { messagesTable } from "~/db/schema"
 import { validateEmail, validateMobileNumber } from "~/lib/validation"
 import { telegram } from "~/server/telegram"
 import { dump } from "js-yaml"
+import ContactInfo from "../parts/ContactInfo"
+import { Button } from "../ui/button"
+import { ImTelegram, ImWhatsapp } from "solid-icons/im"
+import { FiPhone } from "solid-icons/fi"
+import { support } from "../../../config/config"
 
 const contactAction = action(async (formData:FormData) => {
   "use server"
@@ -66,6 +71,29 @@ export const Contact = () => {
               آماده تحول کسب و کار خود هستید؟ همین امروز با ما تماس بگیرید تا در مورد چگونگی کمک به شما برای رسیدن به
               اهدافتان صحبت کنیم.
             </p>
+          </div>
+          <div class="flex gap-2 justify-center mt-5 mb-15 ">
+            <Button variant="secondary"
+              as="a"
+              href={`tel:${support.mobile}`}
+            >
+              تلفن
+              <FiPhone/>
+            </Button>
+            <Button variant="secondary" 
+              as="a"
+              href={support.telegram}
+            >
+              تلگرام
+              <ImTelegram class="text-blue-500"/>
+            </Button>
+            <Button variant="secondary" 
+              as="a"
+              href={`https://wa.me/${support.whatsapp}`}
+            >
+              واتساپ
+              <ImWhatsapp class="text-green-500"/>
+            </Button>
           </div>
           <div class="max-w-2xl mx-auto">
             <form class="space-y-6" method="post" action={contactAction} ref={formRef}>

@@ -19,7 +19,6 @@ expland author => add authors table
 handle error in usechat
 fix mini chat
 order status page
-update contact us page
 rate limit s3 uploader for normal users
 
 cron cleaner for otp
