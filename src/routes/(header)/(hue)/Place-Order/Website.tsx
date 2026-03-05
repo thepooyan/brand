@@ -1,9 +1,9 @@
-import { FiArrowRight, FiCheck, FiCode } from "solid-icons/fi"
-import { createEffect, createSignal, onMount } from "solid-js"
+import { FiArrowRight, FiCode } from "solid-icons/fi"
+import { createEffect, createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import TA from '~/components/parts/TA'
 import RedStar from '~/components/parts/RedStar'
-import { useNavigate, useSearchParams } from "@solidjs/router"
+import { useSearchParams } from "@solidjs/router"
 import { callModal } from '~/components/layout/Modal'
 import Spinner from '~/components/parts/Spinner'
 import { getUser } from "~/lib/signal"
@@ -15,7 +15,6 @@ export default function Website() {
 
   let user = getUser()
   let [p] = useSearchParams()
-  const nv = useNavigate()
 
   createEffect(() => {
     setFormData(prev => ({...prev,
