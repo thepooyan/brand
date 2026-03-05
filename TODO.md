@@ -20,6 +20,7 @@ handle error in usechat
 fix mini chat
 order status page
 update contact us page
+rate limit s3 uploader for normal users
 
 cron cleaner for otp
 check why view transition is not reliable (login and home button)

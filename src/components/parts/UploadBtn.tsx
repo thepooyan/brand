@@ -1,9 +1,9 @@
 import { FiUpload } from "solid-icons/fi"
 import { Button } from "../ui/button"
-import { uploadToS3 } from "~/server/actions"
 import { callModal } from "../layout/Modal"
 import { createEffect, createSignal } from "solid-js"
 import Spinner from "./Spinner"
+import { uploadFileToS3 } from "~/s3/s3Actions"
 
 interface p {
   onUploaded: (url: string) => void
@@ -22,7 +22,8 @@ const UploadBtn = ({onUploaded, setIsUploading}:p) => {
         if (!files || files.length === 0) return
         try {
           setLoading(true)
-          let result = await uploadToS3(files[0])
+          let result = await uploadFileToS3(files[0])
+          if (!result) return callModal.fail("مشکلی در آپلود فایل پیش آمد. لطفا مجددا تلاش کنید.")
           setLoading(false)
           onUploaded(result)
         } catch(_) {

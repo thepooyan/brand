@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button"
 import { createSignal, Show } from "solid-js"
 import { ChangeEvent } from "~/lib/interface"
 import { FiImage, FiLoader, FiUpload, FiX } from "solid-icons/fi"
-import { uploadToS3 } from "~/server/actions"
 import { callModal } from "../layout/Modal"
+import { uploadFileToS3 } from "~/s3/s3Actions"
 
 type UploadState = "idle" | "loading" | "preview"
 
@@ -33,7 +33,7 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
       setState("preview")
     }
     try {
-      const url = await uploadToS3(file)
+      const url = await uploadFileToS3(file)
       reader.readAsDataURL(file)
       setUploadedUrl(url)
       onChange && onChange(url)
