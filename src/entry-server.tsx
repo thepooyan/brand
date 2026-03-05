@@ -2,7 +2,7 @@
 import { createHandler, StartServer } from "@solidjs/start/server";
 import TagManagerHead from "./components/tagManager/TagManagerHead";
 import TagManagerBody from "./components/tagManager/TagManagerBody";
-import { featureEnabled } from "./server/env/shared-env";
+import { isProd } from "./server/env/private-env";
 
 export default createHandler(() => (
   <StartServer
@@ -12,12 +12,12 @@ export default createHandler(() => (
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.png" />
-          {featureEnabled(f => f.gtm) && 
+          {isProd && 
           <TagManagerHead/>}
           {assets}
         </head>
         <body class="dark">
-          {featureEnabled(f => f.gtm) && 
+          {isProd && 
           <TagManagerBody/>}
           <div id="app">{children}</div>
           {scripts}

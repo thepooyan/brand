@@ -5,7 +5,7 @@ import Enamad from "../parts/Enamad"
 import { Show } from "solid-js"
 import { ImTelegram, ImWhatsapp } from "solid-icons/im"
 import Samandehi from "../parts/Samandehi"
-import { featureEnabled } from "~/server/env/shared-env"
+import { isProd } from "~/server/env/private-env"
 
 const Footer = () => {
   return (
@@ -95,7 +95,7 @@ const Footer = () => {
               </ul>
             </div>
             <div class="space-y-2 flex flex-col items-center gap-5">
-              {featureEnabled(f => f.enamad) && <>
+              {isProd && <>
                 <Enamad/>
                 <Samandehi/>
               </> || "Enamad and Samandehi"}
