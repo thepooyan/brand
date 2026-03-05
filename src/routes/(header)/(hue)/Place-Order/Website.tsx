@@ -1,5 +1,5 @@
-import { FiArrowRight, FiCode } from "solid-icons/fi"
-import { createEffect, createSignal } from "solid-js"
+import { FiArrowRight, FiCheck, FiCode } from "solid-icons/fi"
+import { createEffect, createSignal, onMount } from "solid-js"
 import { Button } from "~/components/ui/button"
 import TA from '~/components/parts/TA'
 import RedStar from '~/components/parts/RedStar'
@@ -9,6 +9,7 @@ import Spinner from '~/components/parts/Spinner'
 import { getUser } from "~/lib/signal"
 import { saveWebsiteOrder } from "~/server/actions"
 import { websiteOrder } from "~/lib/interface"
+import SuccessOrder from "~/components/parts/modal/SuccessOrder"
 
 export default function Website() {
 
@@ -63,8 +64,7 @@ export default function Website() {
     setIsSubmitting(false)
 
     if (ok) {
-      callModal.success(" سفارش شما با موفقیت ثبت شد! به زودی با شما تماس خواهیم گرفت. جهت مطلع شدن از وضعیت سفارش خود، میتواند به پنل کاربری مراجعه کنید ")
-      nv("/Panel/Order-status")
+      callModal(() => <SuccessOrder/>)
     } else {
       callModal.fail()
     }

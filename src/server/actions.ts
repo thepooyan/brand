@@ -69,8 +69,10 @@ export const saveWebsiteOrder = async (order: websiteOrder) => {
       ...order,
       features: JSON.stringify(order.features)
     }
-    await db.insert(websiteOrdersTable).values(values)
-    await telegram.admin.send(`سفارش سایت \n\n${yaml.dump(order)}`)
+    await Promise.all([
+      await db.insert(websiteOrdersTable).values(values),
+      await telegram.admin.send(`سفارش سایت \n\n${yaml.dump(order)}`)
+    ])
     return {ok: true}
   } catch(_) {
     return {ok: false}
