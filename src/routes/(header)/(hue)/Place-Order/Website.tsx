@@ -3,7 +3,7 @@ import { createEffect, createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import TA from '~/components/parts/TA'
 import RedStar from '~/components/parts/RedStar'
-import { useSearchParams } from "@solidjs/router"
+import { useNavigate, useSearchParams } from "@solidjs/router"
 import { callModal } from '~/components/layout/Modal'
 import Spinner from '~/components/parts/Spinner'
 import { getUser } from "~/lib/signal"
@@ -39,6 +39,7 @@ export default function Website() {
   })
 
   const [isSubmitting, setIsSubmitting] = createSignal(false)
+  const nv = useNavigate()
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target
@@ -64,6 +65,7 @@ export default function Website() {
 
     if (ok) {
       callModal(() => <SuccessOrder/>)
+      nv("/")
     } else {
       callModal.fail()
     }
