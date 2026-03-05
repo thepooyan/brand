@@ -1,14 +1,14 @@
-"use server"
-
 import axios from "axios"
 import { db } from "~/db/db"
 import { adminsTable } from "~/db/schema"
-import { privateEnv } from "./env/private-env"
+import { isProd, privateEnv } from "./env/private-env"
+import "@/lib/server-only"
 
 const adminToken = privateEnv.ADMIN_BOT 
 const supportToken = privateEnv.SUPPORT_BOT 
 
 const send = async (botToken: string, text: string, chat_id: string | number) => {
+  if (!isProd) return
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`
   const res = await axios.post(url, { chat_id, text })
 
