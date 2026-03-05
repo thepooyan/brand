@@ -5,7 +5,7 @@ import Enamad from "../parts/Enamad"
 import { Show } from "solid-js"
 import { ImTelegram, ImWhatsapp } from "solid-icons/im"
 import Samandehi from "../parts/Samandehi"
-import { isProd } from "~/server/env/private-env"
+import { isProd } from "~/server/env/shared-env"
 
 const Footer = () => {
   return (

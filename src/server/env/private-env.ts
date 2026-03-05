@@ -18,5 +18,3 @@ export const privateEnvSchema = z.object({
 
 export type PrivateEnv = z.infer<typeof privateEnvSchema>;
 export const privateEnv: PrivateEnv = privateEnvSchema.parse(process.env);
-
-export const isProd = privateEnv.NODE_ENV === "production"

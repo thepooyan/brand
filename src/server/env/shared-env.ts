@@ -14,7 +14,6 @@ export const sharedEnvSchema = z.object({
 })
 
 export type sharedEnv = z.infer<typeof sharedEnvSchema>;
-export const getSharedEnv = () => sharedEnvSchema.parse(import.meta.env)
 export const sharedEnv = sharedEnvSchema.parse(import.meta.env)
 
 type featureSelector = (f: typeof Features) => Features
@@ -22,3 +21,5 @@ export const featureEnabled = (f: featureSelector) => {
   const feature = f(Features)
   return sharedEnv.VITE_features.includes(feature)
 }
+
+export const isProd = sharedEnv.PROD

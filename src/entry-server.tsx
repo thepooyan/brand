@@ -2,7 +2,7 @@
 import { createHandler, StartServer } from "@solidjs/start/server";
 import TagManagerHead from "./components/tagManager/TagManagerHead";
 import TagManagerBody from "./components/tagManager/TagManagerBody";
-import { isProd } from "./server/env/private-env";
+import { isProd } from "./server/env/shared-env";
 
 export default createHandler(() => (
   <StartServer
