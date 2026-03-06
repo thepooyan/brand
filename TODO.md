@@ -1,5 +1,13 @@
-for seo:
+expose useChat as node package 
+useChat error handling is buggy
+handle error in usechat
+fix mini chat
+order status page
+rate limit s3 uploader for normal users
 
+seo:
+check gsc
+expland author => add authors table
 Google Search Console
 Bing Webmaster Tools
 Screaming Frog (crawler)
@@ -8,18 +16,6 @@ Schema generators
 Static sitemap generators
 Framework SEO libraries
 
-expose useChat as node package 
-useChat error handling is buggy
-
-
-seo:
-check gsc
-expland author => add authors table
-
-handle error in usechat
-fix mini chat
-order status page
-rate limit s3 uploader for normal users
 
 cron cleaner for otp
 check why view transition is not reliable (login and home button)
