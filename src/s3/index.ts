@@ -1,4 +1,3 @@
-import "@/lib/server-only"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
 import { S3Client } from "@aws-sdk/client-s3"
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"

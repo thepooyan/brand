@@ -1,5 +1,4 @@
 import { z } from "zod";
-import "@/lib/server-only"
 
 export const privateEnvSchema = z.object({
   SESSION_SECRET: z.string().min(1),

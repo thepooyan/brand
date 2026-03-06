@@ -1,5 +1,4 @@
 "use server"
-import "@/lib/server-only";
 import { adminsTable, chatbotTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
