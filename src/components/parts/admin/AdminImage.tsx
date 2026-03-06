@@ -25,11 +25,9 @@ const AdminImage = ({url}:p) => {
       <img src={url} class="rounded-lg h-60 w-60 m-auto object-contain"/>
 
       <div class="flex justify-center gap-3 mt-5">
-        <Copyable toCopy={url}>
-          <Button> 
-            <FiCopy/>
-          </Button>
-        </Copyable>
+        <Button> 
+          <FiCopy/>
+        </Button>
 
         <Button class="bg-destructive hover:bg-destructive/80" onclick={deleteImage}>
           <FaSolidBucket/>
