@@ -3,86 +3,54 @@ const create = () => {
   return (
     <>
       <h1>راهنمای استفاده از API چت‌بات</h1>
+      <ol>
+        <li>
+          قبل از هرچیز باید چت‌بات خود را ساخته باشید. 
+          <a href="/Docs/chat-bot/create">آموزش ساخت چت‌بات</a>
+        </li>
+        <li>
+          سپس از طریق <a href="/Panel/Chatbot">پنل کاربری</a> اقدام به دریافت توکن چت‌بات خود کنید.
 
-      <section>
-        <h2>۱. احراز هویت</h2>
-        <p>
-          برای ارسال درخواست به چت‌بات، باید توکن چت‌بات را در هدر Authorization قرار دهید.
-          این توکن مشخص می‌کند درخواست به کدام چت‌بات ارسال شود.
-        </p>
-      </section>
-
-      <section>
-        <h2>۲. اندپوینت</h2>
-        <p>
-          تمام پیام‌ها باید به اندپوینت زیر ارسال شوند:
-        </p>
-        <p>
-          <strong>POST</strong> <code>/chat</code>
-        </p>
-      </section>
-
-      <section>
-        <h2>۳. فرمت درخواست (استاندارد OpenAI)</h2>
-        <p>
-          ساختار درخواست دقیقاً مشابه Chat Completions در OpenAI است و از آرایه messages استفاده می‌کند.
-        </p>
-
-        <pre>
-          <code>{`POST /chat
-Content-Type: application/json
-Authorization: YOUR_CHATBOT_TOKEN
-
-{
-  "model": "gpt-4.1",
-  "messages": [
-    {
-      "role": "system",
-      "content": "تو یک دستیار پشتیبانی هستی"
-    },
-    {
-      "role": "user",
-      "content": "سلام، خدمات شما چیه؟"
-    }
-  ]
-}`}</code>
-        </pre>
-      </section>
-
-      <section>
-        <h2>۴. فرمت پاسخ</h2>
-        <p>
-          پاسخ API نیز مشابه پاسخ OpenAI بوده و پیام نهایی در choices برگردانده می‌شود.
-        </p>
-
-        <pre>
-          <code>{`{
-  "id": "chatcmpl-9f8a2",
-  "object": "chat.completion",
-  "created": 1735650000,
-  "model": "gpt-4.1",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "سلام! ما خدمات پشتیبانی و مشاوره آنلاین ارائه می‌دهیم."
-      },
-      "finish_reason": "stop"
-    }
-  ]
-}`}</code>
-        </pre>
-      </section>
-
-      <section>
-        <h2>۵. توضیح عملکرد</h2>
-        <p>
-          سرور با استفاده از توکن ارسال‌شده در هدر، چت‌بات مربوطه را شناسایی می‌کند.
-          سپس پیام‌ها را پردازش کرده و پاسخ چت‌بات را با فرمت استاندارد OpenAI برمی‌گرداند.
-          این موضوع باعث می‌شود بتوانید بدون تغییر منطق، از SDKها و کلاینت‌های OpenAI استفاده کنید.
-        </p>
-      </section>
+          <span class="text-muted-foreground block">
+            (هر ربات یک توکن مخصوص به خود دارد که میتواند از آن برای ارسال پیام به ربات استفاده کنید)
+          </span>
+        </li>
+        <li>
+          حال با استفاده از توکن، میتوانید به آدرس زیر ریکوئست ارسال کنید و با ربات خود صحبت کنید:
+          <pre class="text-left">
+            https://hooshbaan.com/api/chat
+          </pre>
+          <ul>
+            <li>متد ریکوئیت باید <code>POST</code> باشد</li>
+            <li>
+              توکن باید به صورت Authorization Header ارسال شود:
+              <pre class="text-left">
+                Request Header: <br/>
+                Authorization: Bearer [paste-your-token]
+              </pre>
+            </li>
+            <li>
+              دیتا ارسالی (Request Body) باید به صورت زیر باشد:
+              <pre class="text-left">
+                Request Body: <br/>
+                
+                  messages: [ <br/>
+                    
+                      role: "user", // can be "assistant" or "user" <br/>
+                      content: "پیام خود را اینجا ارسال کنید!" <br/>
+                    
+                  ]
+              </pre>
+              توجه کنید که باید تمام پیام های قبلی را نیز با هر پیام جدید مجددا ارسال کنید، <br/>
+              در غیر این صورت ربات به یاد نخواهد آورد.
+              همه پیام ها را به صورت یک آرایه به ترتیب در messages قرار دهید.
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <p>
+        در صورتی که با مشکل مواجه شدید میتوانید با <a href="/ContactUs">پشتیبانی</a> تماس بگیرید.
+      </p>
     </>
   );
 }

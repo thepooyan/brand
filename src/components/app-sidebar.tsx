@@ -34,6 +34,10 @@ const navMain:nav[] = [
           url: "/docs/chat-bot/api",
         },
        {
+          title: "مثال استفاده از توکن (javascript)",
+          url: "/docs/chat-bot/example-js",
+        },
+       {
           title: "اتصال به تلگرام",
           url: "/docs/chat-bot/telegram",
         },
