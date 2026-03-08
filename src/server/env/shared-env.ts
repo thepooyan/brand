@@ -10,7 +10,8 @@ export enum Features {
 export const sharedEnvSchema = z.object({
   VITE_features: z.string().default("").optional()
   .transform(v => v?.split(",").filter(Boolean) || []).pipe(z.array(z.nativeEnum(Features))),
-  PROD: z.boolean() 
+  PROD: z.boolean(),
+  VITE_BUCKET_URL: z.string().min(1),
 })
 
 export type sharedEnv = z.infer<typeof sharedEnvSchema>;

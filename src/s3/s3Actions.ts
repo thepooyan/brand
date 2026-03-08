@@ -1,13 +1,12 @@
 "use server"
 
-import { privateEnv } from "~/server/env/private-env"
 import { deleteFileFromS3 as del, listS3Files as list, uploadToS3 as up } from "."
 import { isAdminLoggedIn } from "~/server/serverUtil"
 
 
 export const listS3Files = async () => {
   if (!await isAdminLoggedIn()) return null
-  return (await list()).map(i => `https://${privateEnv.BUCKET_URL}/${i}`)
+  return list()
 }
 
 export const deleteFileFromS3 = async (filename: string) => {

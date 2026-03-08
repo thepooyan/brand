@@ -7,7 +7,6 @@ export const privateEnvSchema = z.object({
   GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
   ADMIN_BOT: z.string().min(1),
   SUPPORT_BOT: z.string().min(1),
-  BUCKET_URL: z.string().min(1),
   BUCKET_KEY: z.string().min(1),
   BUCKET_SECRET: z.string().min(1),
   BUCKET_NAME: z.string().min(1),

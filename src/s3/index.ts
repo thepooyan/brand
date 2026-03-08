@@ -1,10 +1,13 @@
+"use server"
+import "@/lib/server-only"
 import { PutObjectCommand } from "@aws-sdk/client-s3"
 import { S3Client } from "@aws-sdk/client-s3"
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"
 import { privateEnv } from "~/server/env/private-env"
+import { sharedEnv } from "~/server/env/shared-env"
 
 export const s3 = new S3Client({
-  endpoint: `https://${privateEnv.BUCKET_URL}`,
+  endpoint: `https://${sharedEnv.VITE_BUCKET_URL}`,
   region: "a",
   forcePathStyle: true,
   credentials: {
@@ -52,5 +55,5 @@ export async function uploadToS3(file: File) {
     ContentType: file.type,
   }))
 
-  return `https://${privateEnv.BUCKET_URL}/${key}`
+  return `https://${sharedEnv.VITE_BUCKET_URL}/${key}`
 }

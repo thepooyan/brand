@@ -16,7 +16,7 @@ const Media = () => {
         <div class="grid grid-cols-3">
           <Show when={files()}>
             {f => <For each={f()}>
-              {i => <AdminImage url={i}/>}
+              {i => <AdminImage url={i} refetch={refetch}/>}
             </For>}
           </Show>
         </div>
