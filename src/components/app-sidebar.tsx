@@ -11,7 +11,8 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import { FiBook } from "solid-icons/fi"
+import { A } from "@solidjs/router"
+import { FiBook, FiHome } from "solid-icons/fi"
 import { ComponentProps } from "solid-js"
 
 export type docsNav = {
@@ -55,7 +56,9 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" class="rtl">
+            <SidebarMenuButton size="lg" class="rtl flex justify-between">
+              <div class="flex gap-2">
+
                 <div class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <FiBook/>
                 </div>
@@ -63,6 +66,10 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                   <span class="font-medium">مستندات</span>
                   <span class="text-muted-foreground text-sm">نسخه ۱.۰.۰</span>
                 </div>
+              </div>
+              <A href="/" class="hover:bg-white hover:text-black p-2 transition-colors rounded cursor-pointer flex justify-center items-center">
+                <FiHome />
+              </A>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
