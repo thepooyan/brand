@@ -27,7 +27,7 @@ const Copyable = ({ children, toCopy }: props) => {
   };
   return (
     <Tooltip open={open()}>
-      <TooltipTrigger onmouseover={() => setOpen(true)} onMouseOut={() => setOpen(false)}>
+      <TooltipTrigger onmouseover={() => setOpen(true)} onMouseOut={() => setOpen(false)} as="div">
         <div class="cursor-pointer inline select-none" onclick={click}>
           {children ? children : limitSize(toCopy)}
         </div>
