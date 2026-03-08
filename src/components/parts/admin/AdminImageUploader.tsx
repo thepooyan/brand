@@ -4,7 +4,10 @@ import { Button } from "~/components/ui/button"
 import { ChangeEvent } from "~/lib/interface"
 import { uploadFileToS3 } from "~/s3/s3Actions"
 
-const AdminImageUploaderBtn = () => {
+interface p {
+  refetch: ()=>void
+}
+const AdminImageUploaderBtn = ({refetch}:p) => {
 
   const [loading, setLoading] = createSignal(false)
   let inputRef!:HTMLInputElement
@@ -19,6 +22,7 @@ const AdminImageUploaderBtn = () => {
     try {
       setLoading(true)
       const url = await uploadFileToS3(file)
+      refetch()
       setLoading(false)
     } catch(e) {
       console.log(e)
