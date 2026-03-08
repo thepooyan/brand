@@ -30,11 +30,11 @@ export const docsChatNav:docsNav[] = [
           url: "/docs/chat-bot/create",
         },
        {
-          title: "استفاده از توکن",
+          title: "استفاده از api",
           url: "/docs/chat-bot/api",
         },
        {
-          title: "مثال استفاده از توکن (javascript)",
+          title: "مثال استفاده از api (javascript)",
           url: "/docs/chat-bot/example-js",
         },
        {
