@@ -15,10 +15,8 @@ const AdminImage = ({url, refetch}:p) => {
   const deleteImage = () => {
     callModal.prompt("حذف شود؟")
     .yes(async () => {
-        callModal.wait()
         let res = await deleteFileFromS3(url)
         if (res === null) callModal.fail("حذف موفقیت آمیز نبود.")
-        callModal.success("انجام شد!")
         refetch()
       })
   }
