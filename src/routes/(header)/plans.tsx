@@ -1,4 +1,5 @@
 import { For } from "solid-js"
+import FreePlanCard from "~/components/plan/free-plan-card"
 import PlanCard from "~/components/plan/plan-card"
 import { allPlans } from "~/sections/plan"
 
@@ -8,6 +9,7 @@ const plans = () => {
       <h1 class="text-3xl mb-10 mt-10 font-bold text-center">پلن ها</h1>
 
       <div class="grid grid-cols-3 gap-3 p-5">
+        <FreePlanCard/>
         <For each={allPlans}>
           {p => <PlanCard plan={p}/>}
         </For>

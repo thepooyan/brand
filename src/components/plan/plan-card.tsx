@@ -1,6 +1,6 @@
 import { allFeatures, plan } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { For, Show } from "solid-js"
+import { For } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 
@@ -12,12 +12,7 @@ const PlanCard = ({plan}:p) => {
     <Card>
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
-        <Show when={plan.expiration}>
-          <CardDescription>{plan.expiration} ماهه</CardDescription>
-        </Show>
-        <Show when={!plan.expiration}>
-          <CardDescription>مدت نامحدود</CardDescription>
-        </Show>
+        <CardDescription>{plan.expiration} ماهه</CardDescription>
       </CardHeader>
       <CardContent>
         <For each={allFeatures}>
@@ -34,10 +29,9 @@ const PlanCard = ({plan}:p) => {
         </For>
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
-        <div class=" font-semibold text-md text-secondary  ">
-          قیمت: 
-          {plan.price === "free" ? "رایگان" : `${plan.price},000 تومان`}
-        </div>
+        <p>
+          قیمت: {plan.price},000 تومان
+        </p>
         <Button class="text-center w-full">همین حالا بخرید!</Button>
       </CardFooter>
     </Card>

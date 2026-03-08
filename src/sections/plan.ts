@@ -4,8 +4,8 @@ type feature = string
 
 export type plan = {
   name: string
-  price: number | "free",
-  expiration: mounthCount | null,
+  price: number,
+  expiration: mounthCount,
   features: feature[]
 }
 
@@ -21,19 +21,22 @@ export const allFeatures: feature[] = [
 ]
 
 const testPlan1: plan = {
-  name: "پلن رایگان",
-  price: "free",
-  expiration: null,
+  name: "پلن شروع",
+  price: 50,
+  expiration: 1,
   features: [
   ]
 }
 
 const testPlan2: plan = {
-  name: "پلن حرفه‌ای",
-  price: 50,
+  name: "پلن متوسط",
+  price: 150,
   expiration: 2,
   features: [
-    ...allFeatures
+    "ارسال رایگان",
+    "فلان چیز",
+    "دهانشویه",
+    "برد بالا",
   ]
 }
 
