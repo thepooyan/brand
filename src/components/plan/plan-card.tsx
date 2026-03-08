@@ -15,6 +15,9 @@ const PlanCard = ({plan}:p) => {
         <Show when={plan.expiration}>
           <CardDescription>{plan.expiration} ماهه</CardDescription>
         </Show>
+        <Show when={!plan.expiration}>
+          <CardDescription>مدت نامحدود</CardDescription>
+        </Show>
       </CardHeader>
       <CardContent>
         <For each={allFeatures}>
@@ -30,12 +33,12 @@ const PlanCard = ({plan}:p) => {
           </p>}
         </For>
       </CardContent>
-      <CardFooter class=" items-start justify-end flex-col">
-        <div class="font-bold text-lg text-secondary  ">
+      <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
+        <div class=" font-semibold text-md text-secondary  ">
           قیمت: 
           {plan.price === "free" ? "رایگان" : `${plan.price},000 تومان`}
         </div>
-        <Button>همین حالا بخرید!</Button>
+        <Button class="text-center w-full">همین حالا بخرید!</Button>
       </CardFooter>
     </Card>
   )
