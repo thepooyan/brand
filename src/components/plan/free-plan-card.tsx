@@ -1,4 +1,4 @@
-import { allFeatures } from "~/sections/plan"
+import { allFeatures, countingFeatures } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { For } from "solid-js"
 import { Button } from "../ui/button"
@@ -17,6 +17,13 @@ const FreePlanCard = () => {
             <FiX class="text-destructive"/>
             {f}
           </p>}
+        </For>
+        <br/>
+        <For each={countingFeatures}>
+          {f => <div class="flex justify-between">
+            <span>{f}:</span>
+            <FiX class="text-destructive"/>
+          </div>}
         </For>
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">

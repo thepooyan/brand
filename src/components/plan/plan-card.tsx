@@ -1,6 +1,6 @@
-import { allFeatures, plan } from "~/sections/plan"
+import { allFeatures, countingFeatures, plan } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { For } from "solid-js"
+import { For, Show } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 
@@ -25,6 +25,20 @@ const PlanCard = ({plan}:p) => {
               <FiX class="text-destructive"/>
             }
             {f}
+          </p>}
+        </For>
+        <br/>
+        <For each={countingFeatures}>
+          {f => <p class="flex justify-between">
+            <span>
+              {f}:
+            </span>
+            <Show
+              when={plan.counting_features.find(c => c.name === f)}
+              fallback={<FiX class="text-destructive"/>}
+            >
+              {s => <span>{s().count} {s().unit || ""}</span>}
+            </Show>
           </p>}
         </For>
       </CardContent>

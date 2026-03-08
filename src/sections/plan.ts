@@ -7,7 +7,17 @@ export type plan = {
   price: number,
   expiration: mounthCount,
   features: feature[]
+  counting_features: countingFeature[]
 }
+
+export type countingFeature = {name: string, count: number, unit?: string}
+
+export const countingFeatures = [
+  "تعداد پیام",
+  "فضای ذخیره سازی",
+  "تعداد ربات",
+  "تعداد سگ"
+]
 
 export const allFeatures: feature[] = [
   "ارسال رایگان",
@@ -25,6 +35,21 @@ const testPlan1: plan = {
   price: 50,
   expiration: 1,
   features: [
+  ],
+  counting_features: [
+    {
+      name: "تعداد پیام",
+      count: 100
+    },
+    {
+      name: "فضای ذخیره سازی",
+      count: 10,
+      unit: "گیگابایت"
+    },
+    {
+      name: "تعداد ربات",
+      count: 2,
+    },
   ]
 }
 
@@ -37,6 +62,21 @@ const testPlan2: plan = {
     "فلان چیز",
     "دهانشویه",
     "برد بالا",
+  ],
+  counting_features: [
+    {
+      name: "تعداد پیام",
+      count: 100
+    },
+    {
+      name: "فضای ذخیره سازی",
+      count: 10,
+      unit: "گیگابایت"
+    },
+    {
+      name: "تعداد ربات",
+      count: 2,
+    },
   ]
 }
 
@@ -46,6 +86,21 @@ const testPlan3: plan = {
   expiration: 3,
   features: [
     ...allFeatures
+  ],
+  counting_features: [
+    {
+      name: "تعداد پیام",
+      count: 100
+    },
+    {
+      name: "فضای ذخیره سازی",
+      count: 10,
+      unit: "گیگابایت"
+    },
+    {
+      name: "تعداد ربات",
+      count: 2,
+    },
   ]
 }
 
