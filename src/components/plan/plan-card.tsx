@@ -30,7 +30,7 @@ const PlanCard = ({plan}:p) => {
           </p>}
         </For>
       </CardContent>
-      <CardFooter class="justify-between">
+      <CardFooter class=" items-start justify-end flex-col">
         <div class="font-bold text-lg text-secondary  ">
           قیمت: 
           {plan.price === "free" ? "رایگان" : `${plan.price},000 تومان`}
