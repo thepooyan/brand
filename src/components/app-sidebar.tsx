@@ -14,13 +14,13 @@ import {
 import { FiBook } from "solid-icons/fi"
 import { ComponentProps } from "solid-js"
 
-type nav = {
+export type docsNav = {
   title: string
   url: string
   isActive?: boolean
-  items?: nav[]
+  items?: docsNav[]
 }
-const navMain:nav[] = [
+export const docsChatNav:docsNav[] = [
     {
       title: "چت بات",
       url: "/docs/chat-bot",
@@ -71,7 +71,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupLabel>هوش مصنوعی</SidebarGroupLabel>
           <SidebarMenu class="gap-2">
-            {navMain.map((item) => (
+            {docsChatNav.map((item) => (
               <SidebarMenuItem >
                 <SidebarMenuButton>
                   <a href={item.url} class="font-medium">
