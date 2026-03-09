@@ -1,6 +1,6 @@
 import { allFeatures, convertPlanToDTO, plan } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { For } from "solid-js"
+import { createSignal, For } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 import { seprateByComma } from "~/lib/utils"
@@ -8,6 +8,8 @@ import { getAuthSession } from "~/lib/session"
 import { db } from "~/db/db"
 import { planTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
+import { callModal } from "../layout/Modal"
+import { useNavigate } from "@solidjs/router"
 
 interface p {
   plan: plan
@@ -45,9 +47,27 @@ const activatePlan = async (p: plan) => {
 
     }
   })
+  return {ok: true}
 }
 
 const PlanCard = ({plan}:p) => {
+
+  const [loading, setLoading] = createSignal(false)
+  const nv = useNavigate()
+
+  const handleClick = async () => {
+    setLoading(true)
+    activatePlan(plan)
+      .then(() => {
+        callModal.success("با موفقیت انجام شد!")
+        nv("/Panel")
+      })
+      .catch(e => {
+        callModal.fail("خطایی رخ داد. لطفا مجددا تلاش کنید.")
+        console.log(e)
+    })
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -86,7 +106,8 @@ const PlanCard = ({plan}:p) => {
           قیمت: {seprateByComma(plan.price * 1000)} تومان
         </p>
         <Button class="text-center w-full"
-          onclick={() => activatePlan(plan)}
+          onclick={handleClick}
+          loading={loading}
         >همین حالا بخرید!</Button>
       </CardFooter>
     </Card>
