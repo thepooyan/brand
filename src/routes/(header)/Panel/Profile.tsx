@@ -9,7 +9,6 @@ import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
-import { pageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
 
