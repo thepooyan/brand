@@ -10,7 +10,7 @@ import { planTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
-import { ActionResponse } from "~/lib/actionAbstraction"
+import { ActionResponse, EitherResponse } from "~/lib/actionAbstraction"
 
 interface p {
   plan: plan
@@ -22,6 +22,8 @@ const activatePlan = async (p: plan):ActionResponse => {
 
   if (!user) return {ok: false, msg: "کاربر یافت نشد", status: 404}
 
+  let result:EitherResponse<void> = {ok: true}
+
   await db.transaction(async tx => {
 
     const dbUser = await tx.query.usersTable.findFirst({
@@ -29,7 +31,7 @@ const activatePlan = async (p: plan):ActionResponse => {
       with: {current_plan: true}
     })
 
-    if (!dbUser) return {ok: false, msg: "کاربر یافت نشد", status: 404}
+    if (!dbUser) return result = {ok: false, msg: "کاربر یافت نشد", status: 404}
 
     if (!dbUser.current_plan) {
       //new plan
@@ -48,7 +50,7 @@ const activatePlan = async (p: plan):ActionResponse => {
 
     }
   })
-  return {ok: true}
+  return result
 }
 
 const PlanCard = ({plan}:p) => {
