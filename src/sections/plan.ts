@@ -20,7 +20,7 @@ export const allFeatures: feature[] = [
 ]
 
 export const freePlan: plan = {
-  name: "پلن شروع",
+  name: "پلن رایگان",
   price: 0,
   expirationMounth: 1,
   messageCount: 10,
