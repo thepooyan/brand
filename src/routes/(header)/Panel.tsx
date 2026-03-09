@@ -13,7 +13,7 @@ const panelItems:panelItems = [
     ]
   },
   {
-    group: "چت‌بات", items: [
+    group: "خدمات", items: [
       {name: "چت‌بات", href: "Chatbot"},
     ]
   },
