@@ -14,20 +14,12 @@ export type countingFeature = {name: string, count: number, unit?: string}
 
 export const countingFeatures = [
   "تعداد پیام",
-  "فضای ذخیره سازی",
   "تعداد ربات",
-  "تعداد سگ"
 ]
 
 export const allFeatures: feature[] = [
-  "ارسال رایگان",
-  "جعبه خالی",
-  "فلان چیز",
-  "اسباب کشی",
-  "دهانشویه",
-  "قالی باف",
-  "برد بالا",
-  "اطمینان",
+  "رنگ سازمانی",
+  "حذف لوگو هوشبان",
 ]
 
 const testPlan1: plan = {
@@ -56,26 +48,19 @@ const testPlan1: plan = {
 const testPlan2: plan = {
   name: "پلن متوسط",
   price: 150,
-  expiration: 2,
+  expiration: 1,
   features: [
-    "ارسال رایگان",
-    "فلان چیز",
-    "دهانشویه",
-    "برد بالا",
+    "رنگ سازمانی",
+    "حذف لوگو هوشبان",
   ],
   counting_features: [
     {
       name: "تعداد پیام",
-      count: 100
-    },
-    {
-      name: "فضای ذخیره سازی",
-      count: 10,
-      unit: "گیگابایت"
+      count: 10000
     },
     {
       name: "تعداد ربات",
-      count: 2,
+      count: 20,
     },
   ]
 }
@@ -83,7 +68,7 @@ const testPlan2: plan = {
 const testPlan3: plan = {
   name: "پلن حرفه‌ای",
   price: 200,
-  expiration: 3,
+  expiration: 1,
   features: [
     ...allFeatures
   ],
@@ -91,11 +76,6 @@ const testPlan3: plan = {
     {
       name: "تعداد پیام",
       count: 100
-    },
-    {
-      name: "فضای ذخیره سازی",
-      count: 10,
-      unit: "گیگابایت"
     },
     {
       name: "تعداد ربات",
@@ -107,5 +87,4 @@ const testPlan3: plan = {
 export const allPlans = [
   testPlan1,
   testPlan2,
-  testPlan3,
 ]
