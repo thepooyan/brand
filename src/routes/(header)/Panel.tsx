@@ -20,6 +20,7 @@ const panelItems:panelItems = [
   {
     group: "پشتیبانی", items: [
       {name: "ثبت تیکت", href: "ticket"},
+      {name: "مستندات", href: "/Docs"},
     ]
   },
 ]
@@ -47,7 +48,7 @@ const Panel = ({children}:ParentProps) => {
 }
 
 const I = ({href, children}:ParentProps<{href: string}>) => {
-  return <Button as={TA} href={`/Panel/${href}`}
+  return <Button as={TA} href={href.startsWith("/") ? href : `/Panel/${href}`}
     variant="outline"
     class="px-5 py-3 inline-block"
     activeClass="bg-zinc-800"
