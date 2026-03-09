@@ -1,7 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { Accessor, createSignal, Setter } from "solid-js"
 import { twMerge } from "tailwind-merge"
-import { blogsTable } from "~/db/schema"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
 
@@ -47,13 +48,15 @@ export const adminsTable = sqliteTable("admins_table", {
 
 export const planTable = sqliteTable("plan", {
   id: int().primaryKey({ autoIncrement: true }),
-  planName: text({enum: ["free"]}).notNull(),
+  plan_id: text({ enum: plan_ids }).notNull(),
   messageCount: integer().notNull(),
   botCount: integer().notNull(),
   remainingMessages: integer().notNull(),
   expirationDate: integer({mode: "timestamp"}).notNull(),
   boughtDate: integer({mode: "timestamp"}).notNull(),
 })
+
+export type NewPlan = typeof planTable.$inferInsert
 
 export const usersTable = sqliteTable("users_table", {
   id: int().primaryKey({ autoIncrement: true }),

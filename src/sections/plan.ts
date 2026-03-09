@@ -1,8 +1,11 @@
+import { NewPlan } from "~/db/schema"
+
 type mounthCount = 1 | 2 | 3
 
 type feature = string
 
 export type plan = {
+  id: (typeof plan_ids)[number],
   name: string
   price: number,
   expirationMounth: mounthCount,
@@ -12,6 +15,23 @@ export type plan = {
   features: feature[]
 }
 
+const daysFromNow = (days: number) => {
+  let date = new Date()
+  date.setDate(date.getDate() + days)
+  return date
+}
+
+export const plan_ids = [ "free" , "starter" , "regular" , "pro" ] as const
+
+export const convertPlanToDTO = (p: plan, remainingMessages?: number):NewPlan => ({
+  plan_id: p.id,
+  botCount: p.botCount,
+  messageCount: p.messageCount,
+  remainingMessages: remainingMessages ? p.messageCount + remainingMessages : p.messageCount,
+  boughtDate: new Date(),
+  expirationDate: daysFromNow(p.expirationMounth * 30),
+})
+
 export const allFeatures: feature[] = [
   "یادگیری از لینک",
   "رنگ سازمانی",
@@ -20,6 +40,7 @@ export const allFeatures: feature[] = [
 ]
 
 export const freePlan: plan = {
+  id: "free",
   name: "پلن رایگان",
   price: 0,
   expirationMounth: 1,
@@ -32,6 +53,7 @@ export const freePlan: plan = {
 }
 
 const testPlan1: plan = {
+  id: "starter",
   name: "پلن شروع",
   price: 50,
   expirationMounth: 1,
@@ -44,6 +66,7 @@ const testPlan1: plan = {
 }
 
 const testPlan2: plan = {
+  id: "regular",
   name: "پلن متوسط",
   price: 150,
   expirationMounth: 1,
@@ -58,6 +81,7 @@ const testPlan2: plan = {
 }
 
 const testPlan3: plan = {
+  id: "pro",
   name: "پلن حرفه‌ای",
   price: 200,
   expirationMounth: 1,

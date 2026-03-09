@@ -1,5 +1,3 @@
-import { plansEnum } from "~/server/llm-generation"
-
 export interface chatbotOrder {
   name: string,
   email: string,
