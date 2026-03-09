@@ -40,7 +40,7 @@ const Profile = () => {
   })
 
   return (
-    <div {...pageMarker()} class=" rounded m-4 max-w-xl mx-auto ">
+    <div class=" rounded m-4 max-w-xl mx-auto ">
       <div class="flex justify-center">
         <Card class="w-full">
           <CardHeader class="text-right">

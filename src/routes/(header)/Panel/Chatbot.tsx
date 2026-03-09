@@ -40,7 +40,7 @@ export default function Component() {
   }
 
   return (
-    <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 " {...pageMarker()} >
+    <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 ">
       <div class="max-w-7xl mx-auto">
         {/* Header */}
         <div class="flex items-center justify-between mb-8">
