@@ -1,7 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { Show } from "solid-js"
-import { cuid } from "zod"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
@@ -35,8 +34,6 @@ const dashboard = () => {
 
   return (
     <div class="container space-y-4">
-      {JSON.stringify(planData())}
-
       <Show when={planData()}>
         {presentPlan => <>
 
