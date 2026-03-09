@@ -138,3 +138,7 @@ function fallbackCopyTextToClipboard(text: string): void {
     
     document.body.removeChild(textArea);
 }
+
+export const seprateByComma = (num: number) => {
+  return num.toLocaleString("fa")
+}

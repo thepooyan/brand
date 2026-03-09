@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { For } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
+import { seprateByComma } from "~/lib/utils"
 
 interface p {
   plan: plan
@@ -30,15 +31,15 @@ const PlanCard = ({plan}:p) => {
         <br/>
         <p class="flex justify-between">
           <span>تعداد پیام:</span>
-          <span>{plan.messageCount}</span>
+          <span>{seprateByComma(plan.messageCount)} عدد</span>
         </p>
         <p class="flex justify-between">
           <span>تعداد ربات:</span>
-          <span>{plan.botCount}</span>
+          <span>{seprateByComma(plan.botCount)} عدد</span>
         </p>
         <p class="flex justify-between">
           <span>پایگاه دانش:</span>
-          <span>{plan.knowledgeBase} کلمه</span>
+          <span>{seprateByComma(plan.knowledgeBase)} کلمه</span>
         </p>
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
