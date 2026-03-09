@@ -3,11 +3,11 @@
 import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/lib/planUtil"
 import { generateToken } from "./serverUtil"
 
-export const plansEnum = {
+const plansEnum = {
   free: "free"
 } as const
 
-export const PlanOptions = {
+const PlanOptions = {
   free: {
     value: plansEnum.free,
     label: "رایگان",
@@ -26,13 +26,13 @@ const daysFromNow = (days: number) => {
   return date
 }
 
-export const newPlan =(id: number, plan: Plan) => ({
-    plan: plan.value,
-    messageCount: plan.messages,
-    remainingMessages: plan.messages,
-    expirationDate: daysFromNow(plan.time),
-    id: id,
-    current_token: generateToken()
+const newPlan =(id: number, plan: Plan) => ({
+  plan: plan.value,
+  messageCount: plan.messages,
+  remainingMessages: plan.messages,
+  expirationDate: daysFromNow(plan.time),
+  id: id,
+  current_token: generateToken()
 })
 
 export class LlmBuilder {

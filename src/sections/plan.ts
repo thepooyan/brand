@@ -8,6 +8,7 @@ export type plan = {
   expirationMounth: mounthCount,
   messageCount: number,
   botCount: number,
+  knowledgeBase: number,
   features: feature[]
 }
 
@@ -18,13 +19,27 @@ export const allFeatures: feature[] = [
   "پشتیبانی اختصاصی"
 ]
 
+export const freePlan: plan = {
+  name: "پلن شروع",
+  price: 0,
+  expirationMounth: 1,
+  messageCount: 10,
+  botCount: 1,
+  knowledgeBase: 100,
+  features: [
+    "یادگیری از لینک",
+  ],
+}
+
 const testPlan1: plan = {
   name: "پلن شروع",
   price: 50,
   expirationMounth: 1,
   messageCount: 100,
   botCount: 2,
+  knowledgeBase: 300,
   features: [
+    "یادگیری از لینک",
   ],
 }
 
@@ -34,7 +49,9 @@ const testPlan2: plan = {
   expirationMounth: 1,
   messageCount: 500,
   botCount: 5,
+  knowledgeBase: 1000,
   features: [
+    "یادگیری از لینک",
     "رنگ سازمانی",
     "حذف لوگو هوشبان",
   ],
@@ -45,6 +62,7 @@ const testPlan3: plan = {
   price: 200,
   expirationMounth: 1,
   messageCount: 1000,
+  knowledgeBase: 5000,
   botCount: 10,
   features: [
     ...allFeatures

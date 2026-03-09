@@ -1,6 +1,6 @@
-import { allFeatures, countingFeatures, plan } from "~/sections/plan"
+import { allFeatures, plan } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { For, Show } from "solid-js"
+import { For } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 
@@ -28,11 +28,17 @@ const PlanCard = ({plan}:p) => {
           </p>}
         </For>
         <br/>
-        <p>
-          تعداد پیام: {plan.messageCount}
+        <p class="flex justify-between">
+          <span>تعداد پیام:</span>
+          <span>{plan.messageCount}</span>
         </p>
-        <p>
-          تعداد ربات: {plan.botCount}
+        <p class="flex justify-between">
+          <span>تعداد ربات:</span>
+          <span>{plan.botCount}</span>
+        </p>
+        <p class="flex justify-between">
+          <span>پایگاه دانش:</span>
+          <span>{plan.knowledgeBase} کلمه</span>
         </p>
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
