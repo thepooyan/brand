@@ -11,6 +11,16 @@ export const chatbotStatusTable = sqliteTable("chatbot_status", {
   current_token: text({length: tokenLength}).notNull()
 })
 
+export const planTable = sqliteTable("plan", {
+  id: int().primaryKey({ autoIncrement: true }),
+  planName: text({enum: ["free"]}).notNull(),
+  messageCount: integer().notNull(),
+  botCount: integer().notNull(),
+  remainingMessages: integer().notNull(),
+  expirationDate: integer({mode: "timestamp"}).notNull(),
+  boughtDate: integer({mode: "timestamp"}).notNull(),
+})
+
 export const chatbot_status_relations = relations(chatbotStatusTable, ({one}) => ({
   chatbot: one(chatbotTable, {fields: [chatbotStatusTable.id], references: [chatbotTable.id]})
 }))
@@ -30,6 +40,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   color: text().notNull().default("#2780d2"),
   color_foreground: text().notNull().default("#ffffff"),
   logo: text(),
+  current_token: text({length: tokenLength})
 })
 
 export type I_Bot = typeof chatbotTable.$inferSelect
@@ -61,6 +72,7 @@ export const usersTable = sqliteTable("users_table", {
   name: text(),
   email: text().unique(),
   number: text({length: 11}).unique().notNull(),
+  current_plan: int().references(() => planTable.id)
 });
 
 export const otpTable = sqliteTable("otp_table", {
