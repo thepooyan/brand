@@ -1,12 +1,36 @@
+import { createAsync, query, redirect } from "@solidjs/router"
+import { eq } from "drizzle-orm"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
+import { db } from "~/db/db"
+import { clearAuthSession, getAuthSession } from "~/lib/session"
+
+const queryUserPlan = query(async() => {
+  "use server"
+  let user = await getAuthSession()
+  if (!user) throw redirect("/Login")
+
+  const dbUser = await db.query.usersTable.findFirst({
+    where: (tbl => eq(tbl.id, user.id)),
+    with: {current_plan: true}
+  })
+
+  if (!dbUser) {
+    clearAuthSession()
+    throw redirect("/Login")
+  }
+
+  return dbUser.current_plan
+}, "userPlan")
 
 const dashboard = () => {
 
+  const planData = createAsync(() => queryUserPlan())
   const cont = "border-1 border-border rounded-lg p-4 bg-card"
 
   return (
     <div class="container space-y-4">
+      {JSON.stringify(planData())}
 
       <div class={cont}>
         <h3 class="text-xl font-bold">
