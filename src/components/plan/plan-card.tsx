@@ -12,7 +12,7 @@ const PlanCard = ({plan}:p) => {
     <Card>
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
-        <CardDescription>{plan.expiration} ماهه</CardDescription>
+        <CardDescription>{plan.expirationMounth} ماهه</CardDescription>
       </CardHeader>
       <CardContent>
         <For each={allFeatures}>
@@ -28,19 +28,12 @@ const PlanCard = ({plan}:p) => {
           </p>}
         </For>
         <br/>
-        <For each={countingFeatures}>
-          {f => <p class="flex justify-between">
-            <span>
-              {f}:
-            </span>
-            <Show
-              when={plan.counting_features.find(c => c.name === f)}
-              fallback={<FiX class="text-destructive"/>}
-            >
-              {s => <span>{s().count} {s().unit || ""}</span>}
-            </Show>
-          </p>}
-        </For>
+        <p>
+          تعداد پیام: {plan.messageCount}
+        </p>
+        <p>
+          تعداد ربات: {plan.botCount}
+        </p>
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
         <p>

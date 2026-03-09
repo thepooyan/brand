@@ -5,86 +5,54 @@ type feature = string
 export type plan = {
   name: string
   price: number,
-  expiration: mounthCount,
+  expirationMounth: mounthCount,
+  messageCount: number,
+  botCount: number,
   features: feature[]
-  counting_features: countingFeature[]
 }
 
-export type countingFeature = {name: string, count: number, unit?: string}
-
-export const countingFeatures = [
-  "تعداد پیام",
-  "تعداد ربات",
-]
-
 export const allFeatures: feature[] = [
+  "یادگیری از لینک",
   "رنگ سازمانی",
   "حذف لوگو هوشبان",
+  "پشتیبانی اختصاصی"
 ]
 
 const testPlan1: plan = {
   name: "پلن شروع",
   price: 50,
-  expiration: 1,
+  expirationMounth: 1,
+  messageCount: 100,
+  botCount: 2,
   features: [
   ],
-  counting_features: [
-    {
-      name: "تعداد پیام",
-      count: 100
-    },
-    {
-      name: "فضای ذخیره سازی",
-      count: 10,
-      unit: "گیگابایت"
-    },
-    {
-      name: "تعداد ربات",
-      count: 2,
-    },
-  ]
 }
 
 const testPlan2: plan = {
   name: "پلن متوسط",
   price: 150,
-  expiration: 1,
+  expirationMounth: 1,
+  messageCount: 500,
+  botCount: 5,
   features: [
     "رنگ سازمانی",
     "حذف لوگو هوشبان",
   ],
-  counting_features: [
-    {
-      name: "تعداد پیام",
-      count: 10000
-    },
-    {
-      name: "تعداد ربات",
-      count: 20,
-    },
-  ]
 }
 
 const testPlan3: plan = {
   name: "پلن حرفه‌ای",
   price: 200,
-  expiration: 1,
+  expirationMounth: 1,
+  messageCount: 1000,
+  botCount: 10,
   features: [
     ...allFeatures
   ],
-  counting_features: [
-    {
-      name: "تعداد پیام",
-      count: 100
-    },
-    {
-      name: "تعداد ربات",
-      count: 2,
-    },
-  ]
 }
 
 export const allPlans = [
   testPlan1,
   testPlan2,
+  testPlan3,
 ]
