@@ -37,8 +37,10 @@ const dashboard = () => {
         <h3 class="text-xl font-bold">
           تاریخ انقضا: 
         </h3>
-        <p class="text-sm mt-1">
+        <p class="text-sm mt-2">
           10/2/1402
+          <br/>
+          ۲۳ روز باقی مانده
         </p>
         <Button class="mr-auto block w-max">
           تمدید پلن
