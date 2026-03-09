@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const tokenLength = 62
+
 export const chatbotStatusTable = sqliteTable("chatbot_status", {
   id: int().notNull().references(() => chatbotTable.id),
   plan: text({enum: ["free"]}).notNull(),
@@ -9,16 +10,6 @@ export const chatbotStatusTable = sqliteTable("chatbot_status", {
   remainingMessages: integer().notNull(),
   expirationDate: integer({mode: "timestamp"}).notNull(),
   current_token: text({length: tokenLength}).notNull()
-})
-
-export const planTable = sqliteTable("plan", {
-  id: int().primaryKey({ autoIncrement: true }),
-  planName: text({enum: ["free"]}).notNull(),
-  messageCount: integer().notNull(),
-  botCount: integer().notNull(),
-  remainingMessages: integer().notNull(),
-  expirationDate: integer({mode: "timestamp"}).notNull(),
-  boughtDate: integer({mode: "timestamp"}).notNull(),
 })
 
 export const chatbot_status_relations = relations(chatbotStatusTable, ({one}) => ({
@@ -67,13 +58,27 @@ export const adminsTable = sqliteTable("admins_table", {
   number: text().notNull()
 })
 
+export const planTable = sqliteTable("plan", {
+  id: int().primaryKey({ autoIncrement: true }),
+  planName: text({enum: ["free"]}).notNull(),
+  messageCount: integer().notNull(),
+  botCount: integer().notNull(),
+  remainingMessages: integer().notNull(),
+  expirationDate: integer({mode: "timestamp"}).notNull(),
+  boughtDate: integer({mode: "timestamp"}).notNull(),
+})
+
 export const usersTable = sqliteTable("users_table", {
   id: int().primaryKey({ autoIncrement: true }),
   name: text(),
   email: text().unique(),
   number: text({length: 11}).unique().notNull(),
-  current_plan: int().references(() => planTable.id)
+  current_plan_id: int().references(() => planTable.id)
 });
+
+export const user_plan_relations = relations(usersTable, ({one}) => ({
+  current_plan: one(planTable, {fields: [usersTable.current_plan_id], references: [planTable.id]})
+}))
 
 export const otpTable = sqliteTable("otp_table", {
   number: text({length: 11}).notNull(),
