@@ -1,4 +1,4 @@
-import { DB_Plan, NewPlan, Plan } from "~/db/schema"
+import { DB_Plan, NewPlan } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
