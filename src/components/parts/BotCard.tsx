@@ -10,7 +10,6 @@ import TA from "./TA"
 import { cn } from "~/lib/utils"
 import { deleteChatbot } from "~/server/actions"
 import { revalidate } from "@solidjs/router"
-import { PlanOptions } from "~/server/llm-generation"
 import { getNewToken } from "~/server/botActions"
 import NewTokenAlert from "./bot/NewTokenAlert"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
@@ -53,8 +52,8 @@ const BotCard = ({bot}:props) => {
         <div class="flex items-center justify-between">
           <CardTitle class="text-lg text-white">{bot.botName}</CardTitle>
           <div class="flex items-center gap-2">
-            <Badge class={bot.isActive ? "bg-green-600 text-white" : "bg-red-600 text-white"}>
-              {bot.isActive ? "فعال" : "غیرفعال"}
+            <Badge class={true ? "bg-green-600 text-white" : "bg-red-600 text-white"}>
+              {true ? "فعال" : "غیرفعال"}
             </Badge>
           </div>
         </div>
@@ -65,19 +64,16 @@ const BotCard = ({bot}:props) => {
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
             <span class="text-gray-400">پلن:</span>
-            <span class="font-medium text-white">{PlanOptions[bot.plan].label}</span>
+            <span class="font-medium text-white">plan</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-400">تعداد پیام:</span>
-            <span class="font-medium text-white">{bot.messageCount.toLocaleString("fa-IR")}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-400">تعداد پیام باقی مانده:</span>
-            <span class="font-medium text-white">{bot.remainingMessages.toLocaleString("fa-IR")}</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-400">تاریخ انقضا:</span>
-            <span class="font-medium text-white">{bot.expirationDate.getDate()}</span>
           </div>
         </div>
 
@@ -85,9 +81,7 @@ const BotCard = ({bot}:props) => {
         <div class="w-full bg-gray-800 rounded-full h-2">
           <div
             class="bg-primary h-2 rounded-full transition-all duration-300"
-            style={{
-              width: `${(bot.remainingMessages / bot.messageCount ) * 100}%`,
-            }}
+            style={{ }}
           />
         </div>
 
@@ -146,7 +140,7 @@ const BotCard = ({bot}:props) => {
           <Button
             size="sm"
             class={cn("w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300",
-              !bot.isActive && "opacity-30 pointer-events-none "
+              false && "opacity-30 pointer-events-none "
             )}
             as={TA} href={`/Panel/Testbot/${bot.id}`}
           >

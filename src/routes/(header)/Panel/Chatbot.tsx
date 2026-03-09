@@ -1,16 +1,14 @@
 import { Card, CardContent,  } from "~/components/ui/card"
 import { Button } from "~/components/ui/button"
 import { FiPlus, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
-import { chatbotStatus } from "~/lib/interface"
 import { createAsync, query, redirect } from "@solidjs/router"
 import { db } from "~/db/db"
-import { chatbotTable, chatbotStatusTable } from "~/db/schema"
+import { chatbotTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
-import { pageMarker } from "~/lib/routeChangeTransition"
 
 const getBots = query(async () => {
   "use server"
@@ -19,25 +17,16 @@ const getBots = query(async () => {
 
   return (await db
   .select({
-    id: chatbotStatusTable.id,
-    plan: chatbotStatusTable.plan,
-    messageCount: chatbotStatusTable.messageCount,
-    remainingMessages: chatbotStatusTable.remainingMessages,
-    expirationDate: chatbotStatusTable.expirationDate,
     botName: chatbotTable.botName,
+    id: chatbotTable.id
   })
-  .from(chatbotStatusTable)
-  .innerJoin(chatbotTable, eq(chatbotStatusTable.id, chatbotTable.id))
+  .from(chatbotTable)
   .where(eq(chatbotTable.userId, user.id)))
 }, "bots")
 
 export default function Component() {
 
   const bots = createAsync(() => getBots())
-
-  const pBots = ():chatbotStatus[] => {
-    return bots()?.map((b) => ({...b, isActive: b.remainingMessages !== 0 })) || []
-  }
 
   return (
     <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 ">
@@ -81,7 +70,7 @@ export default function Component() {
         {/* Bots Grid */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-10">
           <Suspense fallback={<BotCardFallback/>}>
-            {pBots()?.map((bot) => <BotCard bot={bot} />)}
+            {bots()?.map((bot) => <BotCard bot={bot} />)}
           </Suspense>
           {/* Add New Bot Card */}
           <Card class="border-gray-800 bg-gray-900 border-dashed border-2">

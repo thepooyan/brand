@@ -3,19 +3,6 @@ import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const tokenLength = 62
 
-export const chatbotStatusTable = sqliteTable("chatbot_status", {
-  id: int().notNull().references(() => chatbotTable.id),
-  plan: text({enum: ["free"]}).notNull(),
-  messageCount: integer().notNull(),
-  remainingMessages: integer().notNull(),
-  expirationDate: integer({mode: "timestamp"}).notNull(),
-  current_token: text({length: tokenLength}).notNull()
-})
-
-export const chatbot_status_relations = relations(chatbotStatusTable, ({one}) => ({
-  chatbot: one(chatbotTable, {fields: [chatbotStatusTable.id], references: [chatbotTable.id]})
-}))
-
 export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),
