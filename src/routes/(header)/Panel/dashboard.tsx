@@ -1,17 +1,49 @@
+import TA from "~/components/parts/TA"
+import { Button } from "~/components/ui/button"
+
 const dashboard = () => {
+
+  const cont = "border-1 border-border rounded-lg p-4 bg-card"
+
   return (
-    <div>
-      <ul>
-        <li>
-          تعداد پیام باقی مانده: ۲۰
-        </li>
-        <li>
-          پلن فعلی شما: رایگان
-        </li>
-        <li>
-          تاریخ انقضا: 10/2/1402
-        </li>
-      </ul>
+    <div class="container space-y-4">
+
+      <div class={cont}>
+        <h3 class="text-xl font-bold">
+          تعداد پیام باقی مانده: 
+        </h3>
+        <p class="text-left text-sm">
+          ۲۰ از ۱۰۰
+        </p>
+        <div class="h-1 w-full bg-muted rounded-lg overflow-hidden  ">
+          <div class="w-[20%] bg-primary h-full">
+          </div>
+        </div>
+      </div>
+
+      <div class={cont}>
+        <h3 class="text-xl font-bold">
+          پلن فعلی شما: 
+        </h3>
+        <p class="text-sm mt-1">
+          پلن رایگان 
+        </p>
+        <Button as={TA} href="/plans" class="mr-auto block w-max">
+          مشاهده پلن ها
+        </Button>
+      </div>
+
+      <div class={cont}>
+        <h3 class="text-xl font-bold">
+          تاریخ انقضا: 
+        </h3>
+        <p class="text-sm mt-1">
+          10/2/1402
+        </p>
+        <Button class="mr-auto block w-max">
+          تمدید پلن
+        </Button>
+      </div>
     </div>
   )
 }
