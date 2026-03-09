@@ -12,7 +12,7 @@ const dashboard = () => {
         <h3 class="text-xl font-bold">
           تعداد پیام باقی مانده: 
         </h3>
-        <p class="text-left text-sm">
+        <p class="text-left text-sm mb-1">
           ۲۰ از ۱۰۰
         </p>
         <div class="h-1 w-full bg-muted rounded-lg overflow-hidden  ">
