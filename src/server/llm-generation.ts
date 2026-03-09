@@ -1,39 +1,6 @@
 "use server"
 
 import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/lib/planUtil"
-import { generateToken } from "./serverUtil"
-
-const plansEnum = {
-  free: "free"
-} as const
-
-const PlanOptions = {
-  free: {
-    value: plansEnum.free,
-    label: "رایگان",
-    description: "پلن رایگان هوشبان، برای تست ساخت ربات!",
-    time: 7,
-    messages: 10
-  }
-} as const
-
-type PlanKey = keyof typeof PlanOptions
-type Plan = (typeof PlanOptions)[PlanKey]
-
-const daysFromNow = (days: number) => {
-  let date = new Date()
-  date.setDate(date.getDate() + days)
-  return date
-}
-
-const newPlan =(id: number, plan: Plan) => ({
-  plan: plan.value,
-  messageCount: plan.messages,
-  remainingMessages: plan.messages,
-  expirationDate: daysFromNow(plan.time),
-  id: id,
-  current_token: generateToken()
-})
 
 export class LlmBuilder {
   private name!: string
