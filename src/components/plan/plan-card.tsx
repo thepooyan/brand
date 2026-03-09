@@ -10,16 +10,17 @@ import { planTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
+import { ActionResponse } from "~/lib/actionAbstraction"
 
 interface p {
   plan: plan
 }
 
-const activatePlan = async (p: plan) => {
+const activatePlan = async (p: plan):ActionResponse => {
   "use server"
   const user = await getAuthSession()
 
-  if (!user) return
+  if (!user) return {ok: false, msg: "کاربر یافت نشد", status: 404}
 
   await db.transaction(async tx => {
 
@@ -28,7 +29,7 @@ const activatePlan = async (p: plan) => {
       with: {current_plan: true}
     })
 
-    if (!dbUser) throw new Error(`No such user was found.`)
+    if (!dbUser) return {ok: false, msg: "کاربر یافت نشد", status: 404}
 
     if (!dbUser.current_plan) {
       //new plan
@@ -58,14 +59,23 @@ const PlanCard = ({plan}:p) => {
   const handleClick = async () => {
     setLoading(true)
     activatePlan(plan)
-      .then(() => {
-        callModal.success("با موفقیت انجام شد!")
-        nv("/Panel")
+      .then((res) => {
+        if (res.ok) {
+          callModal.success("با موفقیت انجام شد!")
+          nv("/Panel")
+        } else if (res.status === 404){
+          nv("/Login?back=/plans")
+        } else {
+          callModal.fail(res.msg)
+        }
       })
       .catch(e => {
         callModal.fail("خطایی رخ داد. لطفا مجددا تلاش کنید.")
         console.log(e)
     })
+    .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
