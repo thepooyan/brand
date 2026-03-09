@@ -1,11 +1,12 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { Show } from "solid-js"
+import { cuid } from "zod"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
-import { daysRemaining } from "~/lib/utils"
+import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
 import { findPlanName, freePlan } from "~/sections/plan"
 
 const queryUserPlan = query(async() => {
@@ -44,10 +45,10 @@ const dashboard = () => {
           تعداد پیام باقی مانده: 
         </h3>
         <p class="text-left text-sm mb-1">
-          ۲۰ از ۱۰۰
+          {presentPlan().remainingMessages} از {calcMessageCount(presentPlan())}
         </p>
         <div class="h-1 w-full bg-muted rounded-lg overflow-hidden  ">
-          <div class="w-[20%] bg-primary h-full">
+          <div class={`w-[${calcMessagePercent(presentPlan())}%] bg-primary h-full`}>
           </div>
         </div>
       </div>
