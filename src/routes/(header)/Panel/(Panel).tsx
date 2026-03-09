@@ -1,6 +1,6 @@
 const index = () => {
   return (
-    <div class="container mb-80 mt-20 text-center">
+    <div class="flex flex-col justify-center items-center h-full">
       <h1 class="text-xl font-bold">
         به پنل کاربری خوش آمدید
       </h1>

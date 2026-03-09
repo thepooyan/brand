@@ -7,7 +7,7 @@ type nav = {name: string, href: string}
 
 const panelItems:panelItems = [
   {group: "عمومی", items: [
-    {name: "داشبورد", href: ""},
+    {name: "داشبورد", href: "dashboard"},
     {name: "پروفایل", href: "Profile"},
   ]},
   {
@@ -20,7 +20,7 @@ const panelItems:panelItems = [
 const Panel = ({children}:ParentProps) => {
   return (
     <main class="flex">
-      <div class="flex flex-col w-60 gap-1 p-2 border-border h-dvh border-l-1">
+      <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] border-l-1">
         <For each={panelItems}>
           {p => <>
             <span class="text-sm text-muted-foreground first-of-type:mt-0 mt-5 ">
@@ -32,7 +32,7 @@ const Panel = ({children}:ParentProps) => {
           </>}
         </For>
       </div>
-      <div class="p-3 w-full">
+      <div class="p-3 w-full min-h-full">
         {children}
       </div>
     </main>
