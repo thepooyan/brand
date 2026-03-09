@@ -56,6 +56,7 @@ export const planTable = sqliteTable("plan", {
   boughtDate: integer({mode: "timestamp"}).notNull(),
 })
 
+export type DB_Plan = typeof planTable.$inferSelect
 export type NewPlan = typeof planTable.$inferInsert
 
 export const usersTable = sqliteTable("users_table", {

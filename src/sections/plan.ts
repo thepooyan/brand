@@ -1,4 +1,4 @@
-import { NewPlan } from "~/db/schema"
+import { DB_Plan, NewPlan, Plan } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
@@ -98,3 +98,5 @@ export const allPlans = [
   testPlan2,
   testPlan3,
 ]
+
+export const findPlanName = (p: DB_Plan) => allPlans.find(i => i.id === p.plan_id)?.name || ""

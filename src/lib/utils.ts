@@ -141,3 +141,16 @@ function fallbackCopyTextToClipboard(text: string): void {
 export const seprateByComma = (num: number) => {
   return num.toLocaleString("fa")
 }
+
+export const daysRemaining = (targetDate: string | Date): number => {
+  const now = new Date();
+  const target = new Date(targetDate);
+
+  // Get the difference in milliseconds
+  const diffMs = target.getTime() - now.getTime();
+
+  // Convert to days (milliseconds → seconds → minutes → hours → days)
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+  return diffDays;
+}
