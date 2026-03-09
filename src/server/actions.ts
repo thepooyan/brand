@@ -3,7 +3,7 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
-import {  blogsTable, chatbotTable, chatbotStatusTable, I_Blog, I_NewBlog, otpTable, usersTable, websiteOrdersTable } from "~/db/schema"
+import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -94,9 +94,6 @@ export const deleteChatbot = async (botId: number) => {
     if (!user) return {ok: false, msg: "لطفا ابتدا لاگین کنید"}
 
     await db.transaction(async tx => {
-      await tx.delete(chatbotStatusTable).where(
-        eq(chatbotStatusTable.id, botId),
-      )
       await tx.delete(chatbotTable).where(
         and(
           eq(chatbotTable.id, botId),

@@ -6,9 +6,9 @@ export const getPublicSettings = new Elysia({ prefix: "/getPublicSetting" })
 .get("/", 
   async ({ bot }) => {
     return {
-      color: bot.chatbot.color,
-      color_foreground: bot.chatbot.color_foreground,
-      logo: bot.chatbot.logo
+      color: bot.color,
+      color_foreground: bot.color_foreground,
+      logo: bot.logo
     }
   }
 )

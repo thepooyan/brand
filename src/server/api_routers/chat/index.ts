@@ -25,7 +25,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 
     const result = streamText({
       model: google("gemini-2.5-flash"),
-      system: getSystemPrompt(bot.chatbot),
+      system: getSystemPrompt(bot),
       messages: body.messages,
     })
 
