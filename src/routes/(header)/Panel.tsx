@@ -6,15 +6,23 @@ type panelItems = {group: string, items: nav[]}[]
 type nav = {name: string, href: string}
 
 const panelItems:panelItems = [
-  {group: "عمومی", items: [
-    {name: "داشبورد", href: "dashboard"},
-    {name: "پروفایل", href: "Profile"},
-  ]},
+  {
+    group: "عمومی", items: [
+      {name: "داشبورد", href: "dashboard"},
+      {name: "پروفایل", href: "Profile"},
+    ]
+  },
   {
     group: "چت‌بات", items: [
       {name: "چت‌بات", href: "Chatbot"},
     ]
-  }
+  },
+  {
+    group: "پشتیبانی", items: [
+      {name: "ثبت تیکت", href: "ticket"},
+      {name: "تمدید پلن", href: "renew"},
+    ]
+  },
 ]
 
 const Panel = ({children}:ParentProps) => {
