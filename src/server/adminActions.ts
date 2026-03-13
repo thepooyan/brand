@@ -9,6 +9,7 @@ const queryTicketsWithRelations = async () => await db.query.ticketTable.findMan
 export type TicketWithRelations = Awaited<ReturnType<typeof queryTicketsWithRelations>>[number]
 
 export const getAllTickets = query(async () => {
+  "use server"
   if (!await isAdminLoggedIn()) throw redirect("/Login")
   return await queryTicketsWithRelations()
 }, "adminTickets")

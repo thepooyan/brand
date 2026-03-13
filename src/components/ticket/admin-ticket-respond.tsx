@@ -2,11 +2,12 @@ import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { TicketWithRelations } from "~/server/adminActions"
+import Textarea from "../ui/Textarea"
 
 interface p {
   t: TicketWithRelations
 }
-const AdminTicketCard = ({t}:p) => {
+const AdminTicketCardRespond = ({t}:p) => {
   return (
     <Card>
       <CardHeader>
@@ -31,12 +32,15 @@ const AdminTicketCard = ({t}:p) => {
       <CardContent>
         {t.content}
       </CardContent>
-      <CardFooter class="justify-end">
-        <Button as="A" href={`/admin/ticket/answer/${t.id}`}
-        >پاسخ</Button>
+      <CardFooter class="flex flex-col items-stretch gap-2">
+        <Textarea
+          placeholder="پاسخ..."
+          class="w-full block min-h-30"
+        />
+        <Button class="w-max">ارسال</Button>
       </CardFooter>
     </Card>
   )
 }
 
-export default AdminTicketCard
+export default AdminTicketCardRespond
