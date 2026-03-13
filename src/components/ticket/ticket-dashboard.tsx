@@ -8,8 +8,12 @@ const TicketDashboard = () => {
       <Button onclick={() => setTicketState("new") }>تیکت جدید</Button>
 
       <div>
-        تیکت های خوانده نشده
-        تیکت های خوانده شده
+        <Button variant="outline">
+          تیکت های خوانده نشده
+        </Button>
+        <Button variant="outline" >
+          تیکت های خوانده شده
+        </Button>
       </div>
 
     </Card>
