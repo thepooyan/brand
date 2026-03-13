@@ -22,6 +22,7 @@ const panelItems:panelItems = [
     group: "پشتیبانی", items: [
       {name: "ثبت تیکت", href: "ticket"},
       {name: "مستندات", href: "/Docs"},
+      {name: "تماس", href: "/ContactUs"},
     ]
   },
 ]

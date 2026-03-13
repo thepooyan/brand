@@ -39,8 +39,8 @@ const Profile = () => {
   })
 
   return (
-    <div class=" rounded max-w-xl mx-auto ">
-      <div class="flex justify-center">
+    <div class="flex justify-center items-center h-full">
+      <div class="flex justify-center w-lg">
         <Card class="w-full">
           <CardHeader class="text-right">
             <CardTitle class="text-2xl font-bold">فرم اطلاعات شخصی</CardTitle>

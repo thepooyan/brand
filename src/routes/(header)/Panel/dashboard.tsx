@@ -5,7 +5,7 @@ import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
-import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
+import { calcMessageCount, calcMessagePercent, cn, daysRemaining } from "~/lib/utils"
 import { findPlanName, freePlan } from "~/sections/plan"
 
 const queryUserPlan = query(async() => {
@@ -33,19 +33,21 @@ const dashboard = () => {
   const cont = "border-1 border-border rounded-lg p-4 bg-card"
 
   return (
-    <div class="container space-y-4">
+    <div class="grid grid-cols-2 gap-3">
       <Show when={planData()}>
         {presentPlan => <>
 
-      <div class={cont}>
+      <div class={cn(cont, "flex justify-between flex-col")}>
         <h3 class="text-xl font-bold">
           تعداد پیام باقی مانده: 
         </h3>
-        <p class="text-left text-sm mb-1">
-          {presentPlan().remainingMessages} از {calcMessageCount(presentPlan())}
-        </p>
-        <div class="h-1 w-full bg-muted rounded-lg overflow-hidden  ">
-          <div class={`w-[${calcMessagePercent(presentPlan())}%] bg-primary h-full`}>
+        <div class="mb-5">
+          <p class="text-left text-sm mb-1">
+            {presentPlan().remainingMessages} از {calcMessageCount(presentPlan())}
+          </p>
+          <div class="h-1 w-full bg-muted rounded-lg overflow-hidden  ">
+            <div class={`w-[${calcMessagePercent(presentPlan())}%] bg-primary h-full`}>
+            </div>
           </div>
         </div>
       </div>
