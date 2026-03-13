@@ -8,7 +8,7 @@ import { FiFilter, FiPlus } from "solid-icons/fi";
 import { useToggle } from "~/lib/hooks";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 const getUserTickets = query(async () => {
   "use server"
@@ -17,7 +17,7 @@ const getUserTickets = query(async () => {
 
   return db.query.ticketTable.findMany({
     where: (tbl => eq(tbl.userId, user.id)),
-    orderBy: (tbl => tbl.updatedAt )
+    orderBy: (tbl => desc(tbl.updatedAt) )
   })
 }, "userTickets")
 

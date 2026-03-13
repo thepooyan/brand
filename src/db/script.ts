@@ -1,4 +1,4 @@
 import { db } from "./db";
-import { chatbotStatusTable } from "./schema";
+import { ticketTable } from "./schema";
 
-await db.update(chatbotStatusTable).set({remainingMessages: 0})
+await db.delete(ticketTable)
