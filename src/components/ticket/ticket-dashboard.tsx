@@ -17,9 +17,9 @@ const TicketDashboard = () => {
 
   const Btn = ({children}:ParentProps) => {
     const id = Math.random()
-    return <Button variant="outline"
+    return <Button variant={isActive(id) ? "secondary" : "outline"}
       class={cn(
-        isActive(id) && "bg-primary text-primary-foreground"
+        // isActive(id) && "bg-primary text-primary-foreground"
       )}
       onclick={() => activate(id)}>
       {children}
