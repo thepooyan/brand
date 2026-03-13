@@ -1,6 +1,7 @@
 import { For, ParentProps } from "solid-js"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
+import { getUser } from "~/lib/signal"
 
 type panelItems = {group: string, items: nav[]}[]
 type nav = {name: string, href: string}
@@ -26,6 +27,7 @@ const panelItems:panelItems = [
 ]
 
 const Panel = ({children}:ParentProps) => {
+  getUser()
   return (
     <main class="flex">
       <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] border-l-1">

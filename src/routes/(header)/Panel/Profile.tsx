@@ -18,7 +18,7 @@ const handleSubmit = action(async (formData:FormData) => {
   let email = formData.get("email")?.toString() || ""
 
   let number = (await getAuthSession())?.number
-  if (!number) throw redirect("/Login")
+  if (!number) throw redirect("/Login?back=/Panel/Profile")
 
   await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
   updateUserSession(name, email)

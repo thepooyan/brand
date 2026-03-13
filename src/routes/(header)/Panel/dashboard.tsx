@@ -11,7 +11,7 @@ import { findPlanName, freePlan } from "~/sections/plan"
 const queryUserPlan = query(async() => {
   "use server"
   let user = await getAuthSession()
-  if (!user) throw redirect("/Login")
+  if (!user) throw redirect("/Login?back=/Panel/dashboard")
 
   const dbUser = await db.query.usersTable.findFirst({
     where: (tbl => eq(tbl.id, user.id)),
