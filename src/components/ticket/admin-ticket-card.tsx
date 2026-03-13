@@ -31,7 +31,7 @@ const AdminTicketCard = ({t}:p) => {
       </CardHeader>
       <CardContent>
         <For each={t.content}>
-          {c => c}
+          {c => c.msg}
         </For>
       </CardContent>
       <CardFooter class="justify-end">

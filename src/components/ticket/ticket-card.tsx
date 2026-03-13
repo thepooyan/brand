@@ -2,6 +2,7 @@ import { Ticket } from "~/db/schema"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
+import { For } from "solid-js"
 
 interface p {
   t: Ticket
@@ -22,7 +23,9 @@ const TicketCard = ({t}:p) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {t.content}
+        <For each={t.content}>
+          {c => c.msg}
+        </For>
       </CardContent>
       <CardFooter class="justify-end">
         <Button>نمایش</Button>

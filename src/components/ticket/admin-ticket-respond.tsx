@@ -9,7 +9,7 @@ import { ticketTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
-import { createSignal } from "solid-js"
+import { createSignal, For } from "solid-js"
 
 interface p {
   t: TicketWithRelations
@@ -26,7 +26,7 @@ const saveTicketResponse = async (response: string, id: number) => {
     if (!item) return
 
     await ctx.update(ticketTable).set( {
-      content: [...item.content, response],
+      content: [...item.content, {from: "admin", msg: response}],
       state: "responded",
       updatedAt: new Date(),
     })
@@ -85,7 +85,9 @@ const AdminTicketCardRespond = ({t}:p) => {
         </div>
       </CardHeader>
       <CardContent>
-        {t.content}
+        <For each={t.content}>
+          {c => c.msg}
+        </For>
       </CardContent>
       <CardFooter class="flex flex-col items-stretch gap-2" >
         <form onsubmit={handleSubmit}>

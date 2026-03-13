@@ -6,6 +6,7 @@ import Textarea from "../ui/Textarea"
 import { setTicketState } from "./ticket-signal"
 import { callModal } from "../layout/Modal"
 import { newTicket } from "~/server/actions"
+import { revalidate } from "@solidjs/router"
 
 const TicketNew = () => {
 
@@ -24,6 +25,7 @@ const TicketNew = () => {
     if (res.ok) {
       callModal.success()
       setTicketState("dashboard")
+      revalidate("userTickets")
     } else {
       callModal.fail(res.msg)
     }
