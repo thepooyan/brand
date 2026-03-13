@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { FaSolidTicket } from "solid-icons/fa"
 import { FiArrowLeft, FiFileText, FiImage } from "solid-icons/fi"
 import { For } from "solid-js"
 import TA from "~/components/parts/TA"
@@ -14,6 +15,11 @@ const adminMenu = [
     label: "مدیا",
     href: "Media",
     icon: FiImage
+  },
+  {
+    label: "تیکت",
+    href: "ticket",
+    icon: FaSolidTicket
   },
 ]
 

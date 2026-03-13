@@ -11,6 +11,9 @@ export const ticketTable = sqliteTable("ticket", {
   content: text().notNull()
 })
 
+export type Ticket = typeof ticketTable.$inferSelect
+export type NewTicket = typeof ticketTable.$inferInsert
+
 export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),
