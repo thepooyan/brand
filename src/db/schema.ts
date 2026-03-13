@@ -11,6 +11,10 @@ export const ticketTable = sqliteTable("ticket", {
   content: text().notNull()
 })
 
+export const ticket_user_relation = relations(ticketTable, ({one}) => ({
+  user: one(usersTable, {fields: [ticketTable.userId], references: [usersTable.id]})
+}))
+
 export type Ticket = typeof ticketTable.$inferSelect
 export type NewTicket = typeof ticketTable.$inferInsert
 
