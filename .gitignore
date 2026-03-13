@@ -28,4 +28,5 @@ gitignore
 Thumbs.db
 
 *.sqlite
+*.sqlites
 

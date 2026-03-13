@@ -1,5 +1,5 @@
-import { query, redirect } from "@solidjs/router"
-import { eq } from "drizzle-orm"
+import { createAsync, query, redirect } from "@solidjs/router"
+import { and, eq } from "drizzle-orm"
 import { For, ParentProps } from "solid-js"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
@@ -36,13 +36,19 @@ const doesHaveNewTicket = query(async () => {
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel")
   let userTickets = await db.query.ticketTable.findFirst({
-    where: (tbl => eq(tbl.userId, user.id))
+    where: (tbl => and(
+      eq(tbl.userId, user.id),
+      eq(tbl.isSeen, false)
+    ))
   })
-  return userTickets
+  return userTickets !== undefined
 }, "doesHaveNewTicket")
 
 const Panel = ({children}:ParentProps) => {
+
   getUser()
+  const newTicket = createAsync(() => doesHaveNewTicket())
+
   return (
     <main class="flex">
       <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] border-l-1">
@@ -52,7 +58,10 @@ const Panel = ({children}:ParentProps) => {
               {p.group}
             </span>
             <For each={p.items}>
-              {pp => <I href={pp.href}>{pp.name}</I>}
+              {pp => <I href={pp.href}>
+                {pp.name}
+                {pp.href === "ticket" && newTicket() && <div>new</div>}
+              </I>}
             </For>
           </>}
         </For>

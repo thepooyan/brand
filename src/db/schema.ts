@@ -7,6 +7,7 @@ export const tokenLength = 62
 
 export const ticketTable = sqliteTable("ticket", {
   id: int().primaryKey({autoIncrement: true}),
+  isSeen: integer({mode: "boolean"}).notNull().default(true),
   userId: int().notNull().references(() => usersTable.id),
   subject: text().notNull(),
   content: text({mode: "json"}).$type<{from: "user" | "admin", msg: string}[]>().notNull(),
