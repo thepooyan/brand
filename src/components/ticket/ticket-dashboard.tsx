@@ -9,6 +9,7 @@ import { useToggle } from "~/lib/hooks";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
 import { desc, eq } from "drizzle-orm";
+import ticket from "~/routes/(header)/Panel/ticket";
 
 const getUserTickets = query(async () => {
   "use server"
@@ -24,16 +25,18 @@ const getUserTickets = query(async () => {
 const TicketDashboard = () => {
 
   const tickets = createAsync(() => getUserTickets())
-  const [filter, setFilter] = createSignal<TicketStates | null>(null)
+  type filterStates = TicketStates | null | "seen"
+  const [filter, setFilter] = createSignal<filterStates>(null)
 
   const filteredTickets = () => {
     if (filter() === null) return tickets()
+    if (filter() === "seen") return tickets()?.filter(t => t.isSeen === false)
     return tickets()?.filter(t => t.state === filter())
   }
 
-  const {activate, isActive} = useToggle<TicketStates | null>(null)
+  const {activate, isActive} = useToggle<filterStates>(null)
 
-  const Btn = ({children, state}:ParentProps & {state: TicketStates | null}) => {
+  const Btn = ({children, state}:ParentProps & {state: filterStates}) => {
     const id = state
     return <Button variant={isActive(id) ? "secondary" : "outline"}
       onclick={() => {
@@ -58,10 +61,11 @@ const TicketDashboard = () => {
         </div>
         <div class="space-x-1">
           <Btn state={null}>همه</Btn>
-          <For each={ticket_states}>
+          <For each={[...ticket_states, "seen" as const]}>
             {s => <Btn state={s}>
               {s === "responded" && "پاسخ داده شده"}
               {s === "pending" && "در انتظار پاسخ"}
+              {s === "seen" && "تازه"}
             </Btn>}
           </For>
         </div>
