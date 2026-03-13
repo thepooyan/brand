@@ -10,6 +10,7 @@ export const ticketTable = sqliteTable("ticket", {
   userId: int().notNull().references(() => usersTable.id),
   subject: text().notNull(),
   content: text().notNull(),
+  response: text(),
   state: text({ enum: ticket_states }).notNull().default("pending")
 })
 
