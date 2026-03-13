@@ -21,7 +21,9 @@ export const newTicket = async (t: Ticket):Response => {
     await db.insert(ticketTable).values({
       userId: user.id,
       content: t.content,
-      subject: t.subject
+      subject: t.subject,
+      updatedAt: new Date(),
+      state: "pending"
     })
 
     return {ok: true}

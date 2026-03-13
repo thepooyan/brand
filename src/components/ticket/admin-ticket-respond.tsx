@@ -17,7 +17,11 @@ interface p {
 
 const saveTicketResponse = async (response: string, id: number) => {
   "use server"
-  await db.update(ticketTable).set( { response: response, state: "responded" })
+  await db.update(ticketTable).set( {
+    response: response,
+    state: "responded",
+    updatedAt: new Date(),
+  })
   .where(
     eq(ticketTable.id, id)
   )
@@ -83,7 +87,7 @@ const AdminTicketCardRespond = ({t}:p) => {
           />
           <Button type="submit"
             loading={loading}
-            class="w-max">ارسال</Button>
+            class="w-max mt-3">ارسال</Button>
         </form>
       </CardFooter>
     </Card>

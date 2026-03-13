@@ -6,7 +6,6 @@ import TicketCard from "./ticket-card";
 import { Loading } from "../parts/Loading";
 import { FiFilter, FiPlus } from "solid-icons/fi";
 import { useToggle } from "~/lib/hooks";
-import { cn } from "~/lib/utils";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
@@ -17,7 +16,8 @@ const getUserTickets = query(async () => {
   if (!user) throw redirect("/Login?back=/Panel/ticket")
 
   return db.query.ticketTable.findMany({
-    where: (tbl => eq(tbl.userId, user.id))
+    where: (tbl => eq(tbl.userId, user.id)),
+    orderBy: (tbl => tbl.updatedAt )
   })
 }, "userTickets")
 

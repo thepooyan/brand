@@ -11,7 +11,8 @@ export const ticketTable = sqliteTable("ticket", {
   subject: text().notNull(),
   content: text().notNull(),
   response: text(),
-  state: text({ enum: ticket_states }).notNull().default("pending")
+  state: text({ enum: ticket_states }).notNull().default("pending"),
+  updatedAt: integer({mode: "timestamp"}).notNull().default(new Date())
 })
 
 export const ticket_user_relation = relations(ticketTable, ({one}) => ({
