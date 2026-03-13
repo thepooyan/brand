@@ -62,7 +62,7 @@ const Panel = ({children}:ParentProps) => {
               {pp => <I href={pp.href}>
                 {pp.name}
                 {pp.href === "ticket" && newTicket() &&
-                  <Blinker class="absolute left-3 top-0 bottom-0 m-auto"/>
+                  <Blinker class="absolute right-1 top-1"/>
                 }
               </I>}
             </For>

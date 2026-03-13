@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { For } from "solid-js"
 import { FiAlertCircle } from "solid-icons/fi"
+import { limitChar } from "~/lib/utils"
 
 interface p {
   t: Ticket
@@ -30,9 +31,7 @@ const TicketCard = ({t}:p) => {
         </Button>}
       </CardHeader>
       <CardContent>
-        <For each={t.content}>
-          {c => <p>{c.msg}</p>}
-        </For>
+        {limitChar(t.content.at(-1)?.msg || "", 40)}
       </CardContent>
         <Button class="absolute left-5 bottom-5">نمایش</Button>
     </Card>
