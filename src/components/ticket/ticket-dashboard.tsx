@@ -12,6 +12,7 @@ import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
 
 const getUserTickets = query(async () => {
+  "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/ticket")
 
