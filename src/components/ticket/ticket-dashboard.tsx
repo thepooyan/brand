@@ -67,6 +67,12 @@ const TicketDashboard = () => {
         </div>
       </div>
 
+      <Show when={filteredTickets()?.length === 0}>
+        <p class="text-muted-foreground p-5 text-center mt-10">
+          موردی یافت نشد...
+        </p>
+      </Show>
+
       <div class="p-5 grid grid-cols-2 gap-3">
         <Suspense fallback={<Loading/>}>
           <Show when={filteredTickets()}>
