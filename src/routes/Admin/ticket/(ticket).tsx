@@ -22,11 +22,13 @@ const ticket = () => {
       <h1 class="text-3xl font-bold mb-8">
         تیکت ها
       </h1>
-      <Show when={tickets()} fallback={<Loading/>}>
-        {presentData => <For each={presentData()}>
-          {f => <AdminTicketCard t={f}/>}
-        </For>}
-      </Show>
+      <div class="grid grid-cols-2 gap-3">
+        <Show when={tickets()} fallback={<Loading/>}>
+          {presentData => <For each={presentData()}>
+            {f => <AdminTicketCard t={f}/>}
+          </For>}
+        </Show>
+      </div>
     </div>
   )
 }

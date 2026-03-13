@@ -67,7 +67,7 @@ const TicketDashboard = () => {
         </div>
       </div>
 
-      <div class="p-5 space-y-3">
+      <div class="p-5 grid grid-cols-2 gap-3">
         <Suspense fallback={<Loading/>}>
           <Show when={filteredTickets()}>
             {pt => <For each={pt()}>
