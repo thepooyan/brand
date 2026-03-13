@@ -1,7 +1,7 @@
 import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { TicketWithRelations } from "~/server/adminActions"
+import { TicketWithRelations } from "~/db/relationQueries"
 
 interface p {
   t: TicketWithRelations
