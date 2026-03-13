@@ -24,7 +24,7 @@ const TicketCard = ({t}:p) => {
       </CardHeader>
       <CardContent>
         <For each={t.content}>
-          {c => c.msg}
+          {c => <p>{c.msg}</p>}
         </For>
       </CardContent>
       <CardFooter class="justify-end">
