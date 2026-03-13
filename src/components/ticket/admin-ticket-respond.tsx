@@ -29,6 +29,7 @@ const saveTicketResponse = async (response: string, id: number) => {
       content: [...item.content, {from: "admin", msg: response}],
       state: "responded",
       updatedAt: new Date(),
+      isSeen: false
     })
     .where(
       eq(ticketTable.id, id)

@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { For } from "solid-js"
+import { FiAlertCircle } from "solid-icons/fi"
 
 interface p {
   t: Ticket
@@ -10,7 +11,7 @@ interface p {
 const TicketCard = ({t}:p) => {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader class="relative">
         <CardTitle>
           {t.subject}
         </CardTitle>
@@ -21,6 +22,12 @@ const TicketCard = ({t}:p) => {
           {t.state === "pending" && "در انتظار پاسخ"}
           {t.state === "responded" && "پاسخ داده شده"}
         </CardDescription>
+        {!t.isSeen && <Button variant="outline"
+          class=" absolute text-green-500 font-bold left-5 top-5 flex items-center gap-2"
+        >
+          <FiAlertCircle/>
+          جدید
+        </Button>}
       </CardHeader>
       <CardContent>
         <For each={t.content}>

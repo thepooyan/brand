@@ -1,6 +1,7 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { and, eq } from "drizzle-orm"
 import { For, ParentProps } from "solid-js"
+import Blinker from "~/components/parts/Blinker"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
@@ -24,7 +25,7 @@ const panelItems:panelItems = [
   },
   {
     group: "پشتیبانی", items: [
-      {name: "ثبت تیکت", href: "ticket"},
+      {name: "تیکت", href: "ticket"},
       {name: "مستندات", href: "/Docs"},
       {name: "تماس", href: "/ContactUs"},
     ]
@@ -60,7 +61,9 @@ const Panel = ({children}:ParentProps) => {
             <For each={p.items}>
               {pp => <I href={pp.href}>
                 {pp.name}
-                {pp.href === "ticket" && newTicket() && <div>new</div>}
+                {pp.href === "ticket" && newTicket() &&
+                  <Blinker class="absolute left-3 top-0 bottom-0 m-auto"/>
+                }
               </I>}
             </For>
           </>}
@@ -76,7 +79,7 @@ const Panel = ({children}:ParentProps) => {
 const I = ({href, children}:ParentProps<{href: string}>) => {
   return <Button as={TA} href={href.startsWith("/") ? href : `/Panel/${href}`}
     variant="outline"
-    class="px-5 py-3 inline-block"
+    class="px-5 py-3 inline-block relative"
     activeClass="bg-zinc-800"
   >
     {children}
