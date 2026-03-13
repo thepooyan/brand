@@ -14,6 +14,9 @@ const TicketDashboard = () => {
         <Button variant="outline" >
           تیکت های خوانده شده
         </Button>
+        <Button variant="outline" >
+          تیکت های ارسال شده
+        </Button>
       </div>
 
     </Card>

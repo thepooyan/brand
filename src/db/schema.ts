@@ -4,6 +4,13 @@ import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
 
+export const ticketTable = sqliteTable("ticket", {
+  id: int().primaryKey({autoIncrement: true}),
+  userId: int().notNull().references(() => usersTable.id),
+  subject: text().notNull(),
+  content: text().notNull()
+})
+
 export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),

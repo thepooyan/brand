@@ -3,7 +3,7 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
-import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, usersTable, websiteOrdersTable } from "~/db/schema"
+import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, ticketTable, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -18,7 +18,11 @@ export const newTicket = async (t: Ticket):Response => {
     const user = await getAuthSession()
     if (!user) return {ok: false, msg: "لطفا مجددا وارد شوید"}
 
-    console.log(t, user)
+    await db.insert(ticketTable).values({
+      userId: user.id,
+      content: t.content,
+      subject: t.subject
+    })
 
     return {ok: true}
   })
