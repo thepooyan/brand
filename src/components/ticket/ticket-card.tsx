@@ -19,7 +19,7 @@ const TicketCard = ({t}:p) => {
         {t.content}
       </CardContent>
       <CardFooter>
-        <Button>پاسخ</Button>
+        <Button>نمایش</Button>
       </CardFooter>
     </Card>
   )

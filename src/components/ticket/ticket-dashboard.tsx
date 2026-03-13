@@ -1,16 +1,30 @@
 import { createAsync } from "@solidjs/router";
 import { Button } from "../ui/button"
-import { Card } from "../ui/card"
 import { setTicketState } from "./ticket-signal";
 import { getUserTickets } from "~/server/userActions";
-import { For, Show } from "solid-js";
+import { For, ParentProps, Show } from "solid-js";
 import TicketCard from "./ticket-card";
 import { Loading } from "../parts/Loading";
 import { FiFilter } from "solid-icons/fi";
+import { useToggle } from "~/lib/hooks";
+import { cn } from "~/lib/utils";
 
 const TicketDashboard = () => {
 
   const tickets = createAsync(() => getUserTickets())
+
+  const {activate, isActive} = useToggle()
+
+  const Btn = ({children}:ParentProps) => {
+    const id = Math.random()
+    return <Button variant="outline"
+      class={cn(
+        isActive(id) && "bg-primary text-primary-foreground"
+      )}
+      onclick={() => activate(id)}>
+      {children}
+    </Button>
+  }
 
   return (
     <div class="p-1">
@@ -22,15 +36,15 @@ const TicketDashboard = () => {
           فیلتر:
         </div>
         <div class="space-x-1">
-          <Button variant="outline">
+          <Btn>
             تیکت های خوانده نشده
-          </Button>
-          <Button variant="outline" >
+          </Btn>
+          <Btn>
             تیکت های خوانده شده
-          </Button>
-          <Button variant="outline" >
+          </Btn>
+          <Btn>
             تیکت های ارسال شده
-          </Button>
+          </Btn>
         </div>
       </div>
 
@@ -44,5 +58,6 @@ const TicketDashboard = () => {
     </div>
   )
 }
+
 
 export default TicketDashboard
