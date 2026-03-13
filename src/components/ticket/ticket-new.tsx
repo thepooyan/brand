@@ -30,15 +30,17 @@ const TicketNew = () => {
   }
 
   return (
-    <Card>
-      <form onsubmit={handleSubmit}>
-        <h1>ثبت تیکت جدید</h1>
-        <Button variant="secondary" onclick={() => setTicketState("dashboard")}>
+    <Card  class="container p-10">
+      <form onsubmit={handleSubmit} class="space-y-3">
+        <h1 class="inline-block text-2xl font-bold mb-10">ثبت تیکت جدید</h1>
+        <Button variant="secondary" onclick={() => setTicketState("dashboard")}
+          class="float-left"
+        >
           بازگشت
           <FiArrowLeft/>
         </Button>
         <Input placeholder="موضوع" name="subject"/>
-        <Textarea placeholder="متن مورد نظر را انیجا وارد کنید..." name="content"/>
+        <Textarea class="min-h-40" placeholder="متن مورد نظر را انیجا وارد کنید..." name="content"/>
         <Button type="submit" >ارسال</Button>
       </form>
     </Card>
