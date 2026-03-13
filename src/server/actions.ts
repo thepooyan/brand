@@ -10,7 +10,19 @@ import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
 import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
+import { Ticket } from "~/components/ticket/ticket-signal"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
+
+export const newTicket = async (t: Ticket):Response => {
+  return warpResponse(async ():Promise<Response> => {
+    const user = await getAuthSession()
+    if (!user) return {ok: false, msg: "لطفا مجددا وارد شوید"}
+
+    console.log(t, user)
+
+    return {ok: true}
+  })
+}
 
 export const sendOTP = async (number: string):Response<string> => {
   return warpResponse(async ():Promise<Response<string>> => {
