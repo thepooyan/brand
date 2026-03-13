@@ -10,8 +10,8 @@ interface p {
 }
 const TicketCard = ({t}:p) => {
   return (
-    <Card>
-      <CardHeader class="relative">
+    <Card class="relative">
+      <CardHeader class="">
         <CardTitle>
           {t.subject}
         </CardTitle>
@@ -34,9 +34,7 @@ const TicketCard = ({t}:p) => {
           {c => <p>{c.msg}</p>}
         </For>
       </CardContent>
-      <CardFooter class="justify-end">
-        <Button>نمایش</Button>
-      </CardFooter>
+        <Button class="absolute left-5 bottom-5">نمایش</Button>
     </Card>
   )
 }
