@@ -1,3 +1,4 @@
+import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { TicketWithRelations } from "~/server/adminActions"
@@ -19,6 +20,13 @@ const AdminTicketCard = ({t}:p) => {
           <br/>
           {t.user.email}
         </CardDescription>
+        <div class="flex gap-2">
+          {t.state === "pending" && <AiFillWarning class="text-orange-500"/>}
+          {t.state === "responded" && <AiOutlineCheck class="text-green-500"/>}
+          وضعیت: 
+          {t.state === "pending" && "در انتظار پاسخ"}
+          {t.state === "responded" && "پاسخ داده شده"}
+        </div>
       </CardHeader>
       <CardContent>
         {t.content}

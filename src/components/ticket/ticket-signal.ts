@@ -1,10 +1,16 @@
 import { createSignal } from "solid-js"
 
-export type ticketState = "dashboard" | "new"
-export const [ticketState, setTicketState] = createSignal<ticketState>("dashboard")
+type ticketPageState = "dashboard" | "new"
+export const [ticketState, setTicketState] = createSignal<ticketPageState>("dashboard")
 
 export type Ticket = {
   subject: string
   content: string
 }
 
+export const ticket_states = [
+  "pending",
+  "responded"
+] as const
+
+export type TicketStates = typeof ticket_states[number]

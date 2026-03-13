@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { ticket_states } from "~/components/ticket/ticket-signal";
 import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
@@ -8,7 +9,8 @@ export const ticketTable = sqliteTable("ticket", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),
   subject: text().notNull(),
-  content: text().notNull()
+  content: text().notNull(),
+  state: text({ enum: ticket_states }).notNull().default("pending")
 })
 
 export const ticket_user_relation = relations(ticketTable, ({one}) => ({
