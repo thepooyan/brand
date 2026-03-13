@@ -1,6 +1,10 @@
+import { query, redirect } from "@solidjs/router"
+import { eq } from "drizzle-orm"
 import { For, ParentProps } from "solid-js"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
+import { db } from "~/db/db"
+import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
 
 type panelItems = {group: string, items: nav[]}[]
@@ -26,6 +30,16 @@ const panelItems:panelItems = [
     ]
   },
 ]
+
+const doesHaveNewTicket = query(async () => {
+  "use server"
+  const user = await getAuthSession()
+  if (!user) throw redirect("/Login?back=/Panel")
+  let userTickets = await db.query.ticketTable.findFirst({
+    where: (tbl => eq(tbl.userId, user.id))
+  })
+  return userTickets
+}, "doesHaveNewTicket")
 
 const Panel = ({children}:ParentProps) => {
   getUser()
