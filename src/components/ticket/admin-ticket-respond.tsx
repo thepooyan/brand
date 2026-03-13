@@ -17,14 +17,23 @@ interface p {
 
 const saveTicketResponse = async (response: string, id: number) => {
   "use server"
-  await db.update(ticketTable).set( {
-    response: response,
-    state: "responded",
-    updatedAt: new Date(),
+  await db.transaction(async ctx => {
+
+    const item = await ctx.query.ticketTable.findFirst({
+      where: eq(ticketTable.id, id)
+    })
+
+    if (!item) return
+
+    await ctx.update(ticketTable).set( {
+      content: [...item.content, response],
+      state: "responded",
+      updatedAt: new Date(),
+    })
+    .where(
+      eq(ticketTable.id, id)
+    )
   })
-  .where(
-    eq(ticketTable.id, id)
-  )
   return {ok: true}
 }
 

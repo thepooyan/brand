@@ -9,8 +9,7 @@ export const ticketTable = sqliteTable("ticket", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id),
   subject: text().notNull(),
-  content: text().notNull(),
-  response: text(),
+  content: text({mode: "json"}).$type<string[]>().notNull(),
   state: text({ enum: ticket_states }).notNull().default("pending"),
   updatedAt: integer({mode: "timestamp"}).notNull().default(new Date())
 })

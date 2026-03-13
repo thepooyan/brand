@@ -2,6 +2,7 @@ import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { TicketWithRelations } from "~/db/relationQueries"
+import { For } from "solid-js"
 
 interface p {
   t: TicketWithRelations
@@ -29,7 +30,9 @@ const AdminTicketCard = ({t}:p) => {
         </div>
       </CardHeader>
       <CardContent>
-        {t.content}
+        <For each={t.content}>
+          {c => c}
+        </For>
       </CardContent>
       <CardFooter class="justify-end">
         <Button as="A" href={`/admin/ticket/answer/${t.id}`}
