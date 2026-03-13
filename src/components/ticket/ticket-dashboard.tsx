@@ -46,7 +46,7 @@ const TicketDashboard = () => {
       </Button>
 
       <div>
-        <div class="flex gap-2 my-5 mb-2 items-center text-muted-foreground">
+        <div class="flex gap-2 my-5 mb-2 items-center text-muted-foreground text-sm">
           <FiFilter/>
           فیلتر:
         </div>
