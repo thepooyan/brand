@@ -5,7 +5,7 @@ import { getUserTickets } from "~/server/userActions";
 import { For, ParentProps, Show } from "solid-js";
 import TicketCard from "./ticket-card";
 import { Loading } from "../parts/Loading";
-import { FiFilter } from "solid-icons/fi";
+import { FiFilter, FiPlus } from "solid-icons/fi";
 import { useToggle } from "~/lib/hooks";
 import { cn } from "~/lib/utils";
 
@@ -28,7 +28,10 @@ const TicketDashboard = () => {
 
   return (
     <div class="p-1">
-      <Button onclick={() => setTicketState("new") }>تیکت جدید</Button>
+      <Button onclick={() => setTicketState("new") } class="float-left m-5">
+        تیکت جدید
+        <FiPlus/>
+      </Button>
 
       <div>
         <div class="flex gap-2 my-5 mb-2 items-center text-muted-foreground">
