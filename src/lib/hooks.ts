@@ -7,14 +7,15 @@ export const preload = (route: string, ...more: string[]) => {
   more.forEach(m => pr(m, {preloadData: true}))
 }
 
-export const useToggle = (initial?: number) => {
-  const [active, setActive] = createSignal(initial)
+type acceptableToggleTypes = string | number | null | undefined
+export const useToggle = <T extends acceptableToggleTypes>(initial?: T) => {
+  const [active, setActive] = createSignal<acceptableToggleTypes>(initial)
 
-  const activate = (id: number) => {
-    setActive(id)
+  const activate = (id: T) => {
+    setActive(() => id)
   }
 
-  const isActive = (id: number) => {
+  const isActive = (id: T) => {
     return active() === id
   }
 

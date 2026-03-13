@@ -31,10 +31,10 @@ const TicketDashboard = () => {
     return tickets()?.filter(t => t.state === filter())
   }
 
-  const {activate, isActive} = useToggle()
+  const {activate, isActive} = useToggle<TicketStates | null>(null)
 
   const Btn = ({children, state}:ParentProps & {state: TicketStates | null}) => {
-    const id = Math.random()
+    const id = state
     return <Button variant={isActive(id) ? "secondary" : "outline"}
       onclick={() => {
         activate(id)
