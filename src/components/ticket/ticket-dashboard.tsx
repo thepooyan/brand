@@ -1,7 +1,7 @@
 import { createAsync, query, redirect } from "@solidjs/router";
 import { Button } from "../ui/button"
-import { setTicketState } from "./ticket-signal";
-import { For, ParentProps, Show, Suspense } from "solid-js";
+import { setTicketState, ticket_states, TicketStates } from "./ticket-signal";
+import { createSignal, For, ParentProps, Show, Suspense } from "solid-js";
 import TicketCard from "./ticket-card";
 import { Loading } from "../parts/Loading";
 import { FiFilter, FiPlus } from "solid-icons/fi";
@@ -24,16 +24,22 @@ const getUserTickets = query(async () => {
 const TicketDashboard = () => {
 
   const tickets = createAsync(() => getUserTickets())
+  const [filter, setFilter] = createSignal<TicketStates | null>(null)
+
+  const filteredTickets = () => {
+    if (filter() === null) return tickets()
+    return tickets()?.filter(t => t.state === filter())
+  }
 
   const {activate, isActive} = useToggle()
 
-  const Btn = ({children}:ParentProps) => {
+  const Btn = ({children, state}:ParentProps & {state: TicketStates | null}) => {
     const id = Math.random()
     return <Button variant={isActive(id) ? "secondary" : "outline"}
-      class={cn(
-        // isActive(id) && "bg-primary text-primary-foreground"
-      )}
-      onclick={() => activate(id)}>
+      onclick={() => {
+        activate(id)
+        setFilter(state)
+      }}>
       {children}
     </Button>
   }
@@ -51,21 +57,19 @@ const TicketDashboard = () => {
           فیلتر:
         </div>
         <div class="space-x-1">
-          <Btn>
-            تیکت های خوانده نشده
-          </Btn>
-          <Btn>
-            تیکت های خوانده شده
-          </Btn>
-          <Btn>
-            تیکت های ارسال شده
-          </Btn>
+          <Btn state={null}>همه</Btn>
+          <For each={ticket_states}>
+            {s => <Btn state={s}>
+              {s === "responded" && "پاسخ داده شده"}
+              {s === "pending" && "در انتظار پاسخ"}
+            </Btn>}
+          </For>
         </div>
       </div>
 
       <div class="p-5 space-y-3">
         <Suspense fallback={<Loading/>}>
-          <Show when={tickets()}>
+          <Show when={filteredTickets()}>
             {pt => <For each={pt()}>
               {f => <TicketCard t={f}/>}
             </For>}
