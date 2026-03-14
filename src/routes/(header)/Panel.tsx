@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { and, eq } from "drizzle-orm"
-import { For, ParentProps } from "solid-js"
+import { createEffect, For, ParentProps } from "solid-js"
 import Blinker from "~/components/parts/Blinker"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
@@ -49,6 +49,10 @@ const Panel = ({children}:ParentProps) => {
 
   getUser()
   const newTicket = createAsync(() => doesHaveNewTicket())
+
+  createEffect(() => {
+    console.log(newTicket())
+  })
 
   return (
     <main class="flex">

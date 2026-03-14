@@ -1,6 +1,6 @@
 import { createAsync, query, redirect, revalidate, useParams } from "@solidjs/router"
 import { and, eq } from "drizzle-orm"
-import { Show, Suspense } from "solid-js"
+import { createEffect, Show, Suspense } from "solid-js"
 import { Loading } from "~/components/parts/Loading"
 import TicketDetails from "~/components/ticket/ticket-details"
 import { db } from "~/db/db"
@@ -25,7 +25,6 @@ const a = query(async (id: number) => {
     if (!target) return undefined
     if (!target.isSeen) {
       await ctx.update(ticketTable).set({isSeen: true}).where(eq(ticketTable.id, target.id))
-      revalidate("doesHaveNewTicket")
     }
     return target
   })
@@ -36,6 +35,11 @@ const id = () => {
 
   const {id} = useParams()
   const ticket = createAsync(() => a(parseInt(id)))
+
+  createEffect(() => {
+    ticket()
+    revalidate("doesHaveNewTicket")
+  })
 
   return (
     <div>
