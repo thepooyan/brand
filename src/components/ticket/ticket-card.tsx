@@ -1,15 +1,44 @@
-import { Ticket } from "~/db/schema"
+import { Ticket, ticketTable } from "~/db/schema"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { AiFillWarning } from "solid-icons/ai"
-import { FiAlertCircle, FiCheck } from "solid-icons/fi"
+import { FiAlertCircle, FiCheck, FiTrash } from "solid-icons/fi"
 import { limitChar } from "~/lib/utils"
 import TA from "../parts/TA"
+import { callModal } from "../layout/Modal"
+import { db } from "~/db/db"
+import { getAuthSession } from "~/lib/session"
+import { redirect } from "elysia"
+import { and, eq } from "drizzle-orm"
+import { revalidate } from "@solidjs/router"
+
+const deleteTicket = async (id: number) => {
+  "use server"
+  const user = await getAuthSession()
+  if (!user) throw redirect("/Login?back=/Panel/ticket")
+
+  await db.delete(ticketTable).where(
+    and(
+      eq(ticketTable.id, id),
+      eq(ticketTable.userId, user.id)
+    )
+  )
+  return {ok: true}
+}
 
 interface p {
   t: Ticket
 }
 const TicketCard = ({t}:p) => {
+
+  const deleteMe = async () => {
+    callModal.prompt(`تیکت ${t.subject} حذف شود؟`)
+    .yes(async() => {
+        await deleteTicket(t.id)
+        revalidate("userTickets")
+      })
+  }
+
   return (
     <Card class="relative">
       <CardHeader class="">
@@ -34,7 +63,13 @@ const TicketCard = ({t}:p) => {
       <CardContent>
         {limitChar(t.content.at(-1)?.msg || "", 40)}
       </CardContent>
-        <Button class="absolute left-5 bottom-5" as={TA} href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
+      <div class="absolute left-5 bottom-5 gap-2 flex items-center">
+        <Button variant="destructive" onclick={deleteMe}>
+          <FiTrash/>
+          حذف
+        </Button>
+        <Button class="" as={TA} href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
+      </div>
     </Card>
   )
 }

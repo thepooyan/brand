@@ -85,7 +85,7 @@ const TicketDetails = ({t}:p) => {
       </CardContent>
       <CardFooter class="flex-col items-stretch gap-3">
         <form class="space-y-3" onsubmit={handleSubmit}>
-          <Textarea placeholder="پاسخ..." class="min-h-30" name="response"/>
+          <Textarea placeholder="پاسخ..." class="min-h-20" name="response"/>
           <Button class="w-max" loading={loading} type="submit" >ارسال</Button>
         </form>
       </CardFooter>
