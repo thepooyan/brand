@@ -22,7 +22,6 @@ const BotCard = ({bot}:props) => {
   const deleteBot = async () => {
     callModal.prompt(`ربات "${bot.botName}" حذف شود؟`)
     .yes(async () => {
-        callModal.wait()
         let response = await deleteChatbot(bot.id)
         if (response.ok) {
           callModal.success()
