@@ -11,7 +11,7 @@ import { FormSubmitEvent } from "~/db/types"
 import { callModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
 import TicketRail from "./ticket-rail"
-import Input from "../ui/InputNew"
+import Input from "../ui/input"
 
 interface p {
   t: Accessor<Ticket>

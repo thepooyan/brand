@@ -1,16 +1,12 @@
-import clsx from "clsx";
-import { JSX } from "solid-js";
+import { TextField, TextFieldInput } from "./text-field"
 
-const Input = ( props :JSX.InputHTMLAttributes<HTMLInputElement>) => {
+type t = typeof TextFieldInput
+const Input:t = (props) => {
   return (
-    <input
-      {...props}
-      class={clsx(
-        "p-2 w-full border-1 border-border rounded-md bg-transparent min-h-10 " +
-        props.class,
-      )}
-    />
-  );
-};
+    <TextField class="w-full">
+      <TextFieldInput {...props}/>
+    </TextField>
+  )
+}
 
-export default Input;
+export default Input

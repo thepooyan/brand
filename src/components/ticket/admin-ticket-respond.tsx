@@ -10,7 +10,7 @@ import { callModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
 import { Accessor, createSignal } from "solid-js"
 import TicketRail from "./ticket-rail"
-import Input from "../ui/InputNew"
+import Input from "../ui/input"
 
 interface p {
   t: Accessor<TicketWithRelations>

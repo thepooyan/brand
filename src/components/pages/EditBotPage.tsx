@@ -1,5 +1,5 @@
 import { I_Bot } from "~/db/schema"
-import Input from "../ui/InputNew"
+import Input from "../ui/input"
 import { Component, createSignal, ParentComponent } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
