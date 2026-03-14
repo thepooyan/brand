@@ -81,7 +81,7 @@ const AdminTicketCardRespond = ({t}:p) => {
           {t().state === "responded" && "پاسخ داده شده"}
         </div>
       </CardHeader>
-      <CardContent class="p-0 h-full">
+      <CardContent class="p-0 h-[calc(100dvh-20rem)]">
         <TicketRail t={t}/>
       </CardContent>
       <CardFooter class="p-3 mt-auto" >

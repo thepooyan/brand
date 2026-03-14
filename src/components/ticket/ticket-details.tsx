@@ -79,7 +79,7 @@ const TicketDetails = ({t}:p) => {
           <FiArrowLeft/>
         </Button>
       </CardHeader>
-      <CardContent class="p-0 h-full">
+      <CardContent class="p-0 h-[calc(100dvh-16rem)]">
         <TicketRail t={t}/>
       </CardContent>
       <CardFooter class="p-4 mt-auto">
