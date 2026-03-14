@@ -36,9 +36,9 @@ const TicketDetails = ({t}:p) => {
           {c => <TicketBubble {...c}/>}
         </For>
       </CardContent>
-      <CardFooter>
-        <Textarea placeholder="پاسخ..." class="w-full"/>
-        <Button>ارسال</Button>
+      <CardFooter class="flex-col items-stretch gap-3">
+        <Textarea placeholder="پاسخ..." class="min-h-30"/>
+        <Button class="w-max">ارسال</Button>
       </CardFooter>
     </Card>
   )
