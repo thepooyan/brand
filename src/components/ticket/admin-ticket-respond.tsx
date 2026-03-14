@@ -1,7 +1,6 @@
 import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import Textarea from "../ui/Textarea"
 import { TicketWithRelations } from "~/db/relationQueries"
 import { FormSubmitEvent } from "~/db/types"
 import { db } from "~/db/db"
@@ -11,6 +10,7 @@ import { callModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
 import { Accessor, createSignal } from "solid-js"
 import TicketRail from "./ticket-rail"
+import Input from "../ui/InputNew"
 
 interface p {
   t: Accessor<TicketWithRelations>
@@ -71,11 +71,7 @@ const AdminTicketCardRespond = ({t}:p) => {
           {t().subject}
         </CardTitle>
         <CardDescription>
-          {t().user.number}
-          <br/>
-          {t().user.name}
-          <br/>
-          {t().user.email}
+          {t().user.number} | {t().user.name} | {t().user.email}
         </CardDescription>
         <div class="flex gap-2">
           {t().state === "pending" && <AiFillWarning class="text-orange-500"/>}
@@ -85,19 +81,19 @@ const AdminTicketCardRespond = ({t}:p) => {
           {t().state === "responded" && "پاسخ داده شده"}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent class="p-0">
         <TicketRail t={t}/>
       </CardContent>
-      <CardFooter class="flex flex-col items-stretch gap-2" >
-        <form onsubmit={handleSubmit}>
-          <Textarea
+      <CardFooter class="p-3" >
+        <form onsubmit={handleSubmit} class="flex gap-2 items-center w-full">
+          <Input
             placeholder="پاسخ..."
-            class="w-full block min-h-30"
+            class="w-full  "
             name="response"
           />
           <Button type="submit"
             loading={loading}
-            class="w-max mt-3">ارسال</Button>
+           >ارسال</Button>
         </form>
       </CardFooter>
     </Card>

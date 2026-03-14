@@ -1,11 +1,9 @@
 import { Ticket, ticketTable } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Accessor, createSignal, For } from "solid-js"
-import TicketBubble from "./ticket-bubble"
-import Textarea from "../ui/Textarea"
 import { Button } from "../ui/button"
 import { AiFillWarning } from "solid-icons/ai"
-import { FiArrowLeft, FiCheck } from "solid-icons/fi"
+import { FiArrowLeft, FiCheck, FiSend } from "solid-icons/fi"
 import TA from "../parts/TA"
 import { db } from "~/db/db"
 import { eq } from "drizzle-orm"
@@ -13,6 +11,7 @@ import { FormSubmitEvent } from "~/db/types"
 import { callModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
 import TicketRail from "./ticket-rail"
+import Input from "../ui/InputNew"
 
 interface p {
   t: Accessor<Ticket>
@@ -63,7 +62,7 @@ const TicketDetails = ({t}:p) => {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader class="pb-3">
         <CardTitle>{t().subject} | {t().category}</CardTitle>
         <CardDescription class="flex gap-2 items-center">
           {t().state === "pending" && <AiFillWarning class="text-orange-500"/>}
@@ -80,13 +79,16 @@ const TicketDetails = ({t}:p) => {
           <FiArrowLeft/>
         </Button>
       </CardHeader>
-      <CardContent>
+      <CardContent class="p-0">
         <TicketRail t={t}/>
       </CardContent>
-      <CardFooter class="flex-col items-stretch gap-3">
-        <form class="space-y-3" onsubmit={handleSubmit}>
-          <Textarea placeholder="پاسخ..." class="min-h-20" name="response"/>
-          <Button class="w-max" loading={loading} type="submit" >ارسال</Button>
+      <CardFooter class="p-4">
+        <form class="flex gap-2 w-full" onsubmit={handleSubmit}>
+          <Input placeholder="پاسخ..." class="w-full" name="response"/>
+          <Button class="w-max" loading={loading} type="submit" >
+            ارسال
+            <FiSend/>
+          </Button>
         </form>
       </CardFooter>
     </Card>
