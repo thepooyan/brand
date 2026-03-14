@@ -3,6 +3,9 @@ import TA from "~/components/parts/TA";
 import { Button } from "~/components/ui/button";
 
 export default function NotFound() {
+  const back = () => {
+    history.back()
+  }
   return (
     <>
       <HttpStatusCode code={404} />
@@ -20,6 +23,9 @@ export default function NotFound() {
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" as={TA} href="/">
               خانه
+            </Button>
+            <Button size="lg" variant="secondary" onclick={back}>
+              بازگشت
             </Button>
           </div>
         </div>

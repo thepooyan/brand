@@ -33,7 +33,7 @@ const TicketCard = ({t}:p) => {
       <CardContent>
         {limitChar(t.content.at(-1)?.msg || "", 40)}
       </CardContent>
-        <Button class="absolute left-5 bottom-5">نمایش</Button>
+        <Button class="absolute left-5 bottom-5" as="A" href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
     </Card>
   )
 }
