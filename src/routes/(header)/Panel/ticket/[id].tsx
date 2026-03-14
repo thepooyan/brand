@@ -39,7 +39,6 @@ const id = () => {
   createEffect(() => {
     ticket()
     revalidate("doesHaveNewTicket")
-    revalidate("userTickets")
   })
 
   return (
