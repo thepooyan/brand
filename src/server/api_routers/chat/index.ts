@@ -1,4 +1,5 @@
 import { google } from "@ai-sdk/google";
+import { Readable } from "stream"
 import { streamText } from "ai";
 import { getSystemPrompt } from "@/server/serverUtil";
 import Elysia from "elysia";
@@ -23,13 +24,27 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 .post( "/",
   async ({ body, bot }) => {
 
-    const result = streamText({
-      model: google("gemini-2.5-flash"),
-      system: getSystemPrompt(bot),
-      messages: body.messages,
-    })
+    // const result = streamText({
+    //   model: google("gemini-2.5-flash"),
+    //   system: getSystemPrompt(bot),
+    //   messages: body.messages,
+    // })
 
-    return result.toDataStreamResponse()
+    // return result.toDataStreamResponse()
+
+  const encoder = new TextEncoder()
+
+const stream = new ReadableStream({
+  start(controller) {
+    controller.enqueue(encoder.encode('0: Hello '))
+    controller.enqueue(encoder.encode('world!\n'))
+    controller.close()
   }
+})
+
+return new Response(stream, {
+  headers: { 'Content-Type': 'text/plain' }
+})
+}
 );
 
