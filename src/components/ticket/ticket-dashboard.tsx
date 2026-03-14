@@ -47,7 +47,7 @@ const TicketDashboard = () => {
   }
 
   return (
-    <div class="p-1">
+    <div class="p-1 @container">
       <Button onclick={() => setTicketState("new") } class="float-left m-5">
         تیکت جدید
         <FiPlus/>
@@ -82,7 +82,7 @@ const TicketDashboard = () => {
         </p>
       </Show>
 
-      <div class="p-5 grid grid-cols-2 gap-3">
+      <div class="p-5 grid grid-cols-1 @3xl:grid-cols-2 gap-3">
         <Suspense fallback={<Loading/>}>
           <Show when={filteredTickets()}>
             {pt => <For each={pt()}>

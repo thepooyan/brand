@@ -2,7 +2,7 @@ import { Ticket, ticketTable } from "~/db/schema"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { AiFillWarning } from "solid-icons/ai"
-import { FiAlertCircle, FiCheck, FiTrash } from "solid-icons/fi"
+import { FiAlertCircle, FiCheck, FiEye, FiTrash } from "solid-icons/fi"
 import { limitChar } from "~/lib/utils"
 import TA from "../parts/TA"
 import { callModal } from "../layout/Modal"
@@ -40,7 +40,7 @@ const TicketCard = ({t}:p) => {
   }
 
   return (
-    <Card class="relative">
+    <Card class="relative flex flex-col">
       <CardHeader class="">
         <CardTitle>
           {t.subject}
@@ -60,14 +60,19 @@ const TicketCard = ({t}:p) => {
         </Button>}
         <div class="text-sm text-muted-foreground">دسته بندی: {t.category}</div>
       </CardHeader>
-      <CardContent>
-        {limitChar(t.content.at(-1)?.msg || "", 40)}
+      <CardContent class="space-y-4 mt-auto">
+        <p>
+          {limitChar(t.content.at(-1)?.msg || "", 120)}
+        </p>
         <div class="gap-2 flex items-center justify-end">
           <Button variant="destructive" onclick={deleteMe}>
             <FiTrash/>
             حذف
           </Button>
-          <Button class="" as={TA} href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
+          <Button as={TA} href={`/Panel/ticket/${t.id}`}>
+            <FiEye/>
+            مشاهده
+          </Button>
         </div>
       </CardContent>
     </Card>
