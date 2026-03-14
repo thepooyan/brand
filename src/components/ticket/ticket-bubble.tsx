@@ -8,7 +8,7 @@ const TicketBubble = ({msg, from}:p) => {
   return (
     <div
       class={cn(
-        "bg-stone-800 rounded-md mb-4 p-3 w-4/5",
+        "bg-secondary text-secondary-foreground rounded-md mb-4 p-3 w-4/5 border-border border-1",
         from === "admin" && "mr-auto"
       )}
     >

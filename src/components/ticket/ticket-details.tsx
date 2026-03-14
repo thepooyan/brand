@@ -54,7 +54,6 @@ const TicketDetails = ({t}:p) => {
         if (res.ok) {
           revalidate("singleTicket")
           form.reset()
-
         }
       })
     .catch(err => callModal.fail(err))
@@ -81,9 +80,11 @@ const TicketDetails = ({t}:p) => {
         </Button>
       </CardHeader>
       <CardContent>
-        <For each={t().content}>
-          {c => <TicketBubble {...c}/>}
-        </For>
+        <div class=" max-h-80 overflow-auto bg-background p-5 rounded-md -mx-6">
+          <For each={t().content}>
+            {c => <TicketBubble {...c}/>}
+          </For>
+        </div>
       </CardContent>
       <CardFooter class="flex-col items-stretch gap-3">
         <form class="space-y-3" onsubmit={handleSubmit}>
