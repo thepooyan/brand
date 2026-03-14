@@ -1,6 +1,6 @@
 import { Ticket, ticketTable } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, createEffect, createSignal, For } from "solid-js"
+import { Accessor, createSignal, For } from "solid-js"
 import TicketBubble from "./ticket-bubble"
 import Textarea from "../ui/Textarea"
 import { Button } from "../ui/button"
@@ -12,6 +12,7 @@ import { eq } from "drizzle-orm"
 import { FormSubmitEvent } from "~/db/types"
 import { callModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
+import TicketRail from "./ticket-rail"
 
 interface p {
   t: Accessor<Ticket>
@@ -38,13 +39,7 @@ const replyTicketAction = async (response: string, id: number) => {
 
 const TicketDetails = ({t}:p) => {
 
-  let rail!: HTMLDivElement
   const [loading, setLoading] = createSignal(false)
-
-  createEffect(() => {
-    t().content;
-    rail.scrollTo({top: rail.scrollHeight, behavior: "smooth"})
-  })
 
   const handleSubmit = (e: FormSubmitEvent) => {
     e.preventDefault()
@@ -86,11 +81,7 @@ const TicketDetails = ({t}:p) => {
         </Button>
       </CardHeader>
       <CardContent>
-        <div class=" max-h-80 overflow-auto bg-background p-5 rounded-md -mx-6" ref={rail}>
-          <For each={t().content}>
-            {c => <TicketBubble {...c}/>}
-          </For>
-        </div>
+        <TicketRail t={t}/>
       </CardContent>
       <CardFooter class="flex-col items-stretch gap-3">
         <form class="space-y-3" onsubmit={handleSubmit}>

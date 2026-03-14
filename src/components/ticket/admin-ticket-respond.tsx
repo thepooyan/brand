@@ -8,12 +8,12 @@ import { db } from "~/db/db"
 import { ticketTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
-import { useNavigate } from "@solidjs/router"
-import { createSignal, For } from "solid-js"
-import TicketBubble from "./ticket-bubble"
+import { revalidate } from "@solidjs/router"
+import { Accessor, createSignal } from "solid-js"
+import TicketRail from "./ticket-rail"
 
 interface p {
-  t: TicketWithRelations
+  t: Accessor<TicketWithRelations>
 }
 
 const saveTicketResponse = async (response: string, id: number) => {
@@ -41,7 +41,6 @@ const saveTicketResponse = async (response: string, id: number) => {
 
 const AdminTicketCardRespond = ({t}:p) => {
 
-  const nv = useNavigate()
   const [loading, setLoading] = createSignal(false)
 
   const handleSubmit = (e:FormSubmitEvent) => {
@@ -53,11 +52,11 @@ const AdminTicketCardRespond = ({t}:p) => {
     if (!response) return
 
     setLoading(true)
-    saveTicketResponse(response, t.id)
+    saveTicketResponse(response, t().id)
     .then(({ok}) => {
         if (ok) {
-          callModal.success()
-          nv("/admin/ticket")
+          revalidate("adminSingleTicket")
+          form.reset()
         } else {
           callModal.fail()
         }
@@ -69,27 +68,25 @@ const AdminTicketCardRespond = ({t}:p) => {
     <Card>
       <CardHeader>
         <CardTitle>
-          {t.subject}
+          {t().subject}
         </CardTitle>
         <CardDescription>
-          {t.user.number}
+          {t().user.number}
           <br/>
-          {t.user.name}
+          {t().user.name}
           <br/>
-          {t.user.email}
+          {t().user.email}
         </CardDescription>
         <div class="flex gap-2">
-          {t.state === "pending" && <AiFillWarning class="text-orange-500"/>}
-          {t.state === "responded" && <AiOutlineCheck class="text-green-500"/>}
+          {t().state === "pending" && <AiFillWarning class="text-orange-500"/>}
+          {t().state === "responded" && <AiOutlineCheck class="text-green-500"/>}
           وضعیت: 
-          {t.state === "pending" && "در انتظار پاسخ"}
-          {t.state === "responded" && "پاسخ داده شده"}
+          {t().state === "pending" && "در انتظار پاسخ"}
+          {t().state === "responded" && "پاسخ داده شده"}
         </div>
       </CardHeader>
       <CardContent>
-        <For each={t.content}>
-          {c => <TicketBubble {...c} />}
-        </For>
+        <TicketRail t={t}/>
       </CardContent>
       <CardFooter class="flex flex-col items-stretch gap-2" >
         <form onsubmit={handleSubmit}>

@@ -15,7 +15,7 @@ const queryTicket = query(async (id: number) => {
     where: (tbl => eq(tbl.id, id)),
     with: {user: true}
   })
-}, "singleTicket")
+}, "adminSingleTicket")
 
 const answer = () => {
 
@@ -30,7 +30,7 @@ const answer = () => {
       </Button>
       <Suspense fallback={<Loading/>}>
         <Show when={ticket()}>
-          {pt => <AdminTicketCardRespond t={pt()}/>}
+          {pt => <AdminTicketCardRespond t={pt}/>}
         </Show>
       </Suspense>
     </div>
