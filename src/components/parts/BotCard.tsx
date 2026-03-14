@@ -80,7 +80,6 @@ const BotCard = ({bot}:props) => {
         <div class="w-full bg-gray-800 rounded-full h-2">
           <div
             class="bg-primary h-2 rounded-full transition-all duration-300"
-            style={{ }}
           />
         </div>
 
