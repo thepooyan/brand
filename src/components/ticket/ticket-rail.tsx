@@ -12,7 +12,7 @@ const TicketRail = ({t}:{t: Accessor<Ticket>}) => {
   })
 
   return (
-    <div class=" h-75 overflow-auto bg-background p-5 rounded-md" ref={rail}>
+    <div class=" h-full overflow-auto bg-background p-5 rounded-md" ref={rail}>
       <For each={t().content}>
         {c => <TicketBubble {...c}/>}
       </For>

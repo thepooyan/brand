@@ -1,6 +1,6 @@
 import { Ticket, ticketTable } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, createSignal, For } from "solid-js"
+import { Accessor, createSignal } from "solid-js"
 import { Button } from "../ui/button"
 import { AiFillWarning } from "solid-icons/ai"
 import { FiArrowLeft, FiCheck, FiSend } from "solid-icons/fi"
@@ -61,7 +61,7 @@ const TicketDetails = ({t}:p) => {
   }
 
   return (
-    <Card>
+    <Card class="h-[calc(100dvh-6rem)] flex flex-col">
       <CardHeader class="pb-3">
         <CardTitle>{t().subject} | {t().category}</CardTitle>
         <CardDescription class="flex gap-2 items-center">
@@ -79,10 +79,10 @@ const TicketDetails = ({t}:p) => {
           <FiArrowLeft/>
         </Button>
       </CardHeader>
-      <CardContent class="p-0">
+      <CardContent class="p-0 h-full">
         <TicketRail t={t}/>
       </CardContent>
-      <CardFooter class="p-4">
+      <CardFooter class="p-4 mt-auto">
         <form class="flex gap-2 w-full" onsubmit={handleSubmit}>
           <Input placeholder="پاسخ..." class="w-full" name="response"/>
           <Button class="w-max" loading={loading} type="submit" >

@@ -65,7 +65,7 @@ const AdminTicketCardRespond = ({t}:p) => {
     .finally(() => setLoading(false))
   }
   return (
-    <Card>
+    <Card class="h-[calc(100dvh-8rem)] flex flex-col w-full">
       <CardHeader>
         <CardTitle>
           {t().subject}
@@ -81,10 +81,10 @@ const AdminTicketCardRespond = ({t}:p) => {
           {t().state === "responded" && "پاسخ داده شده"}
         </div>
       </CardHeader>
-      <CardContent class="p-0">
+      <CardContent class="p-0 h-full">
         <TicketRail t={t}/>
       </CardContent>
-      <CardFooter class="p-3" >
+      <CardFooter class="p-3 mt-auto" >
         <form onsubmit={handleSubmit} class="flex gap-2 items-center w-full">
           <Input
             placeholder="پاسخ..."

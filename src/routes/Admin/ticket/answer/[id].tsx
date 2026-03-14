@@ -23,8 +23,8 @@ const answer = () => {
   let ticket = createAsync(() => queryTicket(parseInt(id)))
 
   return (
-    <div class="p-5">
-      <Button variant="secondary" class="float-left m-5" as="A" href="/admin/ticket">
+    <div class="p-5 relative">
+      <Button variant="secondary" class="absolute left-5 m-5" as="A" href="/admin/ticket">
         بازگشت
         <FiArrowLeft/>
       </Button>
