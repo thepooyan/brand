@@ -62,14 +62,14 @@ const TicketCard = ({t}:p) => {
       </CardHeader>
       <CardContent>
         {limitChar(t.content.at(-1)?.msg || "", 40)}
+        <div class="gap-2 flex items-center justify-end">
+          <Button variant="destructive" onclick={deleteMe}>
+            <FiTrash/>
+            حذف
+          </Button>
+          <Button class="" as={TA} href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
+        </div>
       </CardContent>
-      <div class="absolute left-5 bottom-5 gap-2 flex items-center">
-        <Button variant="destructive" onclick={deleteMe}>
-          <FiTrash/>
-          حذف
-        </Button>
-        <Button class="" as={TA} href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
-      </div>
     </Card>
   )
 }
