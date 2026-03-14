@@ -50,10 +50,6 @@ const Panel = ({children}:ParentProps) => {
   getUser()
   const newTicket = createAsync(() => doesHaveNewTicket())
 
-  createEffect(() => {
-    console.log(newTicket())
-  })
-
   return (
     <main class="flex">
       <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] border-l-1">
