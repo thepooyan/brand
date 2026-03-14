@@ -10,6 +10,7 @@ import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
 import { createSignal, For } from "solid-js"
+import TicketBubble from "./ticket-bubble"
 
 interface p {
   t: TicketWithRelations
@@ -87,7 +88,7 @@ const AdminTicketCardRespond = ({t}:p) => {
       </CardHeader>
       <CardContent>
         <For each={t.content}>
-          {c => c.msg}
+          {c => <TicketBubble {...c} />}
         </For>
       </CardContent>
       <CardFooter class="flex flex-col items-stretch gap-2" >
