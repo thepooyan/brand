@@ -3,6 +3,7 @@ import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { TicketWithRelations } from "~/db/relationQueries"
 import { For } from "solid-js"
+import { limitChar } from "~/lib/utils"
 
 interface p {
   t: TicketWithRelations
@@ -33,9 +34,7 @@ const AdminTicketCard = ({t}:p) => {
         </div>
       </CardHeader>
       <CardContent>
-        <For each={t.content}>
-          {c => c.msg}
-        </For>
+        {limitChar(t.content.at(-1)?.msg || "", 40)}
       </CardContent>
       <CardFooter class="justify-end">
         <Button as="A" href={`/admin/ticket/answer/${t.id}`}
