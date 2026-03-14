@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 import { AiFillWarning } from "solid-icons/ai"
 import { FiAlertCircle, FiCheck } from "solid-icons/fi"
 import { limitChar } from "~/lib/utils"
+import TA from "../parts/TA"
 
 interface p {
   t: Ticket
@@ -33,7 +34,7 @@ const TicketCard = ({t}:p) => {
       <CardContent>
         {limitChar(t.content.at(-1)?.msg || "", 40)}
       </CardContent>
-        <Button class="absolute left-5 bottom-5" as="A" href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
+        <Button class="absolute left-5 bottom-5" as={TA} href={`/Panel/ticket/${t.id}`}>مشاهده</Button>
     </Card>
   )
 }
