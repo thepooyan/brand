@@ -52,8 +52,8 @@ const TicketDetails = ({t}:p) => {
     replyTicketAction(response, t().id)
     .then(res => {
         if (res.ok) {
-          callModal.success()
           revalidate("singleTicket")
+          form.reset()
 
         }
       })
