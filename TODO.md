@@ -5,8 +5,6 @@ fix mini chat
 order status page
 rate limit s3 uploader for normal users
 
-add admin ticket filters
-
 seo:
 check gsc
 expland author => add authors table
