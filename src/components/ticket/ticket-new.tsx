@@ -7,6 +7,8 @@ import { setTicketState } from "./ticket-signal"
 import { callModal } from "../layout/Modal"
 import { newTicket } from "~/server/actions"
 import { revalidate } from "@solidjs/router"
+import { Select, SelectItem } from "../ui/select"
+import TicketSubjectSelect from "./ticket-subject-select"
 
 const TicketNew = () => {
 
@@ -41,7 +43,8 @@ const TicketNew = () => {
           بازگشت
           <FiArrowLeft/>
         </Button>
-        <Input placeholder="موضوع" name="subject"/>
+        <Input placeholder="عنوان" name="subject"/>
+        <TicketSubjectSelect/>
         <Textarea class="min-h-40" placeholder="متن مورد نظر را انیجا وارد کنید..." name="content"/>
         <Button type="submit" >ارسال</Button>
       </form>

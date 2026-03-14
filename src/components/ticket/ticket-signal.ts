@@ -14,3 +14,11 @@ export const ticket_states = [
 ] as const
 
 export type TicketStates = typeof ticket_states[number]
+
+export const ticket_subjects = [
+  "چت‌بات",
+  "سفارش وبسایت",
+  "مشکلات پنل کاربری",
+  "انتقادات یا پیشنهادات",
+  "سایر",
+]
