@@ -10,6 +10,7 @@ export const ticketTable = sqliteTable("ticket", {
   isSeen: integer({mode: "boolean"}).notNull().default(true),
   userId: int().notNull().references(() => usersTable.id),
   subject: text().notNull(),
+  category: text().notNull().default("سایر"),
   content: text({mode: "json"}).$type<{from: "user" | "admin", msg: string}[]>().notNull(),
   state: text({ enum: ticket_states }).notNull().default("pending"),
   updatedAt: integer({mode: "timestamp"}).notNull().default(new Date()),

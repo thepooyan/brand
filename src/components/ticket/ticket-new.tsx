@@ -7,7 +7,6 @@ import { setTicketState } from "./ticket-signal"
 import { callModal } from "../layout/Modal"
 import { newTicket } from "~/server/actions"
 import { revalidate } from "@solidjs/router"
-import { Select, SelectItem } from "../ui/select"
 import TicketSubjectSelect from "./ticket-subject-select"
 
 const TicketNew = () => {
@@ -19,10 +18,11 @@ const TicketNew = () => {
 
     const subject = formData.get("subject") as string
     const content = formData.get("content") as string
+    const category = formData.get("category") as string
 
-    if (!subject || !content) return callModal.fail("لطفا همه موارد را وارد کنید.")
+    if (!subject || !content || !category) return callModal.fail("لطفا همه موارد را وارد کنید.")
 
-    const res = await newTicket({subject, content})
+    const res = await newTicket({subject, content, category})
 
     if (res.ok) {
       callModal.success()

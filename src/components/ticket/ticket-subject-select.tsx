@@ -23,6 +23,8 @@ const TicketSubjectSelect = ({ onchange, initialValue }:p) => {
   }
 
   return (
+    <>
+    <input hidden value={value()} name="category" type="text"/>
     <Select
         value={value()}
         onChange={changeHandler}
@@ -35,6 +37,7 @@ const TicketSubjectSelect = ({ onchange, initialValue }:p) => {
         </SelectTrigger>
         <SelectContent />
     </Select>
+    </>
   )
 }
 

@@ -5,10 +5,14 @@ fix mini chat
 order status page
 rate limit s3 uploader for normal users
 dropdown for tickets [
+
 chatbot/web desgn/other/
 مشکلات پنل کاربری
 انتقادات و پیشنهادات
 ]
+
+add delete ticket
+taze => khandeh nashode
 
 seo:
 check gsc
