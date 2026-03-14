@@ -61,6 +61,11 @@ const ticket = () => {
           </For>
         </div>
       <div class="grid grid-cols-2 gap-3">
+        <Show when={filteredTickets()?.length === 0}>
+          <p>
+            تیکتی یافت نشد!
+          </p>
+        </Show>
         <Show when={filteredTickets()} fallback={<Loading/>}>
           {presentData => <For each={presentData()}>
             {f => <AdminTicketCard t={f}/>}

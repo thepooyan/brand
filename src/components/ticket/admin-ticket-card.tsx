@@ -2,13 +2,38 @@ import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import { Button } from "../ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { TicketWithRelations } from "~/db/relationQueries"
-import { For } from "solid-js"
 import { limitChar } from "~/lib/utils"
+import { isAdminLoggedIn } from "~/server/serverUtil"
+import { db } from "~/db/db"
+import { ticketTable } from "~/db/schema"
+import { and, eq } from "drizzle-orm"
+import { callModal } from "../layout/Modal"
+import { revalidate } from "@solidjs/router"
 
+const deleteTicket = async (id: number) => {
+  "use server"
+  if (!await isAdminLoggedIn()) return null
+
+  await db.delete(ticketTable).where(
+    and(
+      eq(ticketTable.id, id),
+    )
+  )
+  return {ok: true}
+}
 interface p {
   t: TicketWithRelations
 }
 const AdminTicketCard = ({t}:p) => {
+
+  const deleteMe = () => {
+    callModal.prompt(`تیکت ${t.subject} حذف شود؟`)
+    .yes(async() => {
+        await deleteTicket(t.id)
+        revalidate("adminTickets")
+      })
+  }
+
   return (
     <Card class="relative">
       <CardHeader>
@@ -36,9 +61,12 @@ const AdminTicketCard = ({t}:p) => {
       <CardContent>
         {limitChar(t.content.at(-1)?.msg || "", 40)}
       </CardContent>
-      <CardFooter class="justify-end">
+      <CardFooter class="justify-end space-x-2">
         <Button as="A" href={`/admin/ticket/answer/${t.id}`}
         >پاسخ</Button>
+        <Button variant="destructive" onclick={deleteMe}>
+          حذف
+        </Button>
       </CardFooter>
     </Card>
   )
