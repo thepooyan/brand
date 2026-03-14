@@ -1,9 +1,10 @@
-import { createAsync, query, redirect, useParams } from "@solidjs/router"
+import { createAsync, query, redirect, revalidate, useParams } from "@solidjs/router"
 import { and, eq } from "drizzle-orm"
 import { Show, Suspense } from "solid-js"
 import { Loading } from "~/components/parts/Loading"
 import TicketDetails from "~/components/ticket/ticket-details"
 import { db } from "~/db/db"
+import { ticketTable } from "~/db/schema"
 import { getAuthSession } from "~/lib/session"
 import NotFound from "~/routes/[...404]"
 
@@ -13,12 +14,22 @@ const a = query(async (id: number) => {
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/ticket")
 
-  return db.query.ticketTable.findFirst({
-    where: (tbl => and(
-      eq(tbl.userId, user.id),
-      eq(tbl.id, id)
-    ))
+  let result = await db.transaction(async ctx => {
+
+    const target = await ctx.query.ticketTable.findFirst({
+      where: (tbl => and(
+        eq(tbl.userId, user.id),
+        eq(tbl.id, id)
+      ))
+    })
+    if (!target) return undefined
+    if (!target.isSeen) {
+      await ctx.update(ticketTable).set({isSeen: true}).where(eq(ticketTable.id, target.id))
+      revalidate("doesHaveNewTicket")
+    }
+    return target
   })
+  return result
 }, "singleTicket")
 
 const id = () => {

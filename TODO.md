@@ -12,7 +12,7 @@ chatbot/web desgn/other/
 ]
 
 add delete ticket
-taze => khandeh nashode
+add admin ticket filters
 
 seo:
 check gsc
