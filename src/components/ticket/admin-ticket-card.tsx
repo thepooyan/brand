@@ -9,7 +9,7 @@ interface p {
 }
 const AdminTicketCard = ({t}:p) => {
   return (
-    <Card>
+    <Card class="relative">
       <CardHeader>
         <CardTitle>
           {t.subject}
@@ -27,6 +27,9 @@ const AdminTicketCard = ({t}:p) => {
           وضعیت: 
           {t.state === "pending" && "در انتظار پاسخ"}
           {t.state === "responded" && "پاسخ داده شده"}
+        </div>
+        <div class="absolute left-5 text-sm text-muted-foreground">
+          دسته بندی: {t.category}
         </div>
       </CardHeader>
       <CardContent>
