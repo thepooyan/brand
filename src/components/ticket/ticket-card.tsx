@@ -26,9 +26,9 @@ const TicketCard = ({t}:p) => {
           class=" absolute text-green-500 font-bold left-5 top-5 flex items-center gap-2"
         >
           <FiAlertCircle/>
-          جدید
+          خوانده نشده
         </Button>}
-        <div class="text-sm text-muted-foreground absolute left-5">دسته بندی: {t.category}</div>
+        <div class="text-sm text-muted-foreground">دسته بندی: {t.category}</div>
       </CardHeader>
       <CardContent>
         {limitChar(t.content.at(-1)?.msg || "", 40)}

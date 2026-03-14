@@ -9,7 +9,6 @@ import { useToggle } from "~/lib/hooks";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
 import { desc, eq } from "drizzle-orm";
-import ticket from "~/routes/(header)/Panel/ticket";
 
 const getUserTickets = query(async () => {
   "use server"
@@ -71,7 +70,7 @@ const TicketDashboard = () => {
             {s => <Btn state={s}>
               {s === "responded" && "پاسخ داده شده"}
               {s === "pending" && "در انتظار پاسخ"}
-              {s === "seen" && "تازه"}
+              {s === "seen" && "خوانده نشده"}
             </Btn>}
           </For>
         </div>
