@@ -8,6 +8,7 @@ import { botAuthGuard } from "./botAuthGuard";
 import { chatGaurd } from "./chatGuard";
 import { sessionChatRouter } from "./sessionChat";
 import { cors } from '@elysiajs/cors'
+import { getFakeStream } from "~/server/fakter";
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(cors({
@@ -32,19 +33,12 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 
     // return result.toDataStreamResponse()
 
-  const encoder = new TextEncoder()
 
-const stream = new ReadableStream({
-  start(controller) {
-    controller.enqueue(encoder.encode('0: Hello '))
-    controller.enqueue(encoder.encode('world!\n'))
-    controller.close()
+    const stream = getFakeStream(1000, 1000)
+
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/plain' }
+    })
   }
-})
-
-return new Response(stream, {
-  headers: { 'Content-Type': 'text/plain' }
-})
-}
 );
 
