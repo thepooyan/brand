@@ -139,7 +139,7 @@ export default function Login() {
                 <Label for="otp" class="text-right block text-foreground">
                   کد تایید
                 </Label>
-                <div class="flex justify-center gap-2 ltr ">
+                <div class="flex justify-center gap-4 ltr ">
                   {otpElements.map((_,index) => (
                     <Input
                       ref={otpElements[index]}
@@ -150,7 +150,7 @@ export default function Login() {
                       oninput={() => handleInput(index)}
                       onKeyDown={e => handleKeydown(index, e)}
                       onfocus={() => handleFocues(index)}
-                      class="w-10 h-12 text-center bg-input border-border text-lg ltr"
+                      class="w-full h-12 text-center bg-input border-border text-lg ltr"
                     />
                   ))}
                 </div>

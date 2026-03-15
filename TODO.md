@@ -1,3 +1,13 @@
+
+more bot options:
+- add initial message to bot options
+- add upto 4 suggested questions 
+- optional floating message box above the menu btn
+
+future:
+- save all of the conversations
+
+
 expose useChat as node package 
 useChat error handling is buggy
 handle error in usechat
