@@ -41,6 +41,7 @@ export const POST = async ({request}:{request: Request}) => {
   const response = await replyWithAI(msg, history)
 
   await telegram.send(bot_id, response, String(chat_id))
+
   return "ok"
 }
 
