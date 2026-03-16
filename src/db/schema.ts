@@ -8,7 +8,7 @@ export const tokenLength = 62
 
 export const chatbot_history_table = sqliteTable("chatbot_history", ({
   id: int().primaryKey({autoIncrement: true}),
-  bot_id: int().references(() => chatbotTable.id),
+  bot_id: int().references(() => chatbotTable.id).notNull(),
   chat_id: int().notNull(),
   history: text({ mode: "json" }).$type<message[]>().notNull()
 }))
