@@ -19,10 +19,20 @@ const TelegramSet = () => {
       return setError(`طول توکن باید ${tokenLength} کاراکتر باشد.`)
     }
     setLoading(true)
-    await wait(2000)
-    setLoading(false)
-    closeModal()
-    callModal.success("ربات شما با موفقیت ثبت شد")
+    registerTelegramToken(t)
+    .then(() => {
+      closeModal()
+      callModal.success("ربات شما با موفقیت ثبت شد")
+      })
+    .catch(() => setError("مشکلی پیش آمد. لطفا مجددا تلاش کنید.") )
+    .finally(() => setLoading(false))
+  }
+
+  const registerTelegramToken = (token: string) => {
+    return new Promise( async (res, rej) => {
+      await wait(2000)
+      rej("")
+    })
   }
 
 
