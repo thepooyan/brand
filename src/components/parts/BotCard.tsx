@@ -45,7 +45,7 @@ const BotCard = ({bot}:props) => {
   }
 
   const handleTelegram = () => {
-    callModal(() => <TelegramSet/>)
+    callModal(() => <TelegramSet />)
   }
 
   return (
