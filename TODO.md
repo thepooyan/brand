@@ -3,6 +3,8 @@ more bot options:
 - add initial message to bot options
 - add upto 4 suggested questions 
 - optional floating message box above the menu btn
+- crawler
+- telegram database
 
 future:
 - save all of the conversations
