@@ -37,4 +37,5 @@ const sendToSupport = (text: string, chat_id: string | number) => {
 export const telegram = {
   admin: { send: sendToAdmin },
   support: { send: sendToSupport },
+  send
 }

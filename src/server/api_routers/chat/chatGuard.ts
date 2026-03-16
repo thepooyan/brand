@@ -12,6 +12,8 @@ const chatRequestSchema = z.object({
     .min(1),
 });
 
+export type Message = z.infer<typeof chatRequestSchema>["messages"][number]
+
 export const chatGaurd = new Elysia()
 .guard({
   as: "scoped",

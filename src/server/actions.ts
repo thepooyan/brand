@@ -8,8 +8,9 @@ import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
-import { generateText } from "ai"
+import { CoreMessage, generateText, Message } from "ai"
 import { google } from "@ai-sdk/google"
+import { message } from "~/lib/chatUtil"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -97,11 +98,18 @@ export const saveWebsiteOrder = async (order: websiteOrder) => {
   }
 }
 
-export const replyWithAI = async (message: string) => {
+export const replyWithAI = async (message: string, history?: message[]) => {
+
+  let messages:message[] = []
+  if (history) {
+    messages.push(...history)
+  }
+  messages.push({role: "system", content: message})
+
   const result = await generateText({
     model: google('gemini-2.5-flash'),
     system: prompt.telegram,
-    prompt: message
+    messages: messages
   });
   return result.text
 }
