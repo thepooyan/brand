@@ -1,5 +1,7 @@
 import { useParams } from '@solidjs/router';
+import { and, eq } from 'drizzle-orm';
 import Message from '~/components/parts/chat/Message';
+import { db } from '~/db/db';
 import { message } from '~/lib/chatUtil';
 import { replyWithAI } from '~/server/actions';
 import { telegram } from '~/server/telegram';
@@ -34,7 +36,7 @@ export const POST = async ({request}:{request: Request}) => {
   const msg = body.message.text
   const chat_id = body.message.from.id
 
-  const history = getChatHistory(bot_id, chat_id)
+  const history = await getChatHistory(bot_id, chat_id)
 
   const response = await replyWithAI(msg, history)
 
@@ -42,7 +44,13 @@ export const POST = async ({request}:{request: Request}) => {
   return "ok"
 }
 
-const getChatHistory = (bot_id: string, chat_id:number):message[] => {
-  console.log(`getting history for bot:${bot_id} with ${chat_id}`)
-  return []
+const getChatHistory = async (bot_id: string, chat_id:number):Promise<message[]> => {
+  let a = await db.query.chatbot_history_table.findFirst({
+    where: (tbl => and(
+      eq(tbl.chat_id, chat_id),
+      eq(tbl.bot_id, parseInt(bot_id)),
+    ))
+  })
+  if (!a) return []
+  return a.history
 }

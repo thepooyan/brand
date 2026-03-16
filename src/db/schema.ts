@@ -1,9 +1,17 @@
 import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { ticket_states } from "~/components/ticket/ticket-signal";
+import { message } from "~/lib/chatUtil";
 import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
+
+export const chatbot_history_table = sqliteTable("chatbot_history", ({
+  id: int().primaryKey({autoIncrement: true}),
+  bot_id: int().references(() => chatbotTable.id),
+  chat_id: int().notNull(),
+  history: text({ mode: "json" }).$type<message[]>().notNull()
+}))
 
 export const ticketTable = sqliteTable("ticket", {
   id: int().primaryKey({autoIncrement: true}),
