@@ -10,6 +10,15 @@ const test = () => {
     .catch(s => console.log(s))
   }
 
+  const limitArray = (arr: any[], limit: number) => {
+  if (arr.length > limit) {
+    arr = arr.slice(arr.length - limit)
+  }
+  return arr
+}
+
+  console.log(limitArray([1,2,3], 2))
+
   return (
     <div>
       <Input/>

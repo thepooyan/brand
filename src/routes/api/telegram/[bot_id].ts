@@ -1,6 +1,5 @@
 import { useParams } from '@solidjs/router';
 import { and, eq } from 'drizzle-orm';
-import Message from '~/components/parts/chat/Message';
 import { db } from '~/db/db';
 import { chatbot_history_table } from '~/db/schema';
 import { message } from '~/lib/chatUtil';
@@ -60,6 +59,13 @@ const getChatHistory = async (bot_id: string, chat_id:number):Promise<message[]>
   return a.history
 }
 
+const limitArray = (arr: any[], limit: number) => {
+  if (arr.length > limit) {
+    arr = arr.slice(arr.length - limit)
+  }
+  return arr
+}
+
 const pushChatHistory = async (bot_id: string, chat_id:number, message: string, reply: string) => {
   db.transaction(async ctx => {
 
@@ -72,11 +78,11 @@ const pushChatHistory = async (bot_id: string, chat_id:number, message: string, 
 
     if (old) {
       await ctx.update(chatbot_history_table).set({
-        history: [
+        history: limitArray([
           ...old.history,
           {role: "user", content: message},
           {role: "assistant", content: reply},
-        ]
+        ], 20)
       })
       .where(eq(chatbot_history_table.id, old.id))
 
