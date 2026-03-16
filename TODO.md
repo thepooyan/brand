@@ -9,6 +9,8 @@ more bot options:
 future:
 - save all of the conversations
 
+disable telegram access button depending on plan in panel
+
 
 expose useChat as node package 
 useChat error handling is buggy
