@@ -1,4 +1,4 @@
-import { allFeatures, convertPlanToDTO, plan } from "~/sections/plan"
+import { allFeatures, convertPlanToDTO, doesPlanHaveTelegram, plan } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { createSignal, For } from "solid-js"
 import { Button } from "../ui/button"
@@ -66,7 +66,7 @@ const PlanCard = ({plan}:p) => {
           callModal.success("با موفقیت انجام شد!")
           nv("/Panel")
         } else if (res.status === 404){
-          nv("/Login?back=/plans")
+          nv("/Login?back=/pricing")
         } else {
           callModal.fail(res.msg)
         }
@@ -92,14 +92,20 @@ const PlanCard = ({plan}:p) => {
             {
               plan.features.includes(f)
               &&
-              <FiCheck class="text-green-500"/>
+              <Yes/>
               ||
-              <FiX class="text-destructive"/>
+              <No/>
             }
             {f}
           </p>}
         </For>
         <br/>
+        <p class="flex justify-between">
+          <span>قابلیت اتصال به تلگرام:</span>
+          <span class="flex items-center gap-1 ">
+            {doesPlanHaveTelegram(plan.id) ? <><Yes/>دارد </> : <><No/>ندارد</>}
+          </span>
+        </p>
         <p class="flex justify-between">
           <span>تعداد پیام:</span>
           <span>{seprateByComma(plan.messageCount)} عدد</span>
@@ -125,5 +131,8 @@ const PlanCard = ({plan}:p) => {
     </Card>
   )
 }
+
+const Yes = () => <FiCheck class="text-green-500"/>
+const No = () => <FiX class="text-destructive"/>
 
 export default PlanCard

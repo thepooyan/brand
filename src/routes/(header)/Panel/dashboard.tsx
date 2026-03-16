@@ -62,7 +62,7 @@ const dashboard = () => {
         <p class="text-sm mt-1">
           تعداد ربات: {presentPlan().botCount} عدد
         </p>
-        <Button as={TA} href="/plans" class="mr-auto block w-max">
+        <Button as={TA} href="/pricing" class="mr-auto block w-max">
           مشاهده پلن ها
         </Button>
       </div>
