@@ -3,9 +3,10 @@ import { DB_Plan, NewPlan } from "~/db/schema"
 type mounthCount = 1 | 2 | 3
 
 type feature = string
+type plan_id = typeof plan_ids[number]
 
 export type plan = {
-  id: (typeof plan_ids)[number],
+  id: plan_id,
   name: string
   price: number,
   expirationMounth: mounthCount,
@@ -22,6 +23,12 @@ const daysFromNow = (days: number) => {
 }
 
 export const plan_ids = [ "free" , "starter" , "regular" , "pro" ] as const
+
+export const doesPlanHaveTelegram = (p: plan_id) => {
+  if (p == "pro") return true
+  if (p == "regular") return true
+  return false
+}
 
 export const convertPlanToDTO = (p: plan, remainingMessages?: number):NewPlan => ({
   plan_id: p.id,
