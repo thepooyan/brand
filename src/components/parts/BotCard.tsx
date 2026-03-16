@@ -13,6 +13,7 @@ import { revalidate } from "@solidjs/router"
 import { getNewToken } from "~/server/botActions"
 import NewTokenAlert from "./bot/NewTokenAlert"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import TelegramSet from "./TelegramSet"
 
 interface props {
   bot: chatbotStatus
@@ -41,6 +42,10 @@ const BotCard = ({bot}:props) => {
           callModal.fail(result.msg)
         }
       })
+  }
+
+  const handleTelegram = () => {
+    callModal(() => <TelegramSet/>)
   }
 
   return (
@@ -111,18 +116,15 @@ const BotCard = ({bot}:props) => {
 
           {/* Second Group: Connect to Telegram, Switch Token */}
           <div class="flex gap-2">
-            <Tooltip>
-              <TooltipTrigger
-                as={Button}
-                size="sm"
-                variant="outline"
-                class="flex-1 text-primary-300 border-primary-800 hover:bg-primary-950 hover:text-primary-200 bg-gray-800 opacity-30"
-              >
-                <ImTelegram class="w-3 h-3 ml-1" />
-                اتصال به تلگرام
-              </TooltipTrigger>
-              <TooltipContent>به زودی...</TooltipContent>
-            </Tooltip>
+            <Button
+              size="sm"
+              variant="outline"
+              class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800  "
+              onclick={handleTelegram}
+            >
+              <ImTelegram class="w-3 h-3 ml-1" />
+              اتصال به تلگرام
+            </Button>
             <Button
               size="sm"
               variant="outline"
