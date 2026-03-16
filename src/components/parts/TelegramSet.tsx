@@ -24,7 +24,10 @@ const TelegramSet = () => {
       closeModal()
       callModal.success("ربات شما با موفقیت ثبت شد")
       })
-    .catch(() => setError("مشکلی پیش آمد. لطفا مجددا تلاش کنید.") )
+    .catch(e => {
+      console.log(e)
+      setError("مشکلی پیش آمد. لطفا مجددا تلاش کنید.")
+      })
     .finally(() => setLoading(false))
   }
 
