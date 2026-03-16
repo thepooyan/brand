@@ -1,7 +1,7 @@
 import { useParams } from '@solidjs/router';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
-import { chatbot_history_table, chatbotTable, planTable } from '~/db/schema';
+import { chatbot_history_table, planTable } from '~/db/schema';
 import { message } from '~/lib/chatUtil';
 import { doesPlanHaveTelegram } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
