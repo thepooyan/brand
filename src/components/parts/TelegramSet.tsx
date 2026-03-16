@@ -7,8 +7,9 @@ import { callModal, closeModal } from "../layout/Modal"
 import { tokenLength } from "~/db/schema"
 
 interface p {
+  navigate: (a:string) => void
 }
-const TelegramSet = ({}:p) => {
+const TelegramSet = ({navigate}:p) => {
 
   const [telegramToken, setTelegramToken] = createSignal("")
   const [botToken, setBotToken] = createSignal("")
@@ -60,7 +61,13 @@ const TelegramSet = ({}:p) => {
           placeholder="توکن ربات تلگرام"
           onchange={e => setTelegramToken(e.currentTarget.value)}
         />
-        <p>توکن ربات تلگرام را پس از ساخت آن از تلگرام دریافت کنید</p>
+        <p>
+          توکن ربات تلگرام را پس از ساخت آن از تلگرام دریافت کنید 
+          <span
+            onclick={() => {navigate("/Docs/chat-bot/telegram"); closeModal()} }
+            class="underline text-primary cursor-pointer hover:text-primary/80"
+          >(آموزش)</span>
+        </p>
         <Input
           placeholder="توکن چت‌بات شما"
           onchange={e => setBotToken(e.currentTarget.value)}
@@ -68,7 +75,7 @@ const TelegramSet = ({}:p) => {
         />
         <p>توکن چت‌بات خود را با دکمه "دریافت توکن" دریافت کنید</p>
         <Show when={error()}>
-          { e => <p class="text-destructive font-bold text-right mt-2">{e()}</p>}
+          { e => <p class="text-destructive font-bold text-right mt-4">{e()}</p>}
 
         </Show>
       </CardContent>

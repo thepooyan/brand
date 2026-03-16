@@ -9,7 +9,7 @@ import { callModal } from "../layout/Modal"
 import TA from "./TA"
 import { cn } from "~/lib/utils"
 import { deleteChatbot } from "~/server/actions"
-import { revalidate } from "@solidjs/router"
+import { revalidate, useNavigate } from "@solidjs/router"
 import { getNewToken } from "~/server/botActions"
 import NewTokenAlert from "./bot/NewTokenAlert"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
@@ -44,8 +44,10 @@ const BotCard = ({bot}:props) => {
       })
   }
 
+  const navigate = useNavigate()
+
   const handleTelegram = () => {
-    callModal(() => <TelegramSet />)
+    callModal(() => <TelegramSet navigate={navigate} />)
   }
 
   return (
