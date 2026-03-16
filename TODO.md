@@ -10,7 +10,7 @@ future:
 - save all of the conversations
 
 disable telegram access button depending on plan in panel
-
+disable logo, and color based on plan
 
 expose useChat as node package 
 useChat error handling is buggy
