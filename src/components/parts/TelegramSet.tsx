@@ -60,7 +60,7 @@ const TelegramSet = ({}:p) => {
           placeholder="توکن ربات تلگرام"
           onchange={e => setTelegramToken(e.currentTarget.value)}
         />
-        <p>توکن ربات تلگرام را پس از ساخت آن دریافت میکنید.</p>
+        <p>توکن ربات تلگرام را پس از ساخت آن از تلگرام دریافت کنید</p>
         <Input
           placeholder="توکن چت‌بات شما"
           onchange={e => setBotToken(e.currentTarget.value)}
