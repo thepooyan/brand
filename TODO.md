@@ -11,6 +11,22 @@ future:
 
 disable telegram access button depending on plan in panel
 disable logo, and color based on plan
+add continue with google 
+add number to profile edit
+insider (
+    sms (does not work?)
+    bank (check if works)
+    if bank doesn't work => {
+        move to iran.
+        - cost gets high
+        how to connect to gemini? (get llm service from inside? or use proxy)
+        keep sms and add google
+    } 
+    if bank does work => {
+        remove sms add google and username (or make sms work?),
+        all set
+    }
+)
 
 expose useChat as node package 
 useChat error handling is buggy
