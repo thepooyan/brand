@@ -8,7 +8,8 @@
     "pushdb:local": "drizzle-kit push --config drizzle.config.local.ts",
     "pushdb:prod": "drizzle-kit push --config drizzle.config.ts",
     "env": "bun src/server/env/generateEnv.ts",
-    "publish": "git checkout production && git pull && git merge master && git push && git checkout master"
+    "publish": "git checkout production && git pull && git merge master && git push && git checkout master",
+    "cm": "bun run pushdb:local; git acn"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",

@@ -10,19 +10,19 @@ import { planTable, usersTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
-import { ActionResponse, EitherResponse } from "~/lib/actionAbstraction"
+import { ApiResponse } from "~/lib/actionAbstraction"
 
 interface p {
   plan: plan
 }
 
-const activatePlan = async (p: plan):ActionResponse => {
+const activatePlan = async (p: plan):Promise<ApiResponse> => {
   "use server"
   const user = await getAuthSession()
 
   if (!user) return {ok: false, msg: "کاربر یافت نشد", status: 404}
 
-  let result:EitherResponse<void> = {ok: true}
+  let result:ApiResponse = {ok: true}
 
   await db.transaction(async tx => {
 

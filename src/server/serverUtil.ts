@@ -1,5 +1,5 @@
 "use server"
-import { adminsTable, chatbotTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbotTable, planTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
 import { LanguageValue, ResponseLengthValue } from "~/lib/planUtil"
@@ -9,6 +9,7 @@ import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
+import { freePlan } from "~/sections/plan";
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -66,4 +67,16 @@ export const generateToken = () => {
 export const isAdminLoggedIn = async () => {
   let user = await getAuthSession()
   return user?.role === ROLES.ADMIN
+}
+
+export const newFreePlan = async () => {
+  const [inserted] = await db.insert(planTable).values({
+    plan_id: "free",
+    messageCount: freePlan.messageCount,
+    remainingMessages: freePlan.messageCount,
+    boughtDate: new Date(),
+    expirationDate: null,
+    botCount: freePlan.botCount,
+  }).returning()
+  return inserted
 }
