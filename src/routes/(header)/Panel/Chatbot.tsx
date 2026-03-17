@@ -6,14 +6,14 @@ import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
-import { createEffect, For, Show, Suspense } from "solid-js"
+import { createEffect, For, Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
 import { ActionResponse } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 
 type folan = {botName: string, id: number}
-const getBots = query(async ():ActionResponse<folan[]> => {
+const getBots = query(async ():ActionResponse<{bots: folan[], canHaveMoreBots: boolean}> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")
@@ -29,25 +29,39 @@ const getBots = query(async ():ActionResponse<folan[]> => {
       where: (tbl => eq(tbl.userId, dbUser.id))
     })
 
-    if (userBots.length >= dbUser.current_plan.botCount) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
+    const canHaveMoreBots = userBots.length < dbUser.current_plan.botCount
 
     let result = await ctx.select({
       botName: chatbotTable.botName,
       id: chatbotTable.id
     }).from(chatbotTable)
     .where(eq(chatbotTable.userId, user.id)) 
-    return {ok: true, data: result }
+    return {ok: true, data: {canHaveMoreBots, bots: result} }
   })
 }, "bots")
 
 export default function Component() {
 
   const bots = createAsync(() => getBots())
+
+  const permission = () => {
+    let a = bots()
+    if (a?.ok) {
+      return a.data.canHaveMoreBots
+    }
+    return false
+  }
+
+  const checkPermission = () => {
+    if (!permission())
+      callModal.fail("جهت ساخت ربات های بیشتر، اکانت خود را ارتقا دهید")
+  }
+
   const lala = () => {
     let result = bots()
     if (!result) return []
     if (result.ok) {
-      return result.data
+      return result.data.bots
     } else {
       callModal.fail(result.msg)
       return []
@@ -112,7 +126,9 @@ export default function Component() {
               <h3 class="text-lg font-medium mb-2 text-white">افزودن ربات جدید</h3>
               <p class="text-sm text-gray-400 text-center mb-4">یک چت بات جدید برای کسب و کار خود ایجاد کنید</p>
               <Button class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
-                as={TA} href="/Place-Order/Chatbot"
+                {...(permission() ? {as: TA} : {} )}
+                href="/Place-Order/Chatbot" 
+                onclick={checkPermission}
               >
                 <FiPlus class="w-4 h-4 ml-1" />
                 ایجاد چت بات
