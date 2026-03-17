@@ -27,8 +27,6 @@ export const isChatAllowed = (user: UserRelations | undefined):ApiResponse<prese
   }
 }
 
-export const isNewBotAllowed = () => {}
-
 export const decrementMessageCount = async (plan: DB_Plan) => {
   await db.update(planTable)
     .set({

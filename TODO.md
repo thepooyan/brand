@@ -9,6 +9,7 @@ more bot options:
 future:
 - save all of the conversations
 
+add email format checker
 update use chat
 fix plan-card
 remove plan util

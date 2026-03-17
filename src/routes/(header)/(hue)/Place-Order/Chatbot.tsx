@@ -1,4 +1,5 @@
 import { useNavigate } from "@solidjs/router"
+import { eq } from "drizzle-orm"
 import { AiFillRobot } from "solid-icons/ai"
 import { FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
@@ -8,6 +9,7 @@ import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
+import { ActionResponse, ApiResponse } from "~/lib/actionAbstraction"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/lib/planUtil"
 import { getAuthSession } from "~/lib/session"
@@ -60,7 +62,7 @@ export default function OrderChatbotPage() {
     setIsSubmitting(true)
     callModal.wait()
 
-    let result = await saveOrder(formData())
+    let result = await saveChatbotOrder(formData())
     if (result.ok) {
       callModal.success()
       navigate(`/Panel/Chatbot`)
@@ -419,29 +421,40 @@ export default function OrderChatbotPage() {
   )
 }
 
-type success<T> = {ok: true, data: T}
-type fail = {ok: false, msg: string}
-type result<T> = success<T> | fail
-type response<T> = Promise<result<T>>
-
-const saveOrder = async (order: chatbotOrder):response<number> => {
+const saveChatbotOrder = async (order: chatbotOrder):ActionResponse<number> => {
   "use server"
   try {
 
     let user = await getAuthSession()
     if (!user) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
 
-    let values: typeof chatbotTable.$inferInsert = {
-      ...order,
-      userId: user.id
-    }
+    return await db.transaction(async ctx => {
 
-    let [row] = await db.insert(chatbotTable).values(values).returning({id: chatbotTable.id})
+      let dbUser = await ctx.query.usersTable.findFirst({
+        where: (tbl => eq(tbl.id, user.id)),
+        with: {current_plan: true}
+      })
+      if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
 
-    return {ok: true, data: row.id}
+      const userBots = await ctx.query.chatbotTable.findMany({
+        where: (tbl => eq(tbl.userId, dbUser.id))
+      })
+
+      if (userBots.length >= dbUser.current_plan.botCount) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
+
+
+      let values: typeof chatbotTable.$inferInsert = {
+        ...order,
+        userId: user.id
+      }
+
+      let [row] = await ctx.insert(chatbotTable).values(values).returning({id: chatbotTable.id})
+
+      return {ok: true, data: row.id}
+    })
 
   } catch(e) {
     console.log(e)
-    return {ok: false, msg: "متسافنه خطایی پیش آمد. طلفا مجددا تلاش کنید"}
+    return {ok: false, msg: "متاسفانه خطایی پیش آمد. لطفا مجددا تلاش کنید"}
   }
 }
