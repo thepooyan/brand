@@ -9,7 +9,6 @@ import { db } from "~/db/db";
 import { eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
-import { UserRelations } from "~/db/relationQueries";
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
