@@ -101,9 +101,12 @@ const testPlan3: plan = {
 }
 
 export const allPlans = [
+  freePlan,
   testPlan1,
   testPlan2,
   testPlan3,
 ]
 
-export const findPlanName = (p: DB_Plan) => allPlans.find(i => i.id === p.plan_id)?.name || ""
+export const findPlanName = (p: DB_Plan) => {
+  return allPlans.find(i => i.id === p.plan_id)?.name || ""
+}
