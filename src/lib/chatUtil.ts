@@ -28,9 +28,16 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
         body: JSON.stringify({ messages: updated, ...args }),
       });
 
-      setPending(false);
-      if (res.status === 404) return setErrorMsg("متاسفانه ربات مورد نظر پیدا نشد!")
-      if (res.status === 402) return setErrorMsg("متاسفانه اعتبار شما به پایان رسیده است.")
+      if (res.status !== 200) {
+        let data = await res.json()
+        setPending(false);
+        if (typeof data.errorMessage === "string")
+          return setErrorMsg(data.errorMessage)
+        if (res.status === 404) return setErrorMsg("متاسفانه ربات مورد نظر پیدا نشد!")
+        if (res.status === 402) return setErrorMsg("متاسفانه اعتبار شما به پایان رسیده است.")
+        return setErrorMsg("مشکلی پیش آمده. لطفا مجددا تلاش کنید.")
+      }
+
       setStreaming(true)
       streamDone = false
 
