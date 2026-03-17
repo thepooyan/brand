@@ -1,4 +1,7 @@
+import { eq, sql } from "drizzle-orm"
+import { db } from "~/db/db"
 import { UserRelations } from "~/db/relationQueries"
+import { DB_Plan, planTable } from "~/db/schema"
 
 
 export type apiError = {status: number, msg: string}
@@ -14,4 +17,12 @@ export const isChatAllowed = (user: UserRelations | undefined):apiError | true =
   if (new Date() > plan.expirationDate) return {status: 402, msg: "طرح شما منقضی شده است"}
 
   return true
+}
+
+export const decrementMessageCount = async (plan: DB_Plan) => {
+  await db.update(planTable)
+    .set({
+      remainingMessages: sql`${planTable.remainingMessages} - 1`
+    })
+    .where(eq(planTable.id, plan.id ))
 }
