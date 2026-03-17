@@ -6,27 +6,56 @@ import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
-import { Suspense } from "solid-js"
+import { createEffect, For, Show, Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
+import { ActionResponse } from "~/lib/actionAbstraction"
+import { callModal } from "~/components/layout/Modal"
 
-const getBots = query(async () => {
+type folan = {botName: string, id: number}
+const getBots = query(async ():ActionResponse<folan[]> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")
 
-  return (await db
-  .select({
-    botName: chatbotTable.botName,
-    id: chatbotTable.id
+  return db.transaction(async ctx => {
+
+    let dbUser = await ctx.query.usersTable.findFirst({
+      where: (tbl => eq(tbl.id, user.id)),
+      with: {current_plan: true}
+    })
+    if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+    const userBots = await ctx.query.chatbotTable.findMany({
+      where: (tbl => eq(tbl.userId, dbUser.id))
+    })
+
+    if (userBots.length >= dbUser.current_plan.botCount) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
+
+    let result = await ctx.select({
+      botName: chatbotTable.botName,
+      id: chatbotTable.id
+    }).from(chatbotTable)
+    .where(eq(chatbotTable.userId, user.id)) 
+    return {ok: true, data: result }
   })
-  .from(chatbotTable)
-  .where(eq(chatbotTable.userId, user.id)))
 }, "bots")
 
 export default function Component() {
 
   const bots = createAsync(() => getBots())
+  const lala = () => {
+    let result = bots()
+    if (!result) return []
+    if (result.ok) {
+      return result.data
+    } else {
+      callModal.fail(result.msg)
+      return []
+    }
+  }
+
+  createEffect(() => {
+  })
 
   return (
     <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 ">
@@ -70,7 +99,9 @@ export default function Component() {
         {/* Bots Grid */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-10">
           <Suspense fallback={<BotCardFallback/>}>
-            {bots()?.map((bot) => <BotCard bot={bot} />)}
+            <For each={lala()}>
+              {a => <BotCard bot={a}/>}
+            </For>
           </Suspense>
           {/* Add New Bot Card */}
           <Card class="border-gray-800 bg-gray-900 border-dashed border-2">
