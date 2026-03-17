@@ -7,6 +7,7 @@ import { and, eq, sql } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
 import { getSystemPrompt } from "~/server/serverUtil";
+import { getFakeStream } from "~/server/fakter";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
@@ -23,13 +24,18 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
       return status(402)
   }
 
-    const result = streamText({
-      model: google("gemini-2.5-flash"),
-      system: getSystemPrompt(bot),
-      messages: body.messages,
-    })
+    // const result = streamText({
+    //   model: google("gemini-2.5-flash"),
+    //   system: getSystemPrompt(bot),
+    //   messages: body.messages,
+    // })
+    //
+    // return result.toDataStreamResponse()
+    const stream = getFakeStream(1000, 1000)
 
-    return result.toDataStreamResponse()
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/plain' }
+    })
 },
 )
 

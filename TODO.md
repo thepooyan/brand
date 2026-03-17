@@ -9,6 +9,8 @@ more bot options:
 future:
 - save all of the conversations
 
+checker for making new bots 
+checker for expiration date on plan
 disable telegram access button depending on plan in panel
 disable logo, and color based on plan
 add continue with google 
