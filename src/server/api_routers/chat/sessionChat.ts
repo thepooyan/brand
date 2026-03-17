@@ -6,7 +6,7 @@ import { Chatbot, chatbotTable, planTable, usersTable } from "~/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { apiError, decrementMessageCount, isChatAllowed } from "~/server/botUtil";
+import { decrementMessageCount, isChatAllowed } from "~/server/botUtil";
 import { getFakeStream } from "~/server/fakter";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
@@ -45,7 +45,7 @@ const getUserBot = async (userId: string, botId: string ) => {
 
   let res = isChatAllowed(user)
   if (!res.ok) {
-    return res.error.status
+    return res.status
   }
 
   const bot = await db.query.chatbotTable.findFirst({
@@ -58,7 +58,7 @@ const getUserBot = async (userId: string, botId: string ) => {
   // if (!bot) return {status: 404, msg: "ربات مورد نظر یافت نشد"}
   if (!bot) return 404
 
-  await decrementMessageCount(res.presentUser.current_plan)
+  await decrementMessageCount(res.data.current_plan)
 
   return bot
 }
