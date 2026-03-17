@@ -9,6 +9,7 @@ more bot options:
 future:
 - save all of the conversations
 
+update use chat
 fix plan-card
 remove plan util
 rethink plan. message count should not be in there
