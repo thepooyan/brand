@@ -4,7 +4,6 @@ import { UserRelations } from "~/db/relationQueries"
 import { DB_Plan, planTable, User } from "~/db/schema"
 import { ApiResponse } from "~/lib/actionAbstraction"
 
-
 type presentUser = User & {current_plan: DB_Plan}
 
 export const isChatAllowed = (user: UserRelations | undefined):ApiResponse<presentUser> => {
