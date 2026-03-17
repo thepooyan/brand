@@ -9,6 +9,8 @@ more bot options:
 future:
 - save all of the conversations
 
+rethink plan. message count should not be in there
+remake panel dashboard into one giant card and add telegram status
 make the source of all use chat one place. git submodule or node package?
 checker for making new bots 
 checker for expiration date on plan

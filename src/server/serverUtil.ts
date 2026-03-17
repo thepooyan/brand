@@ -1,5 +1,5 @@
 "use server"
-import { adminsTable, chatbotTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbotTable, planTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
 import { LanguageValue, ResponseLengthValue } from "~/lib/planUtil"

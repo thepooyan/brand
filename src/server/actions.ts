@@ -11,6 +11,7 @@ import { telegram } from "./telegram"
 import { CoreMessage, generateText, Message } from "ai"
 import { google } from "@ai-sdk/google"
 import { message } from "~/lib/chatUtil"
+import { newFreePlan } from "~/sections/plan"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -67,8 +68,10 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     let user = (await db.select().from(usersTable).where(eq(usersTable.number, number))).at(0)
 
     if (!user) {
+      const newPlan = await newFreePlan()
       const newUser: typeof usersTable.$inferInsert = {
-        number: number
+        number: number,
+        current_plan_id: newPlan.id
       }
       let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
       if (!result) throw new Error()
