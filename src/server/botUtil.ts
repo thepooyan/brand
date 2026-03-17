@@ -15,6 +15,7 @@ export const isChatAllowed = (user: UserRelations | undefined):ApiResponse<prese
   let remaining = plan.remainingMessages
   if (remaining <= 0) return {ok: false, status: 402, msg: "محدودیت پیام های شما به پایان رسیده"}
 
+  if (plan.expirationDate)
   if (new Date() > plan.expirationDate) return {ok: false, status: 402, msg: "طرح شما منقضی شده است"}
 
   return {

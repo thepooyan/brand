@@ -34,7 +34,7 @@ const dashboard = () => {
 
   const days = () => {
     const plan = planData()
-    if (plan)
+    if (plan && plan.expirationDate)
       return daysRemaining(plan.expirationDate)
     return null
   }
@@ -79,7 +79,7 @@ const dashboard = () => {
           تاریخ انقضا: 
         </h3>
         <p class="text-sm mt-2">
-          {presentPlan().expirationDate.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"})}
+          {presentPlan().expirationDate?.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
           <br/>
           <Show when={days()}
             fallback={<>تاریخ انقضا پلن شما سپری شده است.</>}
