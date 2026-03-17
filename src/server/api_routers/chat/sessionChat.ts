@@ -6,7 +6,7 @@ import { Chatbot, chatbotTable, planTable, usersTable } from "~/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { apiError, getSystemPrompt, isChatAllowed } from "~/server/serverUtil";
+import { apiError, isChatAllowed } from "~/server/botUtil";
 import { getFakeStream } from "~/server/fakter";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
