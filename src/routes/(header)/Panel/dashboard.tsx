@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { Show } from "solid-js"
+import { Match, Show, Switch } from "solid-js"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
@@ -34,9 +34,9 @@ const dashboard = () => {
 
   const days = () => {
     const plan = planData()
-    if (plan && plan.expirationDate)
-      return daysRemaining(plan.expirationDate)
-    return null
+    if (!plan || !plan.expirationDate) return null
+
+    return daysRemaining(plan.expirationDate)
   }
 
   return (
@@ -81,10 +81,8 @@ const dashboard = () => {
         <p class="text-sm mt-2">
           {presentPlan().expirationDate?.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
           <br/>
-          <Show when={days()}
-            fallback={<>تاریخ انقضا پلن شما سپری شده است.</>}
-          >
-            {s => <>{s()} روز باقی مانده</>}
+          <Show when={days()}>
+            {s => s() > 0 ? `{s()} روز باقی مانده` : `تاریخ انقضا شما سپری شده` }
           </Show>
         </p>
         <Button class="mr-auto block w-max">
