@@ -18,9 +18,9 @@ export default function OrderChatbotPage() {
   const user = getUser()
 
   const [formData, setFormData] = createSignal<chatbotOrder>({
-    name: String(user()?.name),
-    email: String(user()?.email),
-    phone: String(user()?.number),
+    name: String(user()?.name || ""),
+    email: String(user()?.email || ""),
+    phone: String(user()?.number || ""),
     botName: "",
     businessName: "",
     tone: "",
@@ -35,9 +35,9 @@ export default function OrderChatbotPage() {
 
   createEffect(() => {
     setFormData(prev => ({...prev,
-      name: String(user()?.name),
-      email: String(user()?.email),
-      phone: String(user()?.number),
+      name: String(user()?.name || ""),
+      email: String(user()?.email || ""),
+      phone: String(user()?.number || ""),
     }))
   })
 
