@@ -97,7 +97,7 @@ export const usersTable = sqliteTable("users_table", {
   name: text(),
   email: text().unique(),
   number: text({length: 11}).unique().notNull(),
-  current_plan_id: int().references(() => planTable.id)
+  current_plan_id: int().notNull().references(() => planTable.id)
 });
 
 export type User = typeof usersTable.$inferInsert
