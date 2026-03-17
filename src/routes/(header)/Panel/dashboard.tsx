@@ -1,12 +1,13 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { Show } from "solid-js"
+import { da } from "zod/v4/locales"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
 import { calcMessageCount, calcMessagePercent, cn, daysRemaining } from "~/lib/utils"
-import { findPlanName, freePlan } from "~/sections/plan"
+import { findPlanName } from "~/sections/plan"
 
 const queryUserPlan = query(async() => {
   "use server"
@@ -31,6 +32,13 @@ const dashboard = () => {
   const planData = createAsync(() => queryUserPlan())
 
   const cont = "border-1 border-border rounded-lg p-4 bg-card"
+
+  const days = () => {
+    const plan = planData()
+    if (plan)
+      return daysRemaining(plan.expirationDate)
+    return null
+  }
 
   return (
     <div class="grid grid-cols-2 gap-3">
@@ -74,8 +82,11 @@ const dashboard = () => {
         <p class="text-sm mt-2">
           {presentPlan().expirationDate.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"})}
           <br/>
-          {daysRemaining(presentPlan().expirationDate).toLocaleString("fa")}
-          روز باقی مانده
+          <Show when={days()}
+            fallback={<>تاریخ انثضا پلن شما سپری شده است.</>}
+          >
+            {s => <>{s()} روز باقی مانده</>}
+          </Show>
         </p>
         <Button class="mr-auto block w-max">
           تمدید پلن
