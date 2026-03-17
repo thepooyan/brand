@@ -2,13 +2,13 @@
 import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
-import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
-import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, NewTicket, otpTable, ticketTable, usersTable, websiteOrdersTable } from "~/db/schema"
+import { compareEpochTime, findoutRole, generateOTP, newFreePlan, Response, validatePhone, warpResponse } from "./serverUtil"
+import { blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, ticketTable, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
 import { telegram } from "./telegram"
-import { CoreMessage, generateText, Message } from "ai"
+import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { message } from "~/lib/chatUtil"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
@@ -67,8 +67,10 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     let user = (await db.select().from(usersTable).where(eq(usersTable.number, number))).at(0)
 
     if (!user) {
+      const newPlan = await newFreePlan()
       const newUser: typeof usersTable.$inferInsert = {
-        number: number
+        number: number,
+        current_plan_id: newPlan.id
       }
       let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
       if (!result) throw new Error()
