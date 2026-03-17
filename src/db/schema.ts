@@ -85,7 +85,7 @@ export const planTable = sqliteTable("plan", {
   messageCount: integer().notNull(),
   botCount: integer().notNull(),
   remainingMessages: integer().notNull(),
-  expirationDate: integer({mode: "timestamp"}).notNull(),
+  expirationDate: integer({mode: "timestamp"}),
   boughtDate: integer({mode: "timestamp"}).notNull(),
 })
 
