@@ -153,7 +153,9 @@ export const daysRemaining = (targetDate: string | Date): number => {
 
 export const calcMessageCount = (p: DB_Plan) => p.remainingMessages > p.messageCount ? p.remainingMessages : p.messageCount
 
-export const calcMessagePercent = (p: DB_Plan) => Math.round(p.remainingMessages / calcMessageCount(p))
+export const calcMessagePercent = (p: DB_Plan) => {
+  return Math.round(p.remainingMessages / calcMessageCount(p) * 100)
+}
 
 export const  safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok: false, msg: string}> => {
   try {

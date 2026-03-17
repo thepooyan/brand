@@ -53,7 +53,8 @@ const dashboard = () => {
             {presentPlan().remainingMessages} از {calcMessageCount(presentPlan())}
           </p>
           <div class="h-1 w-full bg-muted rounded-lg overflow-hidden  ">
-            <div class={`w-[${calcMessagePercent(presentPlan())}%] bg-primary h-full`}>
+            <div class={`bg-primary h-full`}
+              style={{width: calcMessagePercent(presentPlan()) + "%"}}>
             </div>
           </div>
         </div>
