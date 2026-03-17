@@ -1,6 +1,6 @@
 "use server"
 
-import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/lib/planUtil"
+import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/server/llmUtil"
 
 export class LlmBuilder {
   private name!: string

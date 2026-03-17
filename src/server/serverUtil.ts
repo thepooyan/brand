@@ -2,8 +2,7 @@
 import { adminsTable, chatbotTable, planTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
-import { LanguageValue, ResponseLengthValue } from "~/lib/planUtil"
-import {ToneValue} from "~/lib/planUtil"
+import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmUtil"
 
 import { db } from "~/db/db";
 import { eq } from "drizzle-orm";

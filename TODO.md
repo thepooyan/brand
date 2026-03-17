@@ -11,7 +11,6 @@ future:
 
 add email format checker
 update use chat
-fix plan-card
 remove plan util
 rethink plan. message count should not be in there
 remake panel dashboard into one giant card and add telegram status

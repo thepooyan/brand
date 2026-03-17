@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
-import { ToneOptions } from "~/lib/planUtil"
+import { ToneOptions } from "~/server/llmUtil"
 
 interface p {
   onchange?: (e: string) => void
