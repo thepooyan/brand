@@ -49,6 +49,8 @@ export const chatbotTable = sqliteTable("chatbot", {
   current_token: text({length: tokenLength})
 })
 
+export type Chatbot = typeof chatbotTable.$inferSelect
+
 export const chatbot_user_relation = relations(chatbotTable, ({one}) => ({
   user: one(usersTable, {fields: [chatbotTable.userId], references: [usersTable.id]})
 }))

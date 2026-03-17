@@ -2,11 +2,11 @@ import Elysia from "elysia";
 import { chatGaurd } from "./chatGuard";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
-import { chatbotTable, planTable, usersTable } from "~/db/schema";
+import { Chatbot, chatbotTable, planTable, usersTable } from "~/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { getSystemPrompt } from "~/server/serverUtil";
+import { apiError, getSystemPrompt, isChatAllowed } from "~/server/serverUtil";
 import { getFakeStream } from "~/server/fakter";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
@@ -17,9 +17,9 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
   if (!auth) return status(401)
 
   const bot = await getUserBot(auth.id.toString(), botId)
-
   if (typeof bot === "number")
     return status(bot)
+
 
     // const result = streamText({
     //   model: google("gemini-2.5-flash"),
@@ -43,13 +43,10 @@ const getUserBot = async (userId: string, botId: string ) => {
     with: {current_plan: true}
   })
 
-  if (!user) return 401
-
-  const plan = user.current_plan
-  if (!plan) return 402
-
-  let remaining = plan.remainingMessages
-  if (remaining <= 0) return 402
+  let persission = isChatAllowed(user)
+  if (persission !== true) {
+    return persission.status
+  }
 
   const bot = await db.query.chatbotTable.findFirst({
     where: and(
@@ -57,13 +54,15 @@ const getUserBot = async (userId: string, botId: string ) => {
         eq(chatbotTable.id, parseInt(botId))
     )
   })
+
+  // if (!bot) return {status: 404, msg: "ربات مورد نظر یافت نشد"}
   if (!bot) return 404
 
   await db.update(planTable)
     .set({
       remainingMessages: sql`${planTable.remainingMessages} - 1`
     })
-    .where(eq(planTable.id, plan.id ))
+    .where(eq(planTable.id, user?.current_plan_id! ))
 
   return bot
 }

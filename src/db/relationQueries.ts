@@ -8,3 +8,9 @@ export const queryTicketsWithRelations = async () =>
       orderBy: (tbl => desc(tbl.updatedAt))
     })
 export type TicketWithRelations = Awaited<ReturnType<typeof queryTicketsWithRelations>>[number]
+
+export const queryUserWithRelations = async () => 
+await db.query.usersTable.findMany({
+    with: {current_plan: true}
+  })
+export type UserRelations = Awaited<ReturnType<typeof queryUserWithRelations>>[number]
