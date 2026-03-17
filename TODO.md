@@ -9,6 +9,7 @@ more bot options:
 future:
 - save all of the conversations
 
+make the source of all use chat one place. git submodule or node package?
 checker for making new bots 
 checker for expiration date on plan
 disable telegram access button depending on plan in panel
