@@ -43,9 +43,9 @@ const getUserBot = async (userId: string, botId: string ) => {
     with: {current_plan: true}
   })
 
-  let checkUser = isChatAllowed(user)
-  if (!checkUser.ok) {
-    return checkUser.status
+  let res = isChatAllowed(user)
+  if (!res.ok) {
+    return res.error.status
   }
 
   const bot = await db.query.chatbotTable.findFirst({
@@ -58,7 +58,7 @@ const getUserBot = async (userId: string, botId: string ) => {
   // if (!bot) return {status: 404, msg: "ربات مورد نظر یافت نشد"}
   if (!bot) return 404
 
-  await decrementMessageCount(checkUser.current_plan)
+  await decrementMessageCount(res.presentUser.current_plan)
 
   return bot
 }

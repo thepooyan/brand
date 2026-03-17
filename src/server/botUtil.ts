@@ -7,21 +7,28 @@ import { DB_Plan, planTable, User } from "~/db/schema"
 type presentUser = User & {current_plan: DB_Plan}
 export type apiError = {status: number, msg: string}
 
-export const isChatAllowed = (user: UserRelations | undefined):presentUser & {ok: true} | apiError & {ok: false} => {
-  if (!user) return {ok: false, status: 401, msg: "کاربر احراز هویت نشده است"}
+type success = {ok: true, presentUser: presentUser }
+type fail = {ok: false, error: apiError}
+
+type returnType = success | fail
+
+export const isChatAllowed = (user: UserRelations | undefined):returnType => {
+  if (!user) return {ok: false, error:  {status: 401, msg: "کاربر احراز هویت نشده است"} }
 
   const plan = user.current_plan
-  if (!plan) return {ok: false, status: 403, msg: "طرح فعالی برای شما وجود ندارد"}
+  if (!plan) return {ok: false, error: {status: 403, msg: "طرح فعالی برای شما وجود ندارد"}}
 
   let remaining = plan.remainingMessages
-  if (remaining <= 0) return {ok: false, status: 402, msg: "محدودیت پیام های شما به پایان رسیده"}
+  if (remaining <= 0) return {ok: false, error: {status: 402, msg: "محدودیت پیام های شما به پایان رسیده"}}
 
-  if (new Date() > plan.expirationDate) return {ok: false, status: 402, msg: "طرح شما منقضی شده است"}
+  if (new Date() > plan.expirationDate) return {ok: false, error: {status: 402, msg: "طرح شما منقضی شده است"}}
 
   return {
-    ok: true,
-    ...user,
-    current_plan: plan
+    presentUser: {
+      ...user,
+      current_plan: plan
+    },
+    ok: true
   }
 }
 
