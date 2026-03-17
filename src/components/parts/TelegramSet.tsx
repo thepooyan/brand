@@ -53,7 +53,7 @@ const TelegramSet = ({navigate}:p) => {
   return (
     <div>
       <CardHeader>
-        <CardTitle>اتصال به تلگرام</CardTitle>
+        <CardTitle class="text-foreground">اتصال به تلگرام</CardTitle>
         <CardDescription>جهت اتصال ربات تلگرامی به چت‌بات خود توکن ربات تلگرام خود را وارد کنید.</CardDescription>
       </CardHeader>
       <CardContent class="text-right space-y-2">

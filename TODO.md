@@ -11,12 +11,9 @@ future:
 
 add email format checker
 update use chat
-remove plan util
 rethink plan. message count should not be in there
 remake panel dashboard into one giant card and add telegram status
 make the source of all use chat one place. git submodule or node package?
-checker for making new bots 
-checker for expiration date on plan
 disable telegram access button depending on plan in panel
 disable logo, and color based on plan
 add continue with google 
