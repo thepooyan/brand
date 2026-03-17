@@ -17,12 +17,9 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
   if (!auth) return status(401)
 
   const bot = await getUserBot(auth.id.toString(), botId)
-  switch (bot) {
-    case "404":
-      return status(404)
-    case "empty":
-      return status(402)
-  }
+
+  if (typeof bot === "number")
+    return status(bot)
 
     // const result = streamText({
     //   model: google("gemini-2.5-flash"),
@@ -46,9 +43,13 @@ const getUserBot = async (userId: string, botId: string ) => {
     with: {current_plan: true}
   })
 
-  const plan = user?.current_plan
+  if (!user) return 401
 
-  if (!plan || !user.current_plan_id) return "404"
+  const plan = user.current_plan
+  if (!plan) return 402
+
+  let remaining = plan.remainingMessages
+  if (remaining <= 0) return 402
 
   const bot = await db.query.chatbotTable.findFirst({
     where: and(
@@ -56,17 +57,13 @@ const getUserBot = async (userId: string, botId: string ) => {
         eq(chatbotTable.id, parseInt(botId))
     )
   })
-
-  if (!bot) return "404"
-
-  let remaining = plan.remainingMessages
-  if (remaining <= 0) return "empty"
+  if (!bot) return 404
 
   await db.update(planTable)
     .set({
       remainingMessages: sql`${planTable.remainingMessages} - 1`
     })
-    .where(eq(planTable.id, user.current_plan_id ))
+    .where(eq(planTable.id, plan.id ))
 
   return bot
 }
