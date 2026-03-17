@@ -1,22 +1,28 @@
 import { eq, sql } from "drizzle-orm"
 import { db } from "~/db/db"
 import { UserRelations } from "~/db/relationQueries"
-import { DB_Plan, planTable } from "~/db/schema"
+import { DB_Plan, planTable, User } from "~/db/schema"
 
 
+type presentUser = User & {current_plan: DB_Plan}
 export type apiError = {status: number, msg: string}
-export const isChatAllowed = (user: UserRelations | undefined):apiError | true => {
-  if (!user) return {status: 401, msg: "کاربر احراز هویت نشده است"}
+
+export const isChatAllowed = (user: UserRelations | undefined):presentUser & {ok: true} | apiError & {ok: false} => {
+  if (!user) return {ok: false, status: 401, msg: "کاربر احراز هویت نشده است"}
 
   const plan = user.current_plan
-  if (!plan) return {status: 403, msg: "طرح فعالی برای شما وجود ندارد"}
+  if (!plan) return {ok: false, status: 403, msg: "طرح فعالی برای شما وجود ندارد"}
 
   let remaining = plan.remainingMessages
-  if (remaining <= 0) return {status: 402, msg: "محدودیت پیام های شما به پایان رسیده"}
+  if (remaining <= 0) return {ok: false, status: 402, msg: "محدودیت پیام های شما به پایان رسیده"}
 
-  if (new Date() > plan.expirationDate) return {status: 402, msg: "طرح شما منقضی شده است"}
+  if (new Date() > plan.expirationDate) return {ok: false, status: 402, msg: "طرح شما منقضی شده است"}
 
-  return true
+  return {
+    ok: true,
+    ...user,
+    current_plan: plan
+  }
 }
 
 export const decrementMessageCount = async (plan: DB_Plan) => {

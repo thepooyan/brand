@@ -100,6 +100,8 @@ export const usersTable = sqliteTable("users_table", {
   current_plan_id: int().references(() => planTable.id)
 });
 
+export type User = typeof usersTable.$inferInsert
+
 export const user_plan_relations = relations(usersTable, ({one}) => ({
   current_plan: one(planTable, {fields: [usersTable.current_plan_id], references: [planTable.id]})
 }))
