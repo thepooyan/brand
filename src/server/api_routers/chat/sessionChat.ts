@@ -2,12 +2,13 @@ import Elysia from "elysia";
 import { chatGaurd } from "./chatGuard";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
-import { Chatbot, chatbotTable, planTable, usersTable } from "~/db/schema";
-import { and, eq, sql } from "drizzle-orm";
+import { Chatbot, chatbotTable, usersTable } from "~/db/schema";
+import { and, eq } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
 import { decrementMessageCount, isChatAllowed } from "~/server/botUtil";
 import { getFakeStream } from "~/server/fakter";
+import { ApiResponse } from "~/lib/actionAbstraction";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
@@ -16,9 +17,9 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
   const auth = await getAuthSession()
   if (!auth) return status(401)
 
-  const bot = await getUserBot(auth.id.toString(), botId)
-  if (typeof bot === "number")
-    return status(bot)
+  const res = await getUserBot(auth.id.toString(), botId)
+  if (!res.ok)
+    return status(res.status, {errorMessage: res.msg})
 
 
     // const result = streamText({
@@ -36,7 +37,7 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
 },
 )
 
-const getUserBot = async (userId: string, botId: string ) => {
+const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Chatbot>> => {
 
   const user = await db.query.usersTable.findFirst({
     where: eq(usersTable.id, parseInt(userId)),
@@ -45,7 +46,7 @@ const getUserBot = async (userId: string, botId: string ) => {
 
   let res = isChatAllowed(user)
   if (!res.ok) {
-    return res.status
+    return res
   }
 
   const bot = await db.query.chatbotTable.findFirst({
@@ -55,10 +56,9 @@ const getUserBot = async (userId: string, botId: string ) => {
     )
   })
 
-  // if (!bot) return {status: 404, msg: "ربات مورد نظر یافت نشد"}
-  if (!bot) return 404
+  if (!bot) return {ok:false, status: 404, msg: "ربات مورد نظر یافت نشد"}
 
   await decrementMessageCount(res.data.current_plan)
 
-  return bot
+  return {ok: true, data: bot}
 }
