@@ -1,5 +1,4 @@
-import { db } from "~/db/db"
-import { DB_Plan, NewPlan, planTable } from "~/db/schema"
+import { DB_Plan, NewPlan } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
@@ -21,18 +20,6 @@ const daysFromNow = (days: number) => {
   let date = new Date()
   date.setDate(date.getDate() + days)
   return date
-}
-
-export const newFreePlan = async () => {
-  const [inserted] = await db.insert(planTable).values({
-    plan_id: "free",
-    expirationDate: null,
-    botCount: freePlan.botCount,
-    boughtDate: new Date(),
-    messageCount: freePlan.messageCount,
-    remainingMessages: freePlan.messageCount
-  }).returning()
-  return inserted
 }
 
 export const plan_ids = [ "free" , "starter" , "regular" , "pro" ] as const

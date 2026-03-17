@@ -1,6 +1,7 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { Show } from "solid-js"
+import { da } from "zod/v4/locales"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
@@ -82,7 +83,7 @@ const dashboard = () => {
           {presentPlan().expirationDate?.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
           <br/>
           <Show when={days()}
-            fallback={<>تاریخ انقضا پلن شما سپری شده است.</>}
+            fallback={<>تاریخ انثضا پلن شما سپری شده است.</>}
           >
             {s => <>{s()} روز باقی مانده</>}
           </Show>
