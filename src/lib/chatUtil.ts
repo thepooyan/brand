@@ -9,7 +9,7 @@ export type message = {
 const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
   return (getAnchor: () => HTMLElement) => {
-    const {pushToBuffer, onCleanup} = buffer()
+    const {pushToBuffer, onCleanup, getIsTyping} = buffer()
     const [messages, setMessages] = createSignal<message[]>([]);
     const [pending, setPending] = createSignal(false);
     const [streaming, setStreaming] = createSignal(false);
@@ -30,7 +30,6 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
       if (res.status !== 200) {
         let data = await res.json()
-        setPending(false);
         if (typeof data.errorMessage === "string")
           return setErrorMsg(data.errorMessage)
         if (res.status === 404) return setErrorMsg("متاسفانه ربات مورد نظر پیدا نشد!")
@@ -38,6 +37,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
         return setErrorMsg("مشکلی پیش آمده. لطفا مجددا تلاش کنید.")
       }
 
+      setPending(false);
       setStreaming(true)
       streamDone = false
 
@@ -50,8 +50,6 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
       while (true) {
         const { value, done } = await reader.read();
         if (done) {
-          streamDone = true
-          console.log("stream done")
           break
         }
 
@@ -63,17 +61,13 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
           if (line.startsWith("0:")) {
             let chunk = line.slice(2).trim();
 
-            // remove wrapping quotes if present
             if (chunk.startsWith('"') && chunk.endsWith('"')) {
               chunk = chunk.slice(1, -1);
             }
 
-            // decode escaped characters like \n, \"
             try {
               chunk = JSON.parse(`"${chunk}"`);
-            } catch {
-              // fallback: use raw if JSON decoding fails
-            }
+            } catch { }
 
             response += chunk
             pushToBuffer(chunk, getAnchor())
@@ -88,12 +82,17 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
         }
       } 
 
-      onCleanup(() => {
-        if (!streamDone) return
+      if (getIsTyping()) {
+        onCleanup(() => {
+          setMessages(prev => [...prev, { role: "assistant", content: response }]);
+          setStreaming(false)
+          response = ""
+        })
+      } else {
         setMessages(prev => [...prev, { role: "assistant", content: response }]);
         setStreaming(false)
         response = ""
-      })
+      }
     };
 
     return { send, messages, pending, streaming, errorMsg };
@@ -109,6 +108,8 @@ const buffer = () => {
   const queue: string[] = [];
   let cleanupCallback: (() => void) | null = null;
 
+  const getIsTyping = () => isTyping || queue.length > 0
+  
   const processQueue = (element: HTMLElement) => {
     if (queue.length === 0) {
       if (cleanupCallback) cleanupCallback();
@@ -148,5 +149,5 @@ const buffer = () => {
     cleanupCallback = callback;
   };
 
-  return { pushToBuffer, onCleanup };
+  return { pushToBuffer, onCleanup, getIsTyping };
 };
