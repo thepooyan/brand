@@ -28,13 +28,12 @@ const dashboard = () => {
   const planData = createAsync(() => queryUserPlan())
 
   return (
-    <div>
-      <Show when={planData()}>
-        {presentPlan => <>
-          <PlanDashboard plan={presentPlan}/>
-          </>}
-      </Show>
-    </div>
+    <Show when={planData()}>
+      {presentPlan => <>
+        <PlanDashboard plan={presentPlan}/>
+        </>
+      }
+    </Show>
   )
 }
 

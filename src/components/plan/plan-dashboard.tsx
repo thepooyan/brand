@@ -5,7 +5,7 @@ import { doesPlanHaveTelegram, findPlanName } from "~/sections/plan"
 import { Button } from "../ui/button"
 import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
 import TA from "../parts/TA"
-import { FiCheck, FiX } from "solid-icons/fi"
+import { FiCheck, FiTrendingUp, FiX } from "solid-icons/fi"
 
 interface p {
   plan: Accessor<DB_Plan>
@@ -20,14 +20,17 @@ const PlanDashboard = ({plan}:p) => {
   }
 
   return (
+    <div class="h-full flex justify-center items-center">
     <Card class="w-xl m-auto">
       <CardHeader class="relative">
         <CardTitle>پلن فعلی شما</CardTitle>
         <CardDescription>{findPlanName(plan())}</CardDescription>
         <Button
           as={TA} href="/pricing" class="absolute left-5"
+          variant="secondary"
         >
           ارتقا پلن
+          <FiTrendingUp class="text-green-500"/>
         </Button>
       </CardHeader>
       <CardContent class="">
@@ -77,6 +80,7 @@ const PlanDashboard = ({plan}:p) => {
 
       </CardContent>
     </Card>
+    </div>
   )
 }
 
