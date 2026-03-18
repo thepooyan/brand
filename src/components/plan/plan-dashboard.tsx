@@ -1,6 +1,6 @@
 import { DB_Plan } from "~/db/schema"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, Show } from "solid-js"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { Accessor, ParentProps, Show } from "solid-js"
 import { doesPlanHaveTelegram, findPlanName } from "~/sections/plan"
 import { Button } from "../ui/button"
 import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
@@ -20,17 +20,49 @@ const PlanDashboard = ({plan}:p) => {
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card class="w-xl m-auto">
+      <CardHeader class="relative">
         <CardTitle>پلن فعلی شما</CardTitle>
         <CardDescription>{findPlanName(plan())}</CardDescription>
+        <Button
+          as={TA} href="/pricing" class="absolute left-5"
+        >
+          ارتقا پلن
+        </Button>
       </CardHeader>
-      <CardContent class="grid grid-cols-2 gap-10">
-        <div>
+      <CardContent class="">
+        <div class="grid grid-cols-2 mb-10 mt-5">
 
-          <h3 class="text-lg font-bold">
+          <div>
+            <Title>مشخصات:</Title>
+            <Text>
+              تعداد ربات: {plan().botCount} عدد
+            </Text>
+            <Text>
+              اتصال به تلگرام: 
+              {doesPlanHaveTelegram(plan().plan_id) ? <>بله <FiCheck class="text-green-500"/></> : <>خیر <FiX class="text-destructive"/></>}
+            </Text>
+          </div>
+
+          <div>
+            <Title>
+              تاریخ انقضا: 
+            </Title>
+            <Text>
+              {plan().expirationDate?.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
+              <br/>
+              <Show when={days()}>
+                {s => s() > 0 ? `${s()} روز باقی مانده` : `تاریخ انقضا شما سپری شده` }
+              </Show>
+            </Text>
+          </div>
+
+        </div>
+
+        <div>
+          <Title>
             تعداد پیام باقی مانده: 
-          </h3>
+          </Title>
           <div class="mb-5">
             <p class="text-left text-sm mb-1">
               {plan().remainingMessages} از {calcMessageCount(plan())}
@@ -42,35 +74,22 @@ const PlanDashboard = ({plan}:p) => {
             </div>
           </div>
         </div>
-        <div class="tex">
-          <p class="">
-            تعداد ربات: {plan().botCount} عدد
-          </p>
-          <p class="flex items-center gap-1">
-            اتصال به تلگرام: 
-            {doesPlanHaveTelegram(plan().plan_id) ? <>بله <FiCheck class="text-green-500"/></> : <>خیر <FiX class="text-destructive"/></>}
-          </p>
-        </div>
-        <div>
-          <h3 class="text-lg font-bold">
-            تاریخ انقضا: 
-          </h3>
-          <p class="text-sm mt-2">
-            {plan().expirationDate?.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
-            <br/>
-            <Show when={days()}>
-              {s => s() > 0 ? `${s()} روز باقی مانده` : `تاریخ انقضا شما سپری شده` }
-            </Show>
-          </p>
-        </div>
+
       </CardContent>
-      <CardFooter>
-        <Button
-          as={TA} href="/pricing"
-        >ارتقا پلن</Button>
-      </CardFooter>
     </Card>
   )
 }
+
+const Title = ({children}:ParentProps) => <h3
+  class="font-bold text-lg"
+>
+  {children}
+</h3>
+
+const Text = ({children}:ParentProps) => <p
+  class="text-muted-foreground flex items-center gap-1"
+>
+  {children}
+</p>
 
 export default PlanDashboard
