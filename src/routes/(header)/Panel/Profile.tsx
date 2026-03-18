@@ -1,4 +1,4 @@
-import { action, redirect, useSubmission } from "@solidjs/router"
+import { action, redirect, revalidate, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
@@ -9,20 +9,29 @@ import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
+import { ActionResponse } from "~/lib/actionAbstraction"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
 
-const handleSubmit = action(async (formData:FormData) => {
+const handleSubmit = action(async (formData:FormData):ActionResponse => {
   "use server"
-  let name = formData.get("name")?.toString() || ""
-  let email = formData.get("email")?.toString() || ""
+  let name = formData.get("name")?.toString() 
+  let email = formData.get("email")?.toString() 
+  let number = formData.get("number")?.toString() 
 
-  let number = (await getAuthSession())?.number
-  if (!number) throw redirect("/Login?back=/Panel/Profile")
+  if (!name || !email || !number) return {ok: false, msg: "لطفا همه موارد را وارد کنید"}
 
-  await db.update(usersTable).set({name: name, email: email}).where(eq(usersTable.number, number))
-  updateUserSession(name, email)
-  return "done"
+  let user = await getAuthSession()
+  if (!user) throw redirect("/Login?back=/Panel/Profile")
+
+  await db.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.id))
+  await updateUserSession({user: {
+    name: name,
+    email: email, 
+    number: number
+  }})
+
+  return {ok: true}
 })
 
 
@@ -34,7 +43,12 @@ const Profile = () => {
     if (submission.error) {
       callModal.fail()
     } else if (submission.result) {
-      callModal.success()
+      if ( submission.result.ok) {
+        callModal.success()
+        revalidate("user")
+      } else {
+        callModal.fail(submission.result.msg)
+      }
     } 
   })
 

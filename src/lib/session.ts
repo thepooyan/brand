@@ -7,8 +7,8 @@ export enum ROLES {
   ADMIN
 }
 
-type SessionData = {
-  user?: typeof usersTable.$inferSelect & {role: ROLES}
+export type SessionData = {
+  user: typeof usersTable.$inferSelect & {role: ROLES}
 };
 
 async function useAuthSession() {
