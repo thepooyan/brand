@@ -46,7 +46,7 @@ const Header = () => {
               بلاگ
             </TA>
             <Button variant="outline" onclick={() => toggleTheme()}>
-              <FiSun class="" />
+              <FiSun />
             </Button>
             <Show when={logged()}>
               <div class="space-x-2">

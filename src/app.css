@@ -1,10 +1,11 @@
 @import "tailwindcss";
-@import "./styles/theme-default.css";
+@import "./styles/chadcn.css";
+@import "./styles/theme/light.css";
+@import "./styles/theme/dark.css";
 @import "./styles/viewTransitions.css";
 @import "./styles/animation.css";
 @import "./styles/fonts.css";
 @import "./styles/scrollbar.css";
-@import "./styles/chadcn.css";
 @import "./styles/proseOverride.css";
 @plugin "@tailwindcss/typography";
 @config "../tailwind.config.ts";

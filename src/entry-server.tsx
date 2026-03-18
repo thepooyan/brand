@@ -3,6 +3,7 @@ import { createHandler, StartServer } from "@solidjs/start/server";
 import TagManagerHead from "./components/tagManager/TagManagerHead";
 import TagManagerBody from "./components/tagManager/TagManagerBody";
 import { isProd } from "./server/env/shared-env";
+import { defaultTheme } from "./lib/theme";
 
 export default createHandler(() => (
   <StartServer
@@ -16,7 +17,7 @@ export default createHandler(() => (
           <TagManagerHead/>}
           {assets}
         </head>
-        <body class="dark">
+        <body class={`theme-${defaultTheme}`}>
           {isProd && 
           <TagManagerBody/>}
           <div id="app">{children}</div>
