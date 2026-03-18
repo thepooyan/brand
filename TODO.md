@@ -9,7 +9,6 @@ more bot options:
 future:
 - save all of the conversations
 
-add email format checker
 update use chat
 rethink plan. message count should not be in there
 remake panel dashboard into one giant card and add telegram status

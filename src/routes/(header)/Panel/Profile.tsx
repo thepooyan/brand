@@ -80,7 +80,7 @@ const Profile = () => {
                 </Label>
                 <div class="flex items-center">
                   <Suspense fallback={<Fallback/>}>
-                    <Input  placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={user()?.email || ""}/>
+                    <Input type="email" placeholder="ایمیل خود را وارد کنید" class="text-right" name="email" value={user()?.email || ""}/>
                   </Suspense>
                 </div>
               </div>
