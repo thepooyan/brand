@@ -28,7 +28,7 @@ export default function AdminLayout({children}:{children: Element}) {
   return (
     <>
     <style>{`html {overflow: hidden}`}</style>
-    <div class="dark min-h-screen bg-background text-foreground">
+    <div class="min-h-screen bg-background text-foreground">
       {/* Header */}
       <header class="border-b border-border bg-card">
         <div class="flex h-16 items-center justify-between px-6">

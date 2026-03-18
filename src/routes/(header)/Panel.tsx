@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { and, eq } from "drizzle-orm"
-import { createEffect, For, ParentProps } from "solid-js"
+import { For, ParentProps } from "solid-js"
 import Blinker from "~/components/parts/Blinker"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
@@ -80,7 +80,7 @@ const I = ({href, children}:ParentProps<{href: string}>) => {
   return <Button as={TA} href={href.startsWith("/") ? href : `/Panel/${href}`}
     variant="outline"
     class="px-5 py-3 inline-block relative"
-    activeClass="bg-zinc-800"
+    activeClass="bg-accent"
   >
     {children}
   </Button>
