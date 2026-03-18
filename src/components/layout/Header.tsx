@@ -2,11 +2,12 @@ import { Button } from "../ui/button"
 import { FaSolidUserGear } from 'solid-icons/fa'
 import { name, nameEn } from "../../../config/config"
 import MobileMenu from "../parts/MobileMenu"
-import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
+import { FiLogIn, FiMenu, FiSun, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
 import { logUserOut, useIsLoggedIn } from "~/lib/signal"
 import { ROLES } from "~/lib/session"
+import { toggleTheme } from "~/lib/theme"
 
 const Header = () => {
 
@@ -44,6 +45,9 @@ const Header = () => {
             <TA href="/Blog" class="text-sm font-medium hover:text-primary transition-colors">
               بلاگ
             </TA>
+            <Button variant="outline" onclick={() => toggleTheme()}>
+              <FiSun class="" />
+            </Button>
             <Show when={logged()}>
               <div class="space-x-2">
                 <Button as={TA} href="/Panel">پنل کاربری</Button>
