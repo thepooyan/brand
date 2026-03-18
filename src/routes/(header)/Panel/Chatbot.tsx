@@ -6,14 +6,20 @@ import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
-import { createEffect, For, Suspense } from "solid-js"
+import { For, Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
 import { ActionResponse } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
+import { doesPlanHaveTelegram } from "~/sections/plan"
 
-type folan = {botName: string, id: number}
-const getBots = query(async ():ActionResponse<{bots: folan[], canHaveMoreBots: boolean}> => {
+type botPreview = {botName: string, id: number}
+type initialData = {
+  bots: botPreview[],
+  canHaveMoreBots: boolean,
+  telegramAccess: boolean
+}
+const getInitialData = query(async ():ActionResponse<initialData> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")
@@ -31,34 +37,44 @@ const getBots = query(async ():ActionResponse<{bots: folan[], canHaveMoreBots: b
 
     const canHaveMoreBots = userBots.length < dbUser.current_plan.botCount
 
+    const telegramAccess = doesPlanHaveTelegram(dbUser.current_plan.plan_id)
+
     let result = await ctx.select({
       botName: chatbotTable.botName,
       id: chatbotTable.id
     }).from(chatbotTable)
     .where(eq(chatbotTable.userId, user.id)) 
-    return {ok: true, data: {canHaveMoreBots, bots: result} }
+    return {ok: true, data: {canHaveMoreBots, bots: result, telegramAccess} }
   })
 }, "bots")
 
 export default function Component() {
 
-  const bots = createAsync(() => getBots())
+  const initialData = createAsync(() => getInitialData())
 
-  const permission = () => {
-    let a = bots()
-    if (a?.ok) {
-      return a.data.canHaveMoreBots
+  const moreBotsPermission = () => {
+    let d = initialData()
+    if (d?.ok) {
+      return d.data.canHaveMoreBots
+    }
+    return false
+  }
+
+  const telegramPermission = () => {
+    let d = initialData()
+    if (d?.ok) {
+      return d.data.telegramAccess
     }
     return false
   }
 
   const checkPermission = () => {
-    if (!permission())
+    if (!moreBotsPermission())
       callModal.fail("جهت ساخت ربات های بیشتر، اکانت خود را ارتقا دهید")
   }
 
-  const lala = () => {
-    let result = bots()
+  const bots = () => {
+    let result = initialData()
     if (!result) return []
     if (result.ok) {
       return result.data.bots
@@ -67,9 +83,6 @@ export default function Component() {
       return []
     }
   }
-
-  createEffect(() => {
-  })
 
   return (
     <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 ">
@@ -113,8 +126,8 @@ export default function Component() {
         {/* Bots Grid */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 mt-10">
           <Suspense fallback={<BotCardFallback/>}>
-            <For each={lala()}>
-              {a => <BotCard bot={a}/>}
+            <For each={bots()}>
+              {b => <BotCard bot={b} telegramAccess={telegramPermission}/>}
             </For>
           </Suspense>
           {/* Add New Bot Card */}
@@ -126,7 +139,7 @@ export default function Component() {
               <h3 class="text-lg font-medium mb-2 text-white">افزودن ربات جدید</h3>
               <p class="text-sm text-gray-400 text-center mb-4">یک چت بات جدید برای کسب و کار خود ایجاد کنید</p>
               <Button class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
-                {...(permission() ? {as: TA} : {} )}
+                {...(moreBotsPermission() ? {as: TA} : {} )}
                 href="/Place-Order/Chatbot" 
                 onclick={checkPermission}
               >

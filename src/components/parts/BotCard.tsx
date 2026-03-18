@@ -12,13 +12,14 @@ import { deleteChatbot } from "~/server/actions"
 import { revalidate, useNavigate } from "@solidjs/router"
 import { getNewToken } from "~/server/botActions"
 import NewTokenAlert from "./bot/NewTokenAlert"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
 import TelegramSet from "./TelegramSet"
+import { Accessor } from "solid-js"
 
 interface props {
-  bot: chatbotStatus
+  bot: chatbotStatus,
+  telegramAccess: Accessor<boolean>
 }
-const BotCard = ({bot}:props) => {
+const BotCard = ({bot, telegramAccess}:props) => {
 
   const deleteBot = async () => {
     callModal.prompt(`ربات "${bot.botName}" حذف شود؟`)
@@ -47,7 +48,10 @@ const BotCard = ({bot}:props) => {
   const navigate = useNavigate()
 
   const handleTelegram = () => {
-    callModal(() => <TelegramSet navigate={navigate} />)
+    if (telegramAccess())
+      callModal(() => <TelegramSet navigate={navigate} />)
+    else
+    callModal.fail("متاسفانه پلن فعلی شما شامل اتصال به تلگرام نمیباشد. لطفا پلن خود را ارتقا دهید.")
   }
 
   return (
