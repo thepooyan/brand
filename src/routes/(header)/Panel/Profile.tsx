@@ -71,6 +71,17 @@ const Profile = () => {
                 </div>
               </div>
 
+              <div class="space-y-2">
+                <Label for="fax" class="block text-right">
+                  شماره همراه
+                </Label>
+                <div class="flex items-center">
+                  <Suspense fallback={<Fallback/>}>
+                    <Input  placeholder="شماره همراه خود را وارد کنید" class="text-right" name="number" value={user()?.number || ""}/>
+                  </Suspense>
+                </div>
+              </div>
+
             </CardContent>
             <CardFooter>
               <MyButton type="submit" class="w-full" isWaiting={submission.pending}>
