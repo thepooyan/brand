@@ -11,9 +11,7 @@ future:
 
 update use chat
 rethink plan. message count should not be in there
-remake panel dashboard into one giant card and add telegram status
 make the source of all use chat one place. git submodule or node package?
-
 disable logo, and color based on plan
 add continue with google 
 
@@ -58,10 +56,6 @@ compelete order status
 profile does not work on could?
 put telegram bot somewhere
 save personal info on order requests
-
--pend-review chatbot page
--pend-make chatbot stuff
--pend make otp
 
 services: {
     AI 

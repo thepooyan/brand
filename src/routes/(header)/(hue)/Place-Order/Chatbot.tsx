@@ -77,13 +77,14 @@ export default function OrderChatbotPage() {
     <>
       <div class="container mx-auto px-4 py-8">
         {/* Back Button */}
-        <TA
-          href="/ai-services"
+        <Button
+          variant="link"
           class="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8"
+          onclick={() => history.back()}
         >
           <FiArrowRight class="ml-2 h-4 w-4" />
-          بازگشت به خدمات هوش مصنوعی
-        </TA>
+          بازگشت 
+        </Button>
 
         <div class="max-w-4xl mx-auto">
           {/* Header */}
