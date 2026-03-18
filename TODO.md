@@ -37,6 +37,10 @@ fix mini chat
 order status page
 rate limit s3 uploader for normal users
 
+cron cleaner for otp
+?buffer que breaks if there is delay between streamed responsed
+profile does not work on could?
+
 seo:
 check gsc
 expland author => add authors table
@@ -47,12 +51,6 @@ Ahrefs / SEMrush (analysis)
 Schema generators
 Static sitemap generators
 Framework SEO libraries
-
-
-cron cleaner for otp
-?buffer que breaks if there is delay between streamed responsed
-compelete order status
-profile does not work on could?
 
 services: {
     AI 
@@ -73,6 +71,6 @@ services: {
 }
 
 ***
+
 Final steps:
 - finish config
-- robots.txt
