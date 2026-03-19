@@ -6,9 +6,10 @@ export type message = {
 };
 
 
+type onType = (chunk: string) => any | undefined
 const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
-  return (getAnchor: () => HTMLElement) => {
+  return (getAnchor: () => HTMLElement, onType?: onType) => {
     const {pushToBuffer, onCleanup, getIsTyping} = buffer()
     const [messages, setMessages] = createSignal<message[]>([]);
     const [pending, setPending] = createSignal(false);
@@ -70,7 +71,7 @@ const getUseChat = (endpoint: string, args?: Record<string, any>) => {
             } catch { }
 
             response += chunk
-            pushToBuffer(chunk, getAnchor())
+            pushToBuffer(chunk, getAnchor(), onType)
           }
           if (line.startsWith("3:")) { // Response is error?
             if (line.startsWith('3:"An error occurred."')) {
@@ -110,7 +111,7 @@ const buffer = () => {
 
   const getIsTyping = () => isTyping || queue.length > 0
   
-  const processQueue = (element: HTMLElement) => {
+  const processQueue = (element: HTMLElement, onType?: onType) => {
     if (queue.length === 0) {
       if (cleanupCallback) cleanupCallback();
       return;
@@ -127,6 +128,7 @@ const buffer = () => {
     const type = () => {
       if (index < str.length) {
         element.textContent += str[index];
+        onType && onType(str[index])
         index++;
         setTimeout(type, 10);
       } else {
@@ -138,11 +140,11 @@ const buffer = () => {
     type();
   };
 
-  const pushToBuffer = (str: string, el: HTMLElement) => {
+  const pushToBuffer = (str: string, el: HTMLElement, onType?: onType) => {
     if (typeof str !== 'string' || str.length === 0) return;
     
     queue.push(str);
-    processQueue(el);
+    processQueue(el, onType);
   };
 
   const onCleanup = (callback: () => void) => {

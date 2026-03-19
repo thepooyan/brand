@@ -22,10 +22,10 @@ export default function Demo() {
     hour12: false
   });
 
-  const {messages, pending, streaming, send} = useChat(() => {
-    scrollToBottom()
-    return streamElementRef
-  })
+  const {messages, pending, streaming, send} = useChat(
+    () => streamElementRef,
+    () => scrollToBottom()
+  );
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({
@@ -36,6 +36,8 @@ export default function Demo() {
 
   createEffect(() => {
     pending()
+    streaming()
+    messages()
     scrollToBottom()
   })
 
