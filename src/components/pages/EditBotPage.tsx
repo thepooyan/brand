@@ -16,6 +16,7 @@ import { useNavigate } from "@solidjs/router"
 import ColorPicker from "../ui/color-picker"
 import { ImageUploader } from "../parts/ImageUploader"
 import { Dynamic } from "solid-js/web"
+import ArrayInput from "../ui/array-input"
 
 interface p {
   bot: I_Bot
@@ -94,6 +95,9 @@ const EditBotPage = ({bot}:p) => {
           <In key="greeting" name="پیام خوش آمد گویی" value={store.greeting}/>
           <div>
             <In key="floatingMessage" name="پیام شناور" value={store.floatingMessage?.msg}/>
+          </div>
+          <div>
+            <ArrayInput/>
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو

@@ -166,3 +166,10 @@ export const  safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {o
     return { ok: false, msg: message }
   }
 }
+
+export const ifEnterPressed = (callback: (e: KeyboardEvent) => void) => (e: KeyboardEvent) => {
+  if (e.key === "Enter") {
+    e.preventDefault()
+    callback(e)
+  }
+}
