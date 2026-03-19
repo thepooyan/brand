@@ -91,6 +91,10 @@ const EditBotPage = ({bot}:p) => {
             رنگ نوشته (معمولا سفید یا سیاه)
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setStore("color_foreground", val)}/>
           </Seprator>
+          <In key="greeting" name="پیام خوش آمد گویی" value={store.greeting}/>
+          <div>
+            <In key="floatingMessage" name="پیام شناور" value={store.floatingMessage?.msg}/>
+          </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو
             <ImageUploader initialValue={bot.logo || undefined} onChange={val => setStore("logo", val)}/>
