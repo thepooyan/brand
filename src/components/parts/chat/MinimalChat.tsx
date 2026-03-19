@@ -27,8 +27,9 @@ const MinimalChat = ({botId}:props) => {
   let anchor!: HTMLDivElement
   let messagesRailRef!: HTMLDivElement
 
-  const {messages, send, pending, streaming, errorMsg} = useUserChat( botId )(() => anchor,
-    () => messagesRailRef.scrollTo({top: messagesRailRef.scrollHeight, behavior: "smooth"})
+  const {messages, send, pending, streaming, errorMsg} = useUserChat( botId )(
+    () => anchor,
+    () => scrollToBottom()
   )
   const [inputMessage, setInputMessage] = createSignal("")
 
@@ -51,6 +52,8 @@ const MinimalChat = ({botId}:props) => {
 
   createEffect(() => {
     messages()
+    pending()
+    streaming()
     scrollToBottom()
   })
 
