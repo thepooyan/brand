@@ -97,7 +97,7 @@ const EditBotPage = ({bot}:p) => {
             <In key="floatingMessage" name="پیام شناور" value={store.floatingMessage?.msg}/>
           </div>
           <div>
-            <ArrayInput/>
+            <ArrayInput onchange={(val) => setStore("suggestedQuestions", val)} initialValue={store.suggestedQuestions || []}/>
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو
