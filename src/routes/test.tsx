@@ -1,28 +1,30 @@
+import z from "zod"
 import { Button } from "~/components/ui/button"
 import Input from "~/components/ui/input"
-import { crawl } from "~/server/crawler"
+import { useForm } from "~/lib/hooks/useForm"
 
 const test = () => {
 
-  const send = () => {
-    crawl("https://zarebin.ir")
-    .then(s => console.log(s))
-    .catch(s => console.log(s))
+
+  //supported: string, boolean
+  let sch = z.object({
+    ali: z.string(),
+    akbar: z.boolean(),
+  })
+  const {registerSubmit, register} = useForm(sch)
+
+  const submit = (e:z.infer<typeof sch>) => {
+    console.log(e)
   }
 
-  const limitArray = (arr: any[], limit: number) => {
-  if (arr.length > limit) {
-    arr = arr.slice(arr.length - limit)
-  }
-  return arr
-}
-
-  console.log(limitArray([1,2,3], 2))
 
   return (
     <div>
-      <Input/>
-      <Button onclick={send}>send</Button>
+      <form onsubmit={registerSubmit(submit)}>
+        <Input {...register("ali")} />
+        <Input type="checkbox" {...register("akbar")} />
+        <Button type="submit">s</Button>
+      </form>
     </div>
   )
 }
