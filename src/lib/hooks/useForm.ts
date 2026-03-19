@@ -2,7 +2,11 @@ import { FormSubmitEvent } from "~/db/types";
 import z from "zod";
 import { createSignal } from "solid-js";
 
-export const useForm = <S>(schema?: z.ZodType<S>) => {
+interface p<S> {
+  schema?: z.ZodType<S>,
+  initialValues?: S
+}
+export const useForm = <S>({schema, initialValues}:p<S>) => {
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
 
@@ -50,7 +54,8 @@ export const useForm = <S>(schema?: z.ZodType<S>) => {
 
   const register = (name: keyof S) => {
     return {
-      name: name
+      name: name,
+      value: initialValues && initialValues[name]
     }
   }
 

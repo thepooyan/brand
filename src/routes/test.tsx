@@ -8,11 +8,11 @@ const test = () => {
 
   //supported: string, boolean, number, email
   let sch = z.object({
-    ali: z.string(),
+    ali: z.number(),
     akbar: z.string().min(1, {message: "حداقل یکی"}),
   })
   type form = z.infer<typeof sch>
-  const {registerSubmit, register, errors} = useForm<form>()
+  const {registerSubmit, register, errors} = useForm<form>({initialValues: {ali: 2, akbar: ""}})
   
   const submit = (e:z.infer<typeof sch>) => {
     console.log("submit!", e.ali)
