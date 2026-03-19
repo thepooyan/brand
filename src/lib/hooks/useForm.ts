@@ -2,7 +2,7 @@ import { FormSubmitEvent } from "~/db/types";
 import z from "zod";
 import { createSignal } from "solid-js";
 
-export const useForm = <S>(schema: z.ZodType<S>) => {
+export const useForm = <S>(schema?: z.ZodType<S>) => {
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
 
@@ -16,6 +16,8 @@ export const useForm = <S>(schema: z.ZodType<S>) => {
     formData.forEach((v, k) => {
       (rawValues)[k] = v;
     });
+
+    if (!schema) return callback(rawValues)
 
     let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
     booleanFields.forEach(([name]) => {
