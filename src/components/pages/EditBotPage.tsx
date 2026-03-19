@@ -31,12 +31,13 @@ const EditBotPage = ({bot}:p) => {
     name: string
     as?: Component
     className?: string
+    value: string | null | undefined | number
   }
-  const In = ({key, name, className, as}:pp) => {
+  const In = ({key, name, className, as, value}:pp) => {
     let Comp = as ? as : Input
     return <Seprator className={className}>
       {name}
-      <Comp placeholder={name} value={store[key] || undefined} onchange={(e:ChangeEvent<HTMLInputElement>) => setStore(key, e.currentTarget.value)}/>
+      <Comp placeholder={name} value={value || ""} onchange={(e:ChangeEvent<HTMLInputElement>) => setStore(key, e.currentTarget.value)}/>
     </Seprator>
   }
   const Seprator:ParentComponent<{className?: string, as?: Component | "div"}> = ({children, className, as}) => {
@@ -66,8 +67,8 @@ const EditBotPage = ({bot}:p) => {
       onsubmit={(e:SubmitEvent) => {e.preventDefault(); handleSubmit()} }>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <In key="botName" name="نام ربات"/>
-          <In key="businessName" name="نام بیزنس"/>
+          <In key="botName" name="نام ربات" value={store.botName}/>
+          <In key="businessName" name="نام بیزنس" value={store.businessName}/>
           <Seprator>
             لحن
             <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setStore("tone", getToneKeyByLabel(e) || "") }/>
@@ -81,7 +82,7 @@ const EditBotPage = ({bot}:p) => {
             <ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
               onchange={(e:string) => setStore("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
           </Seprator>
-          <In key="websiteUrl" name="آدرس وبسایت شما"/>
+          <In key="websiteUrl" name="آدرس وبسایت شما" value={store.websiteUrl}/>
           <Seprator className="">
             رنگ سازمانی
             <ColorPicker initialValue={bot.color} onChange={val => setStore("color", val)}/>
@@ -94,7 +95,7 @@ const EditBotPage = ({bot}:p) => {
             لوگو
             <ImageUploader initialValue={bot.logo || undefined} onChange={val => setStore("logo", val)}/>
           </Seprator>
-          <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3"/>
+          <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3" value={store.trainingText}/>
         </div>
         <p class="text-muted-foreground text-sm">
           هرچیزی که ربات باید بداند را در قسمت بالا وارد کنید!
