@@ -8,8 +8,9 @@ more bot options:
 
 future:
 - save all of the conversations
+- calc based on token
+- put token limit ability to users
 
-update use chat
 rethink plan. message count should not be in there
 make the source of all use chat one place. git submodule or node package?
 disable logo, and color based on plan
