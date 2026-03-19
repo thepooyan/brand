@@ -6,12 +6,12 @@ import { useForm } from "~/lib/hooks/useForm"
 const test = () => {
 
 
-  //supported: string, boolean, number
+  //supported: string, boolean, number, email
   let sch = z.object({
     ali: z.email(),
-    akbar: z.boolean(),
+    akbar: z.email().min(1),
   })
-  const {registerSubmit, register} = useForm(sch)
+  const {registerSubmit, register, errors} = useForm(sch)
 
   const submit = (e:z.infer<typeof sch>) => {
     console.log(e)
@@ -22,7 +22,10 @@ const test = () => {
     <div>
       <form onsubmit={registerSubmit(submit)}>
         <Input {...register("ali")} />
-        <Input type="checkbox" {...register("akbar")} />
+        {errors.ali}
+
+        <Input {...register("akbar")} />
+        {errors.akbar}
         <Button type="submit">s</Button>
       </form>
     </div>
