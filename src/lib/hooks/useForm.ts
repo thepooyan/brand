@@ -1,16 +1,17 @@
 import { FormSubmitEvent } from "~/db/types";
 import z from "zod";
-import { createStore } from "solid-js/store";
+import { createSignal } from "solid-js";
 
 export const useForm = <S>(schema: z.ZodType<S>) => {
 
-  const [errors, setErrors] = createStore<Record<string, string[]>>({})
+  const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
 
   const registerSubmit = (callback: (values: S) => void) => (e: FormSubmitEvent) => {
     e.preventDefault();
     const form = e.currentTarget;
     let formData = new FormData(form);
     let rawValues:any = {};
+    setErrors({})
 
     formData.forEach((v, k) => {
       (rawValues)[k] = v;
@@ -27,16 +28,15 @@ export const useForm = <S>(schema: z.ZodType<S>) => {
       rawValues[name] = parseInt(rawValues[name])
     })
 
-    console.log(rawValues)
     let result = schema.safeParse(rawValues)
 
     if (result.success)
       return callback(result.data);
 
     result.error.issues.forEach(i => {
-      let key = i.path.at(0) 
+      let key = i.path.at(0) as keyof S
       if (!key) return
-      setErrors(String(key), prev => prev ? [...prev, i.message] : [i.message])
+      setErrors(prev => prev[key] ? ({...prev, [key]: [...prev[key], i.message]}) : ({...prev, [key]: [i.message]}))
     })
   };
 
