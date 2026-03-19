@@ -8,6 +8,7 @@ export const useForm = <S>(schema?: z.ZodType<S>) => {
 
   const registerSubmit = (callback: (values: S) => void) => (e: FormSubmitEvent) => {
     e.preventDefault();
+
     const form = e.currentTarget;
     let formData = new FormData(form);
     let rawValues:any = {};
@@ -17,7 +18,10 @@ export const useForm = <S>(schema?: z.ZodType<S>) => {
       (rawValues)[k] = v;
     });
 
-    if (!schema) return callback(rawValues)
+    if (!schema) {
+      form.reset()
+      return callback(rawValues)
+    }
 
     let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
     booleanFields.forEach(([name]) => {
@@ -32,8 +36,10 @@ export const useForm = <S>(schema?: z.ZodType<S>) => {
 
     let result = schema.safeParse(rawValues)
 
-    if (result.success)
+    if (result.success) {
+      form.reset()
       return callback(result.data);
+    }
 
     result.error.issues.forEach(i => {
       let key = i.path.at(0) as keyof S
