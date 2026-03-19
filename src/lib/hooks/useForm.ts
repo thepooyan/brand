@@ -20,6 +20,11 @@ export const useForm = <S>(schema: z.ZodType<S>) => {
       else rawValues[name] = false
     })
 
+    let numericFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "number")
+    numericFields.forEach(([name]) => {
+      rawValues[name] = parseInt(rawValues[name])
+    })
+
     console.log(rawValues)
     let result = schema.parse(rawValues)
 

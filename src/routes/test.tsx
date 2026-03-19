@@ -6,9 +6,9 @@ import { useForm } from "~/lib/hooks/useForm"
 const test = () => {
 
 
-  //supported: string, boolean
+  //supported: string, boolean, number
   let sch = z.object({
-    ali: z.string(),
+    ali: z.email(),
     akbar: z.boolean(),
   })
   const {registerSubmit, register} = useForm(sch)
