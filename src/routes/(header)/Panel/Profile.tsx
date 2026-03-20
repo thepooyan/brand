@@ -10,14 +10,18 @@ import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
 import { ActionResponse } from "~/lib/actionAbstraction"
+import { extractFormData } from "~/lib/hooks/useForm"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
 
+interface form {
+  name: string
+  email: string
+  number: string
+}
 const handleSubmit = action(async (formData:FormData):ActionResponse => {
   "use server"
-  let name = formData.get("name")?.toString() 
-  let email = formData.get("email")?.toString() 
-  let number = formData.get("number")?.toString() 
+  let {name, email, number} = extractFormData<form>(formData)
 
   if (!name || !email || !number) return {ok: false, msg: "لطفا همه موارد را وارد کنید"}
 
