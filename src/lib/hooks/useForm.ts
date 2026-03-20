@@ -85,9 +85,11 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
           checked: initialValues[name]
         }
       }
-      return {
-        name: name,
-        value: String(initialValues[name])
+      if (typeof initialValues[name] === "string" || typeof initialValues[name] === "number") {
+        return {
+          name: name,
+          value: String(initialValues[name])
+        }
       }
     }
     return {
