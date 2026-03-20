@@ -1,6 +1,7 @@
 import { FormSubmitEvent } from "~/db/types";
 import z from "zod";
 import { createEffect, createSignal } from "solid-js";
+import { createStore } from "solid-js/store";
 
 interface p<S> {
   schema?: z.ZodType<S>,
@@ -15,11 +16,12 @@ export const extractFormData = <T>(formData: FormData) => {
   return rawValues as T
 }
 
-export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
+export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => {
 
   if (!schema && !initialValues) throw new Error(`You have to at least provide one of schema or initialValues to useForm`)
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
+  const [store, setStore] = createStore<S>(initialValues!)
 
   createEffect(() => Object.keys(errors()).length && console.error({...errors()}))
 
@@ -77,18 +79,19 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
     })
   };
 
+  const set = setStore
   const register = (name: keyof S) => {
     if (initialValues) {
-      if (typeof initialValues[name] === "boolean") {
+      if (typeof store[name] === "boolean") {
         return {
           name: name,
-          checked: initialValues[name]
+          checked: store[name]
         }
       }
-      if (typeof initialValues[name] === "string" || typeof initialValues[name] === "number") {
+      if (typeof store[name] === "string" || typeof store[name] === "number") {
         return {
           name: name,
-          value: String(initialValues[name])
+          value: store[name]
         }
       }
     }
@@ -97,6 +100,6 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
     }
   }
 
-  return {registerSubmit, register, errors}
+  return {registerSubmit, set, register, errors}
 
 }
