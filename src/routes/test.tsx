@@ -6,7 +6,7 @@ const test = () => {
 
 
   let a = {
-    ali: "new",
+    ali: 22,
     akbar: true
   }
   const {registerSubmit, register, errors} = useForm({initialValues: a})
