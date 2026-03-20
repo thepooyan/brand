@@ -11,7 +11,8 @@ export const getPublicSettings = new Elysia({ prefix: "/getPublicSetting" })
       logo: bot.logo,
       greeting: bot.greeting,
       suggestedQuestions: bot.suggestedQuestions,
-      floatingMessage: bot.floatingMessage
+      floatingMessage: bot.floatingMessage,
+      botName: bot.botName
     }
   }
 )

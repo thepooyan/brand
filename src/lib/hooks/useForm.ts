@@ -66,9 +66,7 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
       numericFields.forEach(name => {
         if (rawValues[name]) {
           rawValues[name] = parseInt(rawValues[name])
-        } else {
-          rawValues[name] = 0
-        }
+        } 
       })
     }
 
