@@ -106,7 +106,8 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
     if (typeof formValues[name] === "boolean") {
       return {
         name: name,
-        checked: formValues[name]
+        checked: formValues[name],
+        type: "checkbox" as const
       }
     }
     if (typeof formValues[name] === "string" || typeof formValues[name] === "number") {

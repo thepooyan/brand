@@ -14,7 +14,7 @@ const test = () => {
   }
   let a = z.object({
     ali: z.string(),
-    akbar: z.boolean(),
+    akbar: z.string().min(1).default("a"),
     folan: z.number().default(0)
   })
   const {registerSubmit, formValues, setForm, register, errors} = useForm({schema: a, })
@@ -34,7 +34,7 @@ const test = () => {
         <Input {...register("ali")} />
         {errors().ali}
 
-        <Input {...register("akbar")} type="checkbox" />
+        <Input {...register("akbar")} />
         {errors().akbar}
         <Button type="submit">s</Button>
         <Button onclick={change}>sm</Button>
