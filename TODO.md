@@ -11,6 +11,7 @@ future:
 - calc based on token
 - put token limit ability to users
 
+test image uploader delete should remove file from s3
 rethink plan. message count should not be in there
 make the source of all use chat one place. git submodule or node package?
 disable logo, and color based on plan
