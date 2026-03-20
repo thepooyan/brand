@@ -100,7 +100,13 @@ const EditBotPage = ({bot}:p) => {
             رنگ نوشته (معمولا سفید یا سیاه)
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)}/>
           </Seprator>
-          <In key="greeting" name="پیام خوش آمد گویی" />
+          <Seprator>
+            <In key="greeting" name="پیام خوش آمد گویی" />
+            <div>
+              فعال سازی پیامد خوش آمد:
+            <Input type="checkbox" {...register("floatingMessageActive")}/>
+            </div>
+          </Seprator>
           <div>
             <In key="floatingMessage" name="پیام شناور" />
           </div>
