@@ -17,15 +17,15 @@ const test = () => {
     akbar: z.string().min(1).default("a"),
     folan: z.number().default(0)
   })
-  const {registerSubmit, formValues, setForm, register, errors} = useForm({initialValues: b})
+  const {registerSubmit, formValues, setForm, register, errors} = useForm({schema: a})
 
   createEffect(() => console.log({...formValues}))
   
-  const submit = (e:typeof b) => {
+  const submit = (e:any) => {
     console.log("submit!", e)
   }
   const change = () => {
-    // setForm("ali", "lalala")
+    setForm("ali", "lalala")
   }
 
   return (

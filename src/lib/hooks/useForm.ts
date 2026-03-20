@@ -43,7 +43,7 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
   })
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
-  const [formValues, setStore] = createStore<S>(createInitial)
+  const [formValues, setForm] = createStore<S>(createInitial)
 
   createEffect(() => Object.keys(errors()).length && console.error({...errors()}))
 
@@ -104,7 +104,6 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
     })
   };
 
-  const setForm = setStore
   const register = (name: keyof S) => {
     if (typeof formValues[name] === "boolean") {
       return {
