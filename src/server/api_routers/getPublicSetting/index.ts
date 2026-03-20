@@ -8,7 +8,10 @@ export const getPublicSettings = new Elysia({ prefix: "/getPublicSetting" })
     return {
       color: bot.color,
       color_foreground: bot.color_foreground,
-      logo: bot.logo
+      logo: bot.logo,
+      greeting: bot.greeting,
+      suggestedQuestions: bot.suggestedQuestions,
+      floatingMessage: bot.floatingMessage
     }
   }
 )
