@@ -24,13 +24,13 @@ interface p {
 }
 const EditBotPage = ({bot}:p) => {
 
-  let transform = () => ({
+  let flattenBot = () => ({
     ...bot,
     floatingMessage: bot.floatingMessage.msg,
     floatingMessageActive: bot.floatingMessage.active 
   })
 
-  const {registerSubmit, register} = useForm({initialValues: transform()})
+  const {registerSubmit, register} = useForm({initialValues: flattenBot()})
   const [loading, setLoading] = createSignal(false)
   const nv = useNavigate()
 
@@ -55,7 +55,7 @@ const EditBotPage = ({bot}:p) => {
     )
   }
   
-  const handleSubmit = async (data: ReturnType<typeof transform>) => {
+  const handleSubmit = async (data: ReturnType<typeof flattenBot>) => {
     console.log(data)
     return
     setLoading(true)

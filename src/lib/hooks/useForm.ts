@@ -20,8 +20,30 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
 
   if (!schema && !initialValues) throw new Error(`You have to at least provide one of schema or initialValues to useForm`)
 
+  let createInitial:any = {}
+  if (initialValues) createInitial = initialValues
+  else 
+  Object.entries((schema as any).shape as object).map(i => {
+    let value = null
+    switch (i[1].type) {
+      case "boolean":
+        value = false
+          break;
+      case "number":
+        value =  0
+          break;
+      case "string":
+        value =  ""
+          break;
+      case "default":
+        value = i[1].parse()
+        break;
+    }
+    createInitial[i[0]] = value
+  })
+
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
-  const [store, setStore] = createStore<S>(initialValues!)
+  const [formValues, setStore] = createStore<S>(createInitial)
 
   createEffect(() => Object.keys(errors()).length && console.error({...errors()}))
 
@@ -79,27 +101,21 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
     })
   };
 
-  const set = setStore
+  const setForm = setStore
   const register = (name: keyof S) => {
-    if (initialValues) {
-      if (typeof store[name] === "boolean") {
-        return {
-          name: name,
-          checked: store[name]
-        }
-      }
-      if (typeof store[name] === "string" || typeof store[name] === "number") {
-        return {
-          name: name,
-          value: store[name]
-        }
+    if (typeof formValues[name] === "boolean") {
+      return {
+        name: name,
+        checked: formValues[name]
       }
     }
-    return {
-      name: name,
+    if (typeof formValues[name] === "string" || typeof formValues[name] === "number") {
+      return {
+        name: name,
+        value: formValues[name]
+      }
     }
   }
 
-  return {registerSubmit, set, register, errors}
-
+  return {registerSubmit, setForm, register, errors, formValues}
 }

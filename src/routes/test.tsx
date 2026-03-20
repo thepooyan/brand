@@ -1,3 +1,4 @@
+import { createEffect } from "solid-js"
 import z from "zod"
 import { Button } from "~/components/ui/button"
 import Input from "~/components/ui/input"
@@ -14,15 +15,17 @@ const test = () => {
   let a = z.object({
     ali: z.string(),
     akbar: z.boolean(),
-    folan: z.number()
+    folan: z.number().default(0)
   })
-  const {registerSubmit, set, register, errors} = useForm({initialValues: b})
+  const {registerSubmit, formValues, setForm, register, errors} = useForm({schema: a, })
+
+  createEffect(() => console.log({...formValues}))
   
   const submit = (e:z.infer<typeof a>) => {
     console.log("submit!", e)
   }
   const change = () => {
-    set("akbar", true)
+    setForm("ali", "lalala")
   }
 
   return (
