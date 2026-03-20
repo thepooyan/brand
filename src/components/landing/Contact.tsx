@@ -7,25 +7,28 @@ import { messagesTable } from "~/db/schema"
 import { validateEmail, validateMobileNumber } from "~/lib/validation"
 import { telegram } from "~/server/telegram"
 import { dump } from "js-yaml"
-import ContactInfo from "../parts/ContactInfo"
 import { Button } from "../ui/button"
 import { ImTelegram, ImWhatsapp } from "solid-icons/im"
 import { FiPhone } from "solid-icons/fi"
 import { support } from "../../../config/config"
+import { extractFormData } from "~/lib/hooks/useForm"
 
+interface formShape {
+  name: string
+  email: string
+  message: string
+  subject: string
+  number: string
+}
 const contactAction = action(async (formData:FormData) => {
   "use server"
-  let name = formData.get("name")?.toString()
-  let email = formData.get("email")?.toString()
-  let msg = formData.get("message")?.toString()
-  let sub = formData.get("subject")?.toString()
-  let num = formData.get("number")?.toString()
+  let {name, email, message, subject, number} = extractFormData<formShape>(formData)
 
-  if (!name || !msg) return {ok: false, msg: "نام و پیام نمیتوانند خالی باشند"}
-  if (!num && !email) return {ok: false, msg: "لطفا ایمیل یا شماره تلفن خود را جهت پاسخ دهی وارد کنید"}
+  if (!name || !message) return {ok: false, msg: "نام و پیام نمیتوانند خالی باشند"}
+  if (!number && !email) return {ok: false, msg: "لطفا ایمیل یا شماره تلفن خود را جهت پاسخ دهی وارد کنید"}
 
-  if (num) {
-    let {msg} = validateMobileNumber(num)
+  if (number) {
+    let {msg} = validateMobileNumber(number)
     if (msg) return {ok: false, msg: msg}
   }
 
@@ -35,9 +38,9 @@ const contactAction = action(async (formData:FormData) => {
   const values = {
     name: name,
     email: email,
-    message: msg,
-    subject: sub,
-    number: num
+    message: message,
+    subject: subject,
+    number: number
   }
   try {
     await db.insert(messagesTable).values(values)

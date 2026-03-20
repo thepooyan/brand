@@ -6,6 +6,15 @@ interface p<S> {
   schema?: z.ZodType<S>,
   initialValues?: S
 }
+
+export const extractFormData = <T>(formData: FormData) => {
+  let rawValues:any = {}
+  formData.forEach((v,k) => {
+    rawValues[k] = v;
+  })
+  return rawValues as T
+}
+
 export const useForm = <S>({schema, initialValues}:p<S>) => {
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
@@ -15,12 +24,8 @@ export const useForm = <S>({schema, initialValues}:p<S>) => {
 
     const form = e.currentTarget;
     let formData = new FormData(form);
-    let rawValues:any = {};
+    let rawValues = extractFormData<any>(formData)
     setErrors({})
-
-    formData.forEach((v, k) => {
-      (rawValues)[k] = v;
-    });
 
     if (!schema) {
       form.reset()
