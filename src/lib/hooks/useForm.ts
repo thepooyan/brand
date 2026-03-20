@@ -60,7 +60,7 @@ export const useForm = <S>({schema, initialValues}:p<S>) => {
   const register = (name: keyof S) => {
     return {
       name: name,
-      value: initialValues && initialValues[name]
+      value: initialValues && initialValues[name] || undefined
     }
   }
 
