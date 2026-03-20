@@ -15,7 +15,9 @@ export const extractFormData = <T>(formData: FormData) => {
   return rawValues as T
 }
 
-export const useForm = <S>({schema, initialValues}:p<S>) => {
+export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
+
+  if (!schema && !initialValues) throw new Error(`You have to at least provide one of schema or initialValues to useForm`)
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
 
@@ -26,27 +28,41 @@ export const useForm = <S>({schema, initialValues}:p<S>) => {
     let formData = new FormData(form);
     let rawValues = extractFormData<any>(formData)
     setErrors({})
+    let reform = {boolean: false, numeric: false}
+
+    if (initialValues) {
+      let booleanFields = Object.entries(initialValues).filter(f => typeof f[1] === "boolean").map(i => i[0])
+      booleanFields.forEach(name => {
+        if (rawValues[name]) rawValues[name] = true
+        else rawValues[name] = false
+      })
+      reform.boolean = true
+    }
 
     if (!schema) {
-      form.reset()
       return callback(rawValues)
     }
 
-    let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
-    booleanFields.forEach(([name]) => {
-      if (rawValues[name]) rawValues[name] = true
-      else rawValues[name] = false
-    })
+    if (!reform.boolean) {
+      let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
+      booleanFields.forEach(([name]) => {
+        if (rawValues[name]) rawValues[name] = true
+        else rawValues[name] = false
+      })
+      reform.boolean = true
+    }
 
-    let numericFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "number")
-    numericFields.forEach(([name]) => {
-      rawValues[name] = parseInt(rawValues[name])
-    })
+    if (!reform.numeric) {
+      let numericFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "number")
+      numericFields.forEach(([name]) => {
+        rawValues[name] = parseInt(rawValues[name])
+      })
+      reform.numeric = true
+    }
 
     let result = schema.safeParse(rawValues)
 
     if (result.success) {
-      form.reset()
       return callback(result.data);
     }
 
