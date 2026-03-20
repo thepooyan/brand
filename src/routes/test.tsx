@@ -8,7 +8,7 @@ const test = () => {
 
 
   let b = {
-    ali: "folan",
+    ali: 2,
     akbar: false,
     folan: 5
   }
@@ -17,15 +17,15 @@ const test = () => {
     akbar: z.string().min(1).default("a"),
     folan: z.number().default(0)
   })
-  const {registerSubmit, formValues, setForm, register, errors} = useForm({schema: a, })
+  const {registerSubmit, formValues, setForm, register, errors} = useForm({initialValues: b})
 
   createEffect(() => console.log({...formValues}))
   
-  const submit = (e:z.infer<typeof a>) => {
+  const submit = (e:typeof b) => {
     console.log("submit!", e)
   }
   const change = () => {
-    setForm("ali", "lalala")
+    // setForm("ali", "lalala")
   }
 
   return (

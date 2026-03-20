@@ -33,6 +33,7 @@ const ArrayInput = ({onchange, initialValue}:props) => {
       سوالات پیشنهادی:
       <div class="flex gap-2 mt-2">
         <Input
+          name=""
           value={strValue()}
           onkeydown={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
           onkeypress={ifEnterPressed(flush)}

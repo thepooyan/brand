@@ -116,6 +116,9 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
         value: formValues[name]
       }
     }
+    return {
+      name: name
+    }
   }
 
   return {registerSubmit, setForm, register, errors, formValues}

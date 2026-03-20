@@ -4,10 +4,8 @@ import { Component, createSignal, ParentComponent } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
-import { createStore } from "solid-js/store"
 import ToneSelect from "../parts/ToneSelect"
 import { getLanguageKeyByLabel, getLanguageValue, getResponseLengthKeyByLabel, getResponseLengthValue, getToneKeyByLabel, getToneValue } from "~/server/llmUtil"
-import { ChangeEvent } from "~/lib/interface"
 import LangSelect from "../parts/LangSelect"
 import ResLengthSelect from "../parts/ResLengthSelect"
 import { editBot } from "~/server/mutation"
@@ -29,8 +27,12 @@ const EditBotPage = ({bot}:p) => {
     floatingMessage: bot.floatingMessage.msg,
     floatingMessageActive: bot.floatingMessage.active 
   })
+  let reverseFlat = (data: ReturnType<typeof flattenBot>):I_Bot => ({
+    ...data,
+    floatingMessage: {msg: data.floatingMessage, active: data.floatingMessageActive}
+  })
 
-  const {registerSubmit, register} = useForm({initialValues: flattenBot()})
+  const {registerSubmit, register, setForm, formValues} = useForm({initialValues: flattenBot()})
   const [loading, setLoading] = createSignal(false)
   const nv = useNavigate()
 
@@ -56,11 +58,9 @@ const EditBotPage = ({bot}:p) => {
   }
   
   const handleSubmit = async (data: ReturnType<typeof flattenBot>) => {
-    console.log(data)
-    return
     setLoading(true)
     callModal.wait()
-    let res = await editBot(store)
+    let res = await editBot(reverseFlat(data))
     setLoading(false)
     if (res.ok) {
       nv("/Panel/Chatbot")
@@ -80,36 +80,36 @@ const EditBotPage = ({bot}:p) => {
           <In key="businessName" name="نام بیزنس" />
           <Seprator>
             لحن
-            {/*<ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setStore("tone", getToneKeyByLabel(e) || "") }/>*/}
+            <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setForm("tone", getToneKeyByLabel(e) || "") }/>
           </Seprator>
           <Seprator>
             زبان
-            {/*<LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setStore("language", getLanguageKeyByLabel(e) || "")}/>*/}
+            <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setForm("language", getLanguageKeyByLabel(e) || "")}/>
           </Seprator>
           <Seprator>
             حداکثر طول پاسخ
-            {/*<ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
-              onchange={(e:string) => setStore("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>*/}
+            <ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
+              onchange={(e:string) => setForm("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
           </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما" />
           <Seprator className="">
             رنگ سازمانی
-            {/*<ColorPicker initialValue={bot.color} onChange={val => setStore("color", val)}/>*/}
+            <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)}/>
           </Seprator>
           <Seprator className="">
             رنگ نوشته (معمولا سفید یا سیاه)
-            {/*<ColorPicker initialValue={bot.color_foreground} onChange={val => setStore("color_foreground", val)}/>*/}
+            <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)}/>
           </Seprator>
           <In key="greeting" name="پیام خوش آمد گویی" />
           <div>
             <In key="floatingMessage" name="پیام شناور" />
           </div>
           <div>
-            {/*<ArrayInput onchange={(val) => setStore("suggestedQuestions", val)} initialValue={store.suggestedQuestions || []}/>*/}
+            <ArrayInput onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues.suggestedQuestions || []}/>
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو
-            {/*<ImageUploader initialValue={bot.logo || undefined} onChange={val => setStore("logo", val)}/>*/}
+            <ImageUploader initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
           </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3" />
         </div>

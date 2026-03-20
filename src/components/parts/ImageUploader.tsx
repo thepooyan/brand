@@ -89,13 +89,14 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
         {v => 
           <input
             type="hidden"
-            name={name}
+            name={name || ""}
             value={v()}
           />
         }
       </Show>
       <input
         ref={inputRef}
+        name=""
         type="file"
         accept="image/*"
         onChange={handleFileChange}

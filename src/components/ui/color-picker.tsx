@@ -18,9 +18,9 @@ const ColorPicker = ({initialValue, onChange}:p) => {
   return (
     <div class="relative">
       <input type="color" value={value()} onchange={handleChange}
-        class="absolute left-1 top-1 bottom-1 h-auto rounded"
+        class="absolute left-1 top-1 bottom-1 h-auto rounded" name=""
       />
-      <Input value={value()} class="ltr indent-8"/>
+      <Input value={value()} class="ltr indent-8" name=""/>
     </div>
   )
 }
