@@ -1,16 +1,14 @@
 
 more bot options:
-- add initial message to bot options
-- add upto 4 suggested questions 
-- optional floating message box above the menu btn
 - crawler
-- telegram database
+- test telegram database
 
 future:
 - save all of the conversations
 - calc based on token
 - put token limit ability to users
 
+make a better checkbox
 test image uploader delete should remove file from s3
 rethink plan. message count should not be in there
 make the source of all use chat one place. git submodule or node package?
