@@ -58,9 +58,22 @@ export const useForm = <S>({schema, initialValues}:p<S>) => {
   };
 
   const register = (name: keyof S) => {
+    if (initialValues) {
+      if (typeof initialValues[name] === "boolean") {
+        return {
+          name: name,
+          checked: initialValues[name]
+        }
+      }
+      if (typeof initialValues[name] === "string") {
+        return {
+          name: name,
+          value: initialValues[name]
+        }
+      }
+    }
     return {
       name: name,
-      value: initialValues && initialValues[name] || undefined
     }
   }
 

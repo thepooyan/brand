@@ -1,4 +1,3 @@
-import z from "zod"
 import { Button } from "~/components/ui/button"
 import Input from "~/components/ui/input"
 import { useForm } from "~/lib/hooks/useForm"
@@ -6,16 +5,14 @@ import { useForm } from "~/lib/hooks/useForm"
 const test = () => {
 
 
-  //supported: string, boolean, number, email
-  let sch = z.object({
-    ali: z.number(),
-    akbar: z.string().min(1, {message: "حداقل یکی"}),
-  })
-  type form = z.infer<typeof sch>
-  const {registerSubmit, register, errors} = useForm<form>({initialValues: {ali: 2, akbar: ""}})
+  let a = {
+    ali: "new",
+    akbar: true
+  }
+  const {registerSubmit, register, errors} = useForm({initialValues: a})
   
-  const submit = (e:z.infer<typeof sch>) => {
-    console.log("submit!", e.ali)
+  const submit = (e:typeof a) => {
+    console.log("submit!", e)
   }
 
   return (
@@ -24,7 +21,7 @@ const test = () => {
         <Input {...register("ali")} />
         {errors().ali}
 
-        <Input {...register("akbar")} />
+        <Input {...register("akbar")} type="checkbox" />
         {errors().akbar}
         <Button type="submit">s</Button>
       </form>
