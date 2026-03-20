@@ -28,7 +28,6 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
     let formData = new FormData(form);
     let rawValues = extractFormData<any>(formData)
     setErrors({})
-    let reform = {boolean: false, numeric: false}
 
     if (initialValues) {
       let booleanFields = Object.entries(initialValues).filter(f => typeof f[1] === "boolean").map(i => i[0])
@@ -36,29 +35,27 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
         if (rawValues[name]) rawValues[name] = true
         else rawValues[name] = false
       })
-      reform.boolean = true
+
+      let numericFields = Object.entries(initialValues).filter(f => typeof f[1] === "number").map(i => i[0])
+      numericFields.forEach(name => {
+        rawValues[name] = parseInt(rawValues[name])
+      })
     }
 
     if (!schema) {
       return callback(rawValues)
     }
 
-    if (!reform.boolean) {
-      let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
-      booleanFields.forEach(([name]) => {
-        if (rawValues[name]) rawValues[name] = true
-        else rawValues[name] = false
-      })
-      reform.boolean = true
-    }
+    let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
+    booleanFields.forEach(([name]) => {
+      if (rawValues[name]) rawValues[name] = true
+      else rawValues[name] = false
+    })
 
-    if (!reform.numeric) {
-      let numericFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "number")
-      numericFields.forEach(([name]) => {
-        rawValues[name] = parseInt(rawValues[name])
-      })
-      reform.numeric = true
-    }
+    let numericFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "number")
+    numericFields.forEach(([name]) => {
+      rawValues[name] = parseInt(rawValues[name])
+    })
 
     let result = schema.safeParse(rawValues)
 
