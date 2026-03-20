@@ -1,3 +1,5 @@
+import { createEffect } from "solid-js"
+import z from "zod"
 import { Button } from "~/components/ui/button"
 import Input from "~/components/ui/input"
 import { useForm } from "~/lib/hooks/useForm"
@@ -5,14 +7,19 @@ import { useForm } from "~/lib/hooks/useForm"
 const test = () => {
 
 
-  let a = {
-    ali: 22,
-    akbar: true,
-    folan: ""
+  let b = {
+    ali: "folan",
+    akbar: false,
+    folan: 5
   }
-  const {registerSubmit, register, errors} = useForm({initialValues: a})
+  let a = z.object({
+    ali: z.string(),
+    akbar: z.boolean(),
+    folan: z.number()
+  })
+  const {registerSubmit, register, errors} = useForm({schema: a, initialValues: b})
   
-  const submit = (e:typeof a) => {
+  const submit = (e:z.infer<typeof a>) => {
     console.log("submit!", e)
   }
 

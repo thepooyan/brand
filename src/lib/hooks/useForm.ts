@@ -1,6 +1,6 @@
 import { FormSubmitEvent } from "~/db/types";
 import z from "zod";
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 
 interface p<S> {
   schema?: z.ZodType<S>,
@@ -20,6 +20,8 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
   if (!schema && !initialValues) throw new Error(`You have to at least provide one of schema or initialValues to useForm`)
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
+
+  createEffect(() => Object.keys(errors()).length && console.error({...errors()}))
 
   const registerSubmit = (callback: (values: S) => void) => (e: FormSubmitEvent) => {
     e.preventDefault();
