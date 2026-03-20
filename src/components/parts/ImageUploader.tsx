@@ -4,7 +4,7 @@ import { createSignal, Show } from "solid-js"
 import { ChangeEvent } from "~/lib/interface"
 import { FiImage, FiLoader, FiUpload, FiX } from "solid-icons/fi"
 import { callModal } from "../layout/Modal"
-import { uploadFileToS3 } from "~/s3/s3Actions"
+import { deleteFileFromS3, uploadFileToS3 } from "~/s3/s3Actions"
 
 type UploadState = "idle" | "loading" | "preview"
 
@@ -53,7 +53,8 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
     const url = uploadedUrl()
     if (!url) return 
     try {
-      // await deleteFileFromS3(url)
+      let pathname = new URL(url).pathname
+      await deleteFileFromS3(pathname)
       setState("idle")
       setPreview(null)
       setFileName("")
