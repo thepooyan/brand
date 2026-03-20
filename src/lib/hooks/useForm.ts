@@ -43,7 +43,7 @@ export const useForm = <S>({schema, initialValues}:p<S> = {}) => {
     }
 
     if (!schema) {
-      return callback(rawValues)
+      return callback({...initialValues, ...rawValues})
     }
 
     let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
