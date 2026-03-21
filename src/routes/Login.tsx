@@ -117,6 +117,7 @@ export default function Login() {
                   <FiPhone class="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
                   <Input
                     id="phone"
+                    name="phoneNumber"
                     type="tel"
                     placeholder="۰۹۱۲۳۴۵۶۷۸۹"
                     value={phoneNumber()}
