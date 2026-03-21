@@ -13,6 +13,10 @@ export const chatbot_history_table = sqliteTable("chatbot_history", ({
   messages: text({ mode: "json" }).$type<timedMessage[]>().notNull()
 }))
 
+export const chatbot_history_relation = relations(chatbot_history_table, ({one}) => ({
+  chatbot: one(chatbotTable, {fields: [chatbot_history_table.botId], references: [chatbotTable.id]})
+}))
+
 export type History = typeof chatbot_history_table.$inferSelect
 
 export const chatbot_messager_table = sqliteTable("chatbot_messager", ({

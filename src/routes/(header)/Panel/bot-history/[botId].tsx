@@ -11,7 +11,8 @@ const queryBotHistory = query(async(botId: number) => {
   "use server"
   return safeDb2(
     db.query.chatbot_history_table.findMany({
-      where: (tbl => eq(tbl.botId, botId))
+      where: (tbl => eq(tbl.botId, botId)),
+      with: {chatbot: {columns: {botName: true}}}
     })
   )
 }, "botHistory")

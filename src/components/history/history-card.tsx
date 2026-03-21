@@ -5,14 +5,14 @@ import { getUserNickname } from "~/lib/utils"
 import { ParentProps } from "solid-js"
 
 interface p {
-  histroy: History
+  histroy: History & {chatbot: {botName: string}}
 }
 const HistoryCard = ({histroy}:p) => {
   return (
     <Card class="flex justify-between items-center mb-3">
       <CardHeader>
         <CardTitle>مکالمه {histroy.id}</CardTitle>
-        <CardDescription>folan is folan</CardDescription>
+        <CardDescription>{histroy.chatbot.botName}</CardDescription>
       </CardHeader>
         <div>
           <Big>
@@ -39,7 +39,7 @@ const HistoryCard = ({histroy}:p) => {
           </Small>
         </div>
         <Button class="ml-5">
-          نمایش
+          نمایش کامل
         </Button>
     </Card>
   )
