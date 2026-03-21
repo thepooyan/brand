@@ -73,25 +73,9 @@ const BotCard = ({bot, telegramAccess}:props) => {
         {/* Bot Info */}
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
-            <span class="text-gray-400">پلن:</span>
-            <span class="font-medium text-white">plan</span>
+            <span class="text-gray-400">تعداد مکالمه: 2</span>
+            <Button variant="outline" size="sm" as={TA} href={`/panel/bot-history/${bot.id}`}>نمایش مکالمات</Button>
           </div>
-          <div class="flex justify-between">
-            <span class="text-gray-400">تعداد پیام:</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-400">تعداد پیام باقی مانده:</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-gray-400">تاریخ انقضا:</span>
-          </div>
-        </div>
-
-        {/* Progress Bar for Remaining Messages */}
-        <div class="w-full bg-gray-800 rounded-full h-2">
-          <div
-            class="bg-primary h-2 rounded-full transition-all duration-300"
-          />
         </div>
 
         {/* Action Buttons */}
