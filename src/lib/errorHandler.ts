@@ -1,13 +1,3 @@
-import { ActionResponse, SuccessResponse } from "./actionAbstraction"
-
-export const dbCall = async <T>(fn: T):ActionResponse<T> => {
-  try {
-    return {ok: true, data: await fn} as SuccessResponse<T>
-  } catch(e) {
-    return {ok: false, msg: resolveError(e)}
-  }
-}
-
 export const resolveError = (error: unknown):string => {
   if (error instanceof Error) {
     if (error.cause instanceof Error) {

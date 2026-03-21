@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx"
 import { Accessor, createSignal, Setter } from "solid-js"
 import { twMerge } from "tailwind-merge"
 import { DB_Plan } from "~/db/schema"
+import { resolveError } from "./errorHandler"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -157,13 +158,21 @@ export const calcMessagePercent = (p: DB_Plan) => {
   return Math.round(p.remainingMessages / calcMessageCount(p) * 100)
 }
 
-export const  safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok: false, msg: string}> => {
+export const safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok: false, msg: string}> => {
   try {
     const data = await fn
     return {ok: true, data: data }
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e)
     return { ok: false, msg: message }
+  }
+}
+
+export const safeDb = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok: false, msg: string}> => {
+  try {
+    return {ok: true, data: await fn }
+  } catch (e) {
+    return { ok: false, msg: resolveError(e) }
   }
 }
 

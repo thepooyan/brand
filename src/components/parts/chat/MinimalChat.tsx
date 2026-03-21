@@ -4,6 +4,12 @@ import { createEffect, createSignal, ParentProps, Show } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
 import { callModal } from "~/components/layout/Modal";
+import { createAsync, query, redirect } from "@solidjs/router";
+import { db } from "~/db/db";
+import { getAuthSession } from "~/lib/session";
+import { and, eq } from "drizzle-orm";
+import { safeDb } from "~/lib/utils";
+import { ActionResponse, ActionResponse2 } from "~/lib/actionAbstraction";
 
 interface props {
   botId: string
@@ -23,9 +29,41 @@ const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) 
   )
 }
 
+type query = {botName: string, businessName: string }
+const queryBotName = query(async (botId: string):ActionResponse2<query> => {
+  "use server"
+  const user = await getAuthSession()
+  if (!user) throw redirect(`/Login?back=/Panel/Testbot/${botId}`)
+
+  let res = await safeDb(
+    db.query.chatbotTable.findFirst({
+      where: (tbl => and(
+        eq(tbl.userId, user.id),
+        eq(tbl.id, parseInt(botId)),
+      ))
+    })
+  )
+  if (!res.ok) return {...res, data: undefined}
+  if (!res.data) return {ok: false, msg: "ربات یافت نشد", data: undefined}
+
+  return {ok: true,msg: undefined, data: {
+    botName: res.data.botName,
+    businessName: res.data.businessName,
+  }}
+}, "botName")
+
 const MinimalChat = ({botId}:props) => {
   let anchor!: HTMLDivElement
   let messagesRailRef!: HTMLDivElement
+
+  const botName = createAsync(() => queryBotName(botId))
+
+  createEffect(() => {
+    let bi = botName()
+    if (bi?.ok === false) {
+      callModal.fail(bi.msg)
+    }
+  })
 
   const {messages, send, pending, streaming, errorMsg} = useUserChat( botId )(
     () => anchor,
@@ -82,8 +120,8 @@ const MinimalChat = ({botId}:props) => {
                 <img src="/mini-logo.webp" alt={`${nameEn}'s logo` }/>
               </div>
               <div>
-                <h3 class="font-medium">دستیار هوشمند {name}</h3>
-                <p class="text-sm text-muted-foreground">آنلاین</p>
+                <h3 class="font-medium">دستیار هوشمند {botName()?.data?.botName}</h3>
+                <p class="text-sm text-muted-foreground">{botName()?.data?.businessName}</p>
               </div>
             </div>
           </div>
