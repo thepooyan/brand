@@ -9,6 +9,8 @@ export const resolveError = (error: unknown):string => {
       switch (err) {
         case "SQLITE_CONSTRAINT_UNIQUE":
           return `${getTableRowName(tableRow!)} از قبل وجود دارد`
+        case "fetch":
+          return `ارتباط سرور با دیتابیس برقرار نشد. لطفا مجددا تلاش کنید.`
         default:
           return `Unhandled sqlite error code: ${err}`
       }
