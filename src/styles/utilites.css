@@ -1,0 +1,4 @@
+@utility box-* {
+  width: calc(var(--spacing) * --value(integer));
+  height: calc(var(--spacing) * --value(integer));
+}

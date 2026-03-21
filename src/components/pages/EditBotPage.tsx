@@ -16,6 +16,7 @@ import { ImageUploader } from "../parts/ImageUploader"
 import { Dynamic } from "solid-js/web"
 import ArrayInput from "../ui/array-input"
 import { useForm } from "~/lib/hooks/useForm"
+import Checkbox from "../ui/checkbox"
 
 interface p {
   bot: I_Bot
@@ -102,13 +103,13 @@ const EditBotPage = ({bot}:p) => {
           </Seprator>
           <Seprator>
             <In key="greeting" name="پیام خوش آمد گویی" />
-            <div>
-              فعال سازی پیامد خوش آمد:
-            <Input type="checkbox" {...register("floatingMessageActive")}/>
-            </div>
           </Seprator>
           <div>
             <In key="floatingMessage" name="پیام شناور" />
+            <div class="flex gap-2 mt-3 text-sm">
+              <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active}/>
+              فعال سازی پیام شناور
+            </div>
           </div>
           <div>
             <ArrayInput onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues.suggestedQuestions || []}/>
