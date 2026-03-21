@@ -10,10 +10,10 @@ import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
 import { ActionResponse } from "~/lib/actionAbstraction"
-import { dbCall, resolveError } from "~/lib/errorHandler"
 import { extractFormData } from "~/lib/hooks/useForm"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
+import { safeDb } from "~/lib/utils"
 
 interface form {
   name: string
@@ -29,7 +29,7 @@ const handleSubmit = action(async (formData:FormData):ActionResponse => {
   let user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/Profile")
 
-  let result = await dbCall(
+  let result = await safeDb(
     db.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.id))
   )
   if (!result.ok) return result

@@ -1,7 +1,7 @@
 import { useParams } from '@solidjs/router';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
-import { chatbot_history_table, planTable } from '~/db/schema';
+import { chatbot_messager_table, planTable } from '~/db/schema';
 import { message } from '~/lib/chatUtil';
 import { doesPlanHaveTelegram } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
@@ -68,7 +68,7 @@ const getChatHistory = async (bot_token: string, chat_id:number):Promise<message
       eq(planTable.id, plan.id)
     )
 
-    let history = await db.query.chatbot_history_table.findFirst({
+    let history = await db.query.chatbot_messager_table.findFirst({
       where: (tbl => and(
         eq(tbl.chat_id, chat_id),
         eq(tbl.bot_id, bot.id ),
@@ -89,7 +89,7 @@ const limitArray = (arr: any[], limit: number) => {
 const pushChatHistory = async (bot_id: string, chat_id:number, message: string, reply: string) => {
   db.transaction(async ctx => {
 
-    let old = await ctx.query.chatbot_history_table.findFirst({
+    let old = await ctx.query.chatbot_messager_table.findFirst({
       where: (tbl => and(
         eq(tbl.chat_id, chat_id),
         eq(tbl.bot_id, parseInt(bot_id)),
@@ -97,17 +97,17 @@ const pushChatHistory = async (bot_id: string, chat_id:number, message: string, 
     })
 
     if (old) {
-      await ctx.update(chatbot_history_table).set({
+      await ctx.update(chatbot_messager_table).set({
         history: limitArray([
           ...old.history,
           {role: "user", content: message},
           {role: "assistant", content: reply},
         ], 20)
       })
-      .where(eq(chatbot_history_table.id, old.id))
+      .where(eq(chatbot_messager_table.id, old.id))
 
     } else {
-      await ctx.insert(chatbot_history_table).values({
+      await ctx.insert(chatbot_messager_table).values({
         chat_id: chat_id,
         bot_id: parseInt(bot_id),
         history: [

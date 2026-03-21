@@ -6,7 +6,7 @@ import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
 
-export const chatbot_history_table = sqliteTable("chatbot_history", ({
+export const chatbot_messager_table = sqliteTable("chatbot_messager", ({
   id: int().primaryKey({autoIncrement: true}),
   bot_id: int().references(() => chatbotTable.id).notNull(),
   chat_id: int().notNull(),
