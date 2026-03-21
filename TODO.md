@@ -8,6 +8,9 @@ future:
 - calc based on token
 - put token limit ability to users
 
+message limit for each user
+message history
+analytics for message count 
 change telegram connection system? (depending on token is a bad thing)
 make a better checkbox
 test image uploader delete should remove file from s3
