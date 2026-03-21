@@ -1,4 +1,13 @@
 import { db } from "./db";
-import { adminsTable, chatbotTable, planTable, ticketTable } from "./schema";
+import { adminsTable, chatbot_history_table, chatbotTable, planTable, ticketTable } from "./schema";
 
-await db.update(chatbotTable).set({floatingMessage: {msg: "سوال خود را از دستیار هوشمند بپرسید!", active: true}})
+await db.insert(chatbot_history_table).values({
+  botId: 4,
+  userIP: "332211",
+  messages: [
+    {role: "assistant", content: "hi how are you", timestamp: new Date()},
+    {role: "user", content: "hi you are", timestamp: new Date()},
+    {role: "assistant", content: "hi fucking bitch", timestamp: new Date()},
+    {role: "user", content: "hi", timestamp: new Date()},
+  ]
+})
