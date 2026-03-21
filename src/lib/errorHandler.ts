@@ -36,5 +36,6 @@ const getTableRowName = (tableRow: string) => {
 }
 
 const tableRowNames:Record<string, string> = {
-  email: "ایمیل"
+  email: "ایمیل",
+  number: "شماره همراه",
 }
