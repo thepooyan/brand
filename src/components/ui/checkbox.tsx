@@ -1,4 +1,4 @@
-import { FiCheck } from "solid-icons/fi"
+import { TbCheck } from "solid-icons/tb"
 import { createEffect, createSignal } from "solid-js"
 import { cn } from "~/lib/utils"
 
@@ -15,15 +15,15 @@ const Checkbox = ({onchange, initialValue}:props) => {
   return (
     <>
       <div
-        class="border-border border-1 rounded-md bg-stone-600 box-5 overflow-hidden cursor-pointer "
+        class="border-border border-1 rounded-md bg-stone-600 hover:bg-stone-500 box-5 overflow-hidden cursor-pointer "
         onclick={() => setChecked(p => !p)}
       >
         <div 
-          class={cn(`bg-indigo-600 w-full h-full scale-60 opacity-0 origin-center transition-all p-[2px] `,
+          class={cn(`bg-indigo-600 w-full h-full scale-60 opacity-0 origin-center transition-all p-[2px] flex justify-center items-center`,
             checked() && `scale-100 opacity-100`
           )}
         >
-          <FiCheck class="w-full"/>
+          <TbCheck class="w-full"/>
         </div>
       </div>
     </>
