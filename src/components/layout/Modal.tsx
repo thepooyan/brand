@@ -66,7 +66,7 @@ let titleStyle = "flex items-center justify-end gap-2 mr-10"
 const title = () => {
   switch (state()) {
     case "fail":
-      return <div class={clsx(titleStyle,"text-red-500")}> <ImCross/> </div>
+      return <div class={clsx(titleStyle,"text-orange-500")}> <AiFillWarning size={40}/> </div>
     case "success":
       return <div class={clsx(titleStyle,"text-green-500")}> <AiOutlineCheck size={40}/> </div>
     case "prompt":
