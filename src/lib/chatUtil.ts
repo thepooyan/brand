@@ -5,6 +5,9 @@ export type message = {
   content: string
 };
 
+export interface timedMessage extends message {
+  timestamp: Date
+}
 
 type onType = (chunk: string) => any | undefined
 const getUseChat = (endpoint: string, args?: Record<string, any>) => {
