@@ -52,7 +52,7 @@ const Profile = () => {
     if (submission.error) {
       callModal.fail()
     } else if (submission.result) {
-      if ( submission.result.ok) {
+      if (submission.result.ok) {
         callModal.success()
         revalidate("user")
       } else {
