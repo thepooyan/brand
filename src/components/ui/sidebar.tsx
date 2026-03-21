@@ -361,7 +361,7 @@ const SidebarFooter: Component<ComponentProps<"div">> = (props) => {
     <div data-sidebar="footer" class={cn("flex flex-col gap-2 p-2", local.class)} {...others} />
   )
 }
-
+// @ts-ignore
 type SidebarSeparatorProps<T extends ValidComponent = "hr"> = ComponentProps<typeof Separator<T>>
 
 const SidebarSeparator = <T extends ValidComponent = "hr">(props: SidebarSeparatorProps<T>) => {
@@ -369,6 +369,7 @@ const SidebarSeparator = <T extends ValidComponent = "hr">(props: SidebarSeparat
   return (
     <Separator
       data-sidebar="separator"
+      // @ts-ignore
       class={cn("mx-2 w-auto bg-sidebar-border", local.class)}
       {...others}
     />

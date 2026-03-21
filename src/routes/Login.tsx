@@ -13,6 +13,7 @@ import { callModal } from "~/components/layout/Modal"
 import { sendOTP, verifyOTP } from "~/server/actions"
 import { useSearchParams } from "@solidjs/router"
 import { Link } from "@solidjs/meta"
+import { InputChangeEvent } from "~/db/types"
 
 export default function Login() {
   const [phoneNumber, setPhoneNumber] = createSignal("")
@@ -121,7 +122,7 @@ export default function Login() {
                     type="tel"
                     placeholder="۰۹۱۲۳۴۵۶۷۸۹"
                     value={phoneNumber()}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={(e:InputChangeEvent) => setPhoneNumber(e.currentTarget.value)}
                     class="pl-3 pr-10 bg-input border-border ltr placeholder:text-muted-foreground"
                     dir="rtl"
                   />
