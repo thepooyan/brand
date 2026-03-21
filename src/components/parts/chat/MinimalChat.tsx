@@ -1,4 +1,4 @@
-import { name, nameEn } from "../../../../config/config";
+import { nameEn } from "../../../../config/config";
 import { FiSend } from "solid-icons/fi"
 import { createEffect, createSignal, ParentProps, Show } from "solid-js"
 import { Button } from "~/components/ui/button"
@@ -9,7 +9,7 @@ import { db } from "~/db/db";
 import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
 import { safeDb } from "~/lib/utils";
-import { ActionResponse, ActionResponse2 } from "~/lib/actionAbstraction";
+import { ActionResponse2 } from "~/lib/actionAbstraction";
 
 interface props {
   botId: string
