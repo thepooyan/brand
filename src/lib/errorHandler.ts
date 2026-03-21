@@ -1,0 +1,19 @@
+export const resolveError = (error: unknown):string => {
+  if (error instanceof Error) {
+    if (error.cause instanceof Error) {
+      const msg = error.cause.message
+      const split = msg.replaceAll(":", "").split(" ")
+      const err = split.at(0)
+      const target = split.at(-1)
+
+      switch (err) {
+        case "SQLITE_CONSTRAINT_UNIQUE":
+          return `${target} has to be uniqe`
+        default:
+          return `unhandled sqlite error code: ${err}`
+      }
+    }
+  }
+
+  return "متاسفانه خطایی ناشناخته رخ داده است. لطفا مجددا تلاش کنید. در صورت تکرار با پشتیبانی تماس بگیرید."
+}
