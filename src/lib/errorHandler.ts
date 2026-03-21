@@ -4,16 +4,27 @@ export const resolveError = (error: unknown):string => {
       const msg = error.cause.message
       const split = msg.replaceAll(":", "").split(" ")
       const err = split.at(0)
-      const target = split.at(-1)
+      const tableRow = split.at(-1)?.split(".").at(-1)
 
       switch (err) {
         case "SQLITE_CONSTRAINT_UNIQUE":
-          return `${target} has to be uniqe`
+          return `${getTableRowName(tableRow!)} از قبل وجود دارد`
         default:
-          return `unhandled sqlite error code: ${err}`
+          return `Unhandled sqlite error code: ${err}`
       }
     }
   }
 
   return "متاسفانه خطایی ناشناخته رخ داده است. لطفا مجددا تلاش کنید. در صورت تکرار با پشتیبانی تماس بگیرید."
+}
+
+const getTableRowName = (tableRow: string) => {
+  if (tableRowNames[tableRow]) {
+    return tableRowNames[tableRow]
+  }
+  return tableRow
+}
+
+const tableRowNames:Record<string, string> = {
+  email: "ایمیل"
 }
