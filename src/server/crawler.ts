@@ -8,10 +8,10 @@ export const crawl = async (address: string):ActionResponse<string> => {
 
   if (!isUrlValid(address)) return {ok: false, msg: "آدرس داده شده معتبر نمیباشد"}
 
-  const res = await safe( axios.get(address) )
+  const res = await safe( axios.get<string>(address) )
   if (!res.ok) return {ok: false, msg: "آدرس مورد نظر یافت نشد. لطفا درستی آن را بررسی کنید."}
 
-  res.data
+  console.log(res.data.data.replaceAll(/<.*?>/g , ""))
 
   return {ok: true, data: ""}
 }
