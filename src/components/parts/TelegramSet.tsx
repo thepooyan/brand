@@ -5,6 +5,7 @@ import Input from "../ui/input"
 import { wait } from "~/lib/utils"
 import { callModal, closeModal } from "../layout/Modal"
 import { tokenLength } from "~/db/schema"
+import { ChangeEvent } from "~/db/types"
 
 interface p {
   navigate: (a:string) => void
@@ -59,7 +60,7 @@ const TelegramSet = ({navigate}:p) => {
       <CardContent class="text-right space-y-2">
         <Input
           placeholder="توکن ربات تلگرام"
-          onchange={e => setTelegramToken(e.currentTarget.value)}
+          onchange={(e:ChangeEvent<HTMLInputElement>) => setTelegramToken(e.currentTarget.value)}
         />
         <p>
           توکن ربات تلگرام را پس از ساخت آن از تلگرام دریافت کنید 
@@ -70,7 +71,7 @@ const TelegramSet = ({navigate}:p) => {
         </p>
         <Input
           placeholder="توکن چت‌بات شما"
-          onchange={e => setBotToken(e.currentTarget.value)}
+          onchange={(e:ChangeEvent<HTMLInputElement>) => setBotToken(e.currentTarget.value)}
           class="mt-4"
         />
         <p>توکن چت‌بات خود را با دکمه "دریافت توکن" دریافت کنید</p>

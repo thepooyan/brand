@@ -149,7 +149,7 @@ export default function Login() {
                       pattern="[0-9]*"
                       maxLength={1}
                       oninput={() => handleInput(index)}
-                      onKeyDown={e => handleKeydown(index, e)}
+                      onKeyDown={ (e:KeyboardEvent) => handleKeydown(index, e)}
                       onfocus={() => handleFocues(index)}
                       class="w-full h-12 text-center bg-input border-border text-lg ltr"
                     />

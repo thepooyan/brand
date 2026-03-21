@@ -110,7 +110,7 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
         role="button"
         tabIndex={0}
         onClick={() => state() !== "preview" && inputRef.click()}
-        onKeyDown={(e) => {
+        onKeyDown={(e:KeyboardEvent) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault()
             if (state() !== "preview") inputRef.click()
@@ -170,7 +170,7 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={(e) => {
+                onClick={(e:MouseEvent) => {
                   e.stopPropagation()
                   handleRemove()
                 }}

@@ -6,6 +6,7 @@ import { Button } from "./ui/button"
 import { cn } from "~/lib/utils"
 import PendingMsg from "./parts/chat/PendingMsg"
 import { useChat } from "~/lib/chatUtil"
+import { ChangeEvent } from "~/db/types"
 
 interface ChatWidgetProps {
   className?: string
@@ -114,7 +115,7 @@ export function Widget({ className }: ChatWidgetProps) {
                 <div class="flex space-x-2 items-center">
                   <Input
                     value={inputValue()}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={(e:ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)}
                     onKeyPress={handleKeyPress}
                     class="flex-1"
                     placeholder="سوالتون رو بفرمایید..."
