@@ -176,9 +176,19 @@ export const safeDb = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {
   }
 }
 
+export const safeDb2 = async <T>(fn: Promise<T>): Promise<{ok: true, data: T, msg: undefined} | {ok: false, msg: string, data: undefined}> => {
+  try {
+    return {ok: true, data: await fn , msg: undefined}
+  } catch (e) {
+    return { ok: false, msg: resolveError(e) , data: undefined}
+  }
+}
+
 export const ifEnterPressed = (callback: (e: KeyboardEvent) => void) => (e: KeyboardEvent) => {
   if (e.key === "Enter") {
     e.preventDefault()
     callback(e)
   }
 }
+
+export const getUserNickname = (userIP: string) => userIP

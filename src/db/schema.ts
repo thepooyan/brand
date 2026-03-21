@@ -13,6 +13,8 @@ export const chatbot_history_table = sqliteTable("chatbot_history", ({
   messages: text({ mode: "json" }).$type<timedMessage[]>().notNull()
 }))
 
+export type History = typeof chatbot_history_table.$inferSelect
+
 export const chatbot_messager_table = sqliteTable("chatbot_messager", ({
   id: int().primaryKey({autoIncrement: true}),
   bot_id: int().references(() => chatbotTable.id).notNull(),

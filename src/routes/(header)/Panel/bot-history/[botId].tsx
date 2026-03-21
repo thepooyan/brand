@@ -1,13 +1,15 @@
 import { createAsync, query, useParams } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { Suspense } from "solid-js"
+import { createEffect, For, Show, Suspense } from "solid-js"
+import HistoryCard from "~/components/history/history-card"
+import { callModal } from "~/components/layout/Modal"
 import { Loading } from "~/components/parts/Loading"
 import { db } from "~/db/db"
-import { safeDb } from "~/lib/utils"
+import { safeDb2 } from "~/lib/utils"
 
 const queryBotHistory = query(async(botId: number) => {
   "use server"
-  return safeDb(
+  return safeDb2(
     db.query.chatbot_history_table.findMany({
       where: (tbl => eq(tbl.botId, botId))
     })
@@ -19,12 +21,19 @@ const botId = () => {
   const {botId} = useParams()
   const botHistory = createAsync(() => queryBotHistory(parseInt(botId)))
 
+  createEffect(() => {
+    let error = botHistory()?.msg
+    if (error) callModal.fail(error)
+  })
+
   return (
-    <div>
-      <Suspense fallback={<Loading/>}>
-        {JSON.stringify(botHistory())}
-      </Suspense>
-    </div>
+    <Suspense fallback={<Loading/>}>
+      <Show when={botHistory()?.data}>
+        {bh => <For each={bh()}>
+          {b => <HistoryCard histroy={b}/>}
+        </For>}
+      </Show>
+    </Suspense>
   )
 }
 
