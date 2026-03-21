@@ -8,6 +8,7 @@ future:
 - calc based on token
 - put token limit ability to users
 
+change telegram connection system? (depending on token is a bad thing)
 make a better checkbox
 test image uploader delete should remove file from s3
 rethink plan. message count should not be in there
