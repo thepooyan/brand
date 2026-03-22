@@ -37,9 +37,10 @@ const HistoryCardMapper = ({data}:p) => {
 
   return (
     <>
-      <div class="grid grid-cols-2 gap-1 mb-4">
+      <div class="grid grid-cols-2 gap-2 mb-4">
         <FilterSection name="زمان" fh={timeFilterHook}/>
-        <FilterSection name="ربات" fh={botFilterHook}/>
+        {Object.keys(botFilters).length > 1 && 
+        <FilterSection name="ربات" fh={botFilterHook}/>}
         <FilterSection name="کاربر" fh={userFilterHook}/>
       </div>
 
