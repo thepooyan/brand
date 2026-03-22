@@ -10,10 +10,10 @@ interface p {
 }
 const HistoryCardMapper = ({data}:p) => {
   const timeFilters:filterOptions<HistoryWithName> = {
-    "امروز": (d:HistoryWithName) => filterToday(d.messages.at(-1)?.timestamp),
-    "هفته گذشته": (d:HistoryWithName) => filterLastWeek(d.messages.at(-1)?.timestamp),
-    "ماه گذشته": (d:HistoryWithName) => filterLastMonth(d.messages.at(-1)?.timestamp),
-    "قدیمی تر": (d:HistoryWithName) => filterOlderThanLastMonth(d.messages.at(-1)?.timestamp),
+    "امروز": (d:HistoryWithName) => filterToday(d.lastUpdated),
+    "هفته گذشته": (d:HistoryWithName) => filterLastWeek(d.lastUpdated),
+    "ماه گذشته": (d:HistoryWithName) => filterLastMonth(d.lastUpdated),
+    "قدیمی تر": (d:HistoryWithName) => filterOlderThanLastMonth(d.lastUpdated),
   }
   const timeFilterHook = useFilter(() => data, timeFilters)
 
