@@ -8,11 +8,15 @@ future:
 - calc based on token
 - put token limit ability to users
 
+history {
+add pageination for history
+history filter: user filter has to be dropdown with search
+details
+remove
+}
 make an abstraction to talk with bot
 add every source of talk with bot to history
-history filter: user filter has to be dropdown with search
 message limit for each user
-message history
 analytics for message count 
 change telegram connection system? (depending on token is a bad thing)
 make a better checkbox
