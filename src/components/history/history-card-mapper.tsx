@@ -56,13 +56,18 @@ const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: 
       <FiFilter/>
       فیلتر {name}:
     </span>
-    <For each={Object.keys(allFilters)}>
+    <Button variant="outline"
+      size="sm"
+      class={cn(activeFilter() === "" && "bg-secondary")}
+      onclick={() => setFilter("")}>
+      همه
+    </Button>
+    <For each={Object.keys(allFilters).filter(i => i !== "")}>
       {k => <Button
         variant="outline" size="sm"
         onclick={() => setFilter(k)} 
         class={cn(activeFilter() === k && "bg-secondary")}>
         {k}
-        {k === "" && "همه"}
       </Button>}
     </For>
   </div>
