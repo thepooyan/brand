@@ -2,6 +2,7 @@ import { createAsync, query, redirect } from "@solidjs/router"
 import { eq, inArray } from "drizzle-orm"
 import { createEffect, For, Show, Suspense } from "solid-js"
 import HistoryCard from "~/components/history/history-card"
+import HistoryCardMapper from "~/components/history/history-card-mapper"
 import { callModal } from "~/components/layout/Modal"
 import { Loading } from "~/components/parts/Loading"
 import { db } from "~/db/db"
@@ -38,9 +39,7 @@ const botId = () => {
   return (
     <Suspense fallback={<Loading/>}>
       <Show when={botHistory()?.data}>
-        {(bh) => <For each={bh()}>
-          {(b, idx) => <HistoryCard histroy={b} idx={idx}/>}
-        </For>}
+        {d => <HistoryCardMapper data={d()}/>}
       </Show>
     </Suspense>
   )

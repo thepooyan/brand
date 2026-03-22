@@ -4,8 +4,9 @@ import { Button } from "../ui/button"
 import { getUserNickname } from "~/lib/utils"
 import { Accessor, ParentProps } from "solid-js"
 
+export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
-  histroy: History & {chatbot: {botName: string}}
+  histroy: HistoryWithName
   idx: Accessor<number>
 }
 const HistoryCard = ({histroy, idx}:p) => {

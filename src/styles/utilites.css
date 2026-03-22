@@ -2,3 +2,8 @@
   width: calc(var(--spacing) * --value(integer));
   height: calc(var(--spacing) * --value(integer));
 }
+@utility center {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}

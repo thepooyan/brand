@@ -21,3 +21,20 @@ export const useToggle = <T extends acceptableToggleTypes>(initial?: T) => {
 
   return {activate, isActive}
 }
+
+type predicate<T> = (value: T) => boolean
+export type filterOptions<T> = {[key: string]: predicate<T>}
+
+export const useFilter = <D, F extends filterOptions<D>>(data: D[], filterOptions: F) => {
+
+  const noFilter: filterOptions<D> = {"": () => true}
+  const allFilters:filterOptions<D> = {...noFilter, ...filterOptions}
+
+  const [filter, setter] = createSignal<keyof typeof allFilters>("")
+
+  const setFilter = (filterName: keyof F | "") => setter(filterName as string)
+  
+  const filtered = () => data.filter( allFilters[filter()] )
+
+  return {filtered, setFilter, activeFilter: filter}
+}

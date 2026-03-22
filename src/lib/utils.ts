@@ -192,3 +192,66 @@ export const ifEnterPressed = (callback: (e: KeyboardEvent) => void) => (e: Keyb
 }
 
 export const getUserNickname = (userIP: string) => userIP
+
+export function filterLastWeek(date: Date | undefined | null): boolean {
+  if (!date) return false
+  const today = new Date();
+
+  // Monday = 1 … Sunday = 0 in JS, so normalize to Monday=0 … Sunday=6
+  const weekday = (today.getDay() + 6) % 7;
+
+  // This week's Monday
+  const thisMonday = new Date(today);
+  thisMonday.setDate(today.getDate() - weekday);
+
+  // Last week's Monday and Sunday
+  const lastWeekMonday = new Date(thisMonday);
+  lastWeekMonday.setDate(thisMonday.getDate() - 7);
+
+  const lastWeekSunday = new Date(thisMonday);
+  lastWeekSunday.setDate(thisMonday.getDate() - 1);
+
+  return  (date >= lastWeekMonday && date <= lastWeekSunday);
+}
+
+export function filterOlderThanLastMonth(date: Date | undefined | null): boolean {
+  if (!date) return false
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth(); // 0-indexed
+
+  // Start of the current month
+  const currentMonthStartDate = new Date(year, month, 1);
+
+  return (date < currentMonthStartDate);
+}
+
+export function filterToday(date: Date | null | undefined): boolean {
+  if (!date) return false
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Normalize to start of day
+
+  const dCopy = new Date(date);
+  dCopy.setHours(0, 0, 0, 0); // Normalize to start of day
+  return dCopy.getTime() === today.getTime();
+}
+
+export function filterLastMonth(date: Date | null | undefined): boolean {
+  if (!date) return false
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth(); // 0-indexed
+
+  // Previous month's year and month
+  let prevMonthYear = year;
+  let prevMonth = month - 1;
+  if (prevMonth < 0) {
+    prevMonth = 11; // December
+    prevMonthYear--;
+  }
+
+  const lastMonthStartDate = new Date(prevMonthYear, prevMonth, 1);
+  const lastMonthEndDate = new Date(year, month, 0); // Day 0 of current month = last day of previous month
+
+  return (date >= lastMonthStartDate && date <= lastMonthEndDate);
+}
