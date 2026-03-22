@@ -37,7 +37,7 @@ const HistoryCardMapper = ({data}:p) => {
 
   return (
     <>
-      <div class="grid grid-cols-2">
+      <div class="grid grid-cols-2 gap-1 mb-4">
         <FilterSection name="زمان" fh={timeFilterHook}/>
         <FilterSection name="ربات" fh={botFilterHook}/>
         <FilterSection name="کاربر" fh={userFilterHook}/>
@@ -51,7 +51,7 @@ const HistoryCardMapper = ({data}:p) => {
 }
 
 const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: string, fh: filterHook<HistoryWithName>}) => 
-  <div class="my-4 mb-6 flex gap-1">
+  <div class="flex gap-1">
     <span class="text-sm center gap-1 text-muted-foreground ">
       <FiFilter/>
       فیلتر {name}:
