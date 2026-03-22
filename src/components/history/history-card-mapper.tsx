@@ -18,13 +18,24 @@ const HistoryCardMapper = ({data}:p) => {
     "قدیمی تر": (d:HistoryWithName) => filterOlderThanLastMonth(d.messages.at(-1)?.timestamp),
   }
   const {filtered, setFilter, activeFilter} = useFilter(data, timeFilters)
-  createEffect(() => console.log(activeFilter() === ""))
+
+  const botsIds = new Set(data.map(i => i.botId))
+
+  const botFilters: filterOptions<HistoryWithName> = {}
+
+  botsIds.forEach(i => {
+    botFilters[i] = (d:HistoryWithName) => d.botId === i
+  })
+
+  const {filtered: filtered2, setFilter: setBotFilter, activeFilter: activeBotFilter} = useFilter(filtered(), botFilters)
+
+
   return (
     <>
       <div class="my-4 mb-6 flex gap-1">
         <span class="text-sm center gap-1 text-muted-foreground ">
           <FiFilter/>
-          فیلتر:
+          فیلتر زمان:
         </span>
         <For each={Object.keys(timeFilters)}>
           {k => <Button
@@ -35,7 +46,23 @@ const HistoryCardMapper = ({data}:p) => {
           </Button>}
         </For>
       </div>
-      <For each={filtered()}>
+
+      <div class="my-4 mb-6 flex gap-1">
+        <span class="text-sm center gap-1 text-muted-foreground ">
+          <FiFilter/>
+          فیلتر بات:
+        </span>
+        <For each={Object.keys(botFilters)}>
+          {k => <Button
+            variant="outline" size="sm"
+            onclick={() => setBotFilter(k)} 
+            class={cn(activeBotFilter() === k && "bg-secondary")}>
+            {k}
+          </Button>}
+        </For>
+      </div>
+
+      <For each={filtered2()}>
         {(b, idx) => <HistoryCard histroy={b} idx={idx}/>}
       </For>
     </>
