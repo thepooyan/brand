@@ -29,7 +29,7 @@ const HistoryCard = ({histroy, idx}:p) => {
             تاریخ آخرین پیام:
           </Big>
           <Small>
-           {new Date(histroy.messages.at(-1)!.timestamp).toLocaleDateString("fa-IR")}
+           {new Date(histroy.lastUpdated).toLocaleDateString("fa-IR")}
           </Small>
         </div>
         <div>
