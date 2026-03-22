@@ -18,21 +18,29 @@ const HistoryCardMapper = ({data}:p) => {
   }
   const timeFilterHook = useFilter(() => data, timeFilters)
 
-  const botsIds = new Set(data.map(i => i.botId))
+  const uniqeBotIds = new Set(data.map(i => i.botId))
   const botFilters: filterOptions<HistoryWithName> = {}
-  botsIds.forEach(i => {
+  uniqeBotIds.forEach(i => {
     botFilters[i] = (d:HistoryWithName) => d.botId === i
   })
 
   const botFilterHook = useFilter(timeFilterHook.filtered, botFilters)
-  const {filtered} = botFilterHook
 
+  const uniqeUserIps = new Set(data.map(i => i.userIP))
+  const userFilters: filterOptions<HistoryWithName> = {}
+  uniqeUserIps.forEach(i => {
+    userFilters[i] = (d:HistoryWithName) => d.userIP === i
+  })
+
+  const userFilterHook = useFilter(botFilterHook.filtered, userFilters)
+  const {filtered} = userFilterHook
 
   return (
     <>
       <div class="grid grid-cols-2">
         <FilterSection name="زمان" fh={timeFilterHook}/>
         <FilterSection name="ربات" fh={botFilterHook}/>
+        <FilterSection name="کاربر" fh={userFilterHook}/>
       </div>
 
       <For each={filtered()}>
