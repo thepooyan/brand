@@ -1,5 +1,6 @@
+import { Accordion } from "@kobalte/core"
 import { usePreloadRoute } from "@solidjs/router"
-import { createSignal } from "solid-js"
+import { Accessor, createSignal } from "solid-js"
 
 export const preload = (route: string, ...more: string[]) => {
   const pr = usePreloadRoute()
@@ -25,7 +26,7 @@ export const useToggle = <T extends acceptableToggleTypes>(initial?: T) => {
 type predicate<T> = (value: T) => boolean
 export type filterOptions<T> = {[key: string]: predicate<T>}
 
-export const useFilter = <D, F extends filterOptions<D>>(data: D[], filterOptions: F) => {
+export const useFilter = <D, F extends filterOptions<D>>(data: Accessor<D[]>, filterOptions: F) => {
 
   const noFilter: filterOptions<D> = {"": () => true}
   const allFilters:filterOptions<D> = {...noFilter, ...filterOptions}
@@ -34,7 +35,9 @@ export const useFilter = <D, F extends filterOptions<D>>(data: D[], filterOption
 
   const setFilter = (filterName: keyof F | "") => setter(filterName as string)
   
-  const filtered = () => data.filter( allFilters[filter()] )
+  const filtered = () => data().filter( allFilters[filter()] )
 
-  return {filtered, setFilter, activeFilter: filter}
+  return {filtered, setFilter, activeFilter: filter, allFilters}
 }
+
+export type filterHook = ReturnType<typeof useFilter>
