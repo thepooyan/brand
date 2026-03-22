@@ -74,7 +74,6 @@ const BotCard = ({bot, telegramAccess}:props) => {
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
             <span class="text-gray-400">تعداد مکالمه: 2</span>
-            <Button variant="outline" size="sm" as={TA} href={`/panel/bot-history/${bot.id}`}>نمایش مکالمات</Button>
           </div>
         </div>
 
