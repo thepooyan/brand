@@ -4,6 +4,7 @@ import { FiFilter } from "solid-icons/fi"
 import { filterOptions, useFilter } from "~/lib/hooks"
 import { Button } from "../ui/button"
 import { cn, filterLastMonth, filterLastWeek, filterOlderThanLastMonth, filterToday } from "~/lib/utils"
+import botId from "~/routes/(header)/Panel/history/(history)"
 
 interface p {
   data: HistoryWithName[]
@@ -21,7 +22,9 @@ const HistoryCardMapper = ({data}:p) => {
 
   const botsIds = new Set(data.map(i => i.botId))
 
-  const botFilters: filterOptions<HistoryWithName> = {}
+  const botFilters: filterOptions<HistoryWithName> = {
+    "همه": () => true,
+  }
 
   botsIds.forEach(i => {
     botFilters[i] = (d:HistoryWithName) => d.botId === i
@@ -47,6 +50,7 @@ const HistoryCardMapper = ({data}:p) => {
         </For>
       </div>
 
+      {botId.length > 1 &&
       <div class="my-4 mb-6 flex gap-1">
         <span class="text-sm center gap-1 text-muted-foreground ">
           <FiFilter/>
@@ -60,7 +64,7 @@ const HistoryCardMapper = ({data}:p) => {
             {k}
           </Button>}
         </For>
-      </div>
+      </div>}
 
       <For each={filtered2()}>
         {(b, idx) => <HistoryCard histroy={b} idx={idx}/>}
