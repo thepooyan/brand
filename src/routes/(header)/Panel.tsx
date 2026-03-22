@@ -20,7 +20,9 @@ const panelItems:panelItems = [
   },
   {
     group: "خدمات", items: [
-      {name: "چت‌بات", href: "Chatbot"},
+      {name: "چت‌بات ها", href: "Chatbot"},
+      {name: "مکالمات", href: "history"},
+      {name: "آمار", href: "analytics"},
     ]
   },
   {
