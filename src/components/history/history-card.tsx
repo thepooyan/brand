@@ -40,15 +40,20 @@ const HistoryCard = ({histroy, idx}:p) => {
            {histroy.messages.at(-1)?.content}
           </Small>
         </div>
-        <Button class="ml-5">
+      <div class="ml-5 space-x-1">
+        <Button class="" size="sm">
           نمایش کامل
         </Button>
+        <Button variant="destructive" size="sm">
+          حذف
+        </Button>
+      </div>
     </Card>
   )
 }
 
-const Big = ({children}:ParentProps) => <div class="mb-1 font-bold">{children}</div>
+const Big = ({children}:ParentProps) => <div class="mb-1 font-bold text-sm">{children}</div>
 
-const Small = ({children}:ParentProps) => <div class="text-sm text-muted-foreground">{children}</div>
+const Small = ({children}:ParentProps) => <div class="text-xs text-muted-foreground">{children}</div>
 
 export default HistoryCard
