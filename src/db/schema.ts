@@ -10,7 +10,8 @@ export const chatbot_history_table = sqliteTable("chatbot_history", ({
   id: int().primaryKey({autoIncrement: true}),
   botId: int().notNull().references(() => chatbotTable.id),
   userIP: text().notNull(),
-  messages: text({ mode: "json" }).$type<timedMessage[]>().notNull()
+  messages: text({ mode: "json" }).$type<timedMessage[]>().notNull(),
+  lastUpdated: int({mode: "timestamp"}).notNull().default(new Date())
 }))
 
 export const chatbot_history_relation = relations(chatbot_history_table, ({one}) => ({

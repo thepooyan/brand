@@ -9,7 +9,6 @@ interface p {
   data: HistoryWithName[]
 }
 const HistoryCardMapper = ({data}:p) => {
-
   const timeFilters:filterOptions<HistoryWithName> = {
     "امروز": (d:HistoryWithName) => filterToday(d.messages.at(-1)?.timestamp),
     "هفته گذشته": (d:HistoryWithName) => filterLastWeek(d.messages.at(-1)?.timestamp),

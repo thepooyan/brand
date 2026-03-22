@@ -1,7 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
-import { eq, inArray } from "drizzle-orm"
-import { createEffect, For, Show, Suspense } from "solid-js"
-import HistoryCard from "~/components/history/history-card"
+import { desc, eq, inArray } from "drizzle-orm"
+import { createEffect, Show, Suspense } from "solid-js"
 import HistoryCardMapper from "~/components/history/history-card-mapper"
 import { callModal } from "~/components/layout/Modal"
 import { Loading } from "~/components/parts/Loading"
@@ -21,7 +20,8 @@ const queryBotHistory = query(async() => {
 
       return ctx.query.chatbot_history_table.findMany({
         where: (tbl => inArray(tbl.botId, botIds)),
-        with: {chatbot: {columns: {botName: true}}}
+        with: {chatbot: {columns: {botName: true}}},
+        orderBy: (tbl => desc(tbl.lastUpdated))
       })
     })
   )
