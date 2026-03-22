@@ -38,8 +38,8 @@ const botId = () => {
   return (
     <Suspense fallback={<Loading/>}>
       <Show when={botHistory()?.data}>
-        {bh => <For each={bh()}>
-          {b => <HistoryCard histroy={b}/>}
+        {(bh) => <For each={bh()}>
+          {(b, idx) => <HistoryCard histroy={b} idx={idx}/>}
         </For>}
       </Show>
     </Suspense>

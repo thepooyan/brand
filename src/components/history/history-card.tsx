@@ -2,16 +2,17 @@ import { History } from "~/db/schema"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { getUserNickname } from "~/lib/utils"
-import { ParentProps } from "solid-js"
+import { Accessor, ParentProps } from "solid-js"
 
 interface p {
   histroy: History & {chatbot: {botName: string}}
+  idx: Accessor<number>
 }
-const HistoryCard = ({histroy}:p) => {
+const HistoryCard = ({histroy, idx}:p) => {
   return (
     <Card class="flex justify-between items-center mb-3">
       <CardHeader>
-        <CardTitle>مکالمه {histroy.id}</CardTitle>
+        <CardTitle>مکالمه {idx()+1}</CardTitle>
         <CardDescription>{histroy.chatbot.botName}</CardDescription>
       </CardHeader>
         <div>
