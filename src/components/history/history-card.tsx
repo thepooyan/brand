@@ -74,6 +74,14 @@ const HistoryCard = ({histroy:h, idx}:p) => {
            {h.messages.at(-1)?.content}
           </Small>
         </div>
+        <div>
+          <Big>
+            منبع:
+          </Big>
+          <Small>
+           {h.source}
+          </Small>
+        </div>
       <div class="ml-5 space-x-1">
         <Button class="" size="sm" as={TA} href={`/Panel/history/${h.id}`}>
           نمایش کامل

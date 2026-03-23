@@ -10,11 +10,12 @@ export interface timedMessage extends message {
 }
 
 export const chat_sources = [
-  "telegram",
-  "widget",
-  "api",
-  "website"
+  {en: "telegram", fa: "تلگرام"},
+  {en: "widget", fa: "ویجت"},
+  {en: "api", fa: "ای‌پی‌آی"},
+  {en: "website", fa: "وبسایت"}
 ] as const
+
 
 export type chat_sources = typeof chat_sources[number]
 
