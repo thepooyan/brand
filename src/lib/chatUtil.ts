@@ -9,6 +9,15 @@ export interface timedMessage extends message {
   timestamp: Date
 }
 
+export const chat_sources = [
+  "telegram",
+  "widget",
+  "api",
+  "website"
+] as const
+
+export type chat_sources = typeof chat_sources[number]
+
 type onType = (chunk: string) => any | undefined
 const getUseChat = (endpoint: string, args?: Record<string, any>) => {
 
