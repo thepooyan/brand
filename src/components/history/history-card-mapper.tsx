@@ -65,7 +65,7 @@ const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: 
     <For each={Object.keys(allFilters).filter(i => i !== "")}>
       {k => <Button
         variant="outline" size="sm"
-        onclick={() => setFilter(k)} 
+        onClick={() => setFilter(k)} 
         class={cn(activeFilter() === k && "bg-secondary")}>
         {k}
       </Button>}

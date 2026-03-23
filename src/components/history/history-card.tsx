@@ -1,7 +1,7 @@
 import { chatbot_history_table, History } from "~/db/schema"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
-import { getUserNickname, safeDb2 } from "~/lib/utils"
+import { safeDb2 } from "~/lib/utils"
 import { Accessor, ParentProps } from "solid-js"
 import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
@@ -9,7 +9,6 @@ import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { ActionResponse2 } from "~/lib/actionAbstraction"
 import { revalidate } from "@solidjs/router"
-import { nicknameFromIP } from "~/lib/nicknameGenerator"
 
 export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
@@ -55,7 +54,7 @@ const HistoryCard = ({histroy:h, idx}:p) => {
             کاربر:
           </Big>
           <Small>
-           {nicknameFromIP(h.userIP)}
+           {h.userIP}
           </Small>
         </div>
         <div>

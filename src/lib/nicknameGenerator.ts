@@ -1,5 +1,3 @@
-import { createHash } from "crypto";
-
 const adjectives = [
   "آبی", "زرین", "نقره‌ای", "طلایی", "سایه‌ای", "تند", "آرام", "پنهان",
   "سریع", "پرنور", "براق", "خاکستری", "مه‌آلود", "کبود", "صخره‌ای", "آتشین", "برفی",
@@ -35,13 +33,21 @@ const animals = [
   "آهو کوهی", "نهنگ", "کوسه", "گربه‌ماهی", "پنگوئن", "مرغ", "جوجه", "قناری", "فنچ",
 ];
 
-function hashToNumber(input: string): number {
-  const hash = createHash("sha256").update(input).digest("hex");
+async function hashToNumber(input: string): Promise<number> {
+  const hash = await sha256(input)
   return parseInt(hash.slice(0, 16), 16);
 }
 
-export function nicknameFromIP(ip: string): string {
-  const h = hashToNumber(ip);
+async function sha256(text: string) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+export async function nicknameFromIP(ip: string):Promise<string> {
+  const h = await hashToNumber(ip);
 
   const adj = adjectives[h % adjectives.length];
   const ani = animals[ h % animals.length];

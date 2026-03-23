@@ -18,11 +18,12 @@ const queryBotHistory = query(async() => {
       const bots = await ctx.query.chatbotTable.findMany({ where: (tbl => eq(tbl.userId, user.id)) })
       const botIds = bots.map(i => i.id)
 
-      return ctx.query.chatbot_history_table.findMany({
+      let history = await ctx.query.chatbot_history_table.findMany({
         where: (tbl => inArray(tbl.botId, botIds)),
         with: {chatbot: {columns: {botName: true}}},
         orderBy: (tbl => desc(tbl.lastUpdated))
       })
+      return history.map(h => ({...h}))
     })
   )
 }, "botHistory")
