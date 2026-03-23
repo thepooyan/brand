@@ -54,7 +54,7 @@ const HistoryCard = ({histroy:h, idx}:p) => {
             کاربر:
           </Big>
           <Small>
-           {h.userIP}
+           {h.nickname}
           </Small>
         </div>
         <div>
