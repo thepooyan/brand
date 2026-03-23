@@ -11,11 +11,9 @@ future:
 history {
 add pageination for history
 history filter: user filter has to be dropdown with search
-details
-remove
+add every source of talk with bot to history
 }
 make an abstraction to talk with bot
-add every source of talk with bot to history
 message limit for each user
 analytics for message count 
 change telegram connection system? (depending on token is a bad thing)
