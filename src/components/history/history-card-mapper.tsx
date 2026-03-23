@@ -1,7 +1,7 @@
 import { Accessor, For } from "solid-js"
 import HistoryCard, { HistoryWithName } from "./history-card"
 import { FiFilter } from "solid-icons/fi"
-import { filterHook, filterOptions, useFilter } from "~/lib/hooks"
+import { filterHook, filterOptions, useFilter } from "~/lib/hooks/useFilter"
 import { Button } from "../ui/button"
 import { cn, filterLastMonth, filterLastWeek, filterOlderThanLastMonth, filterToday } from "~/lib/utils"
 
