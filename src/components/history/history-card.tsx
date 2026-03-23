@@ -9,6 +9,7 @@ import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { ActionResponse2 } from "~/lib/actionAbstraction"
 import { revalidate } from "@solidjs/router"
+import { nicknameFromIP } from "~/lib/nicknameGenerator"
 
 export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
@@ -54,7 +55,7 @@ const HistoryCard = ({histroy:h, idx}:p) => {
             کاربر:
           </Big>
           <Small>
-           {getUserNickname(h.userIP)}
+           {nicknameFromIP(h.userIP)}
           </Small>
         </div>
         <div>
