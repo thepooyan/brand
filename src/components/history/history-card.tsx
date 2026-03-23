@@ -8,7 +8,7 @@ import { db } from "~/db/db"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { ActionResponse2 } from "~/lib/actionAbstraction"
-import { ResultSet } from "@libsql/client"
+import { revalidate } from "@solidjs/router"
 
 export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
@@ -16,14 +16,18 @@ interface p {
   idx: Accessor<number>
 }
 
-const deleteHistory = async (id: number):ActionResponse2<ResultSet> => {
+const deleteHistory = async (id: number):ActionResponse2 => {
   "use server"
   const user = await getAuthSession()
   if (!user) return {ok: false, msg: "ابتدا لوگین کنید", data: undefined}
 
-  return await safeDb2(
+  let a =  await safeDb2(
     db.delete(chatbot_history_table).where(eq(chatbot_history_table.id, id))
   )
+  if (a.ok) 
+    return {ok: true, msg: undefined, data: undefined}
+  else
+    return {ok: false, msg: a.msg, data: undefined}
 }
 
 const HistoryCard = ({histroy:h, idx}:p) => {
@@ -31,10 +35,12 @@ const HistoryCard = ({histroy:h, idx}:p) => {
   const deleteMe = () => {
     callModal.prompt(`مکالمه ${idx()+1} حذف شود؟`)
     .yes(async () => {
-        // handleSomething(
-        //   await deleteHistory(h.id)
-        // )
-      })
+      let {ok} = await deleteHistory(h.id)
+      if (ok) {
+        callModal.success()
+        revalidate("botHistory")
+      } else callModal.fail()
+    })
   }
 
   return (
