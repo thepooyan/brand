@@ -28,6 +28,7 @@ const id = () => {
     <div>
       <Button onclick={() => history.back()}
         variant="secondary"
+        size="sm"
         class="mr-auto flex"
       >
         بازگشت
