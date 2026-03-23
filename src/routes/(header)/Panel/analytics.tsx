@@ -1,6 +1,10 @@
+import Restriction from "~/components/pages/Restriction"
+
 const analytics = () => {
   return (
-    <div>analytics</div>
+    <div class="grid grid-cols-2">
+      <Restriction/>
+    </div>
   )
 }
 
