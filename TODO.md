@@ -11,8 +11,7 @@ future:
 history {
 add pageination for history
 history filter: user filter has to be dropdown with search
-add every source of talk with bot to history
-add source: telegram, widget, api, website
+add every source of talk with bot to history (done: api, widget | nd: website, telegram)
 }
 make an abstraction to talk with bot
 message limit for each user
