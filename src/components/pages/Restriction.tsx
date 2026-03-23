@@ -23,7 +23,7 @@ const Restriction = () => {
             `هر کاربر مجاز است ${value()} سوال از ربات شما بپرسد`
           }
         </p>
-        <Button class="mt-2">
+        <Button class="mt-2" size="sm">
           ثبت
         </Button>
       </CardContent>
