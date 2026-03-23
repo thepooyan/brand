@@ -14,9 +14,10 @@ import { getNewToken } from "~/server/botActions"
 import NewTokenAlert from "./bot/NewTokenAlert"
 import TelegramSet from "./TelegramSet"
 import { Accessor } from "solid-js"
+import { History } from "~/db/schema"
 
 interface props {
-  bot: chatbotStatus,
+  bot: chatbotStatus & {history?: History[]},
   telegramAccess: Accessor<boolean>
 }
 const BotCard = ({bot, telegramAccess}:props) => {
@@ -73,7 +74,7 @@ const BotCard = ({bot, telegramAccess}:props) => {
         {/* Bot Info */}
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
-            <span class="text-gray-400">تعداد مکالمه: 2</span>
+            <span class="text-gray-400">تعداد مکالمات: {bot.history?.length || "0"}</span>
           </div>
         </div>
 

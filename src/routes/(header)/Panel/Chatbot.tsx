@@ -3,7 +3,6 @@ import { Button } from "~/components/ui/button"
 import { FiPlus, FiBookOpen, FiCode, FiGlobe } from "solid-icons/fi"
 import { createAsync, query, redirect } from "@solidjs/router"
 import { db } from "~/db/db"
-import { chatbotTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { For, Suspense } from "solid-js"
@@ -32,19 +31,15 @@ const getInitialData = query(async ():ActionResponse<initialData> => {
     })
     if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
     const userBots = await ctx.query.chatbotTable.findMany({
-      where: (tbl => eq(tbl.userId, dbUser.id))
+      where: (tbl => eq(tbl.userId, dbUser.id)),
+      with: {history: true}
     })
 
     const canHaveMoreBots = userBots.length < dbUser.current_plan.botCount
 
     const telegramAccess = doesPlanHaveTelegram(dbUser.current_plan.plan_id)
 
-    let result = await ctx.select({
-      botName: chatbotTable.botName,
-      id: chatbotTable.id
-    }).from(chatbotTable)
-    .where(eq(chatbotTable.userId, user.id)) 
-    return {ok: true, data: {canHaveMoreBots, bots: result, telegramAccess} }
+    return {ok: true, data: {canHaveMoreBots, bots: userBots, telegramAccess} }
   })
 }, "bots")
 
