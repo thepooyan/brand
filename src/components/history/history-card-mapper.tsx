@@ -32,7 +32,16 @@ const HistoryCardMapper = ({data}:p) => {
   })
 
   const userFilterHook = useFilter(botFilterHook.filtered, userFilters)
-  const {filtered} = userFilterHook
+
+  const sourceFilters: filterOptions<HistoryWithName> = {
+    "widget": (d:HistoryWithName) => d.source === "widget",
+    "website": (d:HistoryWithName) => d.source === "website",
+    "api": (d:HistoryWithName) => d.source === "api",
+    "telegram": (d:HistoryWithName) => d.source === "telegram",
+  }
+  const sourceFilterHook = useFilter(userFilterHook.filtered, sourceFilters)
+
+  const {filtered} = sourceFilterHook
 
   return (
     <>
@@ -41,6 +50,7 @@ const HistoryCardMapper = ({data}:p) => {
         {Object.keys(botFilters).length > 1 && 
         <FilterSection name="ربات" fh={botFilterHook}/>}
         <FilterSection name="کاربر" fh={userFilterHook}/>
+        <FilterSection name="منبع" fh={sourceFilterHook}/>
       </div>
 
       <For each={filtered()}>
