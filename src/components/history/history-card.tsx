@@ -1,27 +1,54 @@
-import { History } from "~/db/schema"
+import { chatbot_history_table, History } from "~/db/schema"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
-import { getUserNickname } from "~/lib/utils"
+import { getUserNickname, safeDb2 } from "~/lib/utils"
 import { Accessor, ParentProps } from "solid-js"
+import { callModal } from "../layout/Modal"
+import { db } from "~/db/db"
+import { eq } from "drizzle-orm"
+import { getAuthSession } from "~/lib/session"
+import { ActionResponse2 } from "~/lib/actionAbstraction"
+import { ResultSet } from "@libsql/client"
 
 export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
   histroy: HistoryWithName
   idx: Accessor<number>
 }
-const HistoryCard = ({histroy, idx}:p) => {
+
+const deleteHistory = async (id: number):ActionResponse2<ResultSet> => {
+  "use server"
+  const user = await getAuthSession()
+  if (!user) return {ok: false, msg: "ابتدا لوگین کنید", data: undefined}
+
+  return await safeDb2(
+    db.delete(chatbot_history_table).where(eq(chatbot_history_table.id, id))
+  )
+}
+
+const HistoryCard = ({histroy:h, idx}:p) => {
+
+  const deleteMe = () => {
+    callModal.prompt(`مکالمه ${idx()+1} حذف شود؟`)
+    .yes(async () => {
+        // handleSomething(
+        //   await deleteHistory(h.id)
+        // )
+      })
+  }
+
   return (
     <Card class="flex justify-between items-center mb-3">
       <CardHeader>
         <CardTitle>مکالمه {idx()+1}</CardTitle>
-        <CardDescription>{histroy.chatbot.botName}</CardDescription>
+        <CardDescription>{h.chatbot.botName}</CardDescription>
       </CardHeader>
         <div>
           <Big>
             کاربر:
           </Big>
           <Small>
-           {getUserNickname(histroy.userIP)}
+           {getUserNickname(h.userIP)}
           </Small>
         </div>
         <div>
@@ -29,7 +56,7 @@ const HistoryCard = ({histroy, idx}:p) => {
             تاریخ آخرین پیام:
           </Big>
           <Small>
-           {new Date(histroy.lastUpdated).toLocaleDateString("fa-IR")}
+           {new Date(h.lastUpdated).toLocaleDateString("fa-IR")}
           </Small>
         </div>
         <div>
@@ -37,14 +64,14 @@ const HistoryCard = ({histroy, idx}:p) => {
             آخرین پیام:
           </Big>
           <Small>
-           {histroy.messages.at(-1)?.content}
+           {h.messages.at(-1)?.content}
           </Small>
         </div>
       <div class="ml-5 space-x-1">
         <Button class="" size="sm">
           نمایش کامل
         </Button>
-        <Button variant="destructive" size="sm">
+        <Button variant="destructive" size="sm" onclick={deleteMe}>
           حذف
         </Button>
       </div>

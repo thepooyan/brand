@@ -1,5 +1,4 @@
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from "../ui/alert-dialog"
-import { ImCross } from 'solid-icons/im'
 import { Component, createSignal, JSXElement, Match, Switch } from "solid-js"
 import { Button } from "../ui/button"
 import clsx from "clsx"
