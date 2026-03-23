@@ -85,7 +85,9 @@ export const newFreePlan = async () => {
   return inserted
 }
 
-export const updateChatHistory = async (QandA: timedMessage[], botId: number, userIP: string):ActionResponse2<ResultSet> => {
+export const updateChatHistory =
+async (QandA: timedMessage[], botId: number, userIP: string, from: "widget" | "api")
+:ActionResponse2<ResultSet> => {
   "use server"
   return await safeDb2(
       db.transaction(async ctx => {
@@ -100,7 +102,7 @@ export const updateChatHistory = async (QandA: timedMessage[], botId: number, us
           return ctx.insert(chatbot_history_table).values({
             botId: botId,
             userIP: userIP,
-            source: "widget",
+            source: from,
             messages: QandA,
             nickname: await nicknameFromIP(userIP)
           })

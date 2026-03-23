@@ -41,7 +41,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
     updateChatHistory([
       {role: "user", content: lastQ, timestamp: new Date()},
       {role: "assistant", content: "response is this", timestamp: new Date()},
-    ], bot.id, userIp)
+    ], bot.id, userIp, body.from)
 
     return new Response(stream, {
       headers: { 'Content-Type': 'text/plain' }

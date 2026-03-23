@@ -10,6 +10,7 @@ const chatRequestSchema = z.object({
       }),
     )
     .min(1),
+  from: z.enum(["widget", "api"]).default("api")
 });
 
 export type Message = z.infer<typeof chatRequestSchema>["messages"][number]
