@@ -1,14 +1,19 @@
 "use server"
-import { adminsTable, chatbotTable, planTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbot_history_table, chatbotTable, planTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
 import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmUtil"
 
 import { db } from "~/db/db";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
 import { freePlan } from "~/sections/plan";
+import { timedMessage } from "~/lib/chatUtil";
+import { nicknameFromIP } from "~/lib/nicknameGenerator";
+import { ActionResponse2 } from "~/lib/actionAbstraction";
+import { safeDb2 } from "~/lib/utils";
+import { ResultSet } from "@libsql/client";
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -78,4 +83,32 @@ export const newFreePlan = async () => {
     botCount: freePlan.botCount,
   }).returning()
   return inserted
+}
+
+export const updateChatHistory = async (QandA: timedMessage[], botId: number, userIP: string):ActionResponse2<ResultSet> => {
+  "use server"
+  return await safeDb2(
+      db.transaction(async ctx => {
+        let already = await ctx.query.chatbot_history_table.findFirst({ 
+          where: (tbl => and(
+            eq(tbl.userIP, userIP),
+            eq(tbl.botId, botId)
+          ))
+        })
+
+        if (!already) {
+          return ctx.insert(chatbot_history_table).values({
+            botId: botId,
+            userIP: userIP,
+            source: "widget",
+            messages: QandA,
+            nickname: await nicknameFromIP(userIP)
+          })
+        }
+
+        return ctx.update(chatbot_history_table).set({
+          messages: [...already.messages, ...QandA]
+        }).where(eq(chatbot_history_table.id, already.id))
+    })
+  )
 }

@@ -1,7 +1,7 @@
 import { google } from "@ai-sdk/google";
 import { Readable } from "stream"
 import { streamText } from "ai";
-import { getSystemPrompt } from "@/server/serverUtil";
+import { getSystemPrompt, updateChatHistory } from "@/server/serverUtil";
 import Elysia from "elysia";
 import { hooshbaan } from "./hooshbaan";
 import { botAuthGuard } from "./botAuthGuard";
@@ -34,7 +34,14 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
     // return result.toDataStreamResponse()
 
 
+    const lastQ = body.messages.at(-1)?.content || ""
     const stream = getFakeStream(1000, 1000)
+    const userIp = "1111.1111.1111.1111"
+
+    updateChatHistory([
+      {role: "user", content: lastQ, timestamp: new Date()},
+      {role: "assistant", content: "response is this", timestamp: new Date()},
+    ], bot.id, userIp)
 
     return new Response(stream, {
       headers: { 'Content-Type': 'text/plain' }
