@@ -17,18 +17,18 @@ const HistoryCardMapper = ({data}:p) => {
   }
   const timeFilterHook = useFilter(data, timeFilters)
 
-  const uniqeBotIds = new Set(data().map(i => i.nickname))
+  const uniqeBotIds = new Set(data().map(i => i.botId))
   const botFilters: filterOptions<HistoryWithName> = {}
   uniqeBotIds.forEach(i => {
-    botFilters[i] = (d:HistoryWithName) => d.nickname === i
+    botFilters[i] = (d:HistoryWithName) => d.botId === i
   })
 
   const botFilterHook = useFilter(timeFilterHook.filtered, botFilters)
 
-  const uniqeUserIps = new Set(data().map(i => i.userIP))
+  const uniqeUserIps = new Set(data().map(i => i.nickname))
   const userFilters: filterOptions<HistoryWithName> = {}
   uniqeUserIps.forEach(i => {
-    userFilters[i] = (d:HistoryWithName) => d.userIP === i
+    userFilters[i] = (d:HistoryWithName) => d.nickname === i
   })
 
   const userFilterHook = useFilter(botFilterHook.filtered, userFilters)
