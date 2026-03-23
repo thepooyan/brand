@@ -7,7 +7,7 @@ interface p {
 }
 const HistoryChatbox = ({messages}:p) => {
   return (
-    <div>
+    <div class="space-y-2 h-[calc(100dvh-17rem)] overflow-auto">
       <For each={messages}>
         {m => <Message isUser={m.role === "user"}
           timestamp={new Date(m.timestamp).toLocaleTimeString("fa-IR", {hour: "2-digit", minute: "2-digit"})}
