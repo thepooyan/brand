@@ -39,7 +39,7 @@ export const ticketTable = sqliteTable("ticket", {
   updatedAt: integer({mode: "timestamp"}).notNull().default(new Date()),
 })
 
-export const ticket_user_relation = relations(ticketTable, ({one}) => ({
+export const ticket_relations = relations(ticketTable, ({one}) => ({
   user: one(usersTable, {fields: [ticketTable.userId], references: [usersTable.id]})
 }))
 
@@ -121,7 +121,7 @@ export const usersTable = sqliteTable("users_table", {
 
 export type User = typeof usersTable.$inferInsert
 
-export const user_plan_relations = relations(usersTable, ({one}) => ({
+export const users_relations = relations(usersTable, ({one}) => ({
   current_plan: one(planTable, {fields: [usersTable.current_plan_id], references: [planTable.id]})
 }))
 
