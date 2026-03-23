@@ -39,7 +39,7 @@ const botId = () => {
   return (
     <Suspense fallback={<Loading/>}>
       <Show when={botHistory()?.data}>
-        {d => <HistoryCardMapper data={d()}/>}
+        {d => <HistoryCardMapper data={d}/>}
       </Show>
     </Suspense>
   )

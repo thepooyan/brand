@@ -1,4 +1,4 @@
-import { For } from "solid-js"
+import { Accessor, For } from "solid-js"
 import HistoryCard, { HistoryWithName } from "./history-card"
 import { FiFilter } from "solid-icons/fi"
 import { filterHook, filterOptions, useFilter } from "~/lib/hooks"
@@ -6,7 +6,7 @@ import { Button } from "../ui/button"
 import { cn, filterLastMonth, filterLastWeek, filterOlderThanLastMonth, filterToday } from "~/lib/utils"
 
 interface p {
-  data: HistoryWithName[]
+  data: Accessor<HistoryWithName[]>
 }
 const HistoryCardMapper = ({data}:p) => {
   const timeFilters:filterOptions<HistoryWithName> = {
@@ -15,9 +15,9 @@ const HistoryCardMapper = ({data}:p) => {
     "ماه گذشته": (d:HistoryWithName) => filterLastMonth(d.lastUpdated),
     "قدیمی تر": (d:HistoryWithName) => filterOlderThanLastMonth(d.lastUpdated),
   }
-  const timeFilterHook = useFilter(() => data, timeFilters)
+  const timeFilterHook = useFilter(data, timeFilters)
 
-  const uniqeBotIds = new Set(data.map(i => i.botId))
+  const uniqeBotIds = new Set(data().map(i => i.botId))
   const botFilters: filterOptions<HistoryWithName> = {}
   uniqeBotIds.forEach(i => {
     botFilters[i] = (d:HistoryWithName) => d.botId === i
@@ -25,7 +25,7 @@ const HistoryCardMapper = ({data}:p) => {
 
   const botFilterHook = useFilter(timeFilterHook.filtered, botFilters)
 
-  const uniqeUserIps = new Set(data.map(i => i.userIP))
+  const uniqeUserIps = new Set(data().map(i => i.userIP))
   const userFilters: filterOptions<HistoryWithName> = {}
   uniqeUserIps.forEach(i => {
     userFilters[i] = (d:HistoryWithName) => d.userIP === i
