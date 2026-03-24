@@ -9,9 +9,9 @@ future:
 - put token limit ability to users
 
 history {
-add pageination for history
-history filter: user filter has to be dropdown with search
-add every source of talk with bot to history (done: api, widget, telegram, sessionChat | nd: hooshbaan?)
+    add pageination for history
+    history filter: user filter has to be dropdown with search
+    add every source of talk with bot to history (done: api, widget, telegram, sessionChat | nd: hooshbaan?)
 }
 make an abstraction to talk with bot
 message limit for each user
