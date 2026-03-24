@@ -2,10 +2,10 @@ import { useParams } from '@solidjs/router';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { chatbot_messager_table, planTable } from '~/db/schema';
-import { message } from '~/lib/chatUtil';
+import { message, timedMessage } from '~/lib/chatUtil';
 import { doesPlanHaveTelegram } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
-import { hashToken } from '~/server/serverUtil';
+import { hashToken, updateChatHistory } from '~/server/serverUtil';
 import { telegram } from '~/server/telegram';
 
 interface telegramEvent {
@@ -38,22 +38,30 @@ export const POST = async ({request}:{request: Request}) => {
   const msg = body.message.text
   const chat_id = body.message.from.id
 
-  const history = await getChatHistory(bot_token, chat_id)
+  const result = await getChatHistory(bot_token, chat_id)
 
-  if (history === "404") return
-  if (history === "payment") return
+  if (result === "404") return
+  if (result === "payment") return
+
+  const {history, botId} = result
+
 
   const response = await replyWithAI(msg, history)
+  const qa:timedMessage[] = [
+    {role: "user", content: msg, timestamp: new Date()},
+    {role: "assistant", content: response, timestamp: new Date()},
+  ]
 
   await Promise.all([
     pushChatHistory(bot_token, chat_id, msg, response),
+    updateChatHistory(qa, botId, "192.1685.5", "telegram"),
     telegram.send(bot_token, response, String(chat_id))
   ])
 
   return "ok"
 }
 
-const getChatHistory = async (bot_token: string, chat_id:number):Promise<message[] | "404" | "payment"> => {
+const getChatHistory = async (bot_token: string, chat_id:number):Promise<{history: message[], botId: number} | "404" | "payment"> => {
   return await db.transaction(async ctx => {
     const bot = await ctx.query.chatbotTable.findFirst({
       where: (tbl => eq(tbl.current_token, hashToken(bot_token))),
@@ -75,8 +83,8 @@ const getChatHistory = async (bot_token: string, chat_id:number):Promise<message
         eq(tbl.bot_id, bot.id ),
       ))
     })
-    if (!history) return []
-    return history.history
+    if (!history) return {history: [], botId: bot.id}
+    return {history: history.history, botId: bot.id}
   })
 }
 

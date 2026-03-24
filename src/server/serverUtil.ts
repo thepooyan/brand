@@ -86,7 +86,7 @@ export const newFreePlan = async () => {
 }
 
 export const updateChatHistory =
-async (QandA: timedMessage[], botId: number, userIP: string, from: "widget" | "api")
+async (QandA: timedMessage[], botId: number, userIP: string, from: "widget" | "api" | "telegram")
 :ActionResponse2<ResultSet> => {
   "use server"
   return await safeDb2(
