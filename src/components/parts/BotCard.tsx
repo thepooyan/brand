@@ -21,7 +21,6 @@ interface props {
   telegramAccess: Accessor<boolean>
 }
 const BotCard = ({bot, telegramAccess}:props) => {
-  console.log(bot)
 
   const deleteBot = async () => {
     callModal.prompt(`ربات "${bot.botName}" حذف شود؟`)

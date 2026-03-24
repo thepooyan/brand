@@ -31,11 +31,13 @@ const Restriction = ({initial, bot_id}:p) => {
   const handleSubmit = async () => {
     setLoading(true)
     applyLimitation(bot_id, value())
-    .then(() => closeModal())
+    .then(async () => {
+      closeModal()
+      await revalidate("bots")
+      })
     .catch(err => {
         closeModal()
         callModal.fail(err)
-        revalidate("bots")
       })
     .finally(() => setLoading(false))
   }
