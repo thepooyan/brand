@@ -13,7 +13,6 @@ add pageination for history
 history filter: user filter has to be dropdown with search
 add every source of talk with bot to history (done: api, widget, telegram, sessionChat | nd: hooshbaan?)
 }
-make limitation reactive
 make an abstraction to talk with bot
 message limit for each user
 analytics for message count 
