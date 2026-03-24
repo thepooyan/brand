@@ -4,9 +4,12 @@ import { CardContent, CardDescription, CardHeader, CardTitle } from "~/component
 import Input from "~/components/ui/input"
 import { InputChangeEvent } from "~/db/types"
 
-const Restriction = () => {
+interface p {
+  initial: number | null
+}
+const Restriction = ({initial}:p) => {
 
-  const [value, setValue] = createSignal<number | null>(null)
+  const [value, setValue] = createSignal<number | null>(initial)
 
   return (
     <div class="w-md ">
@@ -15,7 +18,10 @@ const Restriction = () => {
         <CardDescription>محدودیت استفاده هر کاربر از ربات شما</CardDescription>
       </CardHeader>
       <CardContent>
-        <Input placeholder="تعداد پیام" type="number" onchange={(e:InputChangeEvent) => setValue(parseInt(e.currentTarget.value) || null)}/>
+        <Input placeholder="تعداد پیام" type="number"
+          onKeyUp={(e:InputChangeEvent) => setValue(parseInt(e.currentTarget.value) || null)}
+          value={value() || undefined}
+        />
         <p class="text-muted-foreground text-sm mt-1">
           {value() === null ?
             "محدودیتی برای کاربران شما وجود ندارد"
