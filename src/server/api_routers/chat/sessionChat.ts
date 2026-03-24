@@ -9,6 +9,8 @@ import { google } from "@ai-sdk/google";
 import { decrementMessageCount, isChatAllowed } from "~/server/botUtil";
 import { getFakeStream } from "~/server/fakter";
 import { ApiResponse } from "~/lib/actionAbstraction";
+import { updateChatHistory } from "~/server/serverUtil";
+import { timedMessage } from "~/lib/chatUtil";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
@@ -30,6 +32,14 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
     //
     // return result.toDataStreamResponse()
     const stream = getFakeStream(1000, 1000)
+
+    const lastQ = body.messages.at(-1)?.content || ""
+    const qa:timedMessage[] = [
+      {role: "user", content: lastQ, timestamp: new Date()},
+      {role: "assistant", content: "this is tele res", timestamp: new Date()},
+    ]
+
+    await updateChatHistory(qa, res.data.id, "11.22.33.44", "telegram")
 
     return new Response(stream, {
       headers: { 'Content-Type': 'text/plain' }
