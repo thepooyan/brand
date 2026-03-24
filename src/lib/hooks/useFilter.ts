@@ -11,7 +11,6 @@ export const useFilter = <D>(data: Accessor<D[]>, filterOptions: filterOptions<D
   const [filter, setter] = createSignal<keyof typeof allFilters>("")
 
   const setFilter = (filterName: keyof filterOptions<D> | "") => {
-    console.log(filterName)
     setter(filterName)
   }
   

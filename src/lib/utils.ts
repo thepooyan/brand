@@ -198,21 +198,10 @@ export function filterLastWeek(date: Date | undefined | null): boolean {
   if (!date) return false
   const today = new Date();
 
-  // Monday = 1 … Sunday = 0 in JS, so normalize to Monday=0 … Sunday=6
-  const weekday = (today.getDay() + 6) % 7;
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-  // This week's Monday
-  const thisMonday = new Date(today);
-  thisMonday.setDate(today.getDate() - weekday);
-
-  // Last week's Monday and Sunday
-  const lastWeekMonday = new Date(thisMonday);
-  lastWeekMonday.setDate(thisMonday.getDate() - 7);
-
-  const lastWeekSunday = new Date(thisMonday);
-  lastWeekSunday.setDate(thisMonday.getDate() - 1);
-
-  return  (date >= lastWeekMonday && date <= lastWeekSunday);
+  return  (date >= sevenDaysAgo && date <= today);
 }
 
 export function filterOlderThanLastMonth(date: Date | undefined | null): boolean {
