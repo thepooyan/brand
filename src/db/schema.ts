@@ -65,7 +65,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   color: text().notNull().default("#2780d2"),
   color_foreground: text().notNull().default("#ffffff"),
   logo: text(),
-  current_token: text({length: tokenLength})
+  current_token: text({length: 64}) // hash length is 64
 })
 
 export type Chatbot = typeof chatbotTable.$inferSelect

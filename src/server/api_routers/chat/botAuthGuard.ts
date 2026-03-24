@@ -4,6 +4,7 @@ import z from "zod";
 import { db } from "~/db/db";
 import { tokenLength } from "~/db/schema";
 import { isChatAllowed } from "~/server/botUtil";
+import { hashToken } from "~/server/serverUtil";
 
 const AuthorizationHeader = z.object({
   authorization: z
@@ -35,7 +36,7 @@ export const botAuthGuard = new Elysia()
 
 const getBot = (token: string) => {
   return db.query.chatbotTable.findFirst({
-    where: (tbl) => eq(tbl.current_token, token),
+    where: (tbl) => eq(tbl.current_token, hashToken(token)),
     with: {user: {with: {current_plan: true}}}
   });
 };

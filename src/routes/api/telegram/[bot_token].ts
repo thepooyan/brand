@@ -5,6 +5,7 @@ import { chatbot_messager_table, planTable } from '~/db/schema';
 import { message } from '~/lib/chatUtil';
 import { doesPlanHaveTelegram } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
+import { hashToken } from '~/server/serverUtil';
 import { telegram } from '~/server/telegram';
 
 interface telegramEvent {
@@ -55,7 +56,7 @@ export const POST = async ({request}:{request: Request}) => {
 const getChatHistory = async (bot_token: string, chat_id:number):Promise<message[] | "404" | "payment"> => {
   return await db.transaction(async ctx => {
     const bot = await ctx.query.chatbotTable.findFirst({
-      where: (tbl => eq(tbl.current_token, bot_token)),
+      where: (tbl => eq(tbl.current_token, hashToken(bot_token))),
       with: {user: {with: {current_plan: true}}}
     })
     if (!bot) return "404"
