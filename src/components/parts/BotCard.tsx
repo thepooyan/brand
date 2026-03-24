@@ -2,7 +2,7 @@ import Spinner from "./Spinner"
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
-import { FiTrash2, FiEdit, FiKey, FiSend } from "solid-icons/fi"
+import { FiTrash2, FiEdit, FiKey, FiSend, FiLock } from "solid-icons/fi"
 import { ImTelegram } from "solid-icons/im"
 import { chatbotStatus } from "~/lib/interface"
 import { callModal } from "../layout/Modal"
@@ -15,6 +15,7 @@ import NewTokenAlert from "./bot/NewTokenAlert"
 import TelegramSet from "./TelegramSet"
 import { Accessor } from "solid-js"
 import { History } from "~/db/schema"
+import Restriction from "../pages/Restriction"
 
 interface props {
   bot: chatbotStatus & {history?: History[]},
@@ -32,6 +33,10 @@ const BotCard = ({bot, telegramAccess}:props) => {
         }
         else callModal.fail(response.msg)
       })
+  }
+
+  const handleLimitation = () => {
+    callModal(() => <Restriction/>)
   }
 
   const getToken = () => {
@@ -123,6 +128,18 @@ const BotCard = ({bot, telegramAccess}:props) => {
             >
               <FiKey class="w-3 h-3 ml-1" />
               دریافت توکن
+            </Button>
+          </div>
+
+          <div class="flex gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800  "
+              onclick={handleLimitation}
+            >
+              <FiLock class="w-3 h-3 ml-1" />
+              اعمال محدودیت
             </Button>
           </div>
 

@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import Input from "~/components/ui/input"
 import { InputChangeEvent } from "~/db/types"
 
@@ -9,7 +9,7 @@ const Restriction = () => {
   const [value, setValue] = createSignal<number | null>(null)
 
   return (
-    <Card>
+    <div class="w-md ">
       <CardHeader>
         <CardTitle>اعمال محدودیت</CardTitle>
         <CardDescription>محدودیت استفاده هر کاربر از ربات شما</CardDescription>
@@ -27,7 +27,7 @@ const Restriction = () => {
           ثبت
         </Button>
       </CardContent>
-    </Card>
+    </div>
   )
 }
 
