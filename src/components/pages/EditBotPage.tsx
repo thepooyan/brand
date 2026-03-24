@@ -112,7 +112,7 @@ const EditBotPage = ({bot}:p) => {
             </div>
           </div>
           <div>
-            <ArrayInput onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues.suggestedQuestions || []}/>
+            <ArrayInput onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues().suggestedQuestions || []}/>
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو

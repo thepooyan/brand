@@ -1,7 +1,6 @@
-import { FormSubmitEvent } from "~/db/types";
+import { FormSubmitEvent, InputChangeEvent } from "~/db/types";
 import z from "zod";
 import { createEffect, createSignal } from "solid-js";
-import { createStore } from "solid-js/store";
 
 interface p<S> {
   schema?: z.ZodType<S>,
@@ -43,53 +42,20 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
   })
 
   const [errors, setErrors] = createSignal<Partial<Record<keyof S, string[]>>>({})
-  const [formValues, setForm] = createStore<S>(createInitial)
+  const [formValues, setForm] = createSignal<S>(createInitial)
 
   createEffect(() => Object.keys(errors()).length && console.error({...errors()}))
 
   const registerSubmit = (callback: (values: S) => void) => (e: FormSubmitEvent) => {
     e.preventDefault();
 
-    const form = e.currentTarget;
-    let formData = new FormData(form);
-    let rawValues = extractFormData<any>(formData)
     setErrors({})
 
-    if (initialValues) {
-      let booleanFields = Object.entries(initialValues).filter(f => typeof f[1] === "boolean").map(i => i[0])
-      booleanFields.forEach(name => {
-        if (rawValues[name]) rawValues[name] = true
-        else rawValues[name] = false
-      })
-
-      let numericFields = Object.entries(initialValues).filter(f => typeof f[1] === "number").map(i => i[0])
-      numericFields.forEach(name => {
-        if (rawValues[name]) {
-          rawValues[name] = parseInt(rawValues[name])
-        } 
-      })
-    }
-
     if (!schema) {
-      return callback({...initialValues, ...rawValues})
+      return callback({...formValues()})
     }
 
-    let booleanFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "boolean")
-    booleanFields.forEach(([name]) => {
-      if (rawValues[name]) rawValues[name] = true
-      else rawValues[name] = false
-    })
-
-    let numericFields = Object.entries((schema as any).shape as object).filter(([_,f]) => f.type === "number")
-    numericFields.forEach(([name]) => {
-      if (rawValues[name])
-      rawValues[name] = parseInt(rawValues[name])
-    })
-
-    if (initialValues)
-      rawValues = {...initialValues, ...rawValues}
-
-    let result = schema.safeParse(rawValues)
+    let result = schema.safeParse(formValues())
 
     if (result.success) {
       return callback(result.data);
@@ -103,17 +69,27 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
   };
 
   const register = (name: keyof S) => {
-    if (typeof formValues[name] === "boolean") {
+    let val = formValues()[name]
+    if (typeof val === "boolean") {
       return {
         name: name,
-        checked: formValues[name],
-        type: "checkbox" as const
+        checked: val,
+        type: "checkbox" as const,
+        onchange: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: e.currentTarget.checked}))
       }
     }
-    if (typeof formValues[name] === "string" || typeof formValues[name] === "number") {
+    if (typeof val === "string") {
       return {
         name: name,
-        value: formValues[name]
+        value: val,
+        onchange: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: e.currentTarget.value}))
+      }
+    }
+    if (typeof val === "number") {
+      return {
+        name: name,
+        value: val,
+        onchange: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: parseInt(e.currentTarget.value) }))
       }
     }
     return {
@@ -121,5 +97,11 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
     }
   }
 
-  return {registerSubmit, setForm, register, errors, formValues}
+  type Setter<T> = <K extends keyof T>(key: K, value: T[K]) => void;
+
+  const setter:Setter<S> = (key, val) => {
+    setForm(prev => ({...prev, [key]: val}))
+  }
+
+  return {registerSubmit, setForm: setter, register, errors, formValues}
 }

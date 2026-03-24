@@ -8,6 +8,7 @@ future:
 - calc based on token
 - put token limit ability to users
 
+hash the token
 floating message tick does not work
 history {
 add pageination for history
