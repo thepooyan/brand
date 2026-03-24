@@ -54,7 +54,7 @@ export const POST = async ({request}:{request: Request}) => {
 
   await Promise.all([
     pushChatHistory(bot_token, chat_id, msg, response),
-    updateChatHistory(qa, botId, "192.1685.5", "telegram"),
+    updateChatHistory(qa, botId, String(body.message.from.id), "telegram"),
     telegram.send(bot_token, response, String(chat_id))
   ])
 
