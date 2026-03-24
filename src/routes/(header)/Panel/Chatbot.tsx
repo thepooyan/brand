@@ -11,10 +11,10 @@ import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
 import { ActionResponse } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 import { doesPlanHaveTelegram } from "~/sections/plan"
+import { chatbotStatus } from "~/lib/interface"
 
-type botPreview = {botName: string, id: number}
 type initialData = {
-  bots: botPreview[],
+  bots: chatbotStatus[],
   canHaveMoreBots: boolean,
   telegramAccess: boolean
 }
@@ -32,7 +32,8 @@ const getInitialData = query(async ():ActionResponse<initialData> => {
     if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
     const userBots = await ctx.query.chatbotTable.findMany({
       where: (tbl => eq(tbl.userId, dbUser.id)),
-      with: {history: true}
+      with: {history: true},
+      columns: {id: true, botName: true, limitation: true}
     })
 
     const canHaveMoreBots = userBots.length < dbUser.current_plan.botCount

@@ -1,3 +1,5 @@
+import { History } from "~/db/schema"
+
 export interface chatbotOrder {
   name: string,
   email: string,
@@ -30,6 +32,8 @@ export interface websiteOrder {
 export interface chatbotStatus {
   id: number,
   botName: string,
+  limitation: number | null
+  history?: History[]
 }
 
 export type ChangeEvent<T extends EventTarget> =

@@ -59,6 +59,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   trainingText: text().notNull(),
   customization: text(),
   description: text(),
+  limitation: int(),
   greeting: text(),
   suggestedQuestions: text({ mode: "json" }).$type<string[]>().notNull().default([]),
   floatingMessage: text({ mode: "json" }).$type<{active: boolean, msg: string}>().default({active: false, msg: ""}).notNull(),

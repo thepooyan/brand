@@ -14,14 +14,14 @@ import { getNewToken } from "~/server/botActions"
 import NewTokenAlert from "./bot/NewTokenAlert"
 import TelegramSet from "./TelegramSet"
 import { Accessor } from "solid-js"
-import { History } from "~/db/schema"
 import Restriction from "../pages/Restriction"
 
 interface props {
-  bot: chatbotStatus & {history?: History[]},
+  bot: chatbotStatus 
   telegramAccess: Accessor<boolean>
 }
 const BotCard = ({bot, telegramAccess}:props) => {
+  console.log(bot)
 
   const deleteBot = async () => {
     callModal.prompt(`ربات "${bot.botName}" حذف شود؟`)
