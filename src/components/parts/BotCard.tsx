@@ -36,7 +36,7 @@ const BotCard = ({bot, telegramAccess}:props) => {
   }
 
   const handleLimitation = () => {
-    callModal(() => <Restriction initial={bot.limitation}/>)
+    callModal(() => <Restriction initial={bot.limitation} bot_id={bot.id}/>)
   }
 
   const getToken = () => {

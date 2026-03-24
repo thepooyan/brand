@@ -1,15 +1,44 @@
+import { eq } from "drizzle-orm"
 import { createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import Input from "~/components/ui/input"
+import { db } from "~/db/db"
+import { chatbotTable } from "~/db/schema"
 import { InputChangeEvent } from "~/db/types"
+import { safeDb2 } from "~/lib/utils"
+import { callModal, closeModal } from "../layout/Modal"
+import { revalidate } from "@solidjs/router"
 
 interface p {
   initial: number | null
+  bot_id: number
 }
-const Restriction = ({initial}:p) => {
+
+const applyLimitation = async (bot_id: number, limitation: number | null) => {
+  "use server"
+  let res = await safeDb2(
+    db.update(chatbotTable).set({limitation: limitation}).where(eq(chatbotTable.id, bot_id))
+  )
+  return {ok: res.ok, msg: res.msg, data: undefined}
+}
+
+const Restriction = ({initial, bot_id}:p) => {
 
   const [value, setValue] = createSignal<number | null>(initial)
+  const [loading, setLoading] = createSignal(false)
+
+  const handleSubmit = async () => {
+    setLoading(true)
+    applyLimitation(bot_id, value())
+    .then(() => closeModal())
+    .catch(err => {
+        closeModal()
+        callModal.fail(err)
+        revalidate("bots")
+      })
+    .finally(() => setLoading(false))
+  }
 
   return (
     <div class="w-md ">
@@ -29,7 +58,7 @@ const Restriction = ({initial}:p) => {
             `هر کاربر مجاز است ${value()} سوال از ربات شما بپرسد`
           }
         </p>
-        <Button class="mt-2" size="sm">
+        <Button class="mt-2" size="sm" loading={loading} onclick={handleSubmit}>
           ثبت
         </Button>
       </CardContent>
