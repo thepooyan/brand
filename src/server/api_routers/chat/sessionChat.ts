@@ -50,30 +50,33 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
 
 const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Chatbot>> => {
 
-  const user = await db.query.usersTable.findFirst({
-    where: eq(usersTable.id, parseInt(userId)),
-    with: {current_plans: true}
-  })
+  return await db.transaction(async ctx => {
 
-  if (!user) return {ok:false, status: 404, msg: "اکانت مورد نظر یافت نشد"}
-
-  const bot = await db.query.chatbotTable.findFirst({
-    where: and(
-        eq(chatbotTable.userId, parseInt(userId)),
-        eq(chatbotTable.id, parseInt(botId))
-    ),
-    with: {user: {
+    const user = await ctx.query.usersTable.findFirst({
+      where: eq(usersTable.id, parseInt(userId)),
       with: {current_plans: true}
-    }}
+    })
+
+    if (!user) return {ok:false, status: 404, msg: "اکانت مورد نظر یافت نشد"}
+
+    const bot = await ctx.query.chatbotTable.findFirst({
+      where: and(
+          eq(chatbotTable.userId, parseInt(userId)),
+          eq(chatbotTable.id, parseInt(botId))
+      ),
+      with: {user: {
+        with: {current_plans: true}
+      }}
+    })
+
+    if (!bot) return {ok:false, status: 404, msg: "ربات مورد نظر یافت نشد"}
+    let res = await isChatAllowed(bot)
+    if (!res.ok) {
+      return res
+    }
+
+    await decrementMessageCount(bot.user, ctx)
+
+    return {ok: true, data: bot}
   })
-
-  if (!bot) return {ok:false, status: 404, msg: "ربات مورد نظر یافت نشد"}
-  let res = await isChatAllowed(bot)
-  if (!res.ok) {
-    return res
-  }
-
-  await decrementMessageCount(bot.user)
-
-  return {ok: true, data: bot}
 }

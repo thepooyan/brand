@@ -10,8 +10,9 @@ export const newFreePlan = async (user_id: number) => {
   return inserted
 }
 
-export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
-  const dbctx = ctx ? ctx : db
+export const decrementMessageCount = async (user: User_Plan, ctx: dbCtx) => {
+  const dbctx = ctx 
+  await cleanExpiredPlans(ctx)
   if (user.current_plans.length === 0) return false
   let soonestPlan = findAvailavlePlanForDecrement(user.current_plans)
   if (!soonestPlan) return false
@@ -26,11 +27,9 @@ export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
   return true
 }
 
-export const cleanExpiredPlans = async () => {
-  await db.transaction(async ctx => {
-    let expired = await ctx.query.planTable.findMany({
-      where: lt(planTable.expirationDate, new Date())
-    })
-    await ctx.delete(planTable).where(inArray(planTable.id, expired.map(i => i.id)))
+export const cleanExpiredPlans = async (ctx: dbCtx) => {
+  let expired = await ctx.query.planTable.findMany({
+    where: lt(planTable.expirationDate, new Date())
   })
+  await ctx.delete(planTable).where(inArray(planTable.id, expired.map(i => i.id)))
 }
