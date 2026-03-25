@@ -20,10 +20,10 @@ const PlanDashboard = ({plan}:p) => {
   }
 
   return (
-    <div class="h-full flex justify-center items-center">
+    <div class="mb-4 flex justify-center items-center">
     <Card class="w-xl m-auto">
       <CardHeader class="relative">
-        <CardTitle>پلن فعلی شما</CardTitle>
+        <CardTitle>پلن فعال</CardTitle>
         <CardDescription>{findPlanName(plan())}</CardDescription>
         <Button
           as={TA} href="/pricing" class="absolute left-5"
