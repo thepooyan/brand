@@ -18,7 +18,7 @@ net analytics for message count
 net add continue with google 
 net make the source of all use chat one place. git submodule or node package?
 change telegram connection system? (depending on token is a bad thing)
-rethink plan. message count should not be in there
+
 disable logo, and color based on plan
 order status page
 
