@@ -1,5 +1,5 @@
 import { createAsync, query, redirect, revalidate, useLocation } from "@solidjs/router";
-import { clearAuthSession, getAuthSession, ROLES, SessionData, updateAuthSession } from "./session";
+import { clearAuthSession, getAuthSession, ROLES, AuthSessionData, updateAuthSession } from "./session";
 import { DeepPartial } from "ai";
 
 const userQuery = (back?: string) => query(async () => {
@@ -34,7 +34,7 @@ export const logUserOut = async () => {
   revalidate("isLoggedIn")
 }
 
-export const updateUserSession = async (data: DeepPartial<SessionData>) => {
+export const updateUserSession = async (data: DeepPartial<AuthSessionData>) => {
   let user = await getAuthSession()
   if (!user) throw redirect("/Login")
   await updateAuthSession({user: {
