@@ -20,7 +20,7 @@ const PlanDashboard = ({plan}:p) => {
   }
 
   return (
-    <div class="mb-4 flex justify-center items-center">
+    <div class="flex justify-center items-center">
     <Card class="w-xl m-auto">
       <CardHeader class="relative">
         <CardTitle>پلن فعال</CardTitle>
