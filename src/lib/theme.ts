@@ -1,6 +1,6 @@
 import { createEffect, createSignal } from "solid-js";
 
-type theme = "dark" | "light" | string
+type theme = "dark" | "light"
 export const defaultTheme:theme = "dark"
 
 export const [theme, setTheme] = createSignal<theme>(defaultTheme)

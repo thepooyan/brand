@@ -8,6 +8,7 @@ import TA from "../parts/TA"
 import { logUserOut, useIsLoggedIn } from "~/lib/signal"
 import { ROLES } from "~/lib/session"
 import { toggleTheme } from "~/lib/theme"
+import ThemeButton from "../theme/theme-button"
 
 const Header = () => {
 
@@ -45,9 +46,7 @@ const Header = () => {
             <TA href="/Blog" class="text-sm font-medium hover:text-primary transition-colors">
               بلاگ
             </TA>
-            <Button variant="outline" onclick={() => toggleTheme()}>
-              <FiSun />
-            </Button>
+            <ThemeButton/>
             <Show when={logged()}>
               <div class="space-x-2">
                 <Button as={TA} href="/Panel">پنل کاربری</Button>
