@@ -1,4 +1,8 @@
+import { cleanExpiredPlans } from "~/sections/planServer";
 import { db } from "../db";
 import { planTable } from "../schema";
 
-await db.delete(planTable)
+
+await cleanExpiredPlans()
+
+// await db.delete(planTable)

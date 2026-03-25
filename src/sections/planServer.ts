@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm"
+import { eq, inArray, lt, sql } from "drizzle-orm"
 import { db, dbCtx } from "~/db/db"
 import { planTable, User_Plan } from "~/db/schema"
 import { convertPlanToDTO, findAvailavlePlanForDecrement, freePlan } from "./plan"
@@ -24,4 +24,13 @@ export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
     await dbctx.delete(planTable).where(eq(planTable.id, updated.id))
   }
   return true
+}
+
+export const cleanExpiredPlans = async () => {
+  await db.transaction(async ctx => {
+    let expired = await ctx.query.planTable.findMany({
+      where: lt(planTable.expirationDate, new Date())
+    })
+    await ctx.delete(planTable).where(inArray(planTable.id, expired.map(i => i.id)))
+  })
 }
