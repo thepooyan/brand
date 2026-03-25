@@ -53,8 +53,9 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
     const url = uploadedUrl()
     if (!url) return 
     try {
-      let pathname = new URL(url).pathname
-      await deleteFileFromS3(pathname)
+      let pathname = new URL(url).pathname.substring(1)
+      let res = await deleteFileFromS3(pathname)
+      if (res === null) throw new Error("none")
       setState("idle")
       setPreview(null)
       setFileName("")
