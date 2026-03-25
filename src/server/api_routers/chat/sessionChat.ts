@@ -67,7 +67,7 @@ const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Ch
   })
 
   if (!bot) return {ok:false, status: 404, msg: "ربات مورد نظر یافت نشد"}
-  let res = isChatAllowed(bot)
+  let res = await isChatAllowed(bot)
   if (!res.ok) {
     return res
   }

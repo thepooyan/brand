@@ -8,7 +8,8 @@ type presentUser = User & {current_plan: DB_Plan}
 type botWithRelations = Chatbot & {
   user: User & {current_plan: DB_Plan}
 }
-export const isChatAllowed = (bot: botWithRelations):ApiResponse<presentUser> => {
+export const isChatAllowed = async (bot: botWithRelations, recieverIP?: string):Promise<ApiResponse<presentUser>> => {
+
   if (!bot) return {ok: false, status: 401, msg: "کاربر احراز هویت نشده است"}
 
   const plan = bot.user.current_plan
@@ -19,6 +20,14 @@ export const isChatAllowed = (bot: botWithRelations):ApiResponse<presentUser> =>
 
   if (plan.expirationDate)
   if (new Date() > plan.expirationDate) return {ok: false, status: 402, msg: "طرح شما منقضی شده است"}
+
+  if (bot.limitation && recieverIP) {
+    let history = await db.query.chatbot_history_table.findMany({
+      where: (tbl => eq(tbl.userIP, recieverIP))
+    })
+    let total = history.map(a => a.messages.length).reduce((p,c) => p+c)
+    if (total >= bot.limitation) return {ok: false, status: 402, msg: "متاسفانه محدودیت پاسخدهی ربات به پایان رسیده"}
+  }
 
   return {
     data: {
