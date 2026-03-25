@@ -3,9 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 import { Accessor, ParentProps, Show } from "solid-js"
 import { doesPlanIncludeFeature, findPlanName, getPlan, planFeatures } from "~/sections/plan"
 import { Button } from "../ui/button"
-import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
+import { calcMessageCount, calcMessagePercent, cn, daysRemaining } from "~/lib/utils"
 import TA from "../parts/TA"
 import { FiCheck, FiTrendingUp, FiX } from "solid-icons/fi"
+import { AiFillWarning } from "solid-icons/ai"
 
 interface p {
   plan: Accessor<PlanInstance>
@@ -14,16 +15,24 @@ const PlanDashboard = ({plan}:p) => {
 
   const days = () => {
     const p = plan()
-    if (!p || !p.expirationDate) return null
-
     return daysRemaining(p.expirationDate)
   }
+  const expired = () => days() <= 0
 
   return (
     <div class="flex justify-center items-center">
     <Card class="w-xl m-auto">
       <CardHeader class="relative">
-        <CardTitle>پلن فعال</CardTitle>
+        <CardTitle>
+          {expired() ?
+            <div class="text-muted-foreground flex gap-2">
+                <AiFillWarning class="text-orange-500"/>
+              پلن منقضی شده
+            </div>
+            :
+            <>پلن فعال</>
+          }
+        </CardTitle>
         <CardDescription>{findPlanName(plan())}</CardDescription>
         <Button
           as={TA} href="/pricing" class="absolute left-5"
@@ -52,7 +61,7 @@ const PlanDashboard = ({plan}:p) => {
               تاریخ انقضا: 
             </Title>
             <Text>
-              {plan().expirationDate?.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
+              {plan().expirationDate.toLocaleString("fa", {day: "numeric", month: "numeric", year: "numeric"}) || "نامحدود"}
               <br/>
               <Show when={days()}>
                 {s => s() > 0 ? `${s()} روز باقی مانده` : `تاریخ انقضا شما سپری شده` }
@@ -62,7 +71,7 @@ const PlanDashboard = ({plan}:p) => {
 
         </div>
 
-        <div>
+        <div class={cn(expired() && "opacity-30")}>
           <Title>
             تعداد پیام باقی مانده: 
           </Title>
