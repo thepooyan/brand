@@ -154,7 +154,14 @@ const isPlanExpired = (p: PlanInstance) => {
   return (p.expirationDate < new Date())
 }
 
+/**
+ * Find the plan that is not expired and has remainingMessages.
+ * Proiority with the one that expires sooner
+ * @returns plan instance that fits the description, or if none, null
+ */
 export const findAvailavlePlan = (plans: PlanInstance[]):PlanInstance | null => {
+  let plansWithMsg = plans.filter(p => p.remainingMessages > 0)
+  if (!plansWithMsg) return null
   let soonest = findSoonestExpiringPlan(plans)
   if (!soonest) return null
   if (!isPlanExpired(soonest)) return soonest
