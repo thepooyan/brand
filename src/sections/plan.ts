@@ -43,12 +43,12 @@ export const getPlan = (p:PlanInstance) => {
   return plan
 }
 
-export const convertPlanToDTO = (p: PlanDefinition, user_id: number, expirationDays: number):NewPlanInstance => ({
+export const convertPlanToDTO = (p: PlanDefinition, user_id: number):NewPlanInstance => ({
   user_id: user_id,
   plan_id: p.id,
   remainingMessages: p.messageCount,
   boughtDate: new Date(),
-  expirationDate: daysFromNow(expirationDays),
+  expirationDate: daysFromNow(p.expirationMounth * 31),
 })
 
 export const freePlan: PlanDefinition = {

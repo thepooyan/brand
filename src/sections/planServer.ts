@@ -1,16 +1,12 @@
 import { eq, sql } from "drizzle-orm"
 import { db, dbCtx } from "~/db/db"
 import { planTable, User_Plan } from "~/db/schema"
-import { daysFromNow, findAvailavlePlan, freePlan } from "./plan"
+import { convertPlanToDTO, findAvailavlePlan, freePlan } from "./plan"
 
 export const newFreePlan = async (user_id: number) => {
-  const [inserted] = await db.insert(planTable).values({
-    plan_id: freePlan.id,
-    remainingMessages: freePlan.messageCount,
-    user_id: user_id,
-    boughtDate: new Date(),
-    expirationDate: daysFromNow(90),
-  }).returning()
+  const [inserted] = await db.insert(planTable).values(
+    convertPlanToDTO(freePlan, user_id)
+  ).returning()
   return inserted
 }
 
