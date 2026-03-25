@@ -164,8 +164,8 @@ export const findAvailavlePlanForDecrement = (plans: PlanInstance[]):PlanInstanc
   if (!plansWithMsg) return null
 
   //if free plan is there, it is the proiority
-  let isFree = plansWithMsg.find(p => p.plan_id === "free")
-  if (isFree) return isFree
+  let freePlan = plansWithMsg.find(p => p.plan_id === "free")
+  if (freePlan && !isPlanExpired(freePlan)) return freePlan
 
   let soonest = findSoonestExpiringPlan(plans)
   if (!soonest) return null
