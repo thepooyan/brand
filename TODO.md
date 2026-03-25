@@ -4,9 +4,7 @@ more bot options:
 - test telegram database
 
 future:
-- save all of the conversations
 - calc based on token
-- put token limit ability to users
 
 history {
     add pageination for history
