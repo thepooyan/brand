@@ -1,4 +1,4 @@
-import { allFeatures, convertPlanToDTO, doesPlanHaveTelegram, plan } from "~/sections/plan"
+import { allFeatures, convertPlanToDTO, doesPlanHaveTelegram, PlanDefinition } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { createSignal, For } from "solid-js"
 import { Button } from "../ui/button"
@@ -13,10 +13,10 @@ import { useNavigate } from "@solidjs/router"
 import { ApiResponse } from "~/lib/actionAbstraction"
 
 interface p {
-  plan: plan
+  plan: PlanDefinition
 }
 
-const activatePlan = async (p: plan):Promise<ApiResponse> => {
+const activatePlan = async (p: PlanDefinition):Promise<ApiResponse> => {
   "use server"
   const user = await getAuthSession()
 

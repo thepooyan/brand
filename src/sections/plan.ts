@@ -2,10 +2,19 @@ import { DB_Plan, NewPlan, } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
-type feature = string
+enum features {
+  telegram = "اتصال به تلگرام",
+  color = "قابلیت تغییر تم",
+  learnFromLink = "یادگیری از لینک",
+  removeOurLogo = "حذف لوگو هوشبان"
+}
+type feature = features
+export const allFeatures = Object.values(features)
+
+export const plan_ids = [ "free" , "starter" , "regular" , "pro" ] as const
 type plan_id = typeof plan_ids[number]
 
-export type plan = {
+export type PlanDefinition = {
   id: plan_id,
   name: string
   price: number,
@@ -22,7 +31,6 @@ const daysFromNow = (days: number) => {
   return date
 }
 
-export const plan_ids = [ "free" , "starter" , "regular" , "pro" ] as const
 
 export const doesPlanHaveTelegram = (p: plan_id) => {
   if (p == "pro") return true
@@ -30,23 +38,16 @@ export const doesPlanHaveTelegram = (p: plan_id) => {
   return false
 }
 
-export const convertPlanToDTO = (p: plan, remainingMessages?: number):NewPlan => ({
+export const convertPlanToDTO = (p: PlanDefinition, remainingMessages?: number):NewPlan => ({
   plan_id: p.id,
   botCount: p.botCount,
   messageCount: p.messageCount,
   remainingMessages: remainingMessages ? p.messageCount + remainingMessages : p.messageCount,
   boughtDate: new Date(),
-  expirationDate: daysFromNow(p.expirationMounth * 30),
+  expirationDate: daysFromNow(p.expirationMounth * 31),
 })
 
-export const allFeatures: feature[] = [
-  "یادگیری از لینک",
-  "رنگ سازمانی",
-  "حذف لوگو هوشبان",
-  "پشتیبانی اختصاصی"
-]
-
-export const freePlan: plan = {
+export const freePlan: PlanDefinition = {
   id: "free",
   name: "پلن رایگان",
   price: 0,
@@ -55,11 +56,11 @@ export const freePlan: plan = {
   botCount: 1,
   knowledgeBase: 100,
   features: [
-    "یادگیری از لینک",
+    features.learnFromLink
   ],
 }
 
-const testPlan1: plan = {
+const testPlan1: PlanDefinition = {
   id: "starter",
   name: "پلن شروع",
   price: 50,
@@ -68,11 +69,11 @@ const testPlan1: plan = {
   botCount: 2,
   knowledgeBase: 300,
   features: [
-    "یادگیری از لینک",
+    features.learnFromLink
   ],
 }
 
-const testPlan2: plan = {
+const testPlan2: PlanDefinition = {
   id: "regular",
   name: "پلن متوسط",
   price: 150,
@@ -81,13 +82,13 @@ const testPlan2: plan = {
   botCount: 5,
   knowledgeBase: 1000,
   features: [
-    "یادگیری از لینک",
-    "رنگ سازمانی",
-    "حذف لوگو هوشبان",
+    features.learnFromLink,
+    features.color,
+    features.removeOurLogo
   ],
 }
 
-const testPlan3: plan = {
+const testPlan3: PlanDefinition = {
   id: "pro",
   name: "پلن حرفه‌ای",
   price: 200,
