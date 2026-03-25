@@ -1,0 +1,45 @@
+.theme-amber {
+  --background: #1A1816;
+  --foreground: #F5E4C3 ;
+
+  --card: #1A1816;
+  --card-foreground: #F5E4C3;
+
+  --popover: #1A1816;
+  --popover-foreground: #F5E4C3;
+
+  --primary: #D65A31;
+  --primary-foreground: #FFF9F0;
+
+  --secondary: #ECA15C;
+  --secondary-foreground: #1A1816;
+
+  --accent: #A85D3A;
+  --accent-foreground: #F5E4C3;
+
+  --muted: #3C3028;
+  --muted-foreground: #D9C4A9;
+
+  --border: #4C3A2F;
+  --input: #4C3A2F;
+  --ring: #ECA15C;
+
+  --destructive: #B4442E;
+  --destructive-foreground: #FFF2E2;
+
+  --chart-1: #D65A31;
+  --chart-2: #ECA15C;
+  --chart-3: #C89C7B;
+  --chart-4: #A85D3A;
+  --chart-5: #754F3A;
+
+  --sidebar: #1A1816;
+  --sidebar-foreground: #F5E4C3;
+  --sidebar-primary: #D65A31;
+  --sidebar-primary-foreground: #FFF9F0;
+  --sidebar-accent: #3C3028;
+  --sidebar-accent-foreground: #F5E4C3;
+  --sidebar-border: #4C3A2F;
+  --sidebar-ring: #ECA15C;
+}
+
