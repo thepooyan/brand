@@ -1,5 +1,5 @@
 import Spinner from "./Spinner"
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { FiTrash2, FiEdit, FiKey, FiSend, FiLock } from "solid-icons/fi"
@@ -60,98 +60,75 @@ const BotCard = ({bot, telegramAccess}:props) => {
   }
 
   return (
-    <Card
-      class=" border-gray-800 bg-gray-900 "
-    >
+    <Card>
       <CardHeader class="pb-4">
-        <div class="flex items-center justify-between">
-          <CardTitle class="text-lg text-white">{bot.botName}</CardTitle>
-          <div class="flex items-center gap-2">
-            <Badge class={true ? "bg-green-600 text-white" : "bg-red-600 text-white"}>
-              {true ? "فعال" : "غیرفعال"}
-            </Badge>
-          </div>
-        </div>
+        <CardTitle> {bot.botName}</CardTitle>
+        <CardDescription>{bot.businessName}</CardDescription>
       </CardHeader>
 
       <CardContent class="space-y-4">
-        {/* Bot Info */}
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
-            <span class="text-gray-400">تعداد مکالمات: </span>
+            <span>تعداد مکالمات: </span>
             {bot.history?.length || "0"}
           </div>
           <div class="flex justify-between">
-            <span class="text-gray-400">محدودیت تعداد پیام:</span>
+            <span>محدودیت تعداد پیام:</span>
             {bot.limitation || "ندارد"}
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div class="space-y-3 pt-2">
-          {/* First Group: Delete, Deactivate, Edit */}
-          <div class="flex gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              class="flex-1 text-red-400 border-red-800 hover:bg-red-950 hover:text-red-300 bg-gray-800"
-              onclick={() => deleteBot()}
-
-            >
-              <FiTrash2 class="w-3 h-3 ml-1" />
-              حذف
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
-              as={TA}
-              href={`/Panel/Edit-Bot/${bot.id}`}
-            >
-              <FiEdit class="w-3 h-3 ml-1" />
-              ویرایش
-            </Button>
-          </div>
-
-          {/* Second Group: Connect to Telegram, Switch Token */}
-          <div class="flex gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800  "
-              onclick={handleTelegram}
-            >
-              <ImTelegram class="w-3 h-3 ml-1" />
-              اتصال به تلگرام
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800"
-              onclick={getToken}
-            >
-              <FiKey class="w-3 h-3 ml-1" />
-              دریافت توکن
-            </Button>
-          </div>
-
-          <div class="flex gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              class="flex-1 text-gray-300 border-gray-700 hover:bg-gray-800 hover:text-white bg-gray-800  "
-              onclick={handleLimitation}
-            >
-              <FiLock class="w-3 h-3 ml-1" />
-              اعمال محدودیت
-            </Button>
-          </div>
-
-          {/* Third Group: Send Message (Separate) */}
+        <div class="grid grid-cols-2 gap-2">
           <Button
             size="sm"
-            class={cn("w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300",
-              false && "opacity-30 pointer-events-none "
+            variant="destructive"
+            onclick={() => deleteBot()}
+          >
+            <FiTrash2 class="w-3 h-3 ml-1" />
+            حذف
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            as={TA}
+            href={`/Panel/Edit-Bot/${bot.id}`}
+          >
+            <FiEdit class="w-3 h-3 ml-1" />
+            ویرایش
+          </Button>
+
+          <Button
+            size="sm"
+            variant="secondary"
+            onclick={handleTelegram}
+          >
+            <ImTelegram class="w-3 h-3 ml-1" />
+            اتصال به تلگرام
+          </Button>
+
+          <Button
+            size="sm"
+            variant="secondary"
+            onclick={getToken}
+          >
+            <FiKey class="w-3 h-3 ml-1" />
+            دریافت توکن
+          </Button>
+
+          <Button
+            size="sm"
+            variant="secondary"
+            class="col-span-2"
+            onclick={handleLimitation}
+          >
+            <FiLock class="w-3 h-3 ml-1" />
+            اعمال محدودیت
+          </Button>
+
+          <Button
+            size="sm"
+            class={cn("col-span-2",
+              false && "opacity-30 pointer-events-none"
             )}
             as={TA} href={`/Panel/Testbot/${bot.id}`}
           >

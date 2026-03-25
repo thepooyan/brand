@@ -6,7 +6,8 @@ export enum planFeatures {
   telegram = "اتصال به تلگرام",
   color = "قابلیت تغییر تم",
   learnFromLink = "یادگیری از لینک",
-  removeOurLogo = "حذف لوگو هوشبان"
+  removeOurLogo = "حذف لوگو هوشبان",
+  specialSupport = "پشتیبانی اختصاصی",
 }
 type feature = planFeatures
 export const allFeatures = Object.values(planFeatures)

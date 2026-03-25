@@ -23,17 +23,18 @@ const getInitialData = query(async ():ActionResponse2<initialData> => {
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")
 
-  return db.transaction(async ctx => {
+  return await db.transaction(async ctx => {
 
     let dbUser = await ctx.query.usersTable.findFirst({
       where: (tbl => eq(tbl.id, user.id)),
       with: {current_plans: true, bots: true}
     })
     if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+
     const userBots = await ctx.query.chatbotTable.findMany({
       where: (tbl => eq(tbl.userId, dbUser.id)),
       with: {history: true},
-      columns: {id: true, botName: true, limitation: true}
+      columns: {id: true, botName: true, limitation: true, businessName: true}
     })
 
     const userp = userPermissions(dbUser)
@@ -79,7 +80,7 @@ export default function Component() {
   }
 
   return (
-    <div class="min-h-screen p-6 border-1 rounded-lg bg-zinc-950 ">
+    <div class="min-h-screen p-6 ">
       <div class="max-w-7xl mx-auto">
         {/* Header */}
         <div class="flex items-center justify-between mb-8">

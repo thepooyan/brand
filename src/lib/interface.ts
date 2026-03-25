@@ -32,6 +32,7 @@ export interface websiteOrder {
 export interface chatbotStatus {
   id: number,
   botName: string,
+  businessName: string
   limitation: number | null
   history?: History[]
 }
