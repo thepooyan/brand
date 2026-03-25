@@ -78,7 +78,12 @@ const BotCard = ({bot, telegramAccess}:props) => {
         {/* Bot Info */}
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
-            <span class="text-gray-400">تعداد مکالمات: {bot.history?.length || "0"}</span>
+            <span class="text-gray-400">تعداد مکالمات: </span>
+            {bot.history?.length || "0"}
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">محدودیت تعداد پیام:</span>
+            {bot.limitation || "ندارد"}
           </div>
         </div>
 
