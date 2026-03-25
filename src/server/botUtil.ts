@@ -1,15 +1,17 @@
 import { eq, sql } from "drizzle-orm"
 import { db } from "~/db/db"
-import { UserRelations } from "~/db/relationQueries"
-import { DB_Plan, planTable, User } from "~/db/schema"
+import { Chatbot, DB_Plan, planTable, User } from "~/db/schema"
 import { ApiResponse } from "~/lib/actionAbstraction"
 
 type presentUser = User & {current_plan: DB_Plan}
 
-export const isChatAllowed = (user: UserRelations | undefined):ApiResponse<presentUser> => {
-  if (!user) return {ok: false, status: 401, msg: "کاربر احراز هویت نشده است"}
+type botWithRelations = Chatbot & {
+  user: User & {current_plan: DB_Plan}
+}
+export const isChatAllowed = (bot: botWithRelations):ApiResponse<presentUser> => {
+  if (!bot) return {ok: false, status: 401, msg: "کاربر احراز هویت نشده است"}
 
-  const plan = user.current_plan
+  const plan = bot.user.current_plan
   if (!plan) return {ok: false, status: 403, msg: "طرح فعالی برای شما وجود ندارد"}
 
   let remaining = plan.remainingMessages
@@ -20,7 +22,7 @@ export const isChatAllowed = (user: UserRelations | undefined):ApiResponse<prese
 
   return {
     data: {
-      ...user,
+      ...bot.user,
       current_plan: plan
     },
     ok: true

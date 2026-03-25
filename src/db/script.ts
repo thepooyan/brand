@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { db } from "./db";
 import { adminsTable, chatbot_history_table, chatbotTable, planTable, ticketTable } from "./schema";

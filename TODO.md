@@ -14,6 +14,7 @@ history {
     add every source of talk with bot to history (done: api, widget, telegram, sessionChat | nd: hooshbaan?)
 }
 
+widget token can be copied and used by anyone? (add host url, or hide token)
 make an abstraction to talk with bot
 message limit for each user
 analytics for message count 

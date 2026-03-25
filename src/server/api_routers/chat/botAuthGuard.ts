@@ -28,7 +28,7 @@ export const botAuthGuard = new Elysia()
   const bot = await getBot(token);
   if (!bot) return status(404, {errorMessage: "ربات یافت نشد"});
 
-  const res = isChatAllowed(bot.user)
+  const res = isChatAllowed(bot)
   if (!res.ok) return status(res.status, {errorMessage: res.msg} )
 
   return {bot: bot}

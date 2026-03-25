@@ -38,7 +38,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
     const stream = getFakeStream(1000, 1000)
     const userIp = "1111.1111.1111.1111"
 
-    updateChatHistory([
+    await updateChatHistory([
       {role: "user", content: lastQ, timestamp: new Date()},
       {role: "assistant", content: "response is this", timestamp: new Date()},
     ], bot.id, userIp, body.from)

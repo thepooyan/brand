@@ -54,19 +54,23 @@ const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Ch
     with: {current_plan: true}
   })
 
-  let res = isChatAllowed(user)
-  if (!res.ok) {
-    return res
-  }
+  if (!user) return {ok:false, status: 404, msg: "اکانت مورد نظر یافت نشد"}
 
   const bot = await db.query.chatbotTable.findFirst({
     where: and(
         eq(chatbotTable.userId, parseInt(userId)),
         eq(chatbotTable.id, parseInt(botId))
-    )
+    ),
+    with: {user: {
+      with: {current_plan: true}
+    }}
   })
 
   if (!bot) return {ok:false, status: 404, msg: "ربات مورد نظر یافت نشد"}
+  let res = isChatAllowed(bot)
+  if (!res.ok) {
+    return res
+  }
 
   await decrementMessageCount(res.data.current_plan)
 
