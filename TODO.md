@@ -13,6 +13,7 @@ history {
     save chats with hooshbaan bot
 }
 
+net fix streaming answer to history
 net widget token can be copied and used by anyone? (add host url, or hide token)
 net analytics for message count 
 net add continue with google 
