@@ -15,7 +15,7 @@ const ChatSample = () => {
       timestamp: new Date(),
     },
     {
-      text: `بله! میتونید همین آلان باهاش صحبت کنید!`,
+      text: `بله! میتونید همین الآن باهاش صحبت کنید!`,
       isUser: false,
       timestamp: new Date(),
     },

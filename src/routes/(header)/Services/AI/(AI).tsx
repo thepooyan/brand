@@ -61,7 +61,7 @@ const AI = () => {
                 {service.comingSoon && <><div class="absolute bg-secondary w-full right-0 h-full top-0 rounded opacity-75
                   flex justify-center items-center font-bold
                   "></div>
-                  <p class="bg-black w-full text-center absolute top-[45%] right-0 py-4">
+                  <p class="bg-background  w-full text-center absolute top-[45%] right-0 py-4">
                     به زودی!...
                   </p>
                 </>}

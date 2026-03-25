@@ -7,6 +7,7 @@ import ContactInfo from "~/components/parts/ContactInfo"
 import { features, integrationOptions } from "~/data/abstract"
 import { preload } from "~/lib/hooks"
 import ChatSample from "~/components/parts/chat/ChatSample"
+import { Contact } from "~/components/landing/Contact"
 
 
 export default function ChatBot() {
@@ -116,12 +117,16 @@ export default function ChatBot() {
             همین الان با ما تماس بگیرید تا چت‌بات اختصاصی برای کسب و کار شما طراحی کنیم
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3">
+            <Button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+              onclick={() => callModal(() => <ContactInfo/>)}
+            >
               درخواست مشاوره رایگان
             </Button>
             <Button
               variant="outline"
               class="border-primary text-primary hover:bg-primary/10 px-8 py-3 bg-transparent"
+              as={TA}
+              href="/pricing"
             >
               مشاهده قیمت‌ها
             </Button>
