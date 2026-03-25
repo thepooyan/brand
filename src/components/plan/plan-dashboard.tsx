@@ -1,14 +1,14 @@
-import { DB_Plan } from "~/db/schema"
+import { PlanInstance } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Accessor, ParentProps, Show } from "solid-js"
-import { doesPlanIncludeFeature, findPlanName, planFeatures } from "~/sections/plan"
+import { doesPlanIncludeFeature, findPlanName, getPlan, planFeatures } from "~/sections/plan"
 import { Button } from "../ui/button"
 import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
 import TA from "../parts/TA"
 import { FiCheck, FiTrendingUp, FiX } from "solid-icons/fi"
 
 interface p {
-  plan: Accessor<DB_Plan>
+  plan: Accessor<PlanInstance>
 }
 const PlanDashboard = ({plan}:p) => {
 
@@ -39,7 +39,7 @@ const PlanDashboard = ({plan}:p) => {
           <div>
             <Title>مشخصات:</Title>
             <Text>
-              تعداد ربات: {plan().botCount} عدد
+              تعداد ربات: {getPlan(plan()).botCount} عدد
             </Text>
             <Text>
               اتصال به تلگرام: 

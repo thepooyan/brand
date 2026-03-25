@@ -103,29 +103,30 @@ export const adminsTable = sqliteTable("admins_table", {
 export const planTable = sqliteTable("plan", {
   id: int().primaryKey({ autoIncrement: true }),
   plan_id: text({ enum: plan_ids }).notNull(),
-  messageCount: integer().notNull(),
-  botCount: integer().notNull(),
   remainingMessages: integer().notNull(),
-  expirationDate: integer({mode: "timestamp"}),
   boughtDate: integer({mode: "timestamp"}).notNull(),
+  expirationDate: integer({mode: "timestamp"}),
+  user_id: int().notNull().references(() => usersTable.id)
 })
 
-export type DB_Plan = typeof planTable.$inferSelect
-export type NewPlan = typeof planTable.$inferInsert
+export type PlanInstance = typeof planTable.$inferSelect
+export type NewPlanInstance = typeof planTable.$inferInsert
 
 export const usersTable = sqliteTable("users_table", {
   id: int().primaryKey({ autoIncrement: true }),
   name: text(),
   email: text().unique(),
   number: text({length: 11}).unique().notNull(),
-  current_plan_id: int().notNull().references(() => planTable.id)
 });
 
 export type User = typeof usersTable.$inferInsert
 
-export const users_relations = relations(usersTable, ({one}) => ({
-  current_plan: one(planTable, {fields: [usersTable.current_plan_id], references: [planTable.id]})
+export const users_relations = relations(usersTable, ({many}) => ({
+  current_plans: many(planTable),
+  bots: many(chatbotTable)
 }))
+export type User_Plan = User & {current_plans: PlanInstance[]}
+export type User_Plan_Bots = User_Plan & {bots: Chatbot[]}
 
 export const otpTable = sqliteTable("otp_table", {
   number: text({length: 11}).notNull(),

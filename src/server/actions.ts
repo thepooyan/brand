@@ -70,13 +70,9 @@ export const verifyOTP = async (number: string, otp: string):Response => {
     let user = (await db.select().from(usersTable).where(eq(usersTable.number, number))).at(0)
 
     if (!user) {
-      const newPlan = await newFreePlan()
-      const newUser: typeof usersTable.$inferInsert = {
-        number: number,
-        current_plan_id: newPlan.id
-      }
-      let result = (await db.insert(usersTable).values(newUser).returning()).at(0)
-      if (!result) throw new Error()
+      let result = (await db.insert(usersTable).values({number}).returning()).at(0)
+      if (!result) throw new Error("user insesrt not successful")
+      await newFreePlan(result.id)
       const role = await findoutRole(result.number)
       await updateAuthSession({user: {...result, role: role }})
       return {ok: true}

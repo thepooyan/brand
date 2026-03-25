@@ -1,4 +1,4 @@
-import { DB_Plan, NewPlan, } from "~/db/schema"
+import { NewPlanInstance, PlanInstance, User_Plan_Bots } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
@@ -37,13 +37,18 @@ export const doesPlanIncludeFeature = (p: plan_id, f: planFeatures) => {
   return plan.features.includes(f)
 }
 
-export const convertPlanToDTO = (p: PlanDefinition, remainingMessages?: number):NewPlan => ({
+export const getPlan = (p:PlanInstance) => {
+  let plan = allPlans.find(f => f.id === p.plan_id)
+  if (!plan) throw new Error(`Plan ${p} is not defined`)
+  return plan
+}
+
+export const convertPlanToDTO = (p: PlanDefinition, user_id: number, expirationDays: number):NewPlanInstance => ({
+  user_id: user_id,
   plan_id: p.id,
-  botCount: p.botCount,
-  messageCount: p.messageCount,
-  remainingMessages: remainingMessages ? p.messageCount + remainingMessages : p.messageCount,
+  remainingMessages: p.messageCount,
   boughtDate: new Date(),
-  expirationDate: daysFromNow(p.expirationMounth * 31),
+  expirationDate: daysFromNow(expirationDays),
 })
 
 export const freePlan: PlanDefinition = {
@@ -108,6 +113,24 @@ export const allPlans = [
   testPlan3,
 ]
 
-export const findPlanName = (p: DB_Plan) => {
+export const findPlanName = (p: PlanInstance) => {
   return allPlans.find(i => i.id === p.plan_id)?.name || ""
 }
+
+const doesAtleastOnePlanHaveTelegram = (plans: PlanInstance[]) => {
+  return plans.map(t => getPlan(t).features.includes(planFeatures.telegram) ).reduce((p,c) => p || c)
+}
+
+const getNumberOfAllowedBots = (plans: PlanInstance[]) => {
+  return plans.map(p => getPlan(p).botCount).reduce((p,c) => p + c)
+}
+
+const getRemainingMesseages = (plans: PlanInstance[]) => {
+  return plans.map(m => m.remainingMessages).reduce((p,c) => p+c)
+}
+
+export const userPermissions = (user: User_Plan_Bots) => ({
+  telegram: doesAtleastOnePlanHaveTelegram(user.current_plans),
+  moreBots: user.bots.length < getNumberOfAllowedBots(user.current_plans),
+  message: getRemainingMesseages(user.current_plans) > 0,
+})

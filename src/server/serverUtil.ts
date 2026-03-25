@@ -73,14 +73,13 @@ export const isAdminLoggedIn = async () => {
   return user?.role === ROLES.ADMIN
 }
 
-export const newFreePlan = async () => {
+export const newFreePlan = async (user_id: number) => {
   const [inserted] = await db.insert(planTable).values({
-    plan_id: "free",
-    messageCount: freePlan.messageCount,
+    plan_id: freePlan.id,
     remainingMessages: freePlan.messageCount,
+    user_id: user_id,
     boughtDate: new Date(),
     expirationDate: null,
-    botCount: freePlan.botCount,
   }).returning()
   return inserted
 }

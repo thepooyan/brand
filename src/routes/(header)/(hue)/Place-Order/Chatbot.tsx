@@ -5,7 +5,6 @@ import { FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import RedStar from "~/components/parts/RedStar"
-import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
@@ -14,6 +13,7 @@ import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/server/llmUtil"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
+import { userPermissions } from "~/sections/plan"
 
 export default function OrderChatbotPage() {
 
@@ -433,15 +433,14 @@ const saveChatbotOrder = async (order: chatbotOrder):ActionResponse<number> => {
 
       let dbUser = await ctx.query.usersTable.findFirst({
         where: (tbl => eq(tbl.id, user.id)),
-        with: {current_plan: true}
+        with: {current_plans: true, bots: true}
       })
       if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
 
-      const userBots = await ctx.query.chatbotTable.findMany({
-        where: (tbl => eq(tbl.userId, dbUser.id))
-      })
 
-      if (userBots.length >= dbUser.current_plan.botCount) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
+      const userPermission = userPermissions(dbUser)
+
+      if (!userPermission.moreBots) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
 
 
       let values: typeof chatbotTable.$inferInsert = {

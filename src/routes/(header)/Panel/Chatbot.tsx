@@ -11,7 +11,7 @@ import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
 import { ActionResponse } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
-import { doesPlanIncludeFeature, planFeatures } from "~/sections/plan"
+import { userPermissions } from "~/sections/plan"
 
 type initialData = {
   bots: chatbotStatus[],
@@ -27,7 +27,7 @@ const getInitialData = query(async ():ActionResponse<initialData> => {
 
     let dbUser = await ctx.query.usersTable.findFirst({
       where: (tbl => eq(tbl.id, user.id)),
-      with: {current_plan: true}
+      with: {current_plans: true, bots: true}
     })
     if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
     const userBots = await ctx.query.chatbotTable.findMany({
@@ -36,11 +36,9 @@ const getInitialData = query(async ():ActionResponse<initialData> => {
       columns: {id: true, botName: true, limitation: true}
     })
 
-    const canHaveMoreBots = userBots.length < dbUser.current_plan.botCount
+    const userp = userPermissions(dbUser)
 
-    const telegramAccess = doesPlanIncludeFeature(dbUser.current_plan.plan_id, planFeatures.telegram)
-
-    return {ok: true, data: {canHaveMoreBots, bots: userBots, telegramAccess} }
+    return {ok: true, data: {canHaveMoreBots: userp.moreBots, bots: userBots, telegramAccess: userp.telegram} }
   })
 }, "bots")
 

@@ -1,9 +1,9 @@
 import { type ClassValue, clsx } from "clsx"
 import { Accessor, createSignal, Setter } from "solid-js"
 import { twMerge } from "tailwind-merge"
-import { DB_Plan } from "~/db/schema"
+import { PlanInstance } from "~/db/schema"
 import { resolveError } from "./errorHandler"
-import { EitherResponse2 } from "./actionAbstraction"
+import { getPlan } from "~/sections/plan"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -153,9 +153,9 @@ export const daysRemaining = (targetDate: string | Date): number => {
   return diffDays;
 }
 
-export const calcMessageCount = (p: DB_Plan) => p.remainingMessages > p.messageCount ? p.remainingMessages : p.messageCount
+export const calcMessageCount = (p: PlanInstance) => getPlan(p).messageCount
 
-export const calcMessagePercent = (p: DB_Plan) => {
+export const calcMessagePercent = (p: PlanInstance) => {
   return Math.round(p.remainingMessages / calcMessageCount(p) * 100)
 }
 

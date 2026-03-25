@@ -1,0 +1,8 @@
+// @ts-nocheck
+import { db } from "../db";
+import { adminsTable } from "../schema";
+
+db.insert(adminsTable).values({
+  number: "09027766926",
+  chat_id: "445589"
+})

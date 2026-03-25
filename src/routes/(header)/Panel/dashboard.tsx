@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { Show } from "solid-js"
+import { For, Show } from "solid-js"
 import PlanDashboard from "~/components/plan/plan-dashboard"
 import { db } from "~/db/db"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
@@ -12,7 +12,7 @@ const queryUserPlan = query(async() => {
 
   const dbUser = await db.query.usersTable.findFirst({
     where: (tbl => eq(tbl.id, user.id)),
-    with: {current_plan: true}
+    with: {current_plans: true}
   })
 
   if (!dbUser) {
@@ -20,7 +20,7 @@ const queryUserPlan = query(async() => {
     throw redirect("/Login?back=/Panel/dashboard")
   }
 
-  return dbUser.current_plan
+  return dbUser.current_plans
 }, "userPlan")
 
 const dashboard = () => {
@@ -29,9 +29,9 @@ const dashboard = () => {
 
   return (
     <Show when={planData()}>
-      {presentPlan => <>
-        <PlanDashboard plan={presentPlan}/>
-        </>
+      {presentPlan => <For each={presentPlan()}>
+        {i => <PlanDashboard plan={() => i}/>}
+        </For>
       }
     </Show>
   )

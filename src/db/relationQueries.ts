@@ -11,6 +11,6 @@ export type TicketWithRelations = Awaited<ReturnType<typeof queryTicketsWithRela
 
 export const queryUserWithRelations = async () => 
 await db.query.usersTable.findMany({
-    with: {current_plan: true}
+    with: {current_plans: true}
   })
 export type UserRelations = Awaited<ReturnType<typeof queryUserWithRelations>>[number]

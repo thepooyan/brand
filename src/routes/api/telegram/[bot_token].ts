@@ -1,10 +1,11 @@
 import { useParams } from '@solidjs/router';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
-import { chatbot_messager_table, planTable } from '~/db/schema';
+import { chatbot_messager_table } from '~/db/schema';
 import { message, timedMessage } from '~/lib/chatUtil';
-import { doesPlanIncludeFeature, planFeatures } from '~/sections/plan';
+import { userPermissions } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
+import { decrementMessageCount } from '~/server/botUtil';
 import { hashToken, updateChatHistory } from '~/server/serverUtil';
 import { telegram } from '~/server/telegram';
 
@@ -65,17 +66,16 @@ const getChatHistory = async (bot_token: string, chat_id:number):Promise<{histor
   return await db.transaction(async ctx => {
     const bot = await ctx.query.chatbotTable.findFirst({
       where: (tbl => eq(tbl.current_token, hashToken(bot_token))),
-      with: {user: {with: {current_plan: true}}}
+      with: {user: {with: {current_plans: true, bots: true}}}
     })
     if (!bot) return "404"
-    const plan = bot.user.current_plan
-    if (!plan) return "payment"
-    if (!doesPlanIncludeFeature(plan.plan_id, planFeatures.telegram)) return "payment"
-    if (plan.messageCount !> 0) return "payment"
 
-    await ctx.update(planTable).set({remainingMessages: plan.remainingMessages - 1}).where(
-      eq(planTable.id, plan.id)
-    )
+    const permissions = userPermissions(bot.user)
+    if (!permissions.message) return "payment"
+    if (!permissions.telegram) return "payment"
+
+    let ok = await decrementMessageCount(bot.user, ctx)
+    if (!ok) return "payment"
 
     let history = await db.query.chatbot_messager_table.findFirst({
       where: (tbl => and(

@@ -1,4 +1,4 @@
-import { allFeatures, convertPlanToDTO, doesPlanIncludeFeature, PlanDefinition, planFeatures } from "~/sections/plan"
+import { allFeatures, convertPlanToDTO, PlanDefinition } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { createSignal, For } from "solid-js"
 import { Button } from "../ui/button"
@@ -6,7 +6,7 @@ import { FiCheck, FiX } from "solid-icons/fi"
 import { seprateByComma } from "~/lib/utils"
 import { getAuthSession } from "~/lib/session"
 import { db } from "~/db/db"
-import { planTable, usersTable } from "~/db/schema"
+import { planTable } from "~/db/schema"
 import { eq } from "drizzle-orm"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
@@ -28,27 +28,13 @@ const activatePlan = async (p: PlanDefinition):Promise<ApiResponse> => {
 
     const dbUser = await tx.query.usersTable.findFirst({
       where: (tbl => eq(tbl.id, user.id)),
-      with: {current_plan: true}
+      with: {current_plans: true}
     })
 
     if (!dbUser) return result = {ok: false, msg: "کاربر یافت نشد", status: 404}
 
-    if (!dbUser.current_plan) {
-      //new plan
-      const [newPlan] = await tx.insert(planTable).values(convertPlanToDTO(p)).returning()
-      await tx.update(usersTable).set({current_plan_id: newPlan.id}).where(eq(usersTable.id, dbUser.id))
+    await tx.insert(planTable).values(convertPlanToDTO(p, dbUser.id, 30))
 
-    } else {
-      //update plan
-      await tx.update(planTable)
-      .set(convertPlanToDTO(p, dbUser.current_plan.remainingMessages))
-      .where(
-        eq(
-          planTable.id,
-          dbUser.current_plan.id
-        ))
-
-    }
   })
   return result
 }
