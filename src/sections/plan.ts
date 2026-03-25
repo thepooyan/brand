@@ -1,4 +1,6 @@
-import { NewPlanInstance, PlanInstance, User_Plan_Bots } from "~/db/schema"
+import { eq, sql } from "drizzle-orm"
+import { db, dbCtx } from "~/db/db"
+import { NewPlanInstance, PlanInstance, planTable, User_Plan, User_Plan_Bots } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
@@ -129,8 +131,75 @@ const getRemainingMesseages = (plans: PlanInstance[]) => {
   return plans.map(m => m.remainingMessages).reduce((p,c) => p+c)
 }
 
-export const userPermissions = (user: User_Plan_Bots) => ({
-  telegram: doesAtleastOnePlanHaveTelegram(user.current_plans),
-  moreBots: user.bots.length < getNumberOfAllowedBots(user.current_plans),
-  message: getRemainingMesseages(user.current_plans) > 0,
-})
+const findSoonestExpiringPlan = (plans: PlanInstance[]): PlanInstance | null => {
+  if (!plans || plans.length === 0) {
+    return null;
+  }
+
+  let soonestPlan: PlanInstance | null = null;
+
+  for (const plan of plans) {
+    if (plan.expirationDate === null) return plan
+    if (isNaN(plan.expirationDate.getTime())) { 
+      console.warn(`Warning: Plan with ID ${plan.id} has an invalid expiration date. Skipping.`);
+      continue
+    }
+    if (soonestPlan === null || plan.expirationDate < soonestPlan.expirationDate!) {
+      soonestPlan = plan;
+    }
+  }
+
+  return soonestPlan;
+}
+
+const isPlanExpired = (p: PlanInstance) => {
+  return (p.expirationDate < new Date())
+}
+
+const findAvailavlePlan = (plans: PlanInstance[]) => {
+  let soonest = findSoonestExpiringPlan(plans)
+  if (!soonest) return null
+  if (!isPlanExpired(soonest)) return soonest
+  return findAvailavlePlan(plans.filter(p => p.id !== soonest.id))
+}
+
+export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
+  const dbctx = ctx ? ctx : db
+  if (user.current_plans.length === 0) return false
+  let soonestPlan = findAvailavlePlan(user.current_plans)
+  if (!soonestPlan) return false
+  await dbctx.update(planTable).set({
+    remainingMessages: sql`${planTable.remainingMessages} - 1`
+  }).where(
+      eq(planTable.id, soonestPlan.id)
+    )
+  return true
+}
+
+export const userPermissions = (user: User_Plan_Bots) => {
+
+  let avlPlan = findAvailavlePlan(user.current_plans)
+  if (!avlPlan) return {
+    telegram: null,
+    moreBots: null,
+    message: null,
+    expired: true
+  }
+  return {
+    telegram: doesAtleastOnePlanHaveTelegram(user.current_plans),
+    moreBots: user.bots.length < getNumberOfAllowedBots(user.current_plans),
+    message: getRemainingMesseages(user.current_plans) > 0,
+    expired: false
+  }
+}
+
+export const newFreePlan = async (user_id: number) => {
+  const [inserted] = await db.insert(planTable).values({
+    plan_id: freePlan.id,
+    remainingMessages: freePlan.messageCount,
+    user_id: user_id,
+    boughtDate: new Date(),
+    expirationDate: daysFromNow(90),
+  }).returning()
+  return inserted
+}

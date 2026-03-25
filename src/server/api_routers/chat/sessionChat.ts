@@ -6,11 +6,12 @@ import { Chatbot, chatbotTable, usersTable } from "~/db/schema";
 import { and, eq } from "drizzle-orm";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { decrementMessageCount, isChatAllowed } from "~/server/botUtil";
+import { isChatAllowed } from "~/server/botUtil";
 import { getFakeStream } from "~/server/fakter";
 import { ApiResponse } from "~/lib/actionAbstraction";
 import { updateChatHistory } from "~/server/serverUtil";
 import { timedMessage } from "~/lib/chatUtil";
+import { decrementMessageCount } from "~/sections/plan";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
@@ -51,7 +52,7 @@ const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Ch
 
   const user = await db.query.usersTable.findFirst({
     where: eq(usersTable.id, parseInt(userId)),
-    with: {current_plan: true}
+    with: {current_plans: true}
   })
 
   if (!user) return {ok:false, status: 404, msg: "اکانت مورد نظر یافت نشد"}
@@ -62,7 +63,7 @@ const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Ch
         eq(chatbotTable.id, parseInt(botId))
     ),
     with: {user: {
-      with: {current_plan: true}
+      with: {current_plans: true}
     }}
   })
 
@@ -72,7 +73,7 @@ const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Ch
     return res
   }
 
-  await decrementMessageCount(res.data.current_plan)
+  await decrementMessageCount(bot.user)
 
   return {ok: true, data: bot}
 }

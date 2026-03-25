@@ -8,7 +8,7 @@ import { getAuthSession } from "~/lib/session"
 import { For, Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
-import { ActionResponse } from "~/lib/actionAbstraction"
+import { ActionResponse2 } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
 import { userPermissions } from "~/sections/plan"
@@ -18,7 +18,7 @@ type initialData = {
   canHaveMoreBots: boolean,
   telegramAccess: boolean
 }
-const getInitialData = query(async ():ActionResponse<initialData> => {
+const getInitialData = query(async ():ActionResponse2<initialData> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")
@@ -38,7 +38,7 @@ const getInitialData = query(async ():ActionResponse<initialData> => {
 
     const userp = userPermissions(dbUser)
 
-    return {ok: true, data: {canHaveMoreBots: userp.moreBots, bots: userBots, telegramAccess: userp.telegram} }
+    return {ok: true, data: {canHaveMoreBots: userp.moreBots || false, bots: userBots, telegramAccess: userp.telegram || false} }
   })
 }, "bots")
 

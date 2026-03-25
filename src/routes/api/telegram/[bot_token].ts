@@ -3,9 +3,8 @@ import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { chatbot_messager_table } from '~/db/schema';
 import { message, timedMessage } from '~/lib/chatUtil';
-import { userPermissions } from '~/sections/plan';
+import { decrementMessageCount, userPermissions } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
-import { decrementMessageCount } from '~/server/botUtil';
 import { hashToken, updateChatHistory } from '~/server/serverUtil';
 import { telegram } from '~/server/telegram';
 

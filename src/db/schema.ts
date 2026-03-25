@@ -105,7 +105,7 @@ export const planTable = sqliteTable("plan", {
   plan_id: text({ enum: plan_ids }).notNull(),
   remainingMessages: integer().notNull(),
   boughtDate: integer({mode: "timestamp"}).notNull(),
-  expirationDate: integer({mode: "timestamp"}),
+  expirationDate: integer({mode: "timestamp"}).notNull(),
   user_id: int().notNull().references(() => usersTable.id)
 })
 

@@ -1,14 +1,12 @@
 "use server"
-import { adminsTable, chatbot_history_table, chatbotTable, planTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbot_history_table, chatbotTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
 import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmUtil"
-
 import { db } from "~/db/db";
 import { and, eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
-import { freePlan } from "~/sections/plan";
 import { timedMessage } from "~/lib/chatUtil";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { ActionResponse2 } from "~/lib/actionAbstraction";
@@ -73,16 +71,6 @@ export const isAdminLoggedIn = async () => {
   return user?.role === ROLES.ADMIN
 }
 
-export const newFreePlan = async (user_id: number) => {
-  const [inserted] = await db.insert(planTable).values({
-    plan_id: freePlan.id,
-    remainingMessages: freePlan.messageCount,
-    user_id: user_id,
-    boughtDate: new Date(),
-    expirationDate: null,
-  }).returning()
-  return inserted
-}
 
 export const updateChatHistory =
 async (QandA: timedMessage[], botId: number, userIP: string, from: "widget" | "api" | "telegram")

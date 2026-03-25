@@ -2,7 +2,7 @@
 import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
-import { compareEpochTime, findoutRole, generateOTP, newFreePlan, Response, validatePhone, warpResponse } from "./serverUtil"
+import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
 import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, ticketTable, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
@@ -12,6 +12,7 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { message } from "~/lib/chatUtil"
 import { safeDb } from "~/lib/utils"
+import { newFreePlan } from "~/sections/plan"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
