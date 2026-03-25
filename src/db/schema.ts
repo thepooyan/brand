@@ -112,6 +112,10 @@ export const planTable = sqliteTable("plan", {
 export type PlanInstance = typeof planTable.$inferSelect
 export type NewPlanInstance = typeof planTable.$inferInsert
 
+export const plan_relations = relations(planTable, ({one}) => ({
+  user: one(usersTable, {fields: [planTable.user_id], references: [usersTable.id]})
+}))
+
 export const usersTable = sqliteTable("users_table", {
   id: int().primaryKey({ autoIncrement: true }),
   name: text(),
