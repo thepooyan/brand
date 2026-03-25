@@ -15,12 +15,12 @@ history {
 
 net widget token can be copied and used by anyone? (add host url, or hide token)
 net analytics for message count 
+net add continue with google 
+net make the source of all use chat one place. git submodule or node package?
 change telegram connection system? (depending on token is a bad thing)
-test image uploader delete should remove file from s3
 rethink plan. message count should not be in there
-make the source of all use chat one place. git submodule or node package?
 disable logo, and color based on plan
-add continue with google 
+order status page
 
 insider (
     sms (does not work?)
@@ -41,7 +41,6 @@ expose useChat as node package
 useChat error handling is buggy
 handle error in usechat
 fix mini chat
-order status page
 rate limit s3 uploader for normal users
 
 cron cleaner for otp
