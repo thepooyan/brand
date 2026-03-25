@@ -122,14 +122,14 @@ export default function Component() {
               {b => <BotCard bot={b} telegramAccess={telegramPermission}/>}
             </For>
           </Suspense>
-          {/* Add New Bot Card */}
-          <Card class="border-gray-800 bg-gray-900 border-dashed border-2">
+
+          <Card >
             <CardContent class="flex flex-col items-center justify-center h-full py-12">
-              <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4">
+              <div class="w-12 h-12 bg-accent rounded-lg flex items-center justify-center mb-4">
                 <FiPlus class="w-6 h-6 text-primary" />
               </div>
-              <h3 class="text-lg font-medium mb-2 text-white">افزودن ربات جدید</h3>
-              <p class="text-sm text-gray-400 text-center mb-4">یک چت بات جدید برای کسب و کار خود ایجاد کنید</p>
+              <h3 class="text-lg font-medium mb-2  ">افزودن ربات جدید</h3>
+              <p class="text-sm text-muted-foreground text-center mb-4">یک چت بات جدید برای کسب و کار خود ایجاد کنید</p>
               <Button class="w-full bg-primary hover:bg-primary-600 text-white shadow-lg hover:shadow-primary/25 transition-all duration-300"
                 {...(moreBotsPermission() ? {as: TA} : {} )}
                 href="/Place-Order/Chatbot" 
