@@ -1,23 +1,21 @@
 
 more bot options:
-- crawler
-- test telegram database
+net - crawler
+net - test telegram database
 
 future:
 - calc based on token
 
 history {
-    add pageination for history
-    history filter: user filter has to be dropdown with search
-    add every source of talk with bot to history (done: api, widget, telegram, sessionChat | nd: hooshbaan?)
+    net add pageination for history
+    net history filter: user filter has to be dropdown with search
+    net test every source of history (done: api, widget, telegram, sessionChat)
+    save chats with hooshbaan bot
 }
 
-widget token can be copied and used by anyone? (add host url, or hide token)
-make an abstraction to talk with bot
-message limit for each user
-analytics for message count 
+net widget token can be copied and used by anyone? (add host url, or hide token)
+net analytics for message count 
 change telegram connection system? (depending on token is a bad thing)
-make a better checkbox
 test image uploader delete should remove file from s3
 rethink plan. message count should not be in there
 make the source of all use chat one place. git submodule or node package?
