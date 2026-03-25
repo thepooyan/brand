@@ -32,7 +32,7 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
     // })
     //
     // return result.toDataStreamResponse()
-    const stream = getFakeStream(1000, 1000)
+    const stream = getFakeStream(100, 100)
 
     const lastQ = body.messages.at(-1)?.content || ""
     const qa:timedMessage[] = [
@@ -40,7 +40,7 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
       {role: "assistant", content: "this is tele res", timestamp: new Date()},
     ]
 
-    await updateChatHistory(qa, res.data.id, "11.22.33.44", "telegram")
+    await updateChatHistory(qa, res.data.id, "11.22.33.44", "website")
 
     return new Response(stream, {
       headers: { 'Content-Type': 'text/plain' }

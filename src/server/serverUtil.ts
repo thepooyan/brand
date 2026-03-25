@@ -7,7 +7,7 @@ import { db } from "~/db/db";
 import { and, eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
-import { timedMessage } from "~/lib/chatUtil";
+import { chat_sources, timedMessage } from "~/lib/chatUtil";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { ActionResponse2 } from "~/lib/actionAbstraction";
 import { safeDb2 } from "~/lib/utils";
@@ -73,7 +73,7 @@ export const isAdminLoggedIn = async () => {
 
 
 export const updateChatHistory =
-async (QandA: timedMessage[], botId: number, userIP: string, from: "widget" | "api" | "telegram")
+async (QandA: timedMessage[], botId: number, userIP: string, from: typeof chat_sources[number])
 :ActionResponse2<ResultSet> => {
   "use server"
   return await safeDb2(

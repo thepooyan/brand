@@ -28,7 +28,7 @@ function generateRandomParagraph(paragraphLength: number = 500, chunkLength: num
 
 export const getFakeStream = (initialDelay: number, wordingDelay: number) => {
   const encoder = new TextEncoder()
-  const messages = generateRandomParagraph(200, 70).map(i => `0: ${i}`)
+  const messages = generateRandomParagraph(20, 70).map(i => `0: ${i}`)
   console.log(messages)
 
   const stream = new ReadableStream({
