@@ -1,6 +1,5 @@
 import Spinner from "./Spinner"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
 import { FiTrash2, FiEdit, FiKey, FiSend, FiLock } from "solid-icons/fi"
 import { ImTelegram } from "solid-icons/im"
@@ -102,7 +101,7 @@ const BotCard = ({bot, telegramAccess}:props) => {
             variant="secondary"
             onclick={handleTelegram}
           >
-            <ImTelegram class="w-3 h-3 ml-1" />
+            <ImTelegram class="w-3 h-3 ml-1 text-blue-600" />
             اتصال به تلگرام
           </Button>
 
