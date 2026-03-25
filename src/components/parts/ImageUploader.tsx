@@ -54,6 +54,7 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
     if (!url) return 
     try {
       let pathname = new URL(url).pathname.substring(1)
+      setState("loading")
       let res = await deleteFileFromS3(pathname)
       if (res === null) throw new Error("none")
       setState("idle")
@@ -65,6 +66,7 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
     } catch(e) {
       console.log(e)
       callModal.fail("حذف تصویر موفقیت آمیز نبود. لطفا مجددا تلاش کنید.")
+      setState("preview")
     }
   }
 
