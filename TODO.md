@@ -13,6 +13,7 @@ history {
     save chats with hooshbaan bot
 }
 
+use chat error handling is wrong
 what if same ip send message from two different sources
 net fix streaming answer to history
 net widget token can be copied and used by anyone? (add host url, or hide token)

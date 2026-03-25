@@ -21,7 +21,7 @@ export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
       eq(planTable.id, soonestPlan.id)
     ).returning()
   if (updated.remainingMessages === 0) {
-    dbctx.delete(planTable).where(eq(planTable.id, updated.id))
+    await dbctx.delete(planTable).where(eq(planTable.id, updated.id))
   }
   return true
 }
