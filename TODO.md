@@ -13,6 +13,7 @@ history {
     save chats with hooshbaan bot
 }
 
+save theme in local storage or cookie
 use chat error handling is wrong
 what if same ip send message from two different sources
 net fix streaming answer to history

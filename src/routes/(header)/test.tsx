@@ -1,4 +1,4 @@
-import { Button } from "~/components/ui/button"
+import Spinner from "~/components/parts/Spinner"
 import { crawl } from "~/server/crawler"
 
 const test = () => {
@@ -9,7 +9,9 @@ const test = () => {
   }
 
   return <>
-    <Button onclick={hi}>hi</Button>
+    hi
+    <Spinner/>
+    hi
   </>
 }
 
