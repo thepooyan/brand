@@ -2,10 +2,10 @@ import { createEffect, createSignal } from "solid-js";
 import { getThemeSession, updateThemeSession } from "./session";
 
 export type theme = "dark" | "light"
-export const defaultTheme:theme = "dark"
+export const defaultTheme:theme = await getThemeSession() || "dark"
 
 
-export const [theme, setTheme] = createSignal<theme>(await getThemeSession() || "dark")
+export const [theme, setTheme] = createSignal<theme>(defaultTheme)
 
 export const toggleTheme = () => {
   setTheme(prev => prev === "dark" ? "light": "dark")
