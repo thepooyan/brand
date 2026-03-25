@@ -159,18 +159,23 @@ const isPlanExpired = (p: PlanInstance) => {
  * Proiority with the one that expires sooner
  * @returns plan instance that fits the description, or if none, null
  */
-export const findAvailavlePlan = (plans: PlanInstance[]):PlanInstance | null => {
+export const findAvailavlePlanForDecrement = (plans: PlanInstance[]):PlanInstance | null => {
   let plansWithMsg = plans.filter(p => p.remainingMessages > 0)
   if (!plansWithMsg) return null
+
+  //if free plan is there, it is the proiority
+  let isFree = plansWithMsg.find(p => p.plan_id === "free")
+  if (isFree) return isFree
+
   let soonest = findSoonestExpiringPlan(plans)
   if (!soonest) return null
   if (!isPlanExpired(soonest)) return soonest
-  return findAvailavlePlan(plans.filter(p => p.id !== soonest.id))
+  return findAvailavlePlanForDecrement(plans.filter(p => p.id !== soonest.id))
 }
 
 export const userPermissions = (user: User_Plan_Bots) => {
 
-  let avlPlan = findAvailavlePlan(user.current_plans)
+  let avlPlan = findAvailavlePlanForDecrement(user.current_plans)
   if (!avlPlan) return {
     telegram: null,
     moreBots: null,
