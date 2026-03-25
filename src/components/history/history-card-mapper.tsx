@@ -1,4 +1,4 @@
-import { Accessor, For } from "solid-js"
+import { Accessor, For, Show } from "solid-js"
 import HistoryCard, { HistoryWithName } from "./history-card"
 import { FiFilter } from "solid-icons/fi"
 import { filterHook, filterOptions, useFilter } from "~/lib/hooks/useFilter"
@@ -56,6 +56,12 @@ const HistoryCardMapper = ({data}:p) => {
       <For each={filtered()}>
         {(b, idx) => <HistoryCard histroy={b} idx={idx}/>}
       </For>
+
+      <Show when={filtered().length === 0}>
+        <div class="text-muted-foreground text-center text-sm my-10">
+          مکالمه ای وجود ندارد
+        </div>
+      </Show>
     </>
   )
 }
