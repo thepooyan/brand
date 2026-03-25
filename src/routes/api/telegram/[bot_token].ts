@@ -3,7 +3,7 @@ import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { chatbot_messager_table, planTable } from '~/db/schema';
 import { message, timedMessage } from '~/lib/chatUtil';
-import { doesPlanHaveTelegram } from '~/sections/plan';
+import { doesPlanIncludeFeature, planFeatures } from '~/sections/plan';
 import { replyWithAI } from '~/server/actions';
 import { hashToken, updateChatHistory } from '~/server/serverUtil';
 import { telegram } from '~/server/telegram';
@@ -70,7 +70,7 @@ const getChatHistory = async (bot_token: string, chat_id:number):Promise<{histor
     if (!bot) return "404"
     const plan = bot.user.current_plan
     if (!plan) return "payment"
-    if (!doesPlanHaveTelegram(plan.plan_id)) return "payment"
+    if (!doesPlanIncludeFeature(plan.plan_id, planFeatures.telegram)) return "payment"
     if (plan.messageCount !> 0) return "payment"
 
     await ctx.update(planTable).set({remainingMessages: plan.remainingMessages - 1}).where(

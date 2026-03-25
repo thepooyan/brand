@@ -10,8 +10,8 @@ import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
 import { ActionResponse } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
-import { doesPlanHaveTelegram } from "~/sections/plan"
 import { chatbotStatus } from "~/lib/interface"
+import { doesPlanIncludeFeature, planFeatures } from "~/sections/plan"
 
 type initialData = {
   bots: chatbotStatus[],
@@ -38,7 +38,7 @@ const getInitialData = query(async ():ActionResponse<initialData> => {
 
     const canHaveMoreBots = userBots.length < dbUser.current_plan.botCount
 
-    const telegramAccess = doesPlanHaveTelegram(dbUser.current_plan.plan_id)
+    const telegramAccess = doesPlanIncludeFeature(dbUser.current_plan.plan_id, planFeatures.telegram)
 
     return {ok: true, data: {canHaveMoreBots, bots: userBots, telegramAccess} }
   })

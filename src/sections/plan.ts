@@ -2,14 +2,14 @@ import { DB_Plan, NewPlan, } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
-enum features {
+export enum planFeatures {
   telegram = "اتصال به تلگرام",
   color = "قابلیت تغییر تم",
   learnFromLink = "یادگیری از لینک",
   removeOurLogo = "حذف لوگو هوشبان"
 }
-type feature = features
-export const allFeatures = Object.values(features)
+type feature = planFeatures
+export const allFeatures = Object.values(planFeatures)
 
 export const plan_ids = [ "free" , "starter" , "regular" , "pro" ] as const
 type plan_id = typeof plan_ids[number]
@@ -31,11 +31,10 @@ const daysFromNow = (days: number) => {
   return date
 }
 
-
-export const doesPlanHaveTelegram = (p: plan_id) => {
-  if (p == "pro") return true
-  if (p == "regular") return true
-  return false
+export const doesPlanIncludeFeature = (p: plan_id, f: planFeatures) => {
+  let plan = allPlans.find(f => f.id === p)
+  if (!plan) throw new Error(`Plan ${p} is not defined`)
+  return plan.features.includes(f)
 }
 
 export const convertPlanToDTO = (p: PlanDefinition, remainingMessages?: number):NewPlan => ({
@@ -56,7 +55,7 @@ export const freePlan: PlanDefinition = {
   botCount: 1,
   knowledgeBase: 100,
   features: [
-    features.learnFromLink
+    planFeatures.learnFromLink
   ],
 }
 
@@ -69,7 +68,7 @@ const testPlan1: PlanDefinition = {
   botCount: 2,
   knowledgeBase: 300,
   features: [
-    features.learnFromLink
+    planFeatures.learnFromLink
   ],
 }
 
@@ -82,9 +81,10 @@ const testPlan2: PlanDefinition = {
   botCount: 5,
   knowledgeBase: 1000,
   features: [
-    features.learnFromLink,
-    features.color,
-    features.removeOurLogo
+    planFeatures.telegram,
+    planFeatures.learnFromLink,
+    planFeatures.color,
+    planFeatures.removeOurLogo
   ],
 }
 

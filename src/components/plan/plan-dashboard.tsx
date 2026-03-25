@@ -1,7 +1,7 @@
 import { DB_Plan } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Accessor, ParentProps, Show } from "solid-js"
-import { doesPlanHaveTelegram, findPlanName } from "~/sections/plan"
+import { doesPlanIncludeFeature, findPlanName, planFeatures } from "~/sections/plan"
 import { Button } from "../ui/button"
 import { calcMessageCount, calcMessagePercent, daysRemaining } from "~/lib/utils"
 import TA from "../parts/TA"
@@ -43,7 +43,7 @@ const PlanDashboard = ({plan}:p) => {
             </Text>
             <Text>
               اتصال به تلگرام: 
-              {doesPlanHaveTelegram(plan().plan_id) ? <>بله <FiCheck class="text-green-500"/></> : <>خیر <FiX class="text-destructive"/></>}
+              {doesPlanIncludeFeature(plan().plan_id, planFeatures.telegram) ? <>بله <FiCheck class="text-green-500"/></> : <>خیر <FiX class="text-destructive"/></>}
             </Text>
           </div>
 

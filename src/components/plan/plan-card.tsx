@@ -1,4 +1,4 @@
-import { allFeatures, convertPlanToDTO, doesPlanHaveTelegram, PlanDefinition } from "~/sections/plan"
+import { allFeatures, convertPlanToDTO, doesPlanIncludeFeature, PlanDefinition, planFeatures } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { createSignal, For } from "solid-js"
 import { Button } from "../ui/button"
@@ -100,12 +100,6 @@ const PlanCard = ({plan}:p) => {
           </p>}
         </For>
         <br/>
-        <p class="flex justify-between">
-          <span>قابلیت اتصال به تلگرام:</span>
-          <span class="flex items-center gap-1 ">
-            {doesPlanHaveTelegram(plan.id) ? <><Yes/>دارد </> : <><No/>ندارد</>}
-          </span>
-        </p>
         <p class="flex justify-between">
           <span>تعداد پیام:</span>
           <span>{seprateByComma(plan.messageCount)} عدد</span>
