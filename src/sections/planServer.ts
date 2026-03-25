@@ -15,10 +15,13 @@ export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
   if (user.current_plans.length === 0) return false
   let soonestPlan = findAvailavlePlanForDecrement(user.current_plans)
   if (!soonestPlan) return false
-  await dbctx.update(planTable).set({
+  let [updated] = await dbctx.update(planTable).set({
     remainingMessages: sql`${planTable.remainingMessages} - 1`
   }).where(
       eq(planTable.id, soonestPlan.id)
-    )
+    ).returning()
+  if (updated.remainingMessages === 0) {
+    dbctx.delete(planTable).where(eq(planTable.id, updated.id))
+  }
   return true
 }

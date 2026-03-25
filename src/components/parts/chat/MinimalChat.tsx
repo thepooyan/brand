@@ -70,6 +70,7 @@ const MinimalChat = ({botId}:props) => {
     () => scrollToBottom()
   )
   const [inputMessage, setInputMessage] = createSignal("")
+  let inputRef!: HTMLInputElement
 
   const proccessing = () => {
     return pending() || streaming()
@@ -79,6 +80,11 @@ const MinimalChat = ({botId}:props) => {
     let a = errorMsg()
     if (a !== null)
     callModal.fail(a)
+  })
+
+  createEffect(() => {
+    proccessing()
+    inputRef.focus()
   })
 
   const scrollToBottom = () => {
@@ -162,6 +168,7 @@ const MinimalChat = ({botId}:props) => {
             <div class="flex gap-2">
               <input
                 type="text"
+                ref={inputRef}
                 value={inputMessage()}
                 onKeyUp={(e) => setInputMessage(e.currentTarget.value)}
                 onKeyPress={handleKeyPress}
