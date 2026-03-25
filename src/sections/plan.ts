@@ -1,6 +1,4 @@
-import { eq, sql } from "drizzle-orm"
-import { db, dbCtx } from "~/db/db"
-import { NewPlanInstance, PlanInstance, planTable, User_Plan, User_Plan_Bots } from "~/db/schema"
+import { NewPlanInstance, PlanInstance, User_Plan_Bots } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
 
@@ -27,7 +25,7 @@ export type PlanDefinition = {
   features: feature[]
 }
 
-const daysFromNow = (days: number) => {
+export const daysFromNow = (days: number) => {
   let date = new Date()
   date.setDate(date.getDate() + days)
   return date
@@ -156,24 +154,11 @@ const isPlanExpired = (p: PlanInstance) => {
   return (p.expirationDate < new Date())
 }
 
-const findAvailavlePlan = (plans: PlanInstance[]) => {
+export const findAvailavlePlan = (plans: PlanInstance[]):PlanInstance | null => {
   let soonest = findSoonestExpiringPlan(plans)
   if (!soonest) return null
   if (!isPlanExpired(soonest)) return soonest
   return findAvailavlePlan(plans.filter(p => p.id !== soonest.id))
-}
-
-export const decrementMessageCount = async (user: User_Plan, ctx?: dbCtx) => {
-  const dbctx = ctx ? ctx : db
-  if (user.current_plans.length === 0) return false
-  let soonestPlan = findAvailavlePlan(user.current_plans)
-  if (!soonestPlan) return false
-  await dbctx.update(planTable).set({
-    remainingMessages: sql`${planTable.remainingMessages} - 1`
-  }).where(
-      eq(planTable.id, soonestPlan.id)
-    )
-  return true
 }
 
 export const userPermissions = (user: User_Plan_Bots) => {
@@ -193,13 +178,3 @@ export const userPermissions = (user: User_Plan_Bots) => {
   }
 }
 
-export const newFreePlan = async (user_id: number) => {
-  const [inserted] = await db.insert(planTable).values({
-    plan_id: freePlan.id,
-    remainingMessages: freePlan.messageCount,
-    user_id: user_id,
-    boughtDate: new Date(),
-    expirationDate: daysFromNow(90),
-  }).returning()
-  return inserted
-}

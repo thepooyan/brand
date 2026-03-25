@@ -12,7 +12,7 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { message } from "~/lib/chatUtil"
 import { safeDb } from "~/lib/utils"
-import { newFreePlan } from "~/sections/plan"
+import { newFreePlan } from "~/sections/planServer"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
