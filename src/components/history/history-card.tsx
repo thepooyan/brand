@@ -10,6 +10,7 @@ import { getAuthSession } from "~/lib/session"
 import { ActionResponse2 } from "~/lib/actionAbstraction"
 import { revalidate } from "@solidjs/router"
 import TA from "../parts/TA"
+import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
@@ -83,7 +84,7 @@ const HistoryCard = ({histroy:h, idx}:p) => {
           </Small>
         </div>
       <div class="ml-5 space-x-1">
-        <Button class="" size="sm" as={TA} href={`/Panel/history/${h.id}`}>
+        <Button class="" size="sm" as={TA} href={`/Panel/history/${h.id}`} navigatorHook={usePanelTransitiveNavigate}>
           نمایش کامل
         </Button>
         <Button variant="destructive" size="sm" onclick={deleteMe}>

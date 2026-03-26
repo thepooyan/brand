@@ -14,6 +14,7 @@ import NewTokenAlert from "./bot/NewTokenAlert"
 import TelegramSet from "./TelegramSet"
 import { Accessor } from "solid-js"
 import Restriction from "../pages/Restriction"
+import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 interface props {
   bot: chatbotStatus 
@@ -90,6 +91,7 @@ const BotCard = ({bot, telegramAccess}:props) => {
             size="sm"
             variant="secondary"
             as={TA}
+            navigatorHook={usePanelTransitiveNavigate}
             href={`/Panel/Edit-Bot/${bot.id}`}
           >
             <FiEdit class="w-3 h-3 ml-1" />
@@ -130,6 +132,7 @@ const BotCard = ({bot, telegramAccess}:props) => {
               false && "opacity-30 pointer-events-none"
             )}
             as={TA} href={`/Panel/Testbot/${bot.id}`}
+            navigatorHook={usePanelTransitiveNavigate}
           >
             <FiSend class="w-3 h-3 ml-1" />
             ارسال پیام
