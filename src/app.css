@@ -1,7 +1,11 @@
 @import "tailwindcss";
 @import "./styles/chadcn.css";
-@import "./styles/theme/light.css";
+@import "./styles/theme/default.css";
 @import "./styles/theme/dark.css";
+@import "./styles/theme/plain.css";
+@import "./styles/theme/pooyan.css";
+@import "./styles/theme/neon.css";
+@import "./styles/theme/amber.css";
 @import "./styles/viewTransitions.css";
 @import "./styles/utilites.css";
 @import "./styles/animation.css";

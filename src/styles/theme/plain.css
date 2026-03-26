@@ -1,0 +1,4 @@
+.theme-plain {
+  --primary: oklch(0.2050 0 0);
+  --primary-foreground: oklch(0.9850 0 0);
+}
