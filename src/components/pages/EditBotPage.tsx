@@ -1,6 +1,6 @@
 import { I_Bot } from "~/db/schema"
 import Input from "../ui/input"
-import { Component, createSignal, ParentComponent } from "solid-js"
+import { children, Component, createSignal, ParentComponent, ParentProps } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
@@ -39,17 +39,19 @@ const EditBotPage = ({bot}:p) => {
   const [loading, setLoading] = createSignal(false)
   const nv = useNavigate()
 
-  interface pp {
+  interface pp extends ParentProps {
     key: keyof typeof bot
     name: string
     as?: Component
     className?: string
+    placeholder?: string
   }
-  const In = ({key, name, className, as}:pp) => {
+  const In = ({key, name, className, placeholder, as, children}:pp) => {
     let Comp = as ? as : Input
     return <Seprator className={className}>
       {name}
-      <Comp placeholder={name}  {...register(key)} />
+      <Comp placeholder={placeholder ? placeholder : name}  {...register(key)} />
+      {children}
     </Seprator>
   }
   const Seprator:ParentComponent<{className?: string, as?: Component | "div"}> = ({children, className, as}) => {
@@ -73,6 +75,21 @@ const EditBotPage = ({bot}:p) => {
     callModal.fail(res.msg)
   }
 
+  interface p {
+    text: () => string
+    key: keyof ReturnType<typeof flattenBot>
+  }
+  const Example = ({text, key}:p) => {
+    return <p class="text-sm text-muted-foreground">
+      مثال: {text()}
+      <span class="text-blue-500 underline cursor-pointer mr-1"
+        onclick={() => {setForm(key, text());console.log(text)} }
+      >
+         (اعمال)
+      </span>
+    </p>
+  }
+
   return (
     <>
       <BackBtn href="/Panel/chatbot"
@@ -83,8 +100,13 @@ const EditBotPage = ({bot}:p) => {
       onsubmit={registerSubmit(handleSubmit)}>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <In key="botName" name="نام ربات" />
           <In key="businessName" name="نام بیزنس" />
+          <In key="botName" name="نام ربات" placeholder={`ربات هوشمند ${formValues().businessName}`}>
+            <Example
+              text={() => `ربات هوشمند ${formValues().businessName}`}
+              key="botName"
+            />
+          </In>
           <Seprator>
             لحن
             <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setForm("tone", getToneKeyByLabel(e) || "") }/>
@@ -108,7 +130,12 @@ const EditBotPage = ({bot}:p) => {
             <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)}/>
           </Seprator>
           <Seprator>
-            <In key="greeting" name="پیام خوش آمد گویی" />
+            <In key="greeting" name="پیام خوش آمد گویی" >
+              <Example
+                text={() => `سلام! من ${formValues().botName} هستم. چطور میتونم کمکتون کنم؟`}
+                key="greeting"
+              />
+            </In>
           </Seprator>
           <div>
             <In key="floatingMessage" name="پیام شناور" />
@@ -134,6 +161,7 @@ const EditBotPage = ({bot}:p) => {
     </>
   )
 }
+
 
 
 export default EditBotPage

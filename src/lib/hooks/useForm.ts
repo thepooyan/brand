@@ -82,14 +82,14 @@ export const useForm = <S extends object>({schema, initialValues}:p<S> = {}) => 
       return {
         name: name,
         value: val,
-        onchange: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: e.currentTarget.value}))
+        onkeyup: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: e.currentTarget.value}))
       }
     }
     if (typeof val === "number") {
       return {
         name: name,
         value: val,
-        onchange: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: parseInt(e.currentTarget.value) }))
+        onkeyup: (e:InputChangeEvent) => setForm(prev => ({...prev, [name]: parseInt(e.currentTarget.value) }))
       }
     }
     return {

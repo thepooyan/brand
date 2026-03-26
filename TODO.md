@@ -13,9 +13,6 @@ history {
     save chats with hooshbaan bot
 }
 
-bot name => {bussiness name}'s smart assistant
-welcome message => hi i am {botname}. how can i assist
-
 make limitation for day?
 fix main wallpaper in white
 save theme in local storage or cookie
