@@ -4,7 +4,6 @@ import { Label } from "~/components/ui/label"
 import { createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "~/components/ui/input"
-import MyButton from "~/components/parts/MyButton"
 import { Timer } from "~/lib/utils"
 import { useViewTransition } from "~/lib/viewTransition"
 import TA from "~/components/parts/TA"
@@ -98,7 +97,7 @@ export default function Login() {
   const [step, setStep, markElement] = useViewTransition<"phone" | "otp">("step", "phone")
 
   return (
-    <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-[url('/wave.webp')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
+    <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-black bg-[url('/wave.webp')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
       <Link rel="canonical" href="https://hooshbaan.com/Login"/>
       <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...markElement("card")}>
         <CardHeader class="text-center">
@@ -128,12 +127,12 @@ export default function Login() {
                   />
                 </div>
               </div>
-              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" isWaiting={isPhoneWaiting}
+              <Button type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground" loading={isPhoneWaiting}
                 {...markElement("btn")}
               >
                   دریافت کد تایید
                   <FiArrowLeft class="mr-2 h-4 w-4" />
-              </MyButton>
+              </Button>
             </form>
           ) : (
             <form onSubmit={handleOtpSubmit} class="space-y-4">
@@ -162,19 +161,19 @@ export default function Login() {
                 <p class="text-sm text-muted-foreground text-center mt-2">
                     {timerSignal() === 0 ? <>
                       کد را دریافت نکرده اید؟
-                      <MyButton reverseSpinner variant="link" class="inline p-0 mr-1 h-auto" onclick={sendAgain} isWaiting={isResendWaiting}>ارسال مجدد</MyButton>
+                      <Button variant="link" class="inline p-0 mr-1 h-auto" onclick={sendAgain} loading={isResendWaiting}>ارسال مجدد</Button>
                     </> : <>
                       کد را دریافت نکرده اید؟
                       ارسال مجدد در {timerSignal()} ثانیه
                     </>}
                 </p>
               </div>
-              <MyButton type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+              <Button type="submit" class="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                   {...markElement("btn")}
-                  isWaiting={isOtpWaiting}>
+                  loading={isOtpWaiting}>
                 تایید و ورود
                 <FiLock class="mr-2 h-4 w-4" />
-              </MyButton>
+              </Button>
               <Button type="button" variant="link" class="w-full text-primary" onClick={() =>  setStep("phone")}>
                 تغییر شماره تلفن
               </Button>
