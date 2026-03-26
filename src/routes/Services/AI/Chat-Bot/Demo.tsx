@@ -8,6 +8,7 @@ import { pageMarker } from '~/lib/routeChangeTransition'
 import { preload } from '~/lib/hooks'
 import { name } from '../../../../../config/config'
 import { BiRegularBrain } from 'solid-icons/bi'
+import { callModal } from '~/components/layout/Modal'
 
 export default function Demo() {
   const [inputMessage, setInputMessage] = createSignal('')
@@ -22,10 +23,15 @@ export default function Demo() {
     hour12: false
   });
 
-  const {messages, pending, streaming, send} = useChat(
+  const {messages, pending, streaming, send, errorMsg} = useChat(
     () => streamElementRef,
     () => scrollToBottom()
   );
+
+  createEffect(() => {
+    let err = (errorMsg())
+    if (err) callModal.fail(err)
+  })
 
   const scrollToBottom = () => {
     messagesRailRef.scrollTo({

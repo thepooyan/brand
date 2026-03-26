@@ -31,7 +31,6 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
       setMessages(updated);
 
       const res = await api.stream(endpoint, {messages: updated, from: source }).catch(e => e)
-      console.log(res)
 
       setPending(false);
 
