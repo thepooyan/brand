@@ -26,7 +26,7 @@ export function useTransitionMarker(groupName: string):[
   (name?: string) => { style: { "view-transition-name": string } },
   typeof applyTransition
 ] {
-  const [que, setQue] = createSignal(true)
+  const [que, setQue] = createSignal(false)
 
   const applyTransition = (changeTheDOM: ()=>void) => {
     setQue(true)
