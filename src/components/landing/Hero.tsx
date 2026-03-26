@@ -21,7 +21,7 @@ const Hero = () => {
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center  ">
             <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 intro text-primary dark:text-foreground">
-              هوش بان ، نردبانی به سوی 
+              هوش بان، نردبانی به سوی 
               <ChangeColor>
                 <span class="text-primary intro whitespace-nowrap m-3 block ">آینده هوشمند</span>
               </ChangeColor>
