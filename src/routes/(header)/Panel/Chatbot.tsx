@@ -89,7 +89,7 @@ export default function Component() {
           {/* Three buttons at top left */}
           <div class="flex gap-3">
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               as={TA} href="/docs/chat-bot/telegram"
             >
@@ -97,7 +97,7 @@ export default function Component() {
               آموزش استفاده در تلگرام
             </Button>
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               as={TA} href="/docs/chat-bot/widget"
             >
@@ -105,7 +105,7 @@ export default function Component() {
               آموزش استفاده به عنوان ویجت
             </Button>
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               as={TA} href="/docs/chat-bot/api"
             >
