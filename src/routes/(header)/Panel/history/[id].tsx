@@ -4,10 +4,11 @@ import { FiArrowLeft } from "solid-icons/fi"
 import { Show, Suspense } from "solid-js"
 import HistoryChatbox from "~/components/history/history-chatbox"
 import { Loading } from "~/components/parts/Loading"
+import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { db } from "~/db/db"
-import { panelPageMarker } from "~/lib/routeChangeTransition"
+import { panelPageMarker, usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { safeDb2 } from "~/lib/utils"
 
 const queryHistoryDetails = query(async (id: number) => {
@@ -27,10 +28,13 @@ const id = () => {
 
   return (
     <div {...panelPageMarker()}>
-      <Button onclick={() => history.back()}
+      <Button
         variant="secondary"
         size="sm"
-        class="mr-auto flex"
+        class="mr-auto flex w-max"
+        as={TA}
+        navigatorHook={usePanelTransitiveNavigate}
+        href="/Panel/history"
       >
         بازگشت
         <FiArrowLeft/>
