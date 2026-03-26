@@ -1,6 +1,8 @@
+import { panelPageMarker } from "~/lib/routeChangeTransition"
+
 const analytics = () => {
   return (
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-2" {...panelPageMarker()}>
       analytics
     </div>
   )

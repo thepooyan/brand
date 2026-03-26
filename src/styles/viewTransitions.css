@@ -20,6 +20,28 @@
   }
 }
 
+@keyframes subtle-slide-out {
+  from {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-5%);
+    opacity: 0;
+  }
+}
+
+@keyframes subtle-slide-in {
+  from {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
 ::view-transition-old(page) {
   animation: 0.1s ease shrink-out;
   transform-origin: center;
@@ -28,5 +50,15 @@
 
 ::view-transition-new(page) {
   animation: 0.3s ease slide-in;
+  z-index: 2;
+}
+
+::view-transition-old(panelPage) {
+  animation: 0.3s  subtle-slide-out;
+  z-index: 1;
+}
+
+::view-transition-new(panelPage) {
+  animation: 0.3s  subtle-slide-in;
   z-index: 2;
 }

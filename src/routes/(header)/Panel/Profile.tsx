@@ -11,6 +11,7 @@ import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
 import { ActionResponse } from "~/lib/actionAbstraction"
 import { extractFormData } from "~/lib/hooks/useForm"
+import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
 import { safeDb } from "~/lib/utils"
@@ -62,7 +63,7 @@ const Profile = () => {
   })
 
   return (
-    <div class="flex justify-center items-center h-full">
+    <div class="flex justify-center items-center h-full" {...panelPageMarker()}>
       <div class="flex justify-center w-lg">
         <Card class="w-full">
           <CardHeader class="text-right">

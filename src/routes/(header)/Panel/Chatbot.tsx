@@ -12,6 +12,7 @@ import { ActionResponse2 } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
 import { userPermissions } from "~/sections/plan"
+import { panelPageMarker } from "~/lib/routeChangeTransition"
 
 type initialData = {
   bots: chatbotStatus[],
@@ -80,7 +81,7 @@ export default function Component() {
   }
 
   return (
-    <div class="min-h-screen p-6 ">
+    <div class="min-h-screen p-6 " {...panelPageMarker()}>
       <div class="max-w-7xl mx-auto">
         {/* Header */}
         <div class="flex items-center justify-between mb-8">

@@ -12,4 +12,13 @@ export const useTransitiveNavigate = () => {
   }
 }
 
+export const [panelPageMarker, panelRouteChangeTransition] = useTransitionMarker("panelPage")
 
+export const usePanelTransitiveNavigate = () => {
+  const nv = useNavigate()
+  return (to: string) => {
+    panelRouteChangeTransition(() => {
+      nv(to)
+    })
+  }
+}

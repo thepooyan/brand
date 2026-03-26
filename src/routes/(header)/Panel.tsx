@@ -5,6 +5,7 @@ import Blinker from "~/components/parts/Blinker"
 import TA from "~/components/parts/TA"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
+import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { getUser } from "~/lib/signal"
 
@@ -83,6 +84,7 @@ const I = ({href, children}:ParentProps<{href: string}>) => {
     variant="outline"
     class="px-5 py-3 inline-block relative"
     activeClass="bg-accent"
+    navigatorHook={usePanelTransitiveNavigate}
   >
     {children}
   </Button>

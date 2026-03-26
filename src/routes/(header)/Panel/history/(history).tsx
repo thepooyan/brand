@@ -5,6 +5,7 @@ import HistoryCardMapper from "~/components/history/history-card-mapper"
 import { callModal } from "~/components/layout/Modal"
 import { Loading } from "~/components/parts/Loading"
 import { db } from "~/db/db"
+import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { safeDb2 } from "~/lib/utils"
 
@@ -38,11 +39,13 @@ const botId = () => {
   })
 
   return (
-    <Suspense fallback={<Loading/>}>
-      <Show when={botHistory()?.data}>
-        {d => <HistoryCardMapper data={d}/>}
-      </Show>
-    </Suspense>
+    <div {...panelPageMarker()}>
+      <Suspense fallback={<Loading/>}>
+        <Show when={botHistory()?.data}>
+          {d => <HistoryCardMapper data={d}/>}
+        </Show>
+      </Suspense>
+    </div>
   )
 }
 

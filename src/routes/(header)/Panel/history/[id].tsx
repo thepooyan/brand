@@ -7,6 +7,7 @@ import { Loading } from "~/components/parts/Loading"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { db } from "~/db/db"
+import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { safeDb2 } from "~/lib/utils"
 
 const queryHistoryDetails = query(async (id: number) => {
@@ -25,7 +26,7 @@ const id = () => {
   const h = createAsync(() => queryHistoryDetails(parseInt(id)))
 
   return (
-    <div>
+    <div {...panelPageMarker()}>
       <Button onclick={() => history.back()}
         variant="secondary"
         size="sm"

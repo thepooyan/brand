@@ -5,10 +5,11 @@ import { useTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 type props = JSX.AnchorHTMLAttributes<HTMLAnchorElement> & {
   activeClass?: string
+  navigatorHook?: () => (to: string) => void
 };
-const TA = ({onClick,...props}:props):JSXElement => {
+const TA = ({onClick, navigatorHook,...props}:props):JSXElement => {
 
-  const nv = useTransitiveNavigate()
+  const nv = navigatorHook ? navigatorHook() : useTransitiveNavigate()
   const pr = usePreloadRoute()
   const location = useLocation()
   let ref!: HTMLAnchorElement
