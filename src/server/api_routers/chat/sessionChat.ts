@@ -40,7 +40,7 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
       {role: "assistant", content: "this is tele res", timestamp: new Date()},
     ]
 
-    await updateChatHistory(qa, res.data.id, "11.22.33.44", "website")
+    await updateChatHistory(qa, res.data.id, "192.168.2.3", "website")
 
     return new Response(stream, {
       headers: { 'Content-Type': 'text/plain' }

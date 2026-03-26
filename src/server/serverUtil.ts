@@ -81,7 +81,8 @@ async (QandA: timedMessage[], botId: number, userIP: string, from: typeof chat_s
         let already = await ctx.query.chatbot_history_table.findFirst({ 
           where: (tbl => and(
             eq(tbl.userIP, userIP),
-            eq(tbl.botId, botId)
+            eq(tbl.botId, botId),
+            eq(tbl.source, from)
           ))
         })
 
