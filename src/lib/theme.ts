@@ -3,7 +3,7 @@ import { getThemeSession, updateThemeSession } from "./session";
 
 export type theme = "dark" | "light"
 // export const defaultTheme:theme = await getThemeSession() || "dark"
-export const defaultTheme:theme = "dark"
+export const defaultTheme:theme = "light"
 
 
 export const [theme, setTheme] = createSignal<theme>(defaultTheme)
