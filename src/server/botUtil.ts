@@ -26,7 +26,7 @@ export const isChatAllowed = async (bot: botWithRelations, recieverIP?: string):
     let history = await db.query.chatbot_history_table.findMany({
       where: (tbl => eq(tbl.userIP, recieverIP))
     })
-    let total = history.map(a => a.messages.length).reduce((p,c) => p+c)
+    let total = history.map(a => a.messages.length).reduce((p,c) => p+c, 0)
     if (total >= bot.limitation) return {ok: false, status: 402, msg: "متاسفانه محدودیت پاسخدهی ربات به پایان رسیده"}
   }
 

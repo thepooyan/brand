@@ -119,15 +119,15 @@ export const findPlanName = (p: PlanInstance) => {
 }
 
 const doesAtleastOnePlanHaveTelegram = (plans: PlanInstance[]) => {
-  return plans.map(t => getPlan(t).features.includes(planFeatures.telegram) ).reduce((p,c) => p || c)
+  return plans.map(t => getPlan(t).features.includes(planFeatures.telegram) ).reduce((p,c) => p || c, false)
 }
 
 const getNumberOfAllowedBots = (plans: PlanInstance[]) => {
-  return plans.map(p => getPlan(p).botCount).reduce((p,c) => p + c)
+  return plans.map(p => getPlan(p).botCount).reduce((p,c) => p + c, 0)
 }
 
 const getRemainingMesseages = (plans: PlanInstance[]) => {
-  return plans.map(m => m.remainingMessages).reduce((p,c) => p+c)
+  return plans.map(m => m.remainingMessages).reduce((p,c) => p+c, 0)
 }
 
 const findSoonestExpiringPlan = (plans: PlanInstance[]): PlanInstance | null => {
