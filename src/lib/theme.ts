@@ -2,7 +2,8 @@ import { createEffect, createSignal } from "solid-js";
 import { getThemeSession, updateThemeSession } from "./session";
 
 export type theme = "dark" | "light"
-export const defaultTheme:theme = await getThemeSession() || "dark"
+// export const defaultTheme:theme = await getThemeSession() || "dark"
+export const defaultTheme:theme = "dark"
 
 
 export const [theme, setTheme] = createSignal<theme>(defaultTheme)
@@ -17,6 +18,6 @@ const setThemeClient = async (val: theme) => {
 }
 
 createEffect(async () => {
-  document.body.className = `theme-${theme()}`
+  document.body.className = `theme-${theme()} ${theme()}`
   await setThemeClient(theme())
 })

@@ -16,7 +16,7 @@ const Hero = () => {
         type="image/jpeg"
       />
       <IntroStagger>
-        <section class="py-20 md:py-32  bg-[url('/wave.webp')] infiniteRotate
+        <section class="py-20 md:py-32 dark:bg-[url('/wave.webp')] infiniteRotate
           !pt-10  bg-repeat-x sm:bg-position-[0_-1rem] bg-position-[0_-10rem] sm:!pt-45 ">
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center  ">
