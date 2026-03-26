@@ -17,6 +17,8 @@ import { Dynamic } from "solid-js/web"
 import ArrayInput from "../ui/array-input"
 import { useForm } from "~/lib/hooks/useForm"
 import Checkbox from "../ui/checkbox"
+import BackBtn from "../parts/back-btn"
+import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 interface p {
   bot: I_Bot
@@ -73,6 +75,10 @@ const EditBotPage = ({bot}:p) => {
 
   return (
     <>
+      <BackBtn href="/Panel/chatbot"
+        class="flex mr-auto ml-13 w-max mb-3"
+        navigatorHook={usePanelTransitiveNavigate}
+      />
       <form class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container"
       onsubmit={registerSubmit(handleSubmit)}>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
