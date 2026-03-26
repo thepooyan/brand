@@ -32,7 +32,7 @@ const dashboard = () => {
   const planData = createAsync(() => queryUserPlan())
 
   return (
-    <div {...panelPageMarker()}>
+    <div {...panelPageMarker()} class="h-full">
       <Show when={planData()?.length === 0}>
         <div class="center h-full gap-1 text-muted-foreground">
           <TbMoodSad size={40}/>

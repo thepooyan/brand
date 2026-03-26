@@ -1,5 +1,4 @@
 import { action, useSubmission } from "@solidjs/router"
-import MyButton from "../parts/MyButton"
 import { createEffect } from "solid-js"
 import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
@@ -159,11 +158,11 @@ export const Contact = () => {
                   placeholder="پیام شما"
                 ></textarea>
               </div>
-              <MyButton
+              <Button
                 class="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-6"
-                isWaiting={submission.pending}
+                loading={submission.pending}
                 type="submit"
-              >ارسال پیام</MyButton>
+              >ارسال پیام</Button>
             </form>
           </div>
         </div>

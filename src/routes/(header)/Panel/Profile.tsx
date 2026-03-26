@@ -2,8 +2,8 @@ import { action, redirect, revalidate, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
-import MyButton from "~/components/parts/MyButton"
 import Spinner from "~/components/parts/Spinner"
+import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
@@ -108,9 +108,9 @@ const Profile = () => {
 
             </CardContent>
             <CardFooter>
-              <MyButton type="submit" class="w-full" isWaiting={submission.pending}>
+              <Button type="submit" class="w-full" loading={submission.pending}>
                 ثبت اطلاعات
-              </MyButton>
+              </Button>
             </CardFooter>
           </form>
         </Card>
