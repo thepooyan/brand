@@ -18,7 +18,6 @@ welcome message => hi i am {botname}. how can i assist
 
 fix main wallpaper in white
 save theme in local storage or cookie
-use chat error handling is wrong
 what if same ip send message from two different sources
 net fix streaming answer to history
 net widget token can be copied and used by anyone? (add host url, or hide token)
