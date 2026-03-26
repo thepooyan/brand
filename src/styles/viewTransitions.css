@@ -33,11 +33,13 @@
 
 @keyframes subtle-slide-in {
   from {
-    transform: translateY(5%);
+    transform: translateY(-1%) scale(.97);
+    transform-origin: top ;
     opacity: 0;
   }
   to {
-    transform: translateY(0%);
+    transform-origin: top ;
+    transform: translateY(0%) scale(1);
     opacity: 1;
   }
 }
