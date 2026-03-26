@@ -54,7 +54,7 @@ const Button = <T extends ValidComponent = "button">(
       disabled={props.loading? unwrap(props.loading) : props.disabled}
     >
       {props.children}
-      {props.loading && unwrap(props.loading) && <Spinner/>}
+      {props.loading && unwrap(props.loading) && <Spinner reverse/>}
     </ButtonPrimitive.Root>
   )
 }
