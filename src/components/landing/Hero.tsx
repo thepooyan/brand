@@ -20,7 +20,7 @@ const Hero = () => {
           !pt-10  bg-repeat-x sm:bg-position-[0_-1rem] bg-position-[0_-10rem] sm:!pt-45 ">
 
           <div class="container mx-auto px-4 flex flex-col items-center text-center  ">
-            <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 intro">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 intro text-primary dark:text-foreground">
               هوش بان ، نردبانی به سوی 
               <ChangeColor>
                 <span class="text-primary intro whitespace-nowrap m-3 block ">آینده هوشمند</span>
