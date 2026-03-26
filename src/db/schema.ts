@@ -24,7 +24,7 @@ export type History = typeof chatbot_history_table.$inferSelect
 
 export const chatbot_messager_table = sqliteTable("chatbot_messager", ({
   id: int().primaryKey({autoIncrement: true}),
-  bot_id: int().references(() => chatbotTable.id).notNull(),
+  bot_id: int().references(() => chatbotTable.id, {onDelete: "cascade"}).notNull(),
   chat_id: int().notNull(),
   history: text({ mode: "json" }).$type<message[]>().notNull()
 }))
