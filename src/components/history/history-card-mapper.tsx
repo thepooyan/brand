@@ -68,7 +68,7 @@ const HistoryCardMapper = ({data}:p) => {
 
 const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: string, fh: filterHook<HistoryWithName>}) => 
   <div class="flex gap-1">
-    <span class="text-sm center gap-1 text-muted-foreground ">
+    <span class="text-sm center gap-1 text-muted-foreground flex-row">
       <FiFilter/>
       فیلتر {name}:
     </span>
