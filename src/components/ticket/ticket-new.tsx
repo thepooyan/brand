@@ -3,7 +3,7 @@ import { Button } from "../ui/button"
 import { Card } from "../ui/card"
 import Input from "../ui/input"
 import Textarea from "../ui/Textarea"
-import { setTicketState } from "./ticket-signal"
+import { markTicketPage, setTicketState } from "./ticket-signal"
 import { callModal } from "../layout/Modal"
 import { newTicket } from "~/server/actions"
 import { revalidate } from "@solidjs/router"
@@ -34,7 +34,7 @@ const TicketNew = () => {
   }
 
   return (
-    <Card  class="container p-10">
+    <Card  class="container p-10" {...markTicketPage()}>
       <form onsubmit={handleSubmit} class="space-y-3">
         <h1 class="inline-block text-2xl font-bold mb-10">ثبت تیکت جدید</h1>
         <Button variant="secondary" onclick={() => setTicketState("dashboard")}

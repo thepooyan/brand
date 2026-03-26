@@ -47,7 +47,7 @@ export function useTransitionMarker(groupName: string):[
 export function useViewTransition<T>(groupName: string, initial: T):[
   Accessor<T>,
   (arg: setterArg<T>)=>void,
-  (name: string) => { style: { "view-transition-name": string } }
+  (name?: string) => { style: { "view-transition-name": string } }
 ] {
   const [state, setState] = createSignal<T>(initial)
   const [markElement, applyTransition] = useTransitionMarker(groupName)

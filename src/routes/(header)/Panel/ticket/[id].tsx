@@ -5,6 +5,7 @@ import { Loading } from "~/components/parts/Loading"
 import TicketDetails from "~/components/ticket/ticket-details"
 import { db } from "~/db/db"
 import { ticketTable } from "~/db/schema"
+import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import NotFound from "~/routes/[...404]"
 
@@ -42,7 +43,7 @@ const id = () => {
   })
 
   return (
-    <div>
+    <div {...panelPageMarker()}>
       <Suspense fallback={<Loading/>}>
         <Show when={ticket()}>
           {pt => <TicketDetails t={pt}/>}

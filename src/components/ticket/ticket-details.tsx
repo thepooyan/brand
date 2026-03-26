@@ -12,6 +12,7 @@ import { callModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
 import TicketRail from "./ticket-rail"
 import Input from "../ui/input"
+import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 
 interface p {
   t: Accessor<Ticket>
@@ -74,6 +75,7 @@ const TicketDetails = ({t}:p) => {
         <Button variant="secondary"
           as={TA} href="/Panel/ticket"
           class="absolute left-10"
+          navigatorHook={usePanelTransitiveNavigate}
         >
           بازگشت
           <FiArrowLeft/>

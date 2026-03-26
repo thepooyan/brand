@@ -1,7 +1,7 @@
-import { createSignal } from "solid-js"
+import { useViewTransition } from "~/lib/viewTransition"
 
 type ticketPageState = "dashboard" | "new"
-export const [ticketState, setTicketState] = createSignal<ticketPageState>("dashboard")
+export const [ticketState, setTicketState, markTicketPage] = useViewTransition<ticketPageState>("panelPage","dashboard")
 
 export const ticket_states = [
   "pending",

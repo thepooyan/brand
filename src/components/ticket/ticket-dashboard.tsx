@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router";
 import { Button } from "../ui/button"
-import { setTicketState, ticket_states, TicketStates } from "./ticket-signal";
+import { markTicketPage, setTicketState, ticket_states, TicketStates } from "./ticket-signal";
 import { createSignal, For, ParentProps, Show, Suspense } from "solid-js";
 import TicketCard from "./ticket-card";
 import { Loading } from "../parts/Loading";
@@ -47,7 +47,7 @@ const TicketDashboard = () => {
   }
 
   return (
-    <div class="p-1 @container">
+    <div class="p-1 @container" {...markTicketPage()}>
       <Button onclick={() => setTicketState("new") } class="float-left m-5">
         تیکت جدید
         <FiPlus/>
