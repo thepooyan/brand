@@ -16,7 +16,7 @@ const Checkbox = ({onchange, disabled, initialValue}:props) => {
   return (
     <>
       <div
-        class={cn("border-border border-1 rounded-md bg-stone-600 hover:bg-stone-500 box-5 overflow-hidden cursor-pointer ",
+        class={cn("border-border border-1 rounded-sm bg-muted hover:bg-muted/80 box-5 overflow-hidden cursor-pointer ",
           disabled && "opacity-70 pointer-events-none "
         )}
         onclick={() => setChecked(p => !p)}
@@ -26,7 +26,7 @@ const Checkbox = ({onchange, disabled, initialValue}:props) => {
             checked() && `scale-100 opacity-100`
           )}
         >
-          <TbCheck class="w-full"/>
+          <TbCheck class="w-full text-white"/>
         </div>
       </div>
     </>
