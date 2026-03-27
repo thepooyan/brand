@@ -10,13 +10,9 @@ export const toggleTheme = () => {
   setTheme(prev => prev === "dark" ? "": "dark")
 }
 
-const setThemeClient = async (val: theme) => {
-  await updateThemeSession({theme: val})
-}
-
 createEffect(async () => {
   document.body.className = `theme-${theme()} ${theme().endsWith("dark") && "dark"}`
-  await setThemeClient(theme())
+  await updateThemeSession({theme: theme()})
 })
 
 export const updateThemeSignal = () => {
