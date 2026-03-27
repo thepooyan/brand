@@ -8,7 +8,7 @@ export const tokenLength = 62
 
 export const chatbot_history_table = sqliteTable("chatbot_history", ({
   id: int().primaryKey({autoIncrement: true}),
-  botId: int().notNull().references(() => chatbotTable.id),
+  botId: int().notNull().references(() => chatbotTable.id, {onDelete: "cascade"}),
   userIP: text().notNull(),
   source: text({ enum: chat_sources }).notNull(),
   nickname: text().notNull(),
@@ -24,7 +24,7 @@ export type History = typeof chatbot_history_table.$inferSelect
 
 export const chatbot_messager_table = sqliteTable("chatbot_messager", ({
   id: int().primaryKey({autoIncrement: true}),
-  bot_id: int().references(() => chatbotTable.id).notNull(),
+  bot_id: int().references(() => chatbotTable.id, {onDelete: "cascade"}).notNull(),
   chat_id: int().notNull(),
   history: text({ mode: "json" }).$type<message[]>().notNull()
 }))
