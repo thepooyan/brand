@@ -5,7 +5,7 @@ import { convertPlanToDTO, findAvailavlePlanForDecrement, freePlan } from "./pla
 
 export const newFreePlan = async (user_id: number) => {
   const [inserted] = await db.insert(planTable).values(
-    convertPlanToDTO(freePlan, user_id)
+    convertPlanToDTO(freePlan, user_id, 1)
   ).returning()
   return inserted
 }

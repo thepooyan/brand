@@ -33,7 +33,7 @@ const activatePlan = async (p: PlanDefinition):Promise<ApiResponse> => {
 
     if (!dbUser) return result = {ok: false, msg: "کاربر یافت نشد", status: 404}
 
-    await tx.insert(planTable).values(convertPlanToDTO(p, dbUser.id))
+    await tx.insert(planTable).values(convertPlanToDTO(p, dbUser.id, 1))
 
   })
   return result
