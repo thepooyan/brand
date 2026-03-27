@@ -1,4 +1,3 @@
-
 more bot options:
 net - crawler
 net - test telegram database
@@ -13,8 +12,14 @@ history {
     save chats with hooshbaan bot
 }
 
-handle edit bot on no plan
+rate limit s3 uploader for normal users
+cron cleaner for otp
 make limitation optionally for day or week or mounth?
+add text explaining why which features are disabled
+order status page
+
+net profile does not work on could?
+net expose useChat as node package 
 net find new wallpaper in white
 net save theme in local storage or cookie
 net fix streaming answer to history
@@ -23,8 +28,6 @@ net analytics for message count
 net add continue with google 
 net make the source of all use chat one place. git submodule or node package?
 
-disable logo, and color based on plan
-order status page
 
 insider (
     sms (does not work?)
@@ -41,15 +44,6 @@ insider (
     }
 )
 
-expose useChat as node package 
-useChat error handling is buggy
-handle error in usechat
-fix mini chat
-rate limit s3 uploader for normal users
-
-cron cleaner for otp
-?buffer que breaks if there is delay between streamed responsed
-profile does not work on could?
 
 seo:
 check gsc
