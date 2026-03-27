@@ -10,8 +10,9 @@ import { callModal } from "../layout/Modal"
 interface props {
   onchange?: (value: string[]) => void
   initialValue?: string[]
+  disabled?: boolean
 }
-const ArrayInput = ({onchange, initialValue}:props) => {
+const ArrayInput = ({onchange, disabled, initialValue}:props) => {
 
   const [strValue, setStrValue] = createSignal("")
   const [value, setValue] = createSignal<string[]>(initialValue || [])
@@ -38,8 +39,9 @@ const ArrayInput = ({onchange, initialValue}:props) => {
           onkeydown={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
           onkeypress={ifEnterPressed(flush)}
           placeholder="مثال: اطلاعات قیمت"
+          disabled={disabled}
         />
-        <Button onclick={flush}>
+        <Button onclick={flush} disabled={disabled}>
           <FiPlus/>
         </Button>
       </div>

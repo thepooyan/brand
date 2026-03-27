@@ -47,12 +47,13 @@ const EditBotPage = ({bot, permission}:p) => {
     as?: Component
     className?: string
     placeholder?: string
+    disabled?: boolean
   }
-  const In = ({key, name, className, placeholder, as, children}:pp) => {
+  const In = ({key, name, className, disabled, placeholder, as, children}:pp) => {
     let Comp = as ? as : Input
     return <Seprator className={className}>
       {name}
-      <Comp placeholder={placeholder ? placeholder : name}  {...register(key)} />
+      <Comp placeholder={placeholder ? placeholder : name}  {...register(key)} disabled={disabled}/>
       {children}
     </Seprator>
   }
@@ -85,7 +86,7 @@ const EditBotPage = ({bot, permission}:p) => {
     return <p class="text-sm text-muted-foreground">
       مثال: {text()}
       <span class="text-blue-500 underline cursor-pointer mr-1"
-        onclick={() => {setForm(key, text());console.log(text)} }
+        onclick={() => {setForm(key, text())} }
       >
          (اعمال)
       </span>
@@ -125,14 +126,14 @@ const EditBotPage = ({bot, permission}:p) => {
           <In key="websiteUrl" name="آدرس وبسایت شما" />
           <Seprator className="">
             رنگ سازمانی
-            <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)} disabled={permission?.colors}/>
+            <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)} disabled={!permission?.colors}/>
           </Seprator>
           <Seprator className="">
             رنگ نوشته (معمولا سفید یا سیاه)
-            <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)}/>
+            <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)} disabled={!permission?.colors}/>
           </Seprator>
           <Seprator>
-            <In key="greeting" name="پیام خوش آمد گویی" >
+            <In key="greeting" name="پیام خوش آمد گویی" disabled={!permission?.proSettings}>
               <Example
                 text={() => `سلام! من ${formValues().botName} هستم. چطور میتونم کمکتون کنم؟`}
                 key="greeting"
@@ -140,14 +141,14 @@ const EditBotPage = ({bot, permission}:p) => {
             </In>
           </Seprator>
           <div>
-            <In key="floatingMessage" name="پیام شناور" />
+            <In key="floatingMessage" name="پیام شناور" disabled={!permission?.proSettings}/>
             <div class="flex gap-2 mt-3 text-sm">
-              <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active}/>
+              <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
               فعال سازی پیام شناور
             </div>
           </div>
           <div>
-            <ArrayInput onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues().suggestedQuestions || []}/>
+            <ArrayInput disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues().suggestedQuestions || []}/>
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو

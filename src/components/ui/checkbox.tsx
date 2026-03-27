@@ -5,8 +5,9 @@ import { cn } from "~/lib/utils"
 interface props {
   onchange?: (value: boolean) => void
   initialValue?: boolean
+  disabled?: boolean
 }
-const Checkbox = ({onchange, initialValue}:props) => {
+const Checkbox = ({onchange, disabled, initialValue}:props) => {
 
   const [checked, setChecked] = createSignal(initialValue || false)
 
@@ -15,7 +16,9 @@ const Checkbox = ({onchange, initialValue}:props) => {
   return (
     <>
       <div
-        class="border-border border-1 rounded-md bg-stone-600 hover:bg-stone-500 box-5 overflow-hidden cursor-pointer "
+        class={cn("border-border border-1 rounded-md bg-stone-600 hover:bg-stone-500 box-5 overflow-hidden cursor-pointer ",
+          disabled && "opacity-70 pointer-events-none "
+        )}
         onclick={() => setChecked(p => !p)}
       >
         <div 
