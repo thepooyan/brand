@@ -13,6 +13,8 @@ history {
     save chats with hooshbaan bot
 }
 
+pushdb does not fucking work again
+
 make limitation for day?
 fix main wallpaper in white
 net save theme in local storage or cookie
