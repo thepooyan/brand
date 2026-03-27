@@ -40,7 +40,7 @@ const getInitialData = query(async ():ActionResponse2<initialData> => {
 
     const userp = userPermissions(dbUser)
 
-    return {ok: true, data: {canHaveMoreBots: userp.moreBots || false, bots: userBots, telegramAccess: userp.telegram || false} }
+    return {ok: true, data: {canHaveMoreBots: userp?.moreBots || false, bots: userBots, telegramAccess: userp?.telegram || false} }
   })
 }, "bots")
 

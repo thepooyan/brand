@@ -125,7 +125,7 @@ const EditBotPage = ({bot, permission}:p) => {
           <In key="websiteUrl" name="آدرس وبسایت شما" />
           <Seprator className="">
             رنگ سازمانی
-            <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)}/>
+            <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)} disabled={permission?.colors}/>
           </Seprator>
           <Seprator className="">
             رنگ نوشته (معمولا سفید یا سیاه)

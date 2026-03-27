@@ -5,8 +5,9 @@ import { ChangeEvent } from "~/lib/interface"
 interface p {
   initialValue?: string
   onChange?: (value: string) => void
+  disabled?: boolean
 }
-const ColorPicker = ({initialValue, onChange}:p) => {
+const ColorPicker = ({initialValue, onChange, disabled}:p) => {
 
   const [value, setValue] = createSignal(initialValue || "")
 
@@ -18,9 +19,9 @@ const ColorPicker = ({initialValue, onChange}:p) => {
   return (
     <div class="relative">
       <input type="color" value={value()} onchange={handleChange}
-        class="absolute left-1 top-1 bottom-1 h-auto rounded" name=""
+        class="absolute left-1 top-1 bottom-1 h-auto rounded" name="" disabled={disabled}
       />
-      <Input value={value()} class="ltr indent-8" name=""/>
+      <Input value={value()} class="ltr indent-8" name="" disabled={disabled}/>
     </div>
   )
 }

@@ -1,18 +1,16 @@
 import { createAsync, query, redirect, useParams } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { createEffect, Show, Suspense } from "solid-js"
-import { fa } from "zod/v4/locales"
 import { callModal } from "~/components/layout/Modal"
 import EditBotPage from "~/components/pages/EditBotPage"
 import { Loading } from "~/components/parts/Loading"
 import { db } from "~/db/db"
-import { ActionResponse2, ApiResponse } from "~/lib/actionAbstraction"
-import { getBotById } from "~/lib/queries"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
 import { userPermissions } from "~/sections/plan"
 
 const queryData = query(async(bot_id: number) => {
+  "use server"
   const sessionUser = await getAuthSession()
   if (!sessionUser) throw redirect("/Login?back=/Panel/Chatbot")
 
@@ -38,7 +36,7 @@ const testbot = () => {
   const data = createAsync(() => queryData(parseInt(params.id)))
 
   createEffect(() => {
-    if (!data()?.ok) callModal.fail(data()?.msg)
+    if (data()?.ok === false) callModal.fail(data()?.msg)
   })
 
   return (

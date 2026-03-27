@@ -13,6 +13,7 @@ history {
     save chats with hooshbaan bot
 }
 
+handle edit bot on no plan
 make limitation optionally for day or week or mounth?
 net find new wallpaper in white
 net save theme in local storage or cookie

@@ -4,6 +4,6 @@ import { db } from "../db";
 import { planTable } from "../schema";
 
 
-await cleanExpiredPlans()
+// await cleanExpiredPlans()
 
-// await db.delete(planTable)
+await db.delete(planTable)
