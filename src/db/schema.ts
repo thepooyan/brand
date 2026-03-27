@@ -32,7 +32,7 @@ export const chatbot_messager_table = sqliteTable("chatbot_messager", ({
 export const ticketTable = sqliteTable("ticket", {
   id: int().primaryKey({autoIncrement: true}),
   isSeen: integer({mode: "boolean"}).notNull().default(true),
-  userId: int().notNull().references(() => usersTable.id),
+  userId: int().notNull().references(() => usersTable.id, {onDelete: "cascade"}),
   subject: text().notNull(),
   category: text().notNull().default("سایر"),
   content: text({mode: "json"}).$type<{from: "user" | "admin", msg: string}[]>().notNull(),
@@ -49,7 +49,7 @@ export type NewTicket = typeof ticketTable.$inferInsert
 
 export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
-  userId: int().notNull().references(() => usersTable.id),
+  userId: int().notNull().references(() => usersTable.id, {onDelete: "cascade"}),
   botName: text().notNull(),
   businessName: text().notNull(),
   tone: text().notNull(),
@@ -106,7 +106,7 @@ export const planTable = sqliteTable("plan", {
   remainingMessages: integer().notNull(),
   boughtDate: integer({mode: "timestamp"}).notNull(),
   expirationDate: integer({mode: "timestamp"}).notNull(),
-  user_id: int().notNull().references(() => usersTable.id)
+  user_id: int().notNull().references(() => usersTable.id, {onDelete: "cascade"})
 })
 
 export type PlanInstance = typeof planTable.$inferSelect
