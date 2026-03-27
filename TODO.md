@@ -18,6 +18,7 @@ add plan safeguard in backend for edit bot, telegram, all plan features
 make limitation optionally for day or week or mounth?
 order status page
 cron cleaner for otp
+fix initial theme glitch
 
 net profile does not work on could?
 net expose useChat as node package 
