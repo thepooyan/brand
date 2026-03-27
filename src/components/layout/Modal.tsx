@@ -77,7 +77,7 @@ const title = () => {
 const Modal = () => {
   return (
     <>
-      <AlertDialog open={open()} onOpenChange={setOpen}>
+      <AlertDialog open={open()} onOpenChange={setOpen} preventScroll={false}>
         <AlertDialogContent class="!w-max" onanimationend={() => !open() && closeCleanup()}>
           <AlertDialogTitle>{title()}</AlertDialogTitle>
           <AlertDialogDescription>
