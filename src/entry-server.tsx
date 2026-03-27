@@ -17,7 +17,7 @@ export default createHandler(() => (
           <TagManagerHead/>}
           {assets}
         </head>
-        <body class={`theme-${defaultTheme}`}>
+        <body class={`theme-${defaultTheme} ${defaultTheme.endsWith("dark") && "dark"}`}>
           {isProd && 
           <TagManagerBody/>}
           <div id="app">{children}</div>
