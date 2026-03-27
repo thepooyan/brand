@@ -1,3 +1,5 @@
+import { A } from "@solidjs/router";
+
 const create = () => {
 
   return (
@@ -6,10 +8,10 @@ const create = () => {
       <ol>
         <li>
           قبل از هرچیز باید چت‌بات خود را ساخته باشید. 
-          <a href="/Docs/chat-bot/create">آموزش ساخت چت‌بات</a>
+          <A href="/Docs/chat-bot/create">آموزش ساخت چت‌بات</A>
         </li>
         <li>
-          سپس از طریق <a href="/Panel/Chatbot">پنل کاربری</a> اقدام به دریافت توکن چت‌بات خود کنید.
+          سپس از طریق <A href="/Panel/Chatbot">پنل کاربری</A> اقدام به دریافت توکن چت‌بات خود کنید.
 
           <span class="text-muted-foreground block">
             (هر ربات یک توکن مخصوص به خود دارد که میتواند از آن برای ارسال پیام به ربات استفاده کنید)
@@ -49,7 +51,7 @@ const create = () => {
         </li>
       </ol>
       <p>
-        در صورتی که با مشکل مواجه شدید میتوانید با <a href="/ContactUs">پشتیبانی</a> تماس بگیرید.
+        در صورتی که با مشکل مواجه شدید میتوانید با <A href="/ContactUs">پشتیبانی</A> تماس بگیرید.
       </p>
     </>
   );

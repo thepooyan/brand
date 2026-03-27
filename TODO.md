@@ -12,14 +12,14 @@ history {
     save chats with hooshbaan bot
 }
 
-rate limit s3 uploader for normal users
-cron cleaner for otp
-make limitation optionally for day or week or mounth?
-add plan safeguard in backend for edit bot, telegram, all plan features
-order status page
 write docs {
 
 }
+rate limit s3 uploader for normal users
+add plan safeguard in backend for edit bot, telegram, all plan features
+make limitation optionally for day or week or mounth?
+order status page
+cron cleaner for otp
 
 net profile does not work on could?
 net expose useChat as node package 

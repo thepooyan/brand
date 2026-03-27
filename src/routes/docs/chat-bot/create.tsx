@@ -1,3 +1,5 @@
+import { A } from "@solidjs/router"
+
 const create = () => {
   return (
     <>
@@ -19,9 +21,9 @@ const create = () => {
       </ol>
 
       <b>
-        <a href="/Place-Order/Chatbot">
+        <A href="/Place-Order/Chatbot">
           لینک ساخت چت‌بات جدید
-        </a>
+        </A>
       </b>
     </>
   )
