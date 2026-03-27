@@ -13,18 +13,14 @@ history {
     save chats with hooshbaan bot
 }
 
-pushdb does not fucking work again
-
-make limitation for day?
-fix main wallpaper in white
+make limitation optionally for day or week or mounth?
+net find new wallpaper in white
 net save theme in local storage or cookie
-
 net fix streaming answer to history
 net widget token can be copied and used by anyone? (add host url, or hide token)
 net analytics for message count 
 net add continue with google 
 net make the source of all use chat one place. git submodule or node package?
-change telegram connection system? (depending on token is a bad thing)
 
 disable logo, and color based on plan
 order status page

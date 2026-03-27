@@ -4,10 +4,11 @@ type mounthCount = 1 | 2 | 3
 
 export enum planFeatures {
   telegram = "اتصال به تلگرام",
-  color = "قابلیت تغییر تم",
+  colors = "قابلیت تغییر تم",
   learnFromLink = "یادگیری از لینک",
   removeOurLogo = "حذف لوگو هوشبان",
   specialSupport = "پشتیبانی اختصاصی",
+  proSettings = "تنظیمات پیشرفته",
 }
 type feature = planFeatures
 export const allFeatures = Object.values(planFeatures)
@@ -89,7 +90,7 @@ const testPlan2: PlanDefinition = {
   features: [
     planFeatures.telegram,
     planFeatures.learnFromLink,
-    planFeatures.color,
+    planFeatures.colors,
     planFeatures.removeOurLogo
   ],
 }
