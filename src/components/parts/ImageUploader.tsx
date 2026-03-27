@@ -12,8 +12,9 @@ interface props {
   name?: string
   onChange?: (value: string) => void
   initialValue?: string
+  disabled?: boolean
 }
-export function ImageUploader({ name, onChange, initialValue }:props) {
+export function ImageUploader({ name,disabled, onChange, initialValue }:props) {
   const [state, setState] = createSignal<UploadState>(initialValue ? "preview" : "idle")
   const [preview, setPreview] = createSignal<string | null>(initialValue || null)
   const [fileName, setFileName] = createSignal<string>("")
@@ -88,7 +89,7 @@ export function ImageUploader({ name, onChange, initialValue }:props) {
   }
 
   return (
-    <div class="flex flex-col items-center gap-4 w-full max-w-sm">
+    <div class={cn("flex flex-col items-center gap-4 w-full max-w-sm", disabled && "opacity-40 pointer-events-none")}>
       <Show when={uploadedUrl()}>
         {v => 
           <input

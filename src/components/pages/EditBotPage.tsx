@@ -152,7 +152,7 @@ const EditBotPage = ({bot, permission}:p) => {
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو
-            <ImageUploader initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
+            <ImageUploader disabled initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
           </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3" />
         </div>
