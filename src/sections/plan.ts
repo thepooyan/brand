@@ -1,7 +1,4 @@
-import { ReturnTypes } from "solid-js"
 import { NewPlanInstance, PlanInstance, User_Plan_Bots } from "~/db/schema"
-
-type mounthCount = 1 | 2 | 3
 
 export enum planFeatures {
   telegram = "اتصال به تلگرام",
@@ -45,19 +42,18 @@ export const getPlan = (p:PlanInstance) => {
   return plan
 }
 
-export const convertPlanToDTO = (p: PlanDefinition, user_id: number):NewPlanInstance => ({
+export const convertPlanToDTO = (p: PlanDefinition, user_id: number, expirationMounth: number):NewPlanInstance => ({
   user_id: user_id,
   plan_id: p.id,
   remainingMessages: p.messageCount,
   boughtDate: new Date(),
-  expirationDate: daysFromNow(p.expirationMounth * 31),
+  expirationDate: daysFromNow(expirationMounth * 31),
 })
 
 export const freePlan: PlanDefinition = {
   id: "free",
   name: "پلن رایگان",
   mounthlyPrice: 0,
-  expirationMounth: 1,
   messageCount: 10,
   botCount: 1,
   knowledgeBase: 100,
@@ -70,7 +66,6 @@ const testPlan1: PlanDefinition = {
   id: "starter",
   name: "پلن شروع",
   mounthlyPrice: 50,
-  expirationMounth: 1,
   messageCount: 100,
   botCount: 2,
   knowledgeBase: 300,
@@ -83,7 +78,6 @@ const testPlan2: PlanDefinition = {
   id: "regular",
   name: "پلن متوسط",
   mounthlyPrice: 150,
-  expirationMounth: 1,
   messageCount: 500,
   botCount: 5,
   knowledgeBase: 1000,
@@ -99,7 +93,6 @@ const testPlan3: PlanDefinition = {
   id: "pro",
   name: "پلن حرفه‌ای",
   mounthlyPrice: 200,
-  expirationMounth: 1,
   messageCount: 1000,
   knowledgeBase: 5000,
   botCount: 10,
@@ -175,10 +168,18 @@ export const findAvailavlePlanForDecrement = (plans: PlanInstance[]):PlanInstanc
   return findAvailavlePlanForDecrement(plans.filter(p => p.id !== soonest.id))
 }
 
-export const userPermissions = (user: User_Plan_Bots) => {
+export const userPermissions = (user: User_Plan_Bots):UserPermissions => {
 
   let avlPlan = findAvailavlePlanForDecrement(user.current_plans)
-  if (!avlPlan) return null
+  if (!avlPlan) return {
+    telegram: false,
+    proSettings: false,
+    colors: false,
+    removeLogo: false,
+    moreBots: false,
+    message: false,
+    expired: true
+  }
 
   return {
     telegram: doesAtleastOnePlanHaveFeature(user.current_plans, planFeatures.telegram),
@@ -187,6 +188,15 @@ export const userPermissions = (user: User_Plan_Bots) => {
     removeLogo: doesAtleastOnePlanHaveFeature(user.current_plans, planFeatures.removeOurLogo),
     moreBots: user.bots.length < getNumberOfAllowedBots(user.current_plans),
     message: getRemainingMesseages(user.current_plans) > 0,
+    expired: false
   }
 }
-export type UserPermissions = ReturnType<typeof userPermissions>
+export type UserPermissions = {
+  telegram: boolean,
+  proSettings: boolean,
+  colors: boolean,
+  removeLogo: boolean,
+  moreBots: boolean,
+  message: boolean,
+  expired: boolean
+}

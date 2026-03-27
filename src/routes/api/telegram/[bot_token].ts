@@ -2,7 +2,7 @@ import { useParams } from '@solidjs/router';
 import { and, eq } from 'drizzle-orm';
 import { db } from '~/db/db';
 import { chatbot_messager_table } from '~/db/schema';
-import { message, timedMessage } from '~/lib/chatUtil';
+import { message, timedMessage } from '~/db/constants';
 import { userPermissions } from '~/sections/plan';
 import { decrementMessageCount } from '~/sections/planServer';
 import { replyWithAI } from '~/server/actions';

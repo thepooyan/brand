@@ -7,7 +7,7 @@ import { db } from "~/db/db";
 import { and, eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
-import { chat_sources, timedMessage } from "~/lib/chatUtil";
+import { chat_sources, timedMessage } from "~/db/constants";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { ActionResponse2 } from "~/lib/actionAbstraction";
 import { safeDb2 } from "~/lib/utils";

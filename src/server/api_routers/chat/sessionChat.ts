@@ -10,7 +10,7 @@ import { isChatAllowed } from "~/server/botUtil";
 import { getFakeStream } from "~/server/fakter";
 import { ApiResponse } from "~/lib/actionAbstraction";
 import { updateChatHistory } from "~/server/serverUtil";
-import { timedMessage } from "~/lib/chatUtil";
+import { timedMessage } from "~/db/constants";
 import { decrementMessageCount } from "~/sections/planServer";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })

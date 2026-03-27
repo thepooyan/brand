@@ -440,7 +440,7 @@ const saveChatbotOrder = async (order: chatbotOrder):ActionResponse<number> => {
 
       const userPermission = userPermissions(dbUser)
 
-      if (!userPermission.moreBots) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
+      if (!userPermission?.moreBots) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
 
 
       let values: typeof chatbotTable.$inferInsert = {

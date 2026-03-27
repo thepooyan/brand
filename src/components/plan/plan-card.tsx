@@ -70,7 +70,7 @@ const PlanCard = ({plan}:p) => {
     <Card>
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
-        <CardDescription>{plan.expirationMounth} ماهه</CardDescription>
+        <CardDescription>۱ ماهه</CardDescription>
       </CardHeader>
       <CardContent>
         <For each={allFeatures}>

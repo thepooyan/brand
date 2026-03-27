@@ -1,6 +1,6 @@
 import { For } from "solid-js"
-import { timedMessage } from "~/lib/chatUtil"
 import Message from "../parts/chat/Message"
+import { timedMessage } from "~/db/constants"
 
 interface p {
   messages: timedMessage[]
