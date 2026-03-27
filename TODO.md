@@ -17,6 +17,9 @@ cron cleaner for otp
 make limitation optionally for day or week or mounth?
 add text explaining why which features are disabled
 order status page
+write docs {
+
+}
 
 net profile does not work on could?
 net expose useChat as node package 
