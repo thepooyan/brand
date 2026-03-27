@@ -101,7 +101,7 @@ const PlanCard = ({plan}:p) => {
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
         <p>
-          قیمت: {seprateByComma(plan.price * 1000)} تومان
+          قیمت: {seprateByComma(plan.mounthlyPrice * 1000)} تومان
         </p>
         <Button class="text-center w-full"
           onclick={handleClick}

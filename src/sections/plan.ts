@@ -1,3 +1,4 @@
+import { ReturnTypes } from "solid-js"
 import { NewPlanInstance, PlanInstance, User_Plan_Bots } from "~/db/schema"
 
 type mounthCount = 1 | 2 | 3
@@ -19,8 +20,7 @@ type plan_id = typeof plan_ids[number]
 export type PlanDefinition = {
   id: plan_id,
   name: string
-  price: number,
-  expirationMounth: mounthCount,
+  mounthlyPrice: number,
   messageCount: number,
   botCount: number,
   knowledgeBase: number,
@@ -56,7 +56,7 @@ export const convertPlanToDTO = (p: PlanDefinition, user_id: number):NewPlanInst
 export const freePlan: PlanDefinition = {
   id: "free",
   name: "پلن رایگان",
-  price: 0,
+  mounthlyPrice: 0,
   expirationMounth: 1,
   messageCount: 10,
   botCount: 1,
@@ -69,7 +69,7 @@ export const freePlan: PlanDefinition = {
 const testPlan1: PlanDefinition = {
   id: "starter",
   name: "پلن شروع",
-  price: 50,
+  mounthlyPrice: 50,
   expirationMounth: 1,
   messageCount: 100,
   botCount: 2,
@@ -82,7 +82,7 @@ const testPlan1: PlanDefinition = {
 const testPlan2: PlanDefinition = {
   id: "regular",
   name: "پلن متوسط",
-  price: 150,
+  mounthlyPrice: 150,
   expirationMounth: 1,
   messageCount: 500,
   botCount: 5,
@@ -98,7 +98,7 @@ const testPlan2: PlanDefinition = {
 const testPlan3: PlanDefinition = {
   id: "pro",
   name: "پلن حرفه‌ای",
-  price: 200,
+  mounthlyPrice: 200,
   expirationMounth: 1,
   messageCount: 1000,
   knowledgeBase: 5000,
@@ -119,8 +119,8 @@ export const findPlanName = (p: PlanInstance) => {
   return allPlans.find(i => i.id === p.plan_id)?.name || ""
 }
 
-const doesAtleastOnePlanHaveTelegram = (plans: PlanInstance[]) => {
-  return plans.map(t => getPlan(t).features.includes(planFeatures.telegram) ).reduce((p,c) => p || c, false)
+const doesAtleastOnePlanHaveFeature = (plans: PlanInstance[], feature: planFeatures) => {
+  return plans.map(t => getPlan(t).features.includes(feature) ).reduce((p,c) => p || c, false)
 }
 
 const getNumberOfAllowedBots = (plans: PlanInstance[]) => {
@@ -178,17 +178,15 @@ export const findAvailavlePlanForDecrement = (plans: PlanInstance[]):PlanInstanc
 export const userPermissions = (user: User_Plan_Bots) => {
 
   let avlPlan = findAvailavlePlanForDecrement(user.current_plans)
-  if (!avlPlan) return {
-    telegram: null,
-    moreBots: null,
-    message: null,
-    expired: true
-  }
+  if (!avlPlan) return null
+
   return {
-    telegram: doesAtleastOnePlanHaveTelegram(user.current_plans),
+    telegram: doesAtleastOnePlanHaveFeature(user.current_plans, planFeatures.telegram),
+    proSettings: doesAtleastOnePlanHaveFeature(user.current_plans, planFeatures.proSettings),
+    colors: doesAtleastOnePlanHaveFeature(user.current_plans, planFeatures.colors),
+    removeLogo: doesAtleastOnePlanHaveFeature(user.current_plans, planFeatures.removeOurLogo),
     moreBots: user.bots.length < getNumberOfAllowedBots(user.current_plans),
     message: getRemainingMesseages(user.current_plans) > 0,
-    expired: false
   }
 }
-
+export type UserPermissions = ReturnType<typeof userPermissions>

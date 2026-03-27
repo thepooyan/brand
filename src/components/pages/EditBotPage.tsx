@@ -1,6 +1,6 @@
 import { I_Bot } from "~/db/schema"
 import Input from "../ui/input"
-import { children, Component, createSignal, ParentComponent, ParentProps } from "solid-js"
+import { Component, createSignal, ParentComponent, ParentProps } from "solid-js"
 import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
@@ -19,11 +19,13 @@ import { useForm } from "~/lib/hooks/useForm"
 import Checkbox from "../ui/checkbox"
 import BackBtn from "../parts/back-btn"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
+import { UserPermissions } from "~/sections/plan"
 
 interface p {
   bot: I_Bot
+  permission: UserPermissions
 }
-const EditBotPage = ({bot}:p) => {
+const EditBotPage = ({bot, permission}:p) => {
 
   let flattenBot = () => ({
     ...bot,
