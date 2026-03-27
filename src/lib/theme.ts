@@ -1,10 +1,13 @@
 import { createEffect, createSignal } from "solid-js";
-import { updateThemeSession } from "./session";
+import { getThemeSession, updateThemeSession } from "./session";
+
+const test = async ():Promise<theme> => {
+  "use server"
+  return getThemeSession()
+}
 
 export type theme = "dark" | "" | "plain" | "amber-dark" | "neon-dark" 
-// export const defaultTheme:theme = await getThemeSession() || "dark"
-export const defaultTheme:theme = "dark"
-
+export const defaultTheme:theme = await test()
 
 export const [theme, setTheme] = createSignal<theme>(defaultTheme)
 
