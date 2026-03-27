@@ -20,6 +20,7 @@ import Checkbox from "../ui/checkbox"
 import BackBtn from "../parts/back-btn"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { UserPermissions } from "~/sections/plan"
+import UpgradeTooltip from "../parts/upgrade-tooltip"
 
 interface p {
   bot: I_Bot
@@ -126,33 +127,46 @@ const EditBotPage = ({bot, permission}:p) => {
           <In key="websiteUrl" name="آدرس وبسایت شما" />
           <Seprator className="">
             رنگ سازمانی
-            <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)} disabled={!permission?.colors}/>
+            <UpgradeTooltip active={!permission.colors}>
+              <ColorPicker initialValue={bot.color} onChange={val => setForm("color", val)} disabled={!permission?.colors}/>
+            </UpgradeTooltip>
           </Seprator>
           <Seprator className="">
             رنگ نوشته (معمولا سفید یا سیاه)
-            <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)} disabled={!permission?.colors}/>
+            <UpgradeTooltip active={!permission.colors}>
+              <ColorPicker initialValue={bot.color_foreground} onChange={val => setForm("color_foreground", val)} disabled={!permission?.colors}/>
+            </UpgradeTooltip>
           </Seprator>
           <Seprator>
-            <In key="greeting" name="پیام خوش آمد گویی" disabled={!permission?.proSettings}>
-              <Example
-                text={() => `سلام! من ${formValues().botName} هستم. چطور میتونم کمکتون کنم؟`}
-                key="greeting"
-              />
-            </In>
+            <UpgradeTooltip active={!permission.proSettings}>
+              <In key="greeting" name="پیام خوش آمد گویی" disabled={!permission?.proSettings}>
+                <Example
+                  text={() => `سلام! من ${formValues().botName} هستم. چطور میتونم کمکتون کنم؟`}
+                  key="greeting"
+                />
+              </In>
+            </UpgradeTooltip>
           </Seprator>
           <div>
-            <In key="floatingMessage" name="پیام شناور" disabled={!permission?.proSettings}/>
-            <div class="flex gap-2 mt-3 text-sm">
-              <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
-              فعال سازی پیام شناور
-            </div>
+            <UpgradeTooltip active={!permission.proSettings} >
+              <In key="floatingMessage" name="پیام شناور" disabled={!permission?.proSettings}/>
+              <div class="flex gap-2 mt-3 text-sm">
+                <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
+                فعال سازی پیام شناور
+              </div>
+            </UpgradeTooltip>
           </div>
           <div>
-            <ArrayInput disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)} initialValue={formValues().suggestedQuestions || []}/>
+            <UpgradeTooltip active={!permission.proSettings}>
+              <ArrayInput disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)}
+                initialValue={formValues().suggestedQuestions || []}/>
+            </UpgradeTooltip>
           </div>
           <Seprator className="md:row-start-2 md:row-span-4 md:col-start-3" as="div">
             لوگو
-            <ImageUploader disabled={!permission.removeLogo} initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
+            <UpgradeTooltip active={!permission.removeLogo}>
+              <ImageUploader disabled={!permission.removeLogo} initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
+            </UpgradeTooltip>
           </Seprator>
           <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3" />
         </div>
