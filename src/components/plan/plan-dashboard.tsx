@@ -1,12 +1,15 @@
 import { PlanInstance } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, ParentProps, Show } from "solid-js"
-import { doesPlanIncludeFeature, findPlanName, getPlan, planFeatures } from "~/sections/plan"
+import { Accessor, For, ParentProps, Show } from "solid-js"
+import { allFeatures, doesPlanIncludeFeature, findPlanName, getPlan, planFeatures } from "~/sections/plan"
 import { Button } from "../ui/button"
 import { calcMessageCount, calcMessagePercent, cn, daysRemaining } from "~/lib/utils"
 import TA from "../parts/TA"
 import { FiCheck, FiTrendingUp, FiX } from "solid-icons/fi"
 import { AiFillWarning } from "solid-icons/ai"
+import { Badge } from "../ui/badge"
+import Check from "../ui/check"
+import X from "../ui/x"
 
 interface p {
   plan: Accessor<PlanInstance>
@@ -51,10 +54,10 @@ const PlanDashboard = ({plan}:p) => {
               تعداد ربات: {getPlan(plan()).botCount} عدد
             </Text>
             <Text>
-              اتصال به تلگرام: 
-              {doesPlanIncludeFeature(plan().plan_id, planFeatures.telegram) ? <>بله <FiCheck class="text-green-500"/></> : <>خیر <FiX class="text-destructive"/></>}
+                پایگاه دانش: {getPlan(plan()).knowledgeBase}
             </Text>
           </div>
+
 
           <div>
             <Title>
@@ -69,6 +72,17 @@ const PlanDashboard = ({plan}:p) => {
             </Text>
           </div>
 
+          <div class="flex flex-wrap gap-1 col-span-2 mt-5">
+            <For each={allFeatures}>
+              {f => <Badge class="flex gap-1 font-normal" variant="secondary"
+                >
+                  {doesPlanIncludeFeature(plan().plan_id, f) ? <Check/> : <X/>}
+                  {f}
+                </Badge>
+              }
+            </For>
+          </div>
+            
         </div>
 
         <div class={cn(expired() && "opacity-30")}>
