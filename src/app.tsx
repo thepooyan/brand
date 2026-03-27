@@ -9,10 +9,12 @@ import FallbackPage from "./components/pages/FallbackPage";
 import {Meta, MetaProvider, Title} from "@solidjs/meta"
 import ErrorPage from "./components/pages/ErrorPage";
 import { description, name, nameEn } from "../config/config";
+import { updateThemeSignal } from "./lib/theme";
 
 export default function App() {
 
   const qc = new QueryClient(queryConfig)
+  updateThemeSignal()
 
   return (
     <>
