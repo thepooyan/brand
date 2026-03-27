@@ -15,7 +15,7 @@ history {
 rate limit s3 uploader for normal users
 cron cleaner for otp
 make limitation optionally for day or week or mounth?
-add text explaining why which features are disabled
+add plan safeguard in backend for edit bot, telegram, all plan features
 order status page
 write docs {
 
