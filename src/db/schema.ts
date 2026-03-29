@@ -124,6 +124,8 @@ export const usersTable = sqliteTable("users_table", {
   name: text(),
   email: text().unique(),
   number: text({length: 11}).unique().notNull(),
+  isBlocked: text({enum: ["0", "1"]}).notNull().default("0"),
+  createdAt: int({ mode: "timestamp"}).notNull().$defaultFn(() => new Date())
 });
 
 export type User = typeof usersTable.$inferInsert
