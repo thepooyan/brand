@@ -97,8 +97,11 @@ export const websiteOrdersTable = sqliteTable("website_orders", {
 export const adminsTable = sqliteTable("admins_table", {
   id: int().primaryKey({autoIncrement: true}),
   chat_id: text().notNull(),
-  number: text().notNull()
+  number: text().notNull().references(() => usersTable.number, {onDelete: "cascade"})
 })
+
+export type AdminData = typeof adminsTable.$inferSelect
+export type NewAdminData = typeof adminsTable.$inferInsert
 
 export const planTable = sqliteTable("plan", {
   id: int().primaryKey({ autoIncrement: true }),
@@ -125,9 +128,10 @@ export const usersTable = sqliteTable("users_table", {
 
 export type User = typeof usersTable.$inferInsert
 
-export const users_relations = relations(usersTable, ({many}) => ({
+export const users_relations = relations(usersTable, ({many, one}) => ({
   current_plans: many(planTable),
-  bots: many(chatbotTable)
+  bots: many(chatbotTable),
+  admin: one(adminsTable, {fields: [usersTable.number], references: [adminsTable.number]})
 }))
 export type User_Plan = User & {current_plans: PlanInstance[]}
 export type User_Plan_Bots = User_Plan & {bots: Chatbot[]}
