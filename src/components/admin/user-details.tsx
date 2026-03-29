@@ -5,9 +5,10 @@ import { FaSolidBan } from "solid-icons/fa"
 import { For, Show } from "solid-js"
 import { Badge } from "../ui/badge"
 import PlanCard from "./plan-card"
-import { Title } from "../prose/prose-item"
+import { Muted, Title } from "../prose/prose-item"
 import BotCard from "./bot-card"
 import { PartialUser } from "~/db/relationQueries"
+import BackBtn from "../parts/back-btn"
 
 interface p {
   user: PartialUser
@@ -20,13 +21,19 @@ const UserDetails = ({user}:p) => {
   return (
     <Card class="m-4">
       <CardHeader class="relative">
-        <CardTitle>{user.number}</CardTitle>
+        <CardTitle>
+          <Muted class="mb-1">شماره:</Muted>
+          {user.number}
+        </CardTitle>
         <CardDescription>{user.name}</CardDescription>
-        <Show when={isAdmin}>
-          <Badge class="absolute left-5" variant="success">
-            admin
-          </Badge>
-        </Show>
+        <div class="absolute left-5 space-x-2">
+          <Show when={isAdmin}>
+            <Badge class="font-normal">
+              admin
+            </Badge>
+          </Show>
+          <BackBtn href="/admin/users"/>
+        </div>
       </CardHeader>
 
       <CardContent>
