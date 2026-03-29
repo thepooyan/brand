@@ -5,9 +5,13 @@ import { callModal } from "~/components/layout/Modal"
 import LoadingSuspense from "~/components/pages/LoadingSuspense"
 import { db } from "~/db/db"
 import { Chatbot, PlanInstance, User } from "~/db/schema"
+import { useAdminQuery } from "~/lib/hooks"
 import { safeDb2 } from "~/lib/utils"
 
 const queryAdminUsers = query(async () => {
+
+  await useAdminQuery()
+
   return safeDb2(
     db.query.usersTable.findMany({
       orderBy: (tbl => tbl.id),

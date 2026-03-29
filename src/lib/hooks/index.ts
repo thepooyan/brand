@@ -1,5 +1,6 @@
-import { usePreloadRoute } from "@solidjs/router"
+import { redirect, usePreloadRoute } from "@solidjs/router"
 import { createSignal } from "solid-js"
+import { isAdminLoggedIn } from "~/server/serverUtil"
 
 export const preload = (route: string, ...more: string[]) => {
   const pr = usePreloadRoute()
@@ -22,3 +23,7 @@ export const useToggle = <T extends acceptableToggleTypes>(initial?: T) => {
   return {activate, isActive}
 }
 
+
+export const useAdminQuery = async () => {
+  if (!await isAdminLoggedIn()) throw redirect("/")
+}

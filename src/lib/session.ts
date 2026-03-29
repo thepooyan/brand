@@ -9,7 +9,7 @@ export enum ROLES {
 }
 
 export type AuthSessionData = {
-  user: typeof usersTable.$inferSelect & {role: ROLES}
+  user?: typeof usersTable.$inferSelect & {role: ROLES}
 };
 
 async function useAuthSession() {
