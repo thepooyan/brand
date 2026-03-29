@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge"
 import { PlanInstance } from "~/db/schema"
 import { resolveError } from "./errorHandler"
 import { getPlan } from "~/sections/plan"
+import { callModal } from "~/components/layout/Modal"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -185,6 +186,15 @@ export const safeDb2 = async <T>(fn: Promise<T>): Promise<{ok: true, data: T, ms
   }
 }
 
+export const safeDb2Transaction = async (fn: Promise<any>): Promise<{ok: true, msg: undefined} | {ok: false, msg: string}> => {
+  try {
+    await fn
+    return {ok: true, msg: undefined}
+  } catch (e) {
+    return { ok: false, msg: resolveError(e) }
+  }
+}
+
 export const ifEnterPressed = (callback: (e: KeyboardEvent) => void) => (e: KeyboardEvent) => {
   if (e.key === "Enter") {
     e.preventDefault()
@@ -250,4 +260,9 @@ export const toEnNumbers = (str: string) => {
   const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
 
   return str.replace(/[۰-۹]/g, d => persianDigits.indexOf(d).toString())
+}
+
+export const ifSure = (fn: () => any, msg?: string) => {
+  callModal.prompt(msg)
+  .yes(() => fn())
 }

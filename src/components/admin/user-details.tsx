@@ -9,6 +9,8 @@ import { Muted, Title } from "../prose/prose-item"
 import BotCard from "./bot-card"
 import { PartialUser } from "~/db/relationQueries"
 import BackBtn from "../parts/back-btn"
+import { blockUser, deleteUser, demoteUser } from "./userInteractions"
+import { ifSure } from "~/lib/utils"
 
 interface p {
   user: PartialUser
@@ -67,11 +69,11 @@ const UserDetails = ({user}:p) => {
         </Show>
       </CardContent>
       <CardFooter class="gap-2 justify-end">
-        <Button variant="destructive">
+        <Button variant="destructive" onclick={() => ifSure(() => deleteUser(user.id!), "کاربر حذف شود؟")}>
           حذف
           <FiTrash/>
         </Button>
-        <Button variant="secondary">
+        <Button variant="secondary" onclick={() => ifSure(() => blockUser(user.id!), "کاربر بلاک شود؟") }>
           بلاک
           <FaSolidBan/>
         </Button>
@@ -82,7 +84,7 @@ const UserDetails = ({user}:p) => {
           </Button>
         </Show>
         <Show when={isAdmin}>
-          <Button>
+          <Button onclick={() => ifSure(() => demoteUser(user.id!), "کاربر به کاربر عادی تغییر پیدا کند؟") }>
             تنزل به کاربر معمولی
             <FiArrowDownCircle/>
           </Button>
