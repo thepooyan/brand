@@ -3,8 +3,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "../ui/button"
 import { FiArrowDownCircle, FiArrowUpCircle, FiTrash } from "solid-icons/fi"
 import { FaSolidBan } from "solid-icons/fa"
-import { Show } from "solid-js"
+import { For, Show } from "solid-js"
 import { Badge } from "../ui/badge"
+import PlanCard from "./plan-card"
+import { Title } from "../prose/prose-item"
 
 interface p {
   user: PartialUser
@@ -27,8 +29,14 @@ const UserCard = ({user}:p) => {
       </CardHeader>
 
       <CardContent>
-        پلن:
-        {JSON.stringify(user.current_plans)}
+        <div class="space-y-2">
+          <Title class="mb-5">
+            پلن ها:
+          </Title>
+          <For each={user.current_plans}>
+            {p => <PlanCard plan={p}/>}
+          </For>
+        </div>
       </CardContent>
       <CardFooter class="gap-2 justify-end">
         <Button variant="destructive">
