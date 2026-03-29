@@ -12,6 +12,7 @@ history {
     save chats with hooshbaan bot
 }
 
+make api success and error fns
 make filters into one button
 make users list
 write docs for widget

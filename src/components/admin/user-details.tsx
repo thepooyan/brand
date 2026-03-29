@@ -11,6 +11,8 @@ import { PartialUser } from "~/db/relationQueries"
 import BackBtn from "../parts/back-btn"
 import { blockUser, deleteUser, demoteUser } from "./userInteractions"
 import { ifSure } from "~/lib/utils"
+import { useNavigate } from "@solidjs/router"
+import { callModal } from "../layout/Modal"
 
 interface p {
   user: PartialUser
@@ -19,6 +21,36 @@ interface p {
 const UserDetails = ({user}:p) => {
 
   const isAdmin = user.admin !== null
+  const nv = useNavigate()
+
+  const deleteMe = () => {
+    ifSure(async() => {
+      let {ok, msg} = await deleteUser(user.id!)
+      if (ok) return nv("/admin/users")
+      callModal.fail(msg)
+    }, "کاربر حذف شود؟")
+  }
+  const blockMe = () => {
+    ifSure(async () => {
+      let {ok, msg} = await blockUser(user.id!)
+      if (ok) return callModal.success()
+      callModal.fail(msg)
+    }, "کاربر بلاک شود؟")
+  }
+  const promoteMe = () => {
+    ifSure(async () => {
+      // let {ok, msg} = await blockUser(user.id!)
+      // if (ok) return callModal.success()
+      // callModal.fail(msg)
+    }, "کاربر ارتقا پیدا کند؟")
+  }
+  const demoteMe = () => {
+    ifSure(async () => {
+      let {ok, msg} = await demoteUser(user.id!)
+      if (ok) return callModal.success()
+      callModal.fail(msg)
+    }, "کاربر دیموت شود؟")
+  }
 
   return (
     <Card class="m-4">
@@ -69,22 +101,22 @@ const UserDetails = ({user}:p) => {
         </Show>
       </CardContent>
       <CardFooter class="gap-2 justify-end">
-        <Button variant="destructive" onclick={() => ifSure(() => deleteUser(user.id!), "کاربر حذف شود؟")}>
+        <Button variant="destructive" onclick={deleteMe}>
           حذف
           <FiTrash/>
         </Button>
-        <Button variant="secondary" onclick={() => ifSure(() => blockUser(user.id!), "کاربر بلاک شود؟") }>
+        <Button variant="secondary" onclick={blockMe}>
           بلاک
           <FaSolidBan/>
         </Button>
         <Show when={!isAdmin}>
-          <Button>
+          <Button onclick={promoteMe}>
             ارتقا به ادمین
             <FiArrowUpCircle/>
           </Button>
         </Show>
         <Show when={isAdmin}>
-          <Button onclick={() => ifSure(() => demoteUser(user.id!), "کاربر به کاربر عادی تغییر پیدا کند؟") }>
+          <Button onclick={demoteMe}>
             تنزل به کاربر معمولی
             <FiArrowDownCircle/>
           </Button>
