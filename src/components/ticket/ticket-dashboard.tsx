@@ -58,7 +58,7 @@ const TicketDashboard = () => {
           تیکت ها
         </h1>
         <p class="text-muted-foreground text-sm mb-8">
-          میتوانید سوالات یا مشکلات خود را توسط تیکت بیان نمایید، همه تیکت ها ظرف ۲۴ ساعت پاسخ داده میشوند.
+          میتوانید سوالات یا مشکلات خود را توسط تیکت بیان نمایید، همه تیکت ها در سریع ترین زمان ممکن پاسخ داده میشوند.
         </p>
         <div class="flex gap-2 my-5 mb-2 items-center text-muted-foreground text-sm">
           <FiFilter/>
