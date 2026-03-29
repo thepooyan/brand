@@ -4,7 +4,7 @@ import { Label } from "~/components/ui/label"
 import { createSignal } from "solid-js"
 import { FiArrowLeft, FiLock, FiPhone } from "solid-icons/fi"
 import Input from "~/components/ui/input"
-import { Timer } from "~/lib/utils"
+import { Timer, toEnNumbers } from "~/lib/utils"
 import { useViewTransition } from "~/lib/viewTransition"
 import TA from "~/components/parts/TA"
 import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
@@ -15,7 +15,8 @@ import { Link } from "@solidjs/meta"
 import { InputChangeEvent } from "~/db/types"
 
 export default function Login() {
-  const [phoneNumber, setPhoneNumber] = createSignal("")
+  const [rawPhoneNumber, setPhoneNumber] = createSignal("")
+  const phoneNumber = () => toEnNumbers(rawPhoneNumber())
   const otpLength = 6;
   const otpElements:HTMLInputElement[] = Array(otpLength).fill("");
   const [isPhoneWaiting, setIsPhoneWaiting] = createSignal(false)
@@ -45,7 +46,7 @@ export default function Login() {
   }
 
   const getOtpValue = () => {
-    return otpElements.map(o => o.value)
+    return otpElements.map(o => toEnNumbers(o.value))
   }
 
   const handleOtpSubmit = (e: any) => {

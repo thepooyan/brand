@@ -245,3 +245,9 @@ export function filterLastMonth(date: Date | null | undefined): boolean {
 
   return (date >= lastMonthStartDate && date <= lastMonthEndDate);
 }
+
+export const toEnNumbers = (str: string) => {
+  const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
+
+  return str.replace(/[۰-۹]/g, d => persianDigits.indexOf(d).toString())
+}
