@@ -1,4 +1,4 @@
-import type { ValidComponent } from "solid-js"
+import type { Signal, ValidComponent } from "solid-js"
 import { mergeProps, splitProps } from "solid-js"
 
 import type { PolymorphicProps } from "@kobalte/core"
@@ -6,6 +6,7 @@ import * as TextFieldPrimitive from "@kobalte/core/text-field"
 import { cva } from "class-variance-authority"
 
 import { cn } from "~/lib/utils"
+import { InputChangeEvent } from "~/db/types"
 
 type TextFieldRootProps<T extends ValidComponent = "div"> =
   TextFieldPrimitive.TextFieldRootProps<T> & {
@@ -45,6 +46,7 @@ type TextFieldInputProps<T extends ValidComponent = "input"> =
       | "time"
       | "url"
       | "week"
+    bind?: Signal<string>
   }
 
 const TextFieldInput = <T extends ValidComponent = "input">(
@@ -52,8 +54,21 @@ const TextFieldInput = <T extends ValidComponent = "input">(
 ) => {
   const props = mergeProps<TextFieldInputProps<T>[]>({ type: "text" }, rawProps)
   const [local, others] = splitProps(props as TextFieldInputProps, ["type", "class"])
+
+  let consbind = () => {
+    let bind = others.bind
+    if (bind) {
+      let [getter, setter] = bind
+      return {
+        value: getter(),
+        onChange: (e:InputChangeEvent) => setter(e.currentTarget.value)
+      }
+    }
+  }
+
   return (
     <TextFieldPrimitive.Input
+      {...consbind()}
       type={local.type}
       class={cn(
         "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[invalid]:border-error-foreground data-[invalid]:text-error-foreground",

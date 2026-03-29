@@ -1,6 +1,6 @@
 import { createAsync, query, useParams } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { createEffect, Show } from "solid-js"
+import { Show } from "solid-js"
 import UserDetails from "~/components/admin/user-details"
 import LoadingSuspense from "~/components/pages/LoadingSuspense"
 import { db } from "~/db/db"
@@ -22,11 +22,10 @@ const id = () => {
   const {id} = useParams()
   const user = createAsync(() => queryUser(parseInt(id)))
 
-  createEffect(() => console.log(user()))
   return (
     <LoadingSuspense>
       <Show when={user()?.data}>
-        {d => <UserDetails user={d()}/>}
+        {d => <UserDetails user={d}/>}
       </Show>
     </LoadingSuspense>
   )

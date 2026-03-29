@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "../ui/button"
 import { FiArrowDownCircle, FiArrowUpCircle, FiTrash } from "solid-icons/fi"
 import { FaSolidBan } from "solid-icons/fa"
-import { For, Show } from "solid-js"
+import { createEffect, For, Show } from "solid-js"
 import { Badge } from "../ui/badge"
 import PlanCard from "./plan-card"
 import { Muted, Title } from "../prose/prose-item"
@@ -11,44 +11,42 @@ import { PartialUser } from "~/db/relationQueries"
 import BackBtn from "../parts/back-btn"
 import { blockUser, deleteUser, demoteUser } from "./userInteractions"
 import { ifSure } from "~/lib/utils"
-import { useNavigate } from "@solidjs/router"
+import { revalidate, useNavigate } from "@solidjs/router"
 import { callModal } from "../layout/Modal"
+import NewAdminModal from "./new-admin-modal"
 
 interface p {
-  user: PartialUser
+  user: () => PartialUser
 }
 
 const UserDetails = ({user}:p) => {
 
-  const isAdmin = user.admin !== null
+  const isAdmin = () => user().admin !== null
   const nv = useNavigate()
+  createEffect(() => console.log({...user()}))
 
   const deleteMe = () => {
     ifSure(async() => {
-      let {ok, msg} = await deleteUser(user.id!)
+      let {ok, msg} = await deleteUser(user().id!)
       if (ok) return nv("/admin/users")
       callModal.fail(msg)
     }, "کاربر حذف شود؟")
   }
   const blockMe = () => {
     ifSure(async () => {
-      let {ok, msg} = await blockUser(user.id!)
+      let {ok, msg} = await blockUser(user().id!)
       if (ok) return callModal.success()
       callModal.fail(msg)
     }, "کاربر بلاک شود؟")
   }
   const promoteMe = () => {
-    ifSure(async () => {
-      // let {ok, msg} = await blockUser(user.id!)
-      // if (ok) return callModal.success()
-      // callModal.fail(msg)
-    }, "کاربر ارتقا پیدا کند؟")
+    callModal(() => <NewAdminModal id={user().id!} number={user().number!}/>)
   }
   const demoteMe = () => {
     ifSure(async () => {
-      let {ok, msg} = await demoteUser(user.id!)
-      if (ok) return callModal.success()
-      callModal.fail(msg)
+      let {ok, msg} = await demoteUser(user().id!)
+      if (!ok) return callModal.fail(msg)
+      revalidate("adminUser")
     }, "کاربر دیموت شود؟")
   }
 
@@ -56,17 +54,17 @@ const UserDetails = ({user}:p) => {
     <Card class="m-4">
       <CardHeader class="relative">
         <CardTitle>
-          {user.number}
+          {user().number}
         </CardTitle>
         <CardDescription>
-          تاریخ عضویت: {user.createdAt?.toLocaleDateString("fa-IR")}
+          تاریخ عضویت: {user().createdAt?.toLocaleDateString("fa-IR")}
           <br/>
-          نام: {user.name}
+          نام: {user().name}
           <br/>
-          ایمیل: {user.email}
+          ایمیل: {user().email}
         </CardDescription>
         <div class="absolute left-5 space-x-2">
-          <Show when={isAdmin}>
+          <Show when={isAdmin()}>
             <Badge class="font-normal">
               admin
             </Badge>
@@ -80,7 +78,7 @@ const UserDetails = ({user}:p) => {
           <Title class="mb-5">
             پلن ها:
           </Title>
-          <For each={user.current_plans} fallback="ندارد...">
+          <For each={user().current_plans} fallback="ندارد...">
             {p => <PlanCard plan={p}/>}
           </For>
         </div>
@@ -88,15 +86,15 @@ const UserDetails = ({user}:p) => {
           <Title class="my-5">
             ربات ها:
           </Title>
-          <For each={user.bots} fallback="ندارد...">
+          <For each={user().bots} fallback="ندارد...">
             {p => <BotCard bot={p}/>}
           </For>
         </div>
-        <Show when={isAdmin}>
+        <Show when={isAdmin()}>
           <div class="space-y-2">
             <Title class="my-5">اطلاعات ادمین:</Title>
             <Muted class="mb-1">چت آیدی تلگرام:</Muted>
-            {user.admin?.chat_id}
+            {user().admin?.chat_id}
           </div>
         </Show>
       </CardContent>
@@ -109,13 +107,13 @@ const UserDetails = ({user}:p) => {
           بلاک
           <FaSolidBan/>
         </Button>
-        <Show when={!isAdmin}>
+        <Show when={!isAdmin()}>
           <Button onclick={promoteMe}>
             ارتقا به ادمین
             <FiArrowUpCircle/>
           </Button>
         </Show>
-        <Show when={isAdmin}>
+        <Show when={isAdmin()}>
           <Button onclick={demoteMe}>
             تنزل به کاربر معمولی
             <FiArrowDownCircle/>
