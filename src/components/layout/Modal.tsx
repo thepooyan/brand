@@ -4,7 +4,30 @@ import { Button } from "../ui/button"
 import clsx from "clsx"
 import { AiFillWarning, AiOutlineCheck } from "solid-icons/ai"
 import Spinner from "../parts/Spinner"
-import { CallbackStore } from "~/lib/utils"
+
+type func = () => void
+class CallbackStore {
+  private yes: func | null = null
+  private no: func | null = null
+  setYes(callback: ()=>void) {
+    this.yes = callback
+  }
+  setNo(callback: ()=>void) {
+    this.no = callback
+  }
+  callYes() {
+    this.yes && this.yes()
+    this.clear()
+  }
+  callNo() {
+    this.no && this.no()
+    this.clear()
+  }
+  private clear() {
+    this.yes = null
+    this.no = null
+  }
+}
 
 type Istate = "" | "prompt" | "fail" | "success" | "wait"
 type modalArgs = {content: () => JSXElement, state?: Istate}
