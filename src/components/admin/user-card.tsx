@@ -7,6 +7,7 @@ import { For, Show } from "solid-js"
 import { Badge } from "../ui/badge"
 import PlanCard from "./plan-card"
 import { Title } from "../prose/prose-item"
+import BotCard from "./bot-card"
 
 interface p {
   user: PartialUser
@@ -35,6 +36,14 @@ const UserCard = ({user}:p) => {
           </Title>
           <For each={user.current_plans}>
             {p => <PlanCard plan={p}/>}
+          </For>
+        </div>
+        <div class="space-y-2">
+          <Title class="my-5">
+            ربات ها:
+          </Title>
+          <For each={user.bots}>
+            {p => <BotCard bot={p}/>}
           </For>
         </div>
       </CardContent>
