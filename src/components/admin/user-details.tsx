@@ -1,4 +1,3 @@
-import { PartialUser } from "~/routes/Admin/users"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { FiArrowDownCircle, FiArrowUpCircle, FiTrash } from "solid-icons/fi"
@@ -8,6 +7,7 @@ import { Badge } from "../ui/badge"
 import PlanCard from "./plan-card"
 import { Title } from "../prose/prose-item"
 import BotCard from "./bot-card"
+import { PartialUser } from "~/db/relationQueries"
 
 interface p {
   user: PartialUser
@@ -18,7 +18,7 @@ const UserDetails = ({user}:p) => {
   const isAdmin = user.admin !== null
 
   return (
-    <Card>
+    <Card class="m-4">
       <CardHeader class="relative">
         <CardTitle>{user.number}</CardTitle>
         <CardDescription>{user.name}</CardDescription>

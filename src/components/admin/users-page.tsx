@@ -1,9 +1,9 @@
 import { Accessor, For } from "solid-js"
-import { PartialUser } from "~/routes/Admin/users"
 import UserCard from "./user-card"
+import { User_Plan_Bots } from "~/db/schema"
 
 interface p {
-  users: Accessor<PartialUser[]>
+  users: Accessor<User_Plan_Bots[]>
 }
 const UsersPage = ({users}:p) => {
   return (

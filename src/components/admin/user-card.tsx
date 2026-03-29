@@ -1,11 +1,11 @@
-import { PartialUser } from "~/routes/Admin/users"
 import { Card } from "../ui/card"
 import { Button } from "../ui/button"
 import { Muted } from "../prose/prose-item"
 import TA from "../parts/TA"
+import { User_Plan_Bots } from "~/db/schema"
 
 interface p {
-  user: PartialUser
+  user: User_Plan_Bots
 }
 
 const UserCard = ({user}:p) => {
