@@ -22,10 +22,15 @@ const UserDetails = ({user}:p) => {
     <Card class="m-4">
       <CardHeader class="relative">
         <CardTitle>
-          <Muted class="mb-1">شماره:</Muted>
           {user.number}
         </CardTitle>
-        <CardDescription>{user.name}</CardDescription>
+        <CardDescription>
+          تاریخ عضویت: {user.createdAt?.toLocaleDateString("fa-IR")}
+          <br/>
+          نام: {user.name}
+          <br/>
+          ایمیل: {user.email}
+        </CardDescription>
         <div class="absolute left-5 space-x-2">
           <Show when={isAdmin}>
             <Badge class="font-normal">
