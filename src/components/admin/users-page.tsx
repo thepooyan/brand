@@ -7,7 +7,7 @@ interface p {
 }
 const UsersPage = ({users}:p) => {
   return (
-    <div>
+    <div class="space-y-2 p-2">
       <For each={users()}>
         {u => <UserCard user={u}/>}
       </For>
