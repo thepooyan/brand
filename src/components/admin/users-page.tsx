@@ -3,16 +3,23 @@ import UserCard from "./user-card"
 import { User_Plan_Bots } from "~/db/schema"
 import { FiFilter } from "solid-icons/fi"
 import { Button } from "../ui/button"
-import Checkbox from "../ui/checkbox"
 import Input from "../ui/input"
 import { FaSolidMagnifyingGlass } from "solid-icons/fa"
 import UserSearchSelect from "./user-search-select"
 import { Muted } from "../prose/prose-item"
+import { filterOptions, useFilter } from "~/lib/hooks/useFilter"
 
 interface p {
   users: Accessor<User_Plan_Bots[]>
 }
 const UsersPage = ({users}:p) => {
+
+  let fo: filterOptions<User_Plan_Bots> = {
+    "فقط ادمین": (e:User_Plan_Bots) => true,
+    "بلاک‌شده": (e:User_Plan_Bots) => e.isBlocked === "1",
+  }
+  const {filtered, setFilter, allFilters, activeFilter} = useFilter(users, fo)
+
   return (
     <div class="space-y-4 p-5">
       <div class="flex gap-2">
@@ -27,15 +34,14 @@ const UsersPage = ({users}:p) => {
           <FiFilter/>
           فیلتر ها:
         </Muted>
-        <Button variant="outline" size="sm">
-          فقط ادمین
-        </Button>
-        <Button variant="outline" size="sm">
-          بلاک شده
-        </Button>
+        <For each={Object.keys(allFilters)}>
+          {f => <Button variant={activeFilter() === f ? "secondary" : "outline"} size="sm" onclick={() => setFilter(f)}>
+            {f || "همه"}
+        </Button>}
+        </For>
       </div>
       <div class="space-y-1.5">
-        <For each={users()}>
+        <For each={filtered()}>
           {u => <UserCard user={u}/>}
         </For>
       </div>
