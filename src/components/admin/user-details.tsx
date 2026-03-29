@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { FiArrowDownCircle, FiArrowUpCircle, FiTrash } from "solid-icons/fi"
-import { FaSolidBan } from "solid-icons/fa"
+import { FaSolidBan, FaSolidUnlock } from "solid-icons/fa"
 import { createEffect, For, Show } from "solid-js"
 import { Badge } from "../ui/badge"
 import PlanCard from "./plan-card"
@@ -9,7 +9,7 @@ import { Muted, Title } from "../prose/prose-item"
 import BotCard from "./bot-card"
 import { PartialUser } from "~/db/relationQueries"
 import BackBtn from "../parts/back-btn"
-import { blockUser, deleteUser, demoteUser } from "./userInteractions"
+import { blockUser, deleteUser, demoteUser, unblockUser } from "./userInteractions"
 import { ifSure } from "~/lib/utils"
 import { revalidate, useNavigate } from "@solidjs/router"
 import { callModal } from "../layout/Modal"
@@ -22,8 +22,8 @@ interface p {
 const UserDetails = ({user}:p) => {
 
   const isAdmin = () => user().admin !== null
+  const isBlocked = () => user().isBlocked === "1"
   const nv = useNavigate()
-  createEffect(() => console.log({...user()}))
 
   const deleteMe = () => {
     ifSure(async() => {
@@ -35,9 +35,18 @@ const UserDetails = ({user}:p) => {
   const blockMe = () => {
     ifSure(async () => {
       let {ok, msg} = await blockUser(user().id!)
-      if (ok) return callModal.success()
-      callModal.fail(msg)
+      if (!ok) return callModal.fail(msg)
+      callModal.success()
+      revalidate("adminUser")
     }, "کاربر بلاک شود؟")
+  }
+  const unblockMe = () => {
+    ifSure(async () => {
+      let {ok, msg} = await unblockUser(user().id!)
+      if (!ok) return callModal.fail(msg)
+      callModal.success()
+      revalidate("adminUser")
+    }, "کاربر آنبلاک شود؟")
   }
   const promoteMe = () => {
     callModal(() => <NewAdminModal id={user().id!} number={user().number!}/>)
@@ -103,10 +112,18 @@ const UserDetails = ({user}:p) => {
           حذف
           <FiTrash/>
         </Button>
-        <Button variant="secondary" onclick={blockMe}>
-          بلاک
-          <FaSolidBan/>
-        </Button>
+        <Show when={isBlocked()}>
+          <Button variant="secondary" onclick={unblockMe}>
+            آنبلاک
+            <FaSolidUnlock/>
+          </Button>
+        </Show>
+        <Show when={!isBlocked()}>
+          <Button variant="secondary" onclick={blockMe}>
+            بلاک
+            <FaSolidBan/>
+          </Button>
+        </Show>
         <Show when={!isAdmin()}>
           <Button onclick={promoteMe}>
             ارتقا به ادمین

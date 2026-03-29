@@ -15,6 +15,11 @@ export const blockUser = (user_id: number) => {
     db.update(usersTable).set({isBlocked: "1"}).where(eq(usersTable.id, user_id))
   )
 }
+export const unblockUser = (user_id: number) => {
+  return safeDb2Transaction(
+    db.update(usersTable).set({isBlocked: "0"}).where(eq(usersTable.id, user_id))
+  )
+}
 export const promoteUser = (newAdmin: NewAdminData) => {
   return safeDb2Transaction(
     db.insert(adminsTable).values(newAdmin)
