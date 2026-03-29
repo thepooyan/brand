@@ -7,6 +7,7 @@ import Checkbox from "../ui/checkbox"
 import Input from "../ui/input"
 import { FaSolidMagnifyingGlass } from "solid-icons/fa"
 import UserSearchSelect from "./user-search-select"
+import { Muted } from "../prose/prose-item"
 
 interface p {
   users: Accessor<User_Plan_Bots[]>
@@ -22,23 +23,15 @@ const UsersPage = ({users}:p) => {
         </Button>
       </div>
       <div class="flex items-center gap-1">
-        <Button variant="secondary">
+        <Muted class="ml-2">
           <FiFilter/>
-          فیلتر ها
-        </Button>
-        <Button variant="secondary">
-          نام
-        </Button>
-        <Button variant="secondary">
-          شماره
-        </Button>
-        <Button variant="secondary">
+          فیلتر ها:
+        </Muted>
+        <Button variant="outline" size="sm">
           فقط ادمین
-          <Checkbox/>
         </Button>
-        <Button variant="secondary">
+        <Button variant="outline" size="sm">
           بلاک شده
-          <Checkbox/>
         </Button>
       </div>
       <For each={users()}>
