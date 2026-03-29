@@ -14,7 +14,7 @@ interface p {
 }
 const UsersPage = ({users}:p) => {
   return (
-    <div class="space-y-2 p-2">
+    <div class="space-y-4 p-5">
       <div class="flex gap-2">
         <Input placeholder="جستجو..."/>
         <UserSearchSelect/>
@@ -34,9 +34,11 @@ const UsersPage = ({users}:p) => {
           بلاک شده
         </Button>
       </div>
-      <For each={users()}>
-        {u => <UserCard user={u}/>}
-      </For>
+      <div class="space-y-1.5">
+        <For each={users()}>
+          {u => <UserCard user={u}/>}
+        </For>
+      </div>
     </div>
   )
 }
