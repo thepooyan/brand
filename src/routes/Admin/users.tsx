@@ -9,6 +9,7 @@ import { useAdminQuery } from "~/lib/hooks"
 import { safeDb2 } from "~/lib/utils"
 
 const queryAdminUsers = query(async () => {
+  "use server"
 
   await useAdminQuery()
 
