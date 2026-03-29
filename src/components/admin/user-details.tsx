@@ -41,7 +41,7 @@ const UserDetails = ({user}:p) => {
           <Title class="mb-5">
             پلن ها:
           </Title>
-          <For each={user.current_plans}>
+          <For each={user.current_plans} fallback="ندارد...">
             {p => <PlanCard plan={p}/>}
           </For>
         </div>
@@ -49,10 +49,17 @@ const UserDetails = ({user}:p) => {
           <Title class="my-5">
             ربات ها:
           </Title>
-          <For each={user.bots}>
+          <For each={user.bots} fallback="ندارد...">
             {p => <BotCard bot={p}/>}
           </For>
         </div>
+        <Show when={isAdmin}>
+          <div class="space-y-2">
+            <Title class="my-5">اطلاعات ادمین:</Title>
+            <Muted class="mb-1">چت آیدی تلگرام:</Muted>
+            {user.admin?.chat_id}
+          </div>
+        </Show>
       </CardContent>
       <CardFooter class="gap-2 justify-end">
         <Button variant="destructive">
