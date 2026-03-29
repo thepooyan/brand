@@ -12,6 +12,7 @@ history {
     save chats with hooshbaan bot
 }
 
+make filters into one button
 make users list
 write docs for widget
 rate limit s3 uploader for normal users

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { FaSolidTicket } from "solid-icons/fa"
-import { FiArrowLeft, FiFileText, FiImage } from "solid-icons/fi"
+import { FiArrowLeft, FiFileText, FiImage, FiUsers } from "solid-icons/fi"
 import { For } from "solid-js"
 import TA from "~/components/parts/TA"
 import { getAdminUser } from "~/lib/signal"
@@ -20,6 +20,11 @@ const adminMenu = [
     label: "تیکت",
     href: "ticket",
     icon: FaSolidTicket
+  },
+  {
+    label: "کاربران",
+    href: "users",
+    icon: FiUsers
   },
 ]
 
