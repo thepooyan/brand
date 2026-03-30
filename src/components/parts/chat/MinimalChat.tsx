@@ -8,8 +8,8 @@ import { createAsync, query, redirect } from "@solidjs/router";
 import { db } from "~/db/db";
 import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
-import { safeDb } from "~/lib/utils";
-import { ActionResponse2 } from "~/lib/actionAbstraction";
+import { Fetch } from "~/lib/actionAbstraction";
+import { safeDb2 } from "~/lib/utils";
 
 interface props {
   botId: string
@@ -30,12 +30,12 @@ const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) 
 }
 
 type query = {botName: string, businessName: string }
-const queryBotName = query(async (botId: string):ActionResponse2<query> => {
+const queryBotName = query(async (botId: string):Fetch<query> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect(`/Login?back=/Panel/Testbot/${botId}`)
 
-  let res = await safeDb(
+  let res = await safeDb2(
     db.query.chatbotTable.findFirst({
       where: (tbl => and(
         eq(tbl.userId, user.id),

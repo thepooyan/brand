@@ -7,7 +7,7 @@ import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
-import { ActionResponse2 } from "~/lib/actionAbstraction"
+import { Transaction } from "~/lib/actionAbstraction"
 import { revalidate } from "@solidjs/router"
 import TA from "../parts/TA"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
@@ -18,18 +18,18 @@ interface p {
   idx: Accessor<number>
 }
 
-const deleteHistory = async (id: number):ActionResponse2 => {
+const deleteHistory = async (id: number):Transaction => {
   "use server"
   const user = await getAuthSession()
-  if (!user) return {ok: false, msg: "ابتدا لوگین کنید", data: undefined}
+  if (!user) return {ok: false, msg: "ابتدا لوگین کنید" }
 
   let a =  await safeDb2(
     db.delete(chatbot_history_table).where(eq(chatbot_history_table.id, id))
   )
   if (a.ok) 
-    return {ok: true, msg: undefined, data: undefined}
+    return {ok: true, msg: undefined }
   else
-    return {ok: false, msg: a.msg, data: undefined}
+    return {ok: false, msg: a.msg}
 }
 
 const HistoryCard = ({histroy:h, idx}:p) => {

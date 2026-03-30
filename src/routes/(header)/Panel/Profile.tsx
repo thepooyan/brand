@@ -9,19 +9,19 @@ import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
-import { ActionResponse } from "~/lib/actionAbstraction"
+import { Transaction, transactionSuccess } from "~/lib/actionAbstraction"
 import { extractFormData } from "~/lib/hooks/useForm"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
-import { safeDb } from "~/lib/utils"
+import { safeDb2 } from "~/lib/utils"
 
 interface form {
   name: string
   email: string
   number: string
 }
-const handleSubmit = action(async (formData:FormData):ActionResponse => {
+const handleSubmit = action(async (formData:FormData):Transaction => {
   "use server"
   let {name, email, number} = extractFormData<form>(formData)
 
@@ -30,7 +30,7 @@ const handleSubmit = action(async (formData:FormData):ActionResponse => {
   let user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/Profile")
 
-  let result = await safeDb(
+  let result = await safeDb2(
     db.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.id))
   )
   if (!result.ok) return result
@@ -41,7 +41,7 @@ const handleSubmit = action(async (formData:FormData):ActionResponse => {
     number: number
   }})
 
-  return {ok: true}
+  return transactionSuccess()
 })
 
 

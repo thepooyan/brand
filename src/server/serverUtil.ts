@@ -9,7 +9,7 @@ import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
 import { chat_sources, timedMessage } from "~/db/constants";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
-import { ActionResponse2 } from "~/lib/actionAbstraction";
+import { Fetch } from "~/lib/actionAbstraction";
 import { safeDb2 } from "~/lib/utils";
 import { ResultSet } from "@libsql/client";
 
@@ -74,7 +74,7 @@ export const isAdminLoggedIn = async () => {
 
 export const updateChatHistory =
 async (QandA: timedMessage[], botId: number, userIP: string, from: typeof chat_sources[number])
-:ActionResponse2<ResultSet> => {
+:Fetch<ResultSet> => {
   "use server"
   return await safeDb2(
       db.transaction(async ctx => {

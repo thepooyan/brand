@@ -8,7 +8,7 @@ import { getAuthSession } from "~/lib/session"
 import { For, Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
-import { ActionResponse2 } from "~/lib/actionAbstraction"
+import { Fetch } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
 import { userPermissions } from "~/sections/plan"
@@ -19,7 +19,7 @@ type initialData = {
   canHaveMoreBots: boolean,
   telegramAccess: boolean
 }
-const getInitialData = query(async ():ActionResponse2<initialData> => {
+const getInitialData = query(async ():Fetch<initialData> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/panel/ChatBot")

@@ -5,6 +5,7 @@ import { PlanInstance } from "~/db/schema"
 import { resolveError } from "./errorHandler"
 import { getPlan } from "~/sections/plan"
 import { callModal } from "~/components/layout/Modal"
+import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "./actionAbstraction"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -146,28 +147,20 @@ export const safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok
   }
 }
 
-export const safeDb = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok: false, msg: string}> => {
+export const safeDb2 = async <T>(fn: Promise<T>):Fetch<T> => {
   try {
-    return {ok: true, data: await fn }
+    return fetchSuccess(await fn)
   } catch (e) {
-    return { ok: false, msg: resolveError(e) }
+    return fetchFail(resolveError(e))
   }
 }
 
-export const safeDb2 = async <T>(fn: Promise<T>): Promise<{ok: true, data: T, msg: undefined} | {ok: false, msg: string, data: undefined}> => {
-  try {
-    return {ok: true, data: await fn , msg: undefined}
-  } catch (e) {
-    return { ok: false, msg: resolveError(e) , data: undefined}
-  }
-}
-
-export const safeDb2Transaction = async (fn: Promise<any>): Promise<{ok: true, msg: undefined} | {ok: false, msg: string}> => {
+export const safeDb2Transaction = async (fn: Promise<any>):Transaction => {
   try {
     await fn
-    return {ok: true, msg: undefined}
+    return transactionSuccess()
   } catch (e) {
-    return { ok: false, msg: resolveError(e) }
+    return transactionFail(resolveError(e))
   }
 }
 
