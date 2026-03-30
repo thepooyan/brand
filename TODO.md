@@ -11,16 +11,15 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
-add pageination for admin users
-make filters into one button
 write docs for widget
 rate limit s3 uploader for normal users
 add plan safeguard in backend for edit bot, telegram, all plan features
 make limitation optionally for day or week or mounth?
 order status page
 cron cleaner for otp
-fix initial theme glitch
 
+net fix initial theme glitch
+net add pageination for admin users
 net profile does not work on could?
 net expose useChat as node package 
 net find new wallpaper in white

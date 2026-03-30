@@ -69,12 +69,10 @@ const HistoryCardMapper = ({data}:p) => {
 
 const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: string, fh: filterHook<HistoryWithName>}) => 
   <div class="flex gap-1">
-    <Tooltip openDelay={0} skipDelayDuration={0}>
-      <TooltipTrigger>
-        <Button variant="outline" size="sm">
-          <FiFilter/>
-          فیلتر {name}:
-        </Button>
+    <Tooltip openDelay={0}  skipDelayDuration={0}>
+      <TooltipTrigger as={Button} variant="outline" size="sm">
+        <FiFilter/>
+        فیلتر {name}:
       </TooltipTrigger>
       <TooltipContent class="gap-1 flex">
         <Button variant="outline"
