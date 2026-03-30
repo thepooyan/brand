@@ -4,6 +4,7 @@ import { FiFilter } from "solid-icons/fi"
 import { filterHook, filterOptions, useFilter } from "~/lib/hooks/useFilter"
 import { Button } from "../ui/button"
 import { cn, filterLastMonth, filterLastWeek, filterOlderThanLastMonth, filterToday } from "~/lib/utils"
+import { Tooltip,TooltipContent, TooltipTrigger } from "../ui/tooltip"
 
 interface p {
   data: Accessor<HistoryWithName[]>
@@ -45,7 +46,7 @@ const HistoryCardMapper = ({data}:p) => {
 
   return (
     <>
-      <div class="grid grid-cols-2 gap-2 mb-4">
+      <div class="flex gap-2 mb-4">
         <FilterSection name="زمان" fh={timeFilterHook}/>
         {Object.keys(botFilters).length > 1 && 
         <FilterSection name="ربات" fh={botFilterHook}/>}
@@ -68,24 +69,30 @@ const HistoryCardMapper = ({data}:p) => {
 
 const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: string, fh: filterHook<HistoryWithName>}) => 
   <div class="flex gap-1">
-    <span class="text-sm center gap-1 text-muted-foreground flex-row">
-      <FiFilter/>
-      فیلتر {name}:
-    </span>
-    <Button variant="outline"
-      size="sm"
-      class={cn(activeFilter() === "" && "bg-secondary")}
-      onclick={() => setFilter("")}>
-      همه
-    </Button>
-    <For each={Object.keys(allFilters).filter(i => i !== "")}>
-      {k => <Button
-        variant="outline" size="sm"
-        onClick={() => setFilter(k)} 
-        class={cn(activeFilter() === k && "bg-secondary")}>
-        {k}
-      </Button>}
-    </For>
+    <Tooltip openDelay={0} skipDelayDuration={0}>
+      <TooltipTrigger>
+        <Button variant="outline" size="sm">
+          <FiFilter/>
+          فیلتر {name}:
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent class="gap-1 flex">
+        <Button variant="outline"
+          size="sm"
+          class={cn(activeFilter() === "" && "bg-secondary")}
+          onclick={() => setFilter("")}>
+          همه
+        </Button>
+        <For each={Object.keys(allFilters).filter(i => i !== "")}>
+          {k => <Button
+            variant="outline" size="sm"
+            onClick={() => setFilter(k)} 
+            class={cn(activeFilter() === k && "bg-secondary")}>
+            {k}
+          </Button>}
+        </For>
+      </TooltipContent>
+    </Tooltip>
   </div>
 
 export default HistoryCardMapper
