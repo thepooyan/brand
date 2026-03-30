@@ -1,4 +1,4 @@
-import { Accessor, For } from "solid-js"
+import { Accessor, createSignal, For } from "solid-js"
 import UserCard from "./user-card"
 import { User_Plan_Bots_Admin } from "~/db/schema"
 import { FiFilter } from "solid-icons/fi"
@@ -8,6 +8,7 @@ import { FaSolidMagnifyingGlass } from "solid-icons/fa"
 import UserSearchSelect from "./user-search-select"
 import { Muted } from "../prose/prose-item"
 import { filterOptions, useFilter } from "~/lib/hooks/useFilter"
+import { setSearch } from "~/routes/Admin/users/searchSignal"
 
 interface p {
   users: Accessor<User_Plan_Bots_Admin[]>
@@ -19,14 +20,17 @@ const UsersPage = ({users}:p) => {
     "بلاک‌شده": (e:User_Plan_Bots_Admin) => e.isBlocked === "1",
   }
   const {filtered, setFilter, allFilters, activeFilter} = useFilter(users, fo)
+  const str = createSignal("")
+  const [type, setType] = createSignal("name")
+  const castType = () => type() === "شماره" ? "number" : "name"
 
   return (
     <div class="space-y-4 p-5">
       <div class="flex gap-2">
-        <Input placeholder="جستجو..."/>
-        <UserSearchSelect/>
-        <Button>
-          <FaSolidMagnifyingGlass/>
+        <Input placeholder="جستجو..." bind={str}/>
+        <UserSearchSelect onchange={e => setType(e)} />
+        <Button onclick={() => {setSearch({str: str[0](), type: castType()})} }>
+          <FaSolidMagnifyingGlass />
         </Button>
       </div>
       <div class="flex justify-between items-center">

@@ -1,13 +1,15 @@
-import { createAsync, query } from "@solidjs/router"
-import { createEffect, Show } from "solid-js"
+import { query } from "@solidjs/router"
+import { createEffect, createResource, Show } from "solid-js"
 import UsersPage from "~/components/admin/users-page"
 import { callModal } from "~/components/layout/Modal"
 import LoadingSuspense from "~/components/pages/LoadingSuspense"
 import { db } from "~/db/db"
 import { useAdminQuery } from "~/lib/hooks"
 import { safeDb2 } from "~/lib/utils"
+import { Search, search } from "./searchSignal"
+import { like } from "drizzle-orm"
 
-const queryAdminUsers = query(async () => {
+const queryAdminUsers = query(async (s: Search) => {
   "use server"
 
   await useAdminQuery()
@@ -15,15 +17,15 @@ const queryAdminUsers = query(async () => {
   return safeDb2(
     db.query.usersTable.findMany({
       orderBy: (tbl => tbl.id),
-      with: {current_plans: true, bots: true, admin: true}
+      with: {current_plans: true, bots: true, admin: true},
+      where: s.str === "" ? undefined : s.type === "name" ? (tbl => like(tbl.name, `%${s.str}%`)) : (tbl => like(tbl.number, `%${s.str}%`))
     })
   )
 }, "adminUsers")
 
 
 const users = () => {
-
-  const users = createAsync(() => queryAdminUsers())
+  const [users] = createResource(search, (s) => queryAdminUsers(s))
 
   createEffect(() => {
     if (users()?.ok === false) callModal.fail(users()?.msg)
