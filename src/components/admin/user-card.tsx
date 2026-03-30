@@ -11,7 +11,7 @@ interface p {
 
 const UserCard = ({user}:p) => {
   return (
-    <Card class="grid grid-cols-[.2fr_1fr_2fr_1fr_1fr_1fr] p-4 gap-1 items-center">
+    <Card class="grid grid-cols-[.2fr_1fr_1fr_1fr_1fr_.4fr] p-4 gap-1 items-center">
       <p>
         {user.isBlocked === "1" && <AiFillLock class="text-destructive"/> }
       </p>
