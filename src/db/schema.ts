@@ -137,6 +137,7 @@ export const users_relations = relations(usersTable, ({many, one}) => ({
 }))
 export type User_Plan = User & {current_plans: PlanInstance[]}
 export type User_Plan_Bots = User_Plan & {bots: Chatbot[]}
+export type User_Plan_Bots_Admin = User_Plan_Bots & {admin: AdminData | null}
 
 export const otpTable = sqliteTable("otp_table", {
   number: text({length: 11}).notNull(),

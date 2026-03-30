@@ -15,7 +15,7 @@ const queryAdminUsers = query(async () => {
   return safeDb2(
     db.query.usersTable.findMany({
       orderBy: (tbl => tbl.id),
-      with: {current_plans: true, bots: true}
+      with: {current_plans: true, bots: true, admin: true}
     })
   )
 }, "adminUsers")
