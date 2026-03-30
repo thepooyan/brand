@@ -9,7 +9,6 @@ history {
     net add pageination for history
     net history filter: user filter has to be dropdown with search
     net test every source of history (done: api, widget, telegram, sessionChat)
-    save chats with hooshbaan bot
 }
 
 add pageination for admin users
