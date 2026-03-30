@@ -9,7 +9,7 @@ import { db } from "~/db/db";
 import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
 import { Fetch } from "~/lib/actionAbstraction";
-import { safeDb2 } from "~/lib/utils";
+import { safeDb } from "~/lib/utils";
 
 interface props {
   botId: string
@@ -35,7 +35,7 @@ const queryBotName = query(async (botId: string):Fetch<query> => {
   const user = await getAuthSession()
   if (!user) throw redirect(`/Login?back=/Panel/Testbot/${botId}`)
 
-  let res = await safeDb2(
+  let res = await safeDb(
     db.query.chatbotTable.findFirst({
       where: (tbl => and(
         eq(tbl.userId, user.id),

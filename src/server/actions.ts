@@ -12,7 +12,7 @@ import { generateText } from "ai"
 import { google } from "@ai-sdk/google"
 import { message } from "~/db/constants"
 import { newFreePlan } from "~/sections/planServer"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -44,7 +44,7 @@ export const sendOTP = async (number: string):Response<string> => {
       otp: newOtp
     } 
 
-    let done = await safeDb2(
+    let done = await safeDb(
       db.transaction(async (tx) => {
         await tx.delete(otpTable).where(eq(otpTable.number, number)),
         await tx.insert(otpTable).values(value)
