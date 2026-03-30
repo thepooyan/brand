@@ -13,9 +13,7 @@ history {
 }
 
 add pageination for admin users
-make api success and error fns
 make filters into one button
-make users list
 write docs for widget
 rate limit s3 uploader for normal users
 add plan safeguard in backend for edit bot, telegram, all plan features
