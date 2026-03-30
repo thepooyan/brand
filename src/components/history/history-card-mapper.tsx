@@ -17,10 +17,10 @@ const HistoryCardMapper = ({data}:p) => {
   }
   const timeFilterHook = useFilter(data, timeFilters)
 
-  const uniqeBotIds = new Set(data().map(i => i.botId))
+  const uniqeBotNames = new Set(data().map(i => i.chatbot.botName))
   const botFilters: filterOptions<HistoryWithName> = {}
-  uniqeBotIds.forEach(i => {
-    botFilters[i] = (d:HistoryWithName) => d.botId === i
+  uniqeBotNames.forEach(i => {
+    botFilters[i] = (d:HistoryWithName) => d.chatbot.botName === i
   })
 
   const botFilterHook = useFilter(timeFilterHook.filtered, botFilters)
