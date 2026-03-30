@@ -6,7 +6,7 @@ import Input from "~/components/ui/input"
 import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
 import { InputChangeEvent } from "~/db/types"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 import { callModal, closeModal } from "../layout/Modal"
 import { revalidate } from "@solidjs/router"
 
@@ -17,7 +17,7 @@ interface p {
 
 const applyLimitation = async (bot_id: number, limitation: number | null) => {
   "use server"
-  let res = await safeDb2(
+  let res = await safeDb(
     db.update(chatbotTable).set({limitation: limitation}).where(eq(chatbotTable.id, bot_id))
   )
   return {ok: res.ok, msg: res.msg, data: undefined}

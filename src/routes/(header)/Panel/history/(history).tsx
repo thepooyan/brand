@@ -7,14 +7,14 @@ import { Loading } from "~/components/parts/Loading"
 import { db } from "~/db/db"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 
 const queryBotHistory = query(async() => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/history")
 
-  return safeDb2(
+  return safeDb(
     db.transaction(async ctx => {
       const bots = await ctx.query.chatbotTable.findMany({ where: (tbl => eq(tbl.userId, user.id)) })
       const botIds = bots.map(i => i.id)

@@ -9,11 +9,11 @@ import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { db } from "~/db/db"
 import { panelPageMarker, usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 
 const queryHistoryDetails = query(async (id: number) => {
   "use server"
-  return safeDb2(
+  return safeDb(
     db.query.chatbot_history_table.findFirst({
       where: (tbl => eq(tbl.id, id)),
       with: {chatbot: true}

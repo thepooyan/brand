@@ -14,7 +14,7 @@ import { extractFormData } from "~/lib/hooks/useForm"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 
 interface form {
   name: string
@@ -30,7 +30,7 @@ const handleSubmit = action(async (formData:FormData):Transaction => {
   let user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/Profile")
 
-  let result = await safeDb2(
+  let result = await safeDb(
     db.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.id))
   )
   if (!result.ok) return result

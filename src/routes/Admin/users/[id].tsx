@@ -5,11 +5,11 @@ import UserDetails from "~/components/admin/user-details"
 import LoadingSuspense from "~/components/pages/LoadingSuspense"
 import { db } from "~/db/db"
 import { partialUsersWith } from "~/db/relationQueries"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 
 const queryUser = query(async (id: number) => {
   "use server"
-  return safeDb2(
+  return safeDb(
     db.query.usersTable.findFirst({
       where: (tbl => eq(tbl.id, id)),
       with: partialUsersWith

@@ -1,7 +1,7 @@
 import { chatbot_history_table, History } from "~/db/schema"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 import { Accessor, ParentProps } from "solid-js"
 import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
@@ -23,7 +23,7 @@ const deleteHistory = async (id: number):Transaction => {
   const user = await getAuthSession()
   if (!user) return {ok: false, msg: "ابتدا لوگین کنید" }
 
-  let a =  await safeDb2(
+  let a =  await safeDb(
     db.delete(chatbot_history_table).where(eq(chatbot_history_table.id, id))
   )
   if (a.ok) 

@@ -5,7 +5,7 @@ import { callModal } from "~/components/layout/Modal"
 import LoadingSuspense from "~/components/pages/LoadingSuspense"
 import { db } from "~/db/db"
 import { useAdminQuery } from "~/lib/hooks"
-import { safeDb2 } from "~/lib/utils"
+import { safeDb } from "~/lib/utils"
 import { Search, search } from "./searchSignal"
 import { like } from "drizzle-orm"
 
@@ -14,7 +14,7 @@ const queryAdminUsers = query(async (s: Search) => {
 
   await useAdminQuery()
 
-  return safeDb2(
+  return safeDb(
     db.query.usersTable.findMany({
       orderBy: (tbl => tbl.id),
       with: {current_plans: true, bots: true, admin: true},

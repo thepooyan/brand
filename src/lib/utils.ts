@@ -147,7 +147,7 @@ export const safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok
   }
 }
 
-export const safeDb2 = async <T>(fn: Promise<T>):Fetch<T> => {
+export const safeDb = async <T>(fn: Promise<T>):Fetch<T> => {
   try {
     return fetchSuccess(await fn)
   } catch (e) {
@@ -155,7 +155,7 @@ export const safeDb2 = async <T>(fn: Promise<T>):Fetch<T> => {
   }
 }
 
-export const safeDb2Transaction = async (fn: Promise<any>):Transaction => {
+export const safeDbTransaction = async (fn: Promise<any>):Transaction => {
   try {
     await fn
     return transactionSuccess()

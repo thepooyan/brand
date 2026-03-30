@@ -10,7 +10,7 @@ import { ErrorMessage } from "~/lib/const";
 import { chat_sources, timedMessage } from "~/db/constants";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { Fetch } from "~/lib/actionAbstraction";
-import { safeDb2 } from "~/lib/utils";
+import { safeDb } from "~/lib/utils";
 import { ResultSet } from "@libsql/client";
 
 type ErrorResponse = { ok: false; msg: string }
@@ -76,7 +76,7 @@ export const updateChatHistory =
 async (QandA: timedMessage[], botId: number, userIP: string, from: typeof chat_sources[number])
 :Fetch<ResultSet> => {
   "use server"
-  return await safeDb2(
+  return await safeDb(
       db.transaction(async ctx => {
         let already = await ctx.query.chatbot_history_table.findFirst({ 
           where: (tbl => and(
