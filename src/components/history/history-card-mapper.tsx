@@ -72,9 +72,9 @@ const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: 
     <Tooltip openDelay={0}  skipDelayDuration={0}>
       <TooltipTrigger as={Button} variant="outline" size="sm">
         <FiFilter/>
-        فیلتر {name}:
+        فیلتر {name}
       </TooltipTrigger>
-      <TooltipContent class="gap-1 flex">
+      <TooltipContent class="gap-1 flex bg-card p-2 text-card-foreground">
         <Button variant="outline"
           size="sm"
           class={cn(activeFilter() === "" && "bg-secondary")}
