@@ -78,6 +78,7 @@ export const verifyOTP = async (number: string, otp: string):Response => {
       await updateAuthSession({user: {...result, role: role }})
       return {ok: true}
     }
+    if (user.isBlocked === "1") return {ok: false, msg: "متاسفانه اکانت کاربری شما بلاک میباشد. لطفابا پشتیبانی تماس بگیرید"}
     const role = await findoutRole(user.number)
     await updateAuthSession({user: {...user, role: role }})
     return {ok: true}
