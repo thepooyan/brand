@@ -18,10 +18,10 @@ const Code = ({code}:p) => {
 
   return (
     <div class="relative">
-      <pre>{code}</pre>
+      <pre class="text-left">{code}</pre>
 
       <Button
-        class={cn("absolute right-2 top-2 w-19 transition-all gap-2 !bg-background text-foreground",
+        class={cn("absolute right-1 top-1 w-19 transition-all gap-2 !bg-background text-foreground",
           copied() && "!bg-success !text-success-foreground w-33"
         )}
         onclick={handleClick}
