@@ -84,6 +84,11 @@ const Footer = () => {
                     بلاگ
                   </A>
                 </li>
+                <li>
+                  <A href="/pricing" class="text-muted-foreground hover:text-primary transition-colors">
+                    قیمت‌ها
+                  </A>
+                </li>
               </ul>
             </div>
             <div>
