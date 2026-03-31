@@ -1,12 +1,24 @@
+import { Button } from "~/components/ui/button"
+import Code from "~/components/ui/code"
+
 const examplejs = () => {
   return (
     <>
-      <pre class="text-left" >
-        fetch("https://hooshbaan.com/api/chat", )
+      <Code code={`
+const data = [
+  {
+    role: "user", 
+    content: "سلام! چه خدماتی ارائه میدید؟",
+  },
+]
 
-
-      </pre>
-
+const response = await fetch("https://hooshbaan.com/api/chat", {
+  headers: {
+    "Content-Type": "application/json",
+    "authorization": "Bearer $token" 
+  },
+  body: JSON.stringify(data)
+})`}/>
     </>
   )
 }

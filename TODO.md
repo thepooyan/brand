@@ -18,6 +18,8 @@ make limitation optionally for day or week or mounth?
 order status page
 cron cleaner for otp
 
+add copy button for code blocks in docs
+net ? add syntax highlighter for example-js
 net fix initial theme glitch
 net add pageination for admin users
 net profile does not work on could?
