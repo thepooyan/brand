@@ -35,10 +35,15 @@ const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
 const PlanSidebar = () => {
 
   const [loading , setLoading] = createSignal(false)
-  const {callTransaction} = useTransaction()
+  const {callTransaction, test} = useTransaction()
   const nv = useNavigate()
 
   const handleClick = async () => {
+    test()
+    .success((a) => console.log(a))
+    .fail((a) => console.log(a))
+    return
+    
     const s = selectedPlan()
     if (!s) return
     setLoading(true);

@@ -2,31 +2,6 @@ import { useNavigate } from "@solidjs/router";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
 
-type func = () => void
-class CallbackStore {
-  private yes: func | null = null
-  private no: func | null = null
-  setYes(callback: ()=>void) {
-    this.yes = callback
-  }
-  setNo(callback: ()=>void) {
-    this.no = callback
-  }
-  callYes() {
-    this.yes && this.yes()
-    this.clear()
-  }
-  callNo() {
-    this.no && this.no()
-    this.clear()
-  }
-  private clear() {
-    this.yes = null
-    this.no = null
-  }
-}
-const callbackStore = new CallbackStore()
-
 export type ErrorResponse = { ok: false; msg: string }
 export type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
 export type EitherResponse<T> = SuccessResponse<T> | ErrorResponse
@@ -55,10 +30,45 @@ export const transactionSuccess = ():TransactionSuccessResponse => ({...transact
 export const transactionFail = (msg: string):TransactionErrorResponse => ({...transactionBase, ok: false, msg: msg})
 export const transactionRedirect = (to: string, bouncy?: boolean):TransactionRedirect => ({...transactionBase, ok: false, redirect: {to, bouncy}})
 
+type successCallback = (tr: TransactionSuccessResponse) => void
+type failCallback = (tr: TransactionErrorResponse) => void
+
 export const useTransaction = () => {
 
   const nv = useNavigate()
   const bnv = useBounce()
+
+  const test = (() => {
+    const enum outcome {
+      success,
+      fail,
+      none
+    }
+    let _outcome: outcome = outcome.none
+
+    const api = {
+      success: (cb:successCallback) => {
+        if (_outcome === outcome.success) {
+          cb(transactionSuccess());
+        }
+        return api;
+      },
+      fail: (cb: failCallback) => {
+        if (_outcome === outcome.fail) {
+          cb(transactionFail("so"));
+        }
+        return api;
+      }
+    };
+
+    const callableApi = () => {
+        if (Math.random() > .5) _outcome = outcome.success
+        else _outcome = outcome.fail
+      return api;
+    };
+
+    return callableApi;
+  })()
 
   const callTransaction = async (tr: Transaction, options?:{successMessage?: string}):Transaction => {
     try {
@@ -81,5 +91,5 @@ export const useTransaction = () => {
       return transactionFail(e instanceof Error ? e.message : String(e))
     }
   }
-  return {callTransaction}
+  return {callTransaction, test}
 }
