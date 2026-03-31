@@ -18,9 +18,7 @@ const Code = ({code}:p) => {
 
   return (
     <div class="relative">
-      <pre>
-        {code}
-      </pre>
+      <pre>{code}</pre>
 
       <Button
         variant="secondary"

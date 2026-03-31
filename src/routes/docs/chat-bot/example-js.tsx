@@ -1,11 +1,9 @@
-import { Button } from "~/components/ui/button"
 import Code from "~/components/ui/code"
 
 const examplejs = () => {
   return (
     <>
-      <Code code={`
-const data = [
+      <Code code={`const data = [
   {
     role: "user", 
     content: "سلام! چه خدماتی ارائه میدید؟",
