@@ -34,7 +34,7 @@ export const useTransaction = () => {
   const nv = useNavigate()
   const bnv = useBounce()
 
-  const callTransaction = async (tr: Transaction, options?:{successMessage?: string}) => {
+  const callTransaction = async (tr: Transaction, options?:{successMessage?: string}):Transaction => {
     return new Promise(async (resolve, reject) => {
       try {
         let res = await tr
@@ -45,17 +45,16 @@ export const useTransaction = () => {
         }
         if (res.ok) {
           callModal.success(options?.successMessage)
-          resolve(res)
+          return resolve(res)
         }
         else {
           callModal.fail(res.msg)
-          reject(res)
+          return reject(res)
         }
-        resolve(res)
       } catch(e) {
         console.log(e)
         callModal.fail()
-        reject(e)
+        return reject(e)
       }
     })
   }

@@ -46,8 +46,7 @@ const PlanSidebar = () => {
       activatePlan(s, selectedMounth()),
     )
     .then(() => nv("/Panel"))
-    .catch(e => console.log(e))
-    .finally(() => setLoading(false))
+    setLoading(false)
   }
 
   const price = () => {
