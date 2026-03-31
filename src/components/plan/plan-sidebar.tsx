@@ -2,21 +2,19 @@ import { convertPlanToDTO, PlanDefinition } from "~/sections/plan"
 import { eq } from "drizzle-orm"
 import { db } from "~/db/db"
 import { planTable } from "~/db/schema"
-import { Transaction, transactionFail, transactionRedirect } from "~/lib/actionAbstraction"
+import { Transaction, transactionFail, transactionRedirect, useTransaction } from "~/lib/actionAbstraction"
 import { getAuthSession } from "~/lib/session"
 import { cn, safeDbTransaction, seprateByComma } from "~/lib/utils"
 import { Button } from "../ui/button";
-import { createSignal } from "solid-js";
+import { createSignal,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
-import { callModal } from "../layout/Modal"
-import { useNavigate } from "@solidjs/router"
 import { Title } from "../prose/prose-item"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
   "use server"
   const user = await getAuthSession()
 
-  if (!user) return transactionRedirect("/Login?back=/pricing")
+  if (!user) return transactionRedirect("/Login", true)
 
   return await db.transaction(async tx => {
 
@@ -36,28 +34,31 @@ const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
 const PlanSidebar = () => {
 
   const [loading , setLoading] = createSignal(false)
-  const nv = useNavigate()
+  const {callTransaction} = useTransaction()
 
   const handleClick = async () => {
     const s = selectedPlan()
     if (!s) return
     setLoading(true)
-    activatePlan(s, selectedMounth() )
-      .then((res) => {
-        if (res.redirect) return nv(res.redirect)
-        if (res.ok) {
-          callModal.success("با موفقیت انجام شد!")
-          nv("/Panel")
-        } else {
-          callModal.fail(res.msg)
-        }
-      })
-      .catch(e => {
-        callModal.fail(e)
-    })
-    .finally(() => {
-        setLoading(false)
-      })
+    await callTransaction(
+      activatePlan(s, selectedMounth())
+    )
+    // activatePlan(s, selectedMounth() )
+    //   .then((res) => {
+    //     if (res.redirect) return nv(res.redirect)
+    //     if (res.ok) {
+    //       callModal.success("با موفقیت انجام شد!")
+    //       nv("/Panel")
+    //     } else {
+    //       callModal.fail(res.msg)
+    //     }
+    //   })
+    //   .catch(e => {
+    //     callModal.fail(e)
+    // })
+    // .finally(() => {
+    //     setLoading(false)
+    //   })
 
   }
 

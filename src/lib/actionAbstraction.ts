@@ -1,3 +1,7 @@
+import { useNavigate } from "@solidjs/router";
+import { clearDelegatedEvents } from "solid-js/web";
+import { callModal } from "~/components/layout/Modal";
+import { useBounce } from "./hooks/useBounce";
 
 export type ErrorResponse = { ok: false; msg: string }
 export type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -15,7 +19,7 @@ export type Fetch<T> = Promise<FetchResponse<T>>
 export const fetchSuccess = <T>(data: T):FetchSuccessResponse<T> => ({ok: true, data: data, msg: undefined})
 export const fetchFail = (msg: string):FetchErrorResponse => ({ok: false, data: undefined, msg: msg})
 
-type TransactionRedirect = { ok: false, msg: undefined, redirect: string }
+type TransactionRedirect = { ok: false, msg: undefined, redirect: {to: string, bouncy?: boolean} }
 type TransactionErrorResponse = { ok: false; msg: string, redirect: undefined }
 type TransactionSuccessResponse = { ok: true, msg: undefined, redirect: undefined }
 type TransactionResponse = TransactionErrorResponse | TransactionSuccessResponse | TransactionRedirect
@@ -23,4 +27,26 @@ export type Transaction = Promise<TransactionResponse>
 
 export const transactionSuccess = ():TransactionSuccessResponse => ({ok: true, msg: undefined, redirect: undefined})
 export const transactionFail = (msg: string):TransactionErrorResponse => ({ok: false, msg: msg, redirect: undefined})
-export const transactionRedirect = (to: string):TransactionRedirect => ({ok: false, msg: undefined, redirect: to})
+export const transactionRedirect = (to: string, bouncy?: boolean):TransactionRedirect => ({ok: false, msg: undefined, redirect: {to, bouncy}})
+
+export const useTransaction = () => {
+
+  const nv = useNavigate()
+  const bnv = useBounce()
+
+  const callTransaction = async (tr: Transaction) => {
+    try {
+      let res = await tr
+      if (res.redirect) {
+        if (res.redirect.bouncy) return bnv(res.redirect.to)
+        else return nv(res.redirect.to)
+      }
+      if (res.ok) callModal.success()
+      else callModal.fail(res.msg)
+    } catch(e) {
+      console.log(e)
+      callModal.fail()
+    }
+  }
+  return {callTransaction}
+}
