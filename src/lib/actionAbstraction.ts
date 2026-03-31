@@ -39,31 +39,26 @@ export const useTransaction = () => {
   const bnv = useBounce()
 
   const test = (() => {
-    const enum outcome {
-      success,
-      fail,
-      none
-    }
-    let _outcome: outcome = outcome.none
+    let _outcome: TransactionResponse | null = null;
 
     const api = {
       success: (cb:successCallback) => {
-        if (_outcome === outcome.success) {
-          cb(transactionSuccess());
+        if (_outcome?.ok) {
+          cb(_outcome);
         }
         return api;
       },
       fail: (cb: failCallback) => {
-        if (_outcome === outcome.fail) {
-          cb(transactionFail("so"));
+        if (_outcome?.ok === false && _outcome.msg) {
+          cb(_outcome);
         }
         return api;
       }
     };
 
     const callableApi = () => {
-        if (Math.random() > .5) _outcome = outcome.success
-        else _outcome = outcome.fail
+        if (Math.random() > .5) _outcome = transactionSuccess()
+        else _outcome = transactionFail("sksk")
       return api;
     };
 
