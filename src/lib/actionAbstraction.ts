@@ -41,16 +41,14 @@ export const useTransaction = () => {
         if (res.redirect) {
           if (res.redirect.bouncy) bnv(res.redirect.to)
           else nv(res.redirect.to)
-          return reject(res)
         }
         if (res.ok) {
           callModal.success(options?.successMessage)
-          return resolve(res)
         }
         else {
           callModal.fail(res.msg)
-          return reject(res)
         }
+        return resolve(res)
       } catch(e) {
         console.log(e)
         callModal.fail()
