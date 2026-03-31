@@ -64,7 +64,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
                 </div>
                 <div class="flex flex-col gap-0.5 leading-none text-right">
                   <span class="font-medium">مستندات</span>
-                  <span class="text-muted-foreground text-sm">نسخه ۱.۰.۰</span>
+                  <span class="text-muted-foreground text-sm">نسخه ۲.۱.۳</span>
                 </div>
               </div>
               <A href="/" class="hover:bg-white hover:text-black p-2 transition-colors rounded cursor-pointer flex justify-center items-center">
