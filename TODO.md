@@ -17,7 +17,7 @@ make limitation optionally for day or week or mounth?
 cron cleaner for otp
 order status page
 
-add copy button for code blocks in docs
+net add npm package name and url to docs
 net ? add syntax highlighter for example-js
 net fix initial theme glitch
 net add pageination for admin users
