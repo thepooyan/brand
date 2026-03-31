@@ -48,7 +48,6 @@ const PlanSidebar = () => {
       activatePlan(s, selectedMounth()),
     ))
     .success(() => nv("/Panel/dashboard"))
-
     
     setLoading(false)
   }
