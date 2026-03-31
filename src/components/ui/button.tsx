@@ -47,11 +47,20 @@ const Button = <T extends ValidComponent = "button">(
   props: PolymorphicProps<T, ButtonProps<T>>
 ) => {
   const [local, others] = splitProps(props as ButtonProps, ["variant", "size", "class"])
+
+  const disabled = () => {
+    let l = false
+    if (props.loading !== undefined) l = unwrap(props.loading)
+    let d = false
+    if (props.disabled !== undefined) d = props.disabled
+    return d || l
+  }
+
   return (
     <ButtonPrimitive.Root
       class={cn(buttonVariants({ variant: local.variant, size: local.size }), local.class, "cursor-pointer")}
       {...others}
-      disabled={props.loading? unwrap(props.loading) : props.disabled}
+      disabled={disabled()}
     >
       {props.children}
       {props.loading && unwrap(props.loading) && <Spinner reverse/>}

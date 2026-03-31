@@ -1,6 +1,6 @@
 import { allFeatures, convertPlanToDTO, PlanDefinition } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, createSignal, For } from "solid-js"
+import { Accessor, createSignal, For, Show } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 import { seprateByComma } from "~/lib/utils"
@@ -102,9 +102,16 @@ const PlanCard = ({plan, mounth}:p) => {
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
         <p>
-          قیمت: {seprateByComma(plan.mounthlyPrice * 1000 * mounth())} تومان
+          قیمت: <Show when={plan.mounthlyPrice === 0}>
+            رایگان
+          </Show>
+          <Show when={plan.mounthlyPrice !== 0}>
+            {seprateByComma(plan.mounthlyPrice * 1000 * mounth())} تومان
+          </Show>
         </p>
+        
         <Button class="text-center w-full"
+          disabled={plan.mounthlyPrice === 0}
           onclick={handleClick}
           loading={loading}
         >همین حالا بخرید!</Button>
