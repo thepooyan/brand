@@ -10,9 +10,9 @@ import TA from "~/components/parts/TA"
 import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { callModal } from "~/components/layout/Modal"
 import { sendOTP, verifyOTP } from "~/server/actions"
-import { useSearchParams } from "@solidjs/router"
 import { Link } from "@solidjs/meta"
 import { InputChangeEvent } from "~/db/types"
+import { useBounceBack } from "~/lib/hooks/useBounce"
 
 export default function Login() {
   const [rawPhoneNumber, setPhoneNumber] = createSignal("")
@@ -27,7 +27,7 @@ export default function Login() {
   const timerSignal = timer.getAccessor()
 
   const navigate = useTransitiveNavigate()
-  const [s] = useSearchParams()
+  const {backAvailable, returnBack} = useBounceBack()
 
   const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()
@@ -58,8 +58,8 @@ export default function Login() {
     setIsOtpWaiting(true)
     let res = await verifyOTP(phoneNumber(), getOtpValue().join(""))
     if (res.ok) {
-      if (s.back && typeof s.back === "string") {
-        return navigate(s.back)
+      if (backAvailable) {
+        return returnBack()
       }
       navigate("/");
       callModal.success("خوش آمدید!")

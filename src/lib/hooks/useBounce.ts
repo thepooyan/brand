@@ -10,3 +10,16 @@ export const useBounce = () => {
 
   return redirect
 }
+
+export const useBounceBack = () => {
+  const loc = useLocation()
+  const nv = useNavigate()
+  const backAvailable = typeof loc.query.back === "string"
+
+  const returnBack = () => {
+    if (typeof loc.query.back === "string") {
+      nv(loc.query.back)
+    }
+  }
+  return {returnBack, backAvailable}
+}
