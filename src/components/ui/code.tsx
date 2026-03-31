@@ -1,7 +1,7 @@
 import { cn, copyToClipboard } from "~/lib/utils"
 import { Button } from "./button"
 import { createSignal } from "solid-js"
-import { FiCheck } from "solid-icons/fi"
+import { FiCheck, FiCopy } from "solid-icons/fi"
 
 interface p {
   code: string
@@ -23,19 +23,25 @@ const Code = ({code}:p) => {
       </pre>
 
       <Button
-        class={cn("absolute right-2 top-2 w-13 transition-all gap-0",
-          copied() && "!bg-success !text-success-foreground w-26"
+        variant="secondary"
+        class={cn("absolute right-2 top-2 w-19 transition-all gap-2",
+          copied() && "!bg-success !text-success-foreground w-33"
         )}
         onclick={handleClick}
       >
-        کپی
-        <div class={cn(
-          "opacity-0 invisible w-0 transition-all center flex-row gap-1 overflow-hidden text-foreground",
-          copied() && "opacity-100 w-12 visible"
+        <FiCopy/>
+        <span>
+          <span>
+            کپی
+          </span>
+          <div class={cn(
+            "opacity-0 invisible w-0 transition-all center flex-row gap-1 overflow-hidden text-foreground inline-flex",
+            copied() && "opacity-100 w-12 visible"
 
-        )}>
-           شد! <FiCheck/>
-        </div>
+          )}>
+             شد! <FiCheck/>
+          </div>
+        </span>
       </Button>
     </div>
   )
