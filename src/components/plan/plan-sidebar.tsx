@@ -2,7 +2,7 @@ import { convertPlanToDTO, PlanDefinition } from "~/sections/plan"
 import { eq } from "drizzle-orm"
 import { db } from "~/db/db"
 import { planTable } from "~/db/schema"
-import { Transaction, transactionFail } from "~/lib/actionAbstraction"
+import { Transaction, transactionFail, transactionRedirect } from "~/lib/actionAbstraction"
 import { getAuthSession } from "~/lib/session"
 import { cn, safeDbTransaction, seprateByComma } from "~/lib/utils"
 import { Button } from "../ui/button";
@@ -16,7 +16,7 @@ const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
   "use server"
   const user = await getAuthSession()
 
-  if (!user) return transactionFail("کاربر یافت نشد!")
+  if (!user) return transactionRedirect("/Login?back=/pricing")
 
   return await db.transaction(async tx => {
 
@@ -44,6 +44,7 @@ const PlanSidebar = () => {
     setLoading(true)
     activatePlan(s, selectedMounth() )
       .then((res) => {
+        if (res.redirect) return nv(res.redirect)
         if (res.ok) {
           callModal.success("با موفقیت انجام شد!")
           nv("/Panel")
