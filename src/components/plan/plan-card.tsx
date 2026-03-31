@@ -1,6 +1,6 @@
 import { allFeatures, convertPlanToDTO, PlanDefinition } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { createSignal, For } from "solid-js"
+import { Accessor, createSignal, For } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 import { seprateByComma } from "~/lib/utils"
@@ -14,9 +14,10 @@ import { ApiResponse } from "~/lib/actionAbstraction"
 
 interface p {
   plan: PlanDefinition
+  mounth: Accessor<number>
 }
 
-const activatePlan = async (p: PlanDefinition):Promise<ApiResponse> => {
+const activatePlan = async (p: PlanDefinition, mounth: number):Promise<ApiResponse> => {
   "use server"
   const user = await getAuthSession()
 
@@ -33,20 +34,20 @@ const activatePlan = async (p: PlanDefinition):Promise<ApiResponse> => {
 
     if (!dbUser) return result = {ok: false, msg: "کاربر یافت نشد", status: 404}
 
-    await tx.insert(planTable).values(convertPlanToDTO(p, dbUser.id, 1))
+    await tx.insert(planTable).values(convertPlanToDTO(p, dbUser.id, mounth))
 
   })
   return result
 }
 
-const PlanCard = ({plan}:p) => {
+const PlanCard = ({plan, mounth}:p) => {
 
   const [loading, setLoading] = createSignal(false)
   const nv = useNavigate()
 
   const handleClick = async () => {
     setLoading(true)
-    activatePlan(plan)
+    activatePlan(plan, mounth())
       .then((res) => {
         if (res.ok) {
           callModal.success("با موفقیت انجام شد!")
@@ -70,7 +71,7 @@ const PlanCard = ({plan}:p) => {
     <Card>
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
-        <CardDescription>۱ ماهه</CardDescription>
+        <CardDescription>{mounth().toLocaleString("fa-IR")} ماهه</CardDescription>
       </CardHeader>
       <CardContent>
         <For each={allFeatures}>
@@ -101,7 +102,7 @@ const PlanCard = ({plan}:p) => {
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
         <p>
-          قیمت: {seprateByComma(plan.mounthlyPrice * 1000)} تومان
+          قیمت: {seprateByComma(plan.mounthlyPrice * 1000 * mounth())} تومان
         </p>
         <Button class="text-center w-full"
           onclick={handleClick}
