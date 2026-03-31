@@ -1,6 +1,7 @@
 import { useNavigate } from "@solidjs/router";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
+import { ownKeys } from "solid-js/store/types/store.js";
 
 export type ErrorResponse = { ok: false; msg: string }
 export type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -38,11 +39,12 @@ export const useTransaction = () => {
   const nv = useNavigate()
   const bnv = useBounce()
 
-  const test = (() => {
+  const callTransaction = (() => {
     let _outcome: TransactionResponse | null = null;
 
     const api = {
       success: (cb:successCallback) => {
+        console.log(_outcome)
         if (_outcome?.ok) {
           cb(_outcome);
         }
@@ -56,35 +58,28 @@ export const useTransaction = () => {
       }
     };
 
-    const callableApi = () => {
-        if (Math.random() > .5) _outcome = transactionSuccess()
-        else _outcome = transactionFail("sksk")
-      return api;
-    };
+    const apply = async (tr: Transaction, options?:{successMessage?: string}) => {
+      try {
+        let res = await tr
+        if (res.redirect) {
+          if (res.redirect.bouncy) bnv(res.redirect.to)
+          else nv(res.redirect.to)
+        } else if (res.ok) {
+          callModal.success(options?.successMessage)
+        } else {
+          callModal.fail(res.msg)
+        }
+        _outcome = res
+      } catch(e) {
+        console.log(e)
+        callModal.fail()
+        _outcome = transactionFail(e instanceof Error ? e.message : String(e))
+      }
+      return api
+    }
 
-    return callableApi;
+    return apply;
   })()
 
-  const callTransaction = async (tr: Transaction, options?:{successMessage?: string}):Transaction => {
-    try {
-      let res = await tr
-      if (res.redirect) {
-        if (res.redirect.bouncy) bnv(res.redirect.to)
-        else nv(res.redirect.to)
-        return res
-      }
-      if (res.ok) {
-        callModal.success(options?.successMessage)
-      }
-      else {
-        callModal.fail(res.msg)
-      }
-      return (res)
-    } catch(e) {
-      console.log(e)
-      callModal.fail()
-      return transactionFail(e instanceof Error ? e.message : String(e))
-    }
-  }
-  return {callTransaction, test}
+  return {callTransaction}
 }
