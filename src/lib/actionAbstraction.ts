@@ -34,19 +34,30 @@ export const useTransaction = () => {
   const nv = useNavigate()
   const bnv = useBounce()
 
-  const callTransaction = async (tr: Transaction) => {
-    try {
-      let res = await tr
-      if (res.redirect) {
-        if (res.redirect.bouncy) return bnv(res.redirect.to)
-        else return nv(res.redirect.to)
+  const callTransaction = async (tr: Transaction, options?:{successMessage?: string}) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let res = await tr
+        if (res.redirect) {
+          if (res.redirect.bouncy) bnv(res.redirect.to)
+          else nv(res.redirect.to)
+          return reject(res)
+        }
+        if (res.ok) {
+          callModal.success(options?.successMessage)
+          resolve(res)
+        }
+        else {
+          callModal.fail(res.msg)
+          reject(res)
+        }
+        resolve(res)
+      } catch(e) {
+        console.log(e)
+        callModal.fail()
+        reject(e)
       }
-      if (res.ok) callModal.success()
-      else callModal.fail(res.msg)
-    } catch(e) {
-      console.log(e)
-      callModal.fail()
-    }
+    })
   }
   return {callTransaction}
 }

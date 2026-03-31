@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { createSignal,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
 import { Title } from "../prose/prose-item"
+import { useNavigate } from "@solidjs/router"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
   "use server"
@@ -35,31 +36,18 @@ const PlanSidebar = () => {
 
   const [loading , setLoading] = createSignal(false)
   const {callTransaction} = useTransaction()
+  const nv = useNavigate()
 
   const handleClick = async () => {
     const s = selectedPlan()
     if (!s) return
     setLoading(true)
     await callTransaction(
-      activatePlan(s, selectedMounth())
+      activatePlan(s, selectedMounth()),
     )
-    // activatePlan(s, selectedMounth() )
-    //   .then((res) => {
-    //     if (res.redirect) return nv(res.redirect)
-    //     if (res.ok) {
-    //       callModal.success("با موفقیت انجام شد!")
-    //       nv("/Panel")
-    //     } else {
-    //       callModal.fail(res.msg)
-    //     }
-    //   })
-    //   .catch(e => {
-    //     callModal.fail(e)
-    // })
-    // .finally(() => {
-    //     setLoading(false)
-    //   })
-
+    .then(() => nv("/Panel"))
+    .catch(e => console.log(e))
+    .finally(() => setLoading(false))
   }
 
   const price = () => {
