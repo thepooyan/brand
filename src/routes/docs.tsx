@@ -51,7 +51,7 @@ const Docs = ({children}:ParentProps) => {
             </BreadcrumbList>
           </Breadcrumb>
         </header>
-        <div class="prose dark:prose-invert p-8 rtl max-w-4xl">
+        <div class="prose dark:prose-invert p-8 rtl w-full max-w-[80dvw] mx-auto ">
           {children}
         </div>
       </SidebarInset>
