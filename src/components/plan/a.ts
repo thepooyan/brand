@@ -1,5 +1,5 @@
 type fn = () => void
-function createDecisionPromiseFn() {
+const myDecisionFn = (() => {
   const enum outcome {
     success,
     fail,
@@ -23,16 +23,16 @@ function createDecisionPromiseFn() {
   };
 
   const callableApi = () => {
-    _outcome = outcome.success
+      if (Math.random() > .5) _outcome = outcome.success
+      else _outcome = outcome.fail
     return api;
   };
 
   return callableApi;
-}
+})()
 
-const myDecisionFn = createDecisionPromiseFn();
 
 myDecisionFn()
-.success(() => console.log("yes"))
-.fail(() => console.log("no"))
+  .success(() => console.log("yes"))
+  .fail(() => console.log("no"))
 
