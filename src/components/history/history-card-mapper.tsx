@@ -47,11 +47,21 @@ const HistoryCardMapper = ({data}:p) => {
   return (
     <>
       <div class="flex gap-2 mb-4">
-        <FilterSection name="زمان" fh={timeFilterHook}/>
-        {Object.keys(botFilters).length > 1 && 
-        <FilterSection name="ربات" fh={botFilterHook}/>}
-        <FilterSection name="کاربر" fh={userFilterHook}/>
-        <FilterSection name="منبع" fh={sourceFilterHook}/>
+        <Tooltip
+          openDelay={0}
+        >
+          <TooltipTrigger as={Button} variant="outline" size="sm">
+            <FiFilter/>
+            فیلتر
+          </TooltipTrigger>
+          <TooltipContent class="bg-card">
+            <FilterSection name="زمان" fh={timeFilterHook}/>
+            {Object.keys(botFilters).length > 1 && 
+            <FilterSection name="ربات" fh={botFilterHook}/>}
+            <FilterSection name="کاربر" fh={userFilterHook}/>
+            <FilterSection name="منبع" fh={sourceFilterHook}/>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       <For each={filtered()}>
@@ -68,13 +78,11 @@ const HistoryCardMapper = ({data}:p) => {
 }
 
 const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: string, fh: filterHook<HistoryWithName>}) => 
-  <div class="flex gap-1">
-    <Tooltip openDelay={0}  skipDelayDuration={0}>
-      <TooltipTrigger as={Button} variant="outline" size="sm">
-        <FiFilter/>
-        فیلتر {name}
-      </TooltipTrigger>
-      <TooltipContent class="gap-1 flex bg-card p-2 text-card-foreground">
+  <div class="flex gap-1 items-center">
+      <p>
+        {name}:
+      </p>
+      <div class="gap-1 flex p-2 ">
         <Button variant="outline"
           size="sm"
           class={cn(activeFilter() === "" && "bg-secondary")}
@@ -89,8 +97,7 @@ const FilterSection = ({name, fh: {allFilters, setFilter, activeFilter}}:{name: 
             {k}
           </Button>}
         </For>
-      </TooltipContent>
-    </Tooltip>
+      </div>
   </div>
 
 export default HistoryCardMapper
