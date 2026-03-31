@@ -1,7 +1,31 @@
 import { useNavigate } from "@solidjs/router";
-import { clearDelegatedEvents } from "solid-js/web";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
+
+type func = () => void
+class CallbackStore {
+  private yes: func | null = null
+  private no: func | null = null
+  setYes(callback: ()=>void) {
+    this.yes = callback
+  }
+  setNo(callback: ()=>void) {
+    this.no = callback
+  }
+  callYes() {
+    this.yes && this.yes()
+    this.clear()
+  }
+  callNo() {
+    this.no && this.no()
+    this.clear()
+  }
+  private clear() {
+    this.yes = null
+    this.no = null
+  }
+}
+const callbackStore = new CallbackStore()
 
 export type ErrorResponse = { ok: false; msg: string }
 export type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -35,26 +59,25 @@ export const useTransaction = () => {
   const bnv = useBounce()
 
   const callTransaction = async (tr: Transaction, options?:{successMessage?: string}):Transaction => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let res = await tr
-        if (res.redirect) {
-          if (res.redirect.bouncy) bnv(res.redirect.to)
-          else nv(res.redirect.to)
-        }
-        if (res.ok) {
-          callModal.success(options?.successMessage)
-        }
-        else {
-          callModal.fail(res.msg)
-        }
-        return resolve(res)
-      } catch(e) {
-        console.log(e)
-        callModal.fail()
-        return reject(e)
+    try {
+      let res = await tr
+      if (res.redirect) {
+        if (res.redirect.bouncy) bnv(res.redirect.to)
+        else nv(res.redirect.to)
+        return res
       }
-    })
+      if (res.ok) {
+        callModal.success(options?.successMessage)
+      }
+      else {
+        callModal.fail(res.msg)
+      }
+      return (res)
+    } catch(e) {
+      console.log(e)
+      callModal.fail()
+      return transactionFail(e instanceof Error ? e.message : String(e))
+    }
   }
   return {callTransaction}
 }

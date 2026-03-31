@@ -41,11 +41,12 @@ const PlanSidebar = () => {
   const handleClick = async () => {
     const s = selectedPlan()
     if (!s) return
-    setLoading(true)
-    await callTransaction(
+    setLoading(true);
+    let res = await callTransaction(
       activatePlan(s, selectedMounth()),
     )
-    .then(() => nv("/Panel"))
+    if (res.ok) nv("/Panel")
+    
     setLoading(false)
   }
 
