@@ -44,7 +44,6 @@ export const useTransaction = () => {
 
     const api = {
       success: (cb:successCallback) => {
-        console.log(_outcome)
         if (_outcome?.ok) {
           cb(_outcome);
         }
@@ -65,13 +64,13 @@ export const useTransaction = () => {
           if (res.redirect.bouncy) bnv(res.redirect.to)
           else nv(res.redirect.to)
         } else if (res.ok) {
+          console.log("ok")
           callModal.success(options?.successMessage)
         } else {
           callModal.fail(res.msg)
         }
         _outcome = res
       } catch(e) {
-        console.log(e)
         callModal.fail()
         _outcome = transactionFail(e instanceof Error ? e.message : String(e))
       }
