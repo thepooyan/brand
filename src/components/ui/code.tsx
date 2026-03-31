@@ -21,8 +21,7 @@ const Code = ({code}:p) => {
       <pre>{code}</pre>
 
       <Button
-        variant="secondary"
-        class={cn("absolute right-2 top-2 w-19 transition-all gap-2",
+        class={cn("absolute right-2 top-2 w-19 transition-all gap-2 !bg-background text-foreground",
           copied() && "!bg-success !text-success-foreground w-33"
         )}
         onclick={handleClick}
@@ -33,7 +32,7 @@ const Code = ({code}:p) => {
             کپی
           </span>
           <div class={cn(
-            "opacity-0 invisible w-0 transition-all center flex-row gap-1 overflow-hidden text-foreground inline-flex",
+            "opacity-0 invisible w-0 transition-all center flex-row gap-1 overflow-hidden text-success-foreground inline-flex",
             copied() && "opacity-100 w-12 visible"
 
           )}>
