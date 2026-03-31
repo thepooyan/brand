@@ -43,15 +43,17 @@ export type Fetch<T> = Promise<FetchResponse<T>>
 export const fetchSuccess = <T>(data: T):FetchSuccessResponse<T> => ({ok: true, data: data, msg: undefined})
 export const fetchFail = (msg: string):FetchErrorResponse => ({ok: false, data: undefined, msg: msg})
 
-type TransactionRedirect = { ok: false, msg: undefined, redirect: {to: string, bouncy?: boolean} }
+const transactionBase = {msg: undefined, data: undefined, redirect: undefined}
+
+type TransactionRedirect = { ok: false, msg: undefined, redirect: {to: string, bouncy?: boolean}, data: undefined }
 type TransactionErrorResponse = { ok: false; msg: string, redirect: undefined }
 type TransactionSuccessResponse = { ok: true, msg: undefined, redirect: undefined }
 type TransactionResponse = TransactionErrorResponse | TransactionSuccessResponse | TransactionRedirect
 export type Transaction = Promise<TransactionResponse>
 
-export const transactionSuccess = ():TransactionSuccessResponse => ({ok: true, msg: undefined, redirect: undefined})
-export const transactionFail = (msg: string):TransactionErrorResponse => ({ok: false, msg: msg, redirect: undefined})
-export const transactionRedirect = (to: string, bouncy?: boolean):TransactionRedirect => ({ok: false, msg: undefined, redirect: {to, bouncy}})
+export const transactionSuccess = ():TransactionSuccessResponse => ({...transactionBase, ok: true})
+export const transactionFail = (msg: string):TransactionErrorResponse => ({...transactionBase, ok: false, msg: msg})
+export const transactionRedirect = (to: string, bouncy?: boolean):TransactionRedirect => ({...transactionBase, ok: false, redirect: {to, bouncy}})
 
 export const useTransaction = () => {
 
