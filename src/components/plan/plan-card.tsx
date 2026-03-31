@@ -1,77 +1,25 @@
-import { allFeatures, convertPlanToDTO, PlanDefinition } from "~/sections/plan"
+import { allFeatures, PlanDefinition } from "~/sections/plan"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, createSignal, For, Show } from "solid-js"
+import { For, Show } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 import { seprateByComma } from "~/lib/utils"
-import { getAuthSession } from "~/lib/session"
-import { db } from "~/db/db"
-import { planTable } from "~/db/schema"
-import { eq } from "drizzle-orm"
-import { callModal } from "../layout/Modal"
-import { useNavigate } from "@solidjs/router"
-import { ApiResponse } from "~/lib/actionAbstraction"
+import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
 
 interface p {
   plan: PlanDefinition
-  mounth: Accessor<number>
 }
-
-const activatePlan = async (p: PlanDefinition, mounth: number):Promise<ApiResponse> => {
-  "use server"
-  const user = await getAuthSession()
-
-  if (!user) return {ok: false, msg: "کاربر یافت نشد", status: 404}
-
-  let result:ApiResponse = {ok: true}
-
-  await db.transaction(async tx => {
-
-    const dbUser = await tx.query.usersTable.findFirst({
-      where: (tbl => eq(tbl.id, user.id)),
-      with: {current_plans: true}
-    })
-
-    if (!dbUser) return result = {ok: false, msg: "کاربر یافت نشد", status: 404}
-
-    await tx.insert(planTable).values(convertPlanToDTO(p, dbUser.id, mounth))
-
-  })
-  return result
-}
-
-const PlanCard = ({plan, mounth}:p) => {
-
-  const [loading, setLoading] = createSignal(false)
-  const nv = useNavigate()
+const PlanCard = ({plan}:p) => {
 
   const handleClick = async () => {
-    setLoading(true)
-    activatePlan(plan, mounth())
-      .then((res) => {
-        if (res.ok) {
-          callModal.success("با موفقیت انجام شد!")
-          nv("/Panel")
-        } else if (res.status === 404){
-          nv("/Login?back=/pricing")
-        } else {
-          callModal.fail(res.msg)
-        }
-      })
-      .catch(e => {
-        callModal.fail("خطایی رخ داد. لطفا مجددا تلاش کنید.")
-        console.log(e)
-    })
-    .finally(() => {
-        setLoading(false)
-      })
+    setSelectedPlan(plan)
   }
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
-        <CardDescription>{mounth().toLocaleString("fa-IR")} ماهه</CardDescription>
+        <CardDescription>{selectedMounth().toLocaleString("fa-IR")} ماهه</CardDescription>
       </CardHeader>
       <CardContent>
         <For each={allFeatures}>
@@ -106,15 +54,18 @@ const PlanCard = ({plan, mounth}:p) => {
             رایگان
           </Show>
           <Show when={plan.mounthlyPrice !== 0}>
-            {seprateByComma(plan.mounthlyPrice * 1000 * mounth())} تومان
+            {seprateByComma(plan.mounthlyPrice * 1000 * selectedMounth())} تومان
           </Show>
         </p>
         
-        <Button class="text-center w-full"
-          disabled={plan.mounthlyPrice === 0}
-          onclick={handleClick}
-          loading={loading}
-        >همین حالا بخرید!</Button>
+        <Show when={selectedPlan()?.id !== plan.id}
+          fallback={<Button class="w-full bg-success text-success-foreground hover:bg-success/80">انتخاب شده</Button>}
+        >
+          <Button class="text-center w-full"
+            disabled={plan.mounthlyPrice === 0}
+            onclick={handleClick}
+          >انتخاب</Button>
+        </Show>
       </CardFooter>
     </Card>
   )
