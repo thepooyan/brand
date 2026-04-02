@@ -56,16 +56,21 @@ export const useTransaction = () => {
       }
     };
 
-    const apply = async (tr: Transaction, options?:{successMessage?: string, revalidate?: string}) => {
+    interface options {
+      successMessage?: string,
+      revalidate?: string,
+      navigate?: string
+    }
+    const apply = async (tr: Transaction, options?:options) => {
       try {
         let res = await tr
         if (res.redirect) {
           if (res.redirect.bouncy) bnv(res.redirect.to)
           else nv(res.redirect.to)
         } else if (res.ok) {
-          console.log("ok")
           callModal.success(options?.successMessage)
           options?.revalidate && revalidate(options.revalidate)
+          options?.navigate && nv(options.navigate)
         } else {
           callModal.fail(res.msg)
         }

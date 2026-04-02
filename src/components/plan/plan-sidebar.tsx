@@ -35,8 +35,7 @@ const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
 const PlanSidebar = () => {
 
   const [loading , setLoading] = createSignal(false)
-  const {callTransaction, } = useTransaction()
-  const nv = useNavigate()
+  const { callTransaction } = useTransaction()
 
   const handleClick = async () => {
     
@@ -46,8 +45,8 @@ const PlanSidebar = () => {
 
     (await callTransaction(
       activatePlan(s, selectedMounth()),
+      {navigate: "/Panel/dashboard"}
     ))
-    .success(() => nv("/Panel/dashboard"))
     
     setLoading(false)
   }
