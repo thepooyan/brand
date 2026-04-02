@@ -28,11 +28,11 @@ const WebsiteOrderCard = ({order}:p) => {
   const [status, setStatus] = createSignal(order.status)
   const {callTransaction} = useTransaction()
 
-  const submitStatus = async () => {
-    (await callTransaction(
+  const submitStatus = () => {
+    callTransaction(
       updateStatus(order.id, status()),
       {revalidate: "admin-website-orders"}
-    ))
+    )
   }
 
   return (
