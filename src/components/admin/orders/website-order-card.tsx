@@ -1,11 +1,41 @@
+import { revalidate } from "@solidjs/router"
+import { eq } from "drizzle-orm"
+import { setStyle } from "motion"
+import { createSignal, useTransition } from "solid-js"
+import GenerallSelect from "~/components/parts/generall-select"
 import { Muted } from "~/components/prose/prose-item"
+import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
-import { WebsiteOrder } from "~/db/schema"
+import { order_status } from "~/db/constants"
+import { db } from "~/db/db"
+import { WebsiteOrder, websiteOrdersTable } from "~/db/schema"
+import { useTransaction } from "~/lib/actionAbstraction"
+import { safeDbTransaction } from "~/lib/utils"
+
+const updateStatus = async (id:number, newStatus: order_status) => {
+  "use server"
+  return safeDbTransaction(
+    db.update(websiteOrdersTable).set({status: newStatus}).where(
+      eq(websiteOrdersTable.id, id)
+    )
+  )
+}
 
 interface p {
   order: WebsiteOrder
 }
 const WebsiteOrderCard = ({order}:p) => {
+
+  const [status, setStatus] = createSignal(order.status)
+  const {callTransaction} = useTransaction()
+
+  const submitStatus = async () => {
+    (await callTransaction(
+      updateStatus(order.id, status())
+    ))
+    .success(() => revalidate("admin-website-orders"))
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -46,11 +76,25 @@ const WebsiteOrderCard = ({order}:p) => {
           {order.description}
         </p>
       </CardContent>
-      <CardFooter>
-
+      <CardFooter class="flex justify-between">
+        <p>
+          <Muted>وضعیت: </Muted> {order.status}
+        </p>
+        <div class="space-y-2">
+          <Muted>تغییر وضعیت:</Muted>
+          <div class="flex gap-2">
+            <M initialValue={status()} onchange={e => setStatus(e)}/>
+            <Button onclick={submitStatus}>
+              ثبت وضعیت
+            </Button>
+          </div>
+        </div>
       </CardFooter>
     </Card>
   )
 }
+const M = GenerallSelect([
+  ...order_status.map(s => ({label: s, value: s})),
+])
 
 export default WebsiteOrderCard
