@@ -1,6 +1,7 @@
 import { revalidate, useNavigate } from "@solidjs/router";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
+import { Setter } from "solid-js";
 
 export type ErrorResponse = { ok: false; msg: string }
 export type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -59,11 +60,14 @@ export const useTransaction = () => {
     interface options {
       successMessage?: string,
       revalidate?: string,
-      navigate?: string
+      navigate?: string,
+      loadingSignal?: Setter<boolean>
     }
     const apply = async (tr: Transaction, options?:options) => {
       try {
+        options?.loadingSignal && options.loadingSignal(true)
         let res = await tr
+        options?.loadingSignal && options.loadingSignal(false)
         if (res.redirect) {
           if (res.redirect.bouncy) bnv(res.redirect.to)
           else nv(res.redirect.to)
