@@ -1,4 +1,3 @@
-import { revalidate } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { createSignal } from "solid-js"
 import GenerallSelect from "~/components/parts/generall-select"
