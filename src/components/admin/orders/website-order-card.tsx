@@ -1,7 +1,6 @@
 import { revalidate } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { setStyle } from "motion"
-import { createSignal, useTransition } from "solid-js"
+import { createSignal } from "solid-js"
 import GenerallSelect from "~/components/parts/generall-select"
 import { Muted } from "~/components/prose/prose-item"
 import { Button } from "~/components/ui/button"
@@ -83,7 +82,7 @@ const WebsiteOrderCard = ({order}:p) => {
         <div class="space-y-2">
           <Muted>تغییر وضعیت:</Muted>
           <div class="flex gap-2">
-            <M initialValue={status()} onchange={e => setStatus(e)}/>
+            <M initialValue={status()} onchange={e => setStatus(e)} class="w-30"/>
             <Button onclick={submitStatus}>
               ثبت وضعیت
             </Button>

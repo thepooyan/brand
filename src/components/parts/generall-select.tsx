@@ -15,9 +15,10 @@ function GenerallSelect<T>(options: option<T>[]) {
     onchange?: (e: T) => void
     initialValue?: T
     placeholder?: string
+    class?: string
   }
 
-  return ({ onchange, initialValue, placeholder }:p) => {
+  return ({ onchange, initialValue, placeholder, ...props }:p) => {
 
     const [value, setValue] = createSignal<option<T> | null>(options.find(o => o.value === initialValue) || null)
 
@@ -35,6 +36,7 @@ function GenerallSelect<T>(options: option<T>[]) {
           options={options.map(o => o.label)}
           placeholder={placeholder}
           itemComponent={(props) => <SelectItem item={props.item}>{props.item.textValue}</SelectItem>}
+          class={props.class}
       >
           <SelectTrigger>
               <SelectValue<string>>{(state) => state.selectedOption()}</SelectValue>
