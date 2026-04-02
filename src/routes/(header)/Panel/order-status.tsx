@@ -1,6 +1,8 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
+import WebsiteOrderCard from "~/components/admin/orders/website-order-card"
 import ShowSuspense from "~/components/parts/ShowSuspense"
+import { Title } from "~/components/prose/prose-item"
 import { db } from "~/db/db"
 import { pageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
@@ -23,8 +25,9 @@ const OrderStatus = () => {
   const orders = createAsync(() => queryOrders())
   return (
     <main {...pageMarker()}>
+      <Title class="mb-4">وضعیت سفارش:</Title>
       <ShowSuspense when={orders()?.data}>
-        {d => JSON.stringify(d())}
+        {d => <WebsiteOrderCard order={d()}/> }
       </ShowSuspense>
     </main>
   )

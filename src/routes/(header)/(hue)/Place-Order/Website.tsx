@@ -10,6 +10,8 @@ import { getUser } from "~/lib/signal"
 import { saveWebsiteOrder } from "~/server/actions"
 import { websiteOrder } from "~/lib/interface"
 import SuccessOrder from "~/components/parts/modal/SuccessOrder"
+import { useTransaction } from "~/lib/actionAbstraction"
+import { FormSubmitEvent } from "~/db/types"
 
 export default function Website() {
 
@@ -39,7 +41,6 @@ export default function Website() {
   })
 
   const [isSubmitting, setIsSubmitting] = createSignal(false)
-  const nv = useNavigate()
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target
@@ -54,21 +55,18 @@ export default function Website() {
         : [...prev.features, feature],
     }))
   }
+  const {callTransaction} = useTransaction()
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormSubmitEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
 
-    let {ok} = await saveWebsiteOrder(formData())
-
-    setIsSubmitting(false)
-
-    if (ok) {
-      callModal(() => <SuccessOrder/>)
-      nv("/")
-    } else {
-      callModal.fail()
-    }
+    callTransaction(
+      saveWebsiteOrder(formData()),
+      {
+        loadingSignal: setIsSubmitting,
+        navigate: "/Panel/order-status"
+      }
+    )
   }
 
   const websiteTypes = [
