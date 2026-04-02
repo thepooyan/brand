@@ -11,6 +11,8 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+fix all caps routes
+fix website order enums
 rate limit s3 uploader for normal users
 add plan safeguard in backend for edit bot, telegram, all plan features
 make limitation optionally for day or week or mounth?
