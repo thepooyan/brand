@@ -24,6 +24,7 @@ const panelItems:panelItems = [
       {name: "چت‌بات ها", href: "Chatbot"},
       {name: "مکالمات", href: "history"},
       {name: "آمار", href: "analytics"},
+      {name: "وضعیت سفارش", href: "order-status"},
     ]
   },
   {

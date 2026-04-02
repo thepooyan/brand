@@ -13,6 +13,7 @@ import { google } from "@ai-sdk/google"
 import { message } from "~/db/constants"
 import { newFreePlan } from "~/sections/planServer"
 import { safeDb } from "~/lib/utils"
+import { Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -85,19 +86,24 @@ export const verifyOTP = async (number: string, otp: string):Response => {
   }) 
 }
 
-export const saveWebsiteOrder = async (order: websiteOrder) => {
+export const saveWebsiteOrder = async (order: websiteOrder):Transaction => {
   try {
+    const user = await getAuthSession()
+
+    if (!user) return transactionFail("لطفا ابتدا وارد حساب کاربری خود شوید.")
+
     let values:typeof websiteOrdersTable.$inferInsert = {
       ...order,
+      user_id: user.id,
       features: JSON.stringify(order.features)
     }
     await Promise.all([
       await db.insert(websiteOrdersTable).values(values),
       await telegram.admin.send(`سفارش سایت \n\n${yaml.dump(order)}`)
     ])
-    return {ok: true}
-  } catch(_) {
-    return {ok: false}
+    return transactionSuccess()
+  } catch(e) {
+    return transactionFail(String(e))
   }
 }
 

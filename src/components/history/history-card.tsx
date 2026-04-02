@@ -1,13 +1,13 @@
 import { chatbot_history_table, History } from "~/db/schema"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
-import { safeDb } from "~/lib/utils"
+import { safeDbTransaction } from "~/lib/utils"
 import { Accessor, ParentProps } from "solid-js"
 import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
 import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
-import { Transaction } from "~/lib/actionAbstraction"
+import { Transaction, transactionFail } from "~/lib/actionAbstraction"
 import { revalidate } from "@solidjs/router"
 import TA from "../parts/TA"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
@@ -21,15 +21,11 @@ interface p {
 const deleteHistory = async (id: number):Transaction => {
   "use server"
   const user = await getAuthSession()
-  if (!user) return {ok: false, msg: "ابتدا لوگین کنید" }
+  if (!user) return transactionFail("لطفا ابتدا وارد حساب خود شوید.")
 
-  let a =  await safeDb(
+  return safeDbTransaction(
     db.delete(chatbot_history_table).where(eq(chatbot_history_table.id, id))
   )
-  if (a.ok) 
-    return {ok: true, msg: undefined }
-  else
-    return {ok: false, msg: a.msg}
 }
 
 const HistoryCard = ({histroy:h, idx}:p) => {

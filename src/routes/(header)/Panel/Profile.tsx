@@ -9,12 +9,12 @@ import Input from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { db } from "~/db/db"
 import { usersTable } from "~/db/schema"
-import { Transaction, transactionSuccess } from "~/lib/actionAbstraction"
+import { Transaction, transactionFail } from "~/lib/actionAbstraction"
 import { extractFormData } from "~/lib/hooks/useForm"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
 import { getUser, updateUserSession } from "~/lib/signal"
-import { safeDb } from "~/lib/utils"
+import { safeDbTransaction } from "~/lib/utils"
 
 interface form {
   name: string
@@ -25,23 +25,23 @@ const handleSubmit = action(async (formData:FormData):Transaction => {
   "use server"
   let {name, email, number} = extractFormData<form>(formData)
 
-  if (!name || !email || !number) return {ok: false, msg: "لطفا همه موارد را وارد کنید"}
+  if (!name || !email || !number) return transactionFail("لطفا همه موارد را وارد کنید")
 
   let user = await getAuthSession()
   if (!user) throw redirect("/Login?back=/Panel/Profile")
 
-  let result = await safeDb(
+  let result = await safeDbTransaction(
     db.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.id))
   )
-  if (!result.ok) return result
+  if (result.ok) {
+    await updateUserSession({user: {
+      name: name,
+      email: email, 
+      number: number
+    }})
+  }
 
-  await updateUserSession({user: {
-    name: name,
-    email: email, 
-    number: number
-  }})
-
-  return transactionSuccess()
+  return result
 })
 
 

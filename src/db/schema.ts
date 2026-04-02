@@ -81,6 +81,7 @@ export type I_NewBot = typeof chatbotTable.$inferInsert
 
 export const websiteOrdersTable = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
+  user_id: int().notNull().references(() => usersTable.id),
   budget: text(),
   contentReady: text(),
   description: text(),
