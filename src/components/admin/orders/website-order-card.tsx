@@ -30,9 +30,9 @@ const WebsiteOrderCard = ({order}:p) => {
 
   const submitStatus = async () => {
     (await callTransaction(
-      updateStatus(order.id, status())
+      updateStatus(order.id, status()),
+      {revalidate: "admin-website-orders"}
     ))
-    .success(() => revalidate("admin-website-orders"))
   }
 
   return (

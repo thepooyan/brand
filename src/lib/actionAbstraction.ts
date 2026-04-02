@@ -1,4 +1,4 @@
-import { useNavigate } from "@solidjs/router";
+import { revalidate, useNavigate } from "@solidjs/router";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
 
@@ -56,7 +56,7 @@ export const useTransaction = () => {
       }
     };
 
-    const apply = async (tr: Transaction, options?:{successMessage?: string}) => {
+    const apply = async (tr: Transaction, options?:{successMessage?: string, revalidate?: string}) => {
       try {
         let res = await tr
         if (res.redirect) {
@@ -65,6 +65,7 @@ export const useTransaction = () => {
         } else if (res.ok) {
           console.log("ok")
           callModal.success(options?.successMessage)
+          options?.revalidate && revalidate(options.revalidate)
         } else {
           callModal.fail(res.msg)
         }
