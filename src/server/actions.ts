@@ -13,7 +13,7 @@ import { google } from "@ai-sdk/google"
 import { message } from "~/db/constants"
 import { newFreePlan } from "~/sections/planServer"
 import { safeDb } from "~/lib/utils"
-import { Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
+import { Transaction, transactionFail, transactionRedirect, transactionSuccess } from "~/lib/actionAbstraction"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -90,7 +90,7 @@ export const saveWebsiteOrder = async (order: websiteOrder):Transaction => {
   try {
     const user = await getAuthSession()
 
-    if (!user) return transactionFail("لطفا ابتدا وارد حساب کاربری خود شوید.")
+    if (!user) return transactionRedirect("/Login", true)
 
     let values:typeof websiteOrdersTable.$inferInsert = {
       ...order,
