@@ -7,7 +7,7 @@ interface p {
 }
 const WebsiteOrdersMapper = ({orders}:p) => {
   return (
-    <div class="p-5 space-y-2">
+    <div class="p-5 space-y-3">
       <For each={orders()}>
         {o => <WebsiteOrderCard order={o}/>}
       </For>

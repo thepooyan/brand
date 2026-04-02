@@ -1,7 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { ticket_states } from "~/components/ticket/ticket-signal";
-import { chat_sources, message, timedMessage } from "~/db/constants";
+import { chat_sources, message, order_status, timedMessage } from "~/db/constants";
 import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
@@ -92,6 +92,8 @@ export const websiteOrdersTable = sqliteTable("website_orders", {
   phone: text(),
   timeline: text(),
   websiteType: text(),
+  createdAt: int({mode: "timestamp"}).notNull().$defaultFn(() => new Date()),
+  status: text({enum: order_status}).notNull().default("pending")
 })
 
 export type WebsiteOrder = typeof websiteOrdersTable.$inferSelect
