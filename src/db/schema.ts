@@ -94,6 +94,8 @@ export const websiteOrdersTable = sqliteTable("website_orders", {
   websiteType: text(),
 })
 
+export type WebsiteOrder = typeof websiteOrdersTable.$inferSelect
+
 export const adminsTable = sqliteTable("admins_table", {
   id: int().primaryKey({autoIncrement: true}),
   chat_id: text().notNull(),
