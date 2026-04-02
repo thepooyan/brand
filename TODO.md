@@ -16,6 +16,7 @@ add plan safeguard in backend for edit bot, telegram, all plan features
 make limitation optionally for day or week or mounth?
 cron cleaner for otp
 order status page
+make a react hook
 
 net add npm package name and url to docs
 net ? add syntax highlighter for example-js
