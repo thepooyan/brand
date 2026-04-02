@@ -1,8 +1,8 @@
 import { createAsync, query } from "@solidjs/router"
-import { createEffect, Show } from "solid-js"
+import { createEffect,  } from "solid-js"
 import WebsiteOrdersMapper from "~/components/admin/orders/website-orders"
 import { callModal } from "~/components/layout/Modal"
-import LoadingSuspense from "~/components/pages/LoadingSuspense"
+import ShowSuspense from "~/components/parts/ShowSuspense"
 import { db } from "~/db/db"
 import { safeDb } from "~/lib/utils"
 
@@ -25,11 +25,9 @@ const WebsiteOrders = () => {
 
   return (
     <div>
-      <LoadingSuspense>
-        <Show when={orders()?.data}>
-          {d => <WebsiteOrdersMapper orders={d} />}
-        </Show>
-      </LoadingSuspense>
+      <ShowSuspense when={orders()?.data}>
+        {d => <WebsiteOrdersMapper orders={d} />}
+      </ShowSuspense>
     </div>
   )
 }

@@ -1,9 +1,9 @@
-import { Accessor, Show } from "solid-js"
+import { Accessor, JSX, Show } from "solid-js"
 import LoadingSuspense from "../pages/LoadingSuspense"
 
 interface p<T> {
-  when: T | boolean | null | undefined
-  children: (data: Accessor<T | true>) => Element | string
+  when: T | null | undefined | false
+  children: (data: Accessor<T>) => JSX.Element
 }
 function ShowSuspense<T>(props:p<T>) {
   return (
