@@ -42,10 +42,13 @@ const PlanSidebar = () => {
     const s = selectedPlan()
     if (!s) return
 
-    (await callTransaction(
+    callTransaction(
       activatePlan(s, selectedMounth()),
-      {navigate: "/Panel/dashboard", loadingSignal: setLoading}
-    ))
+      {
+        navigate: "/Panel/dashboard",
+        loadingSignal: setLoading,
+      }
+    )
   }
 
   const price = () => {
