@@ -26,6 +26,7 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
     }
 
     const send = async (message: string) => {
+      if (pending() || streaming()) return
       setErrorMsg(null)
       setPending(true);
       const updated = [...messages(), { role: "user", content: message } as message];
