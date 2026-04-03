@@ -1,11 +1,16 @@
 import { Muted } from "~/components/prose/prose-item"
+import { Badge } from "~/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
+import { order_status, order_status_fa } from "~/db/constants"
 import { WebsiteOrder } from "~/db/schema"
 
 interface p {
   order: WebsiteOrder
 }
 const WebsiteOrderCard = ({order}:p) => {
+
+  const features = JSON.parse(order.features || "") as string[] 
+
   return (
     <Card>
       <CardHeader>
@@ -13,42 +18,50 @@ const WebsiteOrderCard = ({order}:p) => {
         <CardDescription>{order.name} | {order.email}</CardDescription>
       </CardHeader>
       <CardContent class="grid grid-cols-5 gap-2">
+        {order.budget && 
         <p>
           <Muted>بودجه: </Muted>
           {order.budget}
-        </p>
+        </p>}
+        {order.pageCount && 
         <p>
           <Muted>تعداد صفحه:</Muted>
           {order.pageCount}
-        </p>
+        </p>}
+        {order.timeline && 
         <p>
           <Muted>زمان درخواستی:</Muted>
           {order.timeline}
-        </p>
+        </p>}
+        {order.contentReady && 
         <p>
           <Muted>مطالب آماده است:</Muted>
           {order.contentReady}
-        </p>
+        </p>}
+        {order.websiteType && 
         <p>
-          <Muted>نوع وبسایت:</Muted>
+          <Muted>نوع ساخت:</Muted>
           {order.websiteType}
-        </p>
+        </p>}
+        {order.isMarketplace && 
         <p>
-          <Muted>سایت فروشگاهی:</Muted>
+          <Muted>نوع سایت:</Muted>
           {order.isMarketplace}
-        </p>
+        </p>}
+        {features.length && 
         <p class="col-span-3">
           <Muted>قابلیت‌ها:</Muted>
-          {order.features}
-        </p>
+          {features.map(f => <Badge>{f}</Badge>)}
+        </p>}
+        {order.description && 
         <p class="col-span-3">
           <Muted>توضیحات:</Muted>
           {order.description}
-        </p>
+        </p>}
       </CardContent>
       <CardFooter class="flex justify-between">
         <p>
-          <Muted>وضعیت: </Muted> {order.status}
+          <Muted>وضعیت: </Muted> {order_status_fa(order.status)}
         </p>
       </CardFooter>
     </Card>
