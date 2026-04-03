@@ -3,13 +3,11 @@ import { createEffect, createSignal } from "solid-js"
 import { Button } from "~/components/ui/button"
 import TA from '~/components/parts/TA'
 import RedStar from '~/components/parts/RedStar'
-import { useNavigate, useSearchParams } from "@solidjs/router"
-import { callModal } from '~/components/layout/Modal'
+import { useSearchParams } from "@solidjs/router"
 import Spinner from '~/components/parts/Spinner'
 import { getUser } from "~/lib/signal"
 import { saveWebsiteOrder } from "~/server/actions"
 import { websiteOrder } from "~/lib/interface"
-import SuccessOrder from "~/components/parts/modal/SuccessOrder"
 import { useTransaction } from "~/lib/actionAbstraction"
 import { FormSubmitEvent } from "~/db/types"
 
