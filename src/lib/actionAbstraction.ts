@@ -2,6 +2,7 @@ import { revalidate, useNavigate } from "@solidjs/router";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
 import { Setter } from "solid-js";
+import { resolveError } from "./errorHandler";
 
 export type ErrorResponse = { ok: false; msg: string }
 export type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -80,8 +81,8 @@ export const useTransaction = () => {
         }
         _outcome = res
       } catch(e) {
-        callModal.fail()
-        _outcome = transactionFail(e instanceof Error ? e.message : String(e))
+        callModal.fail(resolveError(e))
+        _outcome = transactionFail(resolveError(e))
       }
       return api
     }
