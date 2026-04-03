@@ -3,7 +3,7 @@ import prompt from "~/data/llm-prompt.json"
 import { db } from "~/db/db"
 import yaml from "js-yaml"
 import { compareEpochTime, findoutRole, generateOTP, Response, validatePhone, warpResponse } from "./serverUtil"
-import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, ticketTable, usersTable, websiteOrdersTable } from "~/db/schema"
+import {  blogsTable, chatbotTable, I_Blog, I_NewBlog, otpTable, ticketTable, User, usersTable, websiteOrdersTable } from "~/db/schema"
 import { and, eq } from "drizzle-orm"
 import { getAuthSession, updateAuthSession } from "~/lib/session"
 import { websiteOrder } from "~/lib/interface"
@@ -13,7 +13,9 @@ import { google } from "@ai-sdk/google"
 import { message } from "~/db/constants"
 import { newFreePlan } from "~/sections/planServer"
 import { safeDb } from "~/lib/utils"
-import { Transaction, transactionFail, transactionRedirect, transactionSuccess } from "~/lib/actionAbstraction"
+import { Fetch, Transaction, transactionFail, transactionRedirect, transactionSuccess } from "~/lib/actionAbstraction"
+import { TbBrandHeadlessui } from "solid-icons/tb"
+import { isProd } from "./env/shared-env"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -54,6 +56,23 @@ export const sendOTP = async (number: string):Response<string> => {
     if (done.ok) return {ok: true, data: newOtp}
     return done
   })
+}
+
+export const forceEnter = async (number: string):Transaction => {
+  if (isProd) return transactionFail("")
+
+  const query = await safeDb(
+    db.query.usersTable.findFirst({
+      where: (tbl => eq(tbl.number, number))
+    })
+  )
+  if (!query.ok) return transactionFail(query.msg)
+  if (!query.data) return transactionFail("کاربر یافت نشد")
+
+  const role = await findoutRole(query.data.number)
+  await updateAuthSession({user: {...query.data, role: role }})
+
+  return transactionSuccess()
 }
 
 export const verifyOTP = async (number: string, otp: string):Response => {

@@ -9,10 +9,12 @@ import { useViewTransition } from "~/lib/viewTransition"
 import TA from "~/components/parts/TA"
 import { pageMarker, useTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { callModal } from "~/components/layout/Modal"
-import { sendOTP, verifyOTP } from "~/server/actions"
+import { forceEnter, sendOTP, verifyOTP } from "~/server/actions"
 import { Link } from "@solidjs/meta"
 import { InputChangeEvent } from "~/db/types"
 import { useBounceBack } from "~/lib/hooks/useBounce"
+import { isProd } from "~/server/env/shared-env"
+import { useTransaction } from "~/lib/actionAbstraction"
 
 export default function Login() {
   const [rawPhoneNumber, setPhoneNumber] = createSignal("")
@@ -28,6 +30,15 @@ export default function Login() {
 
   const navigate = useTransitiveNavigate()
   const {backAvailable, returnBack} = useBounceBack()
+  const {callTransaction} = useTransaction()
+
+  const forceEnterHandler = async () => {
+    if (phoneNumber().length !== 11) return
+    await callTransaction(
+      forceEnter(phoneNumber()),
+      {navigate: "/", revalidate: "isLoggedIn"}
+    )
+  }
 
   const handlePhoneSubmit = async (e: any) => {
     e.preventDefault()
@@ -134,6 +145,7 @@ export default function Login() {
                   دریافت کد تایید
                   <FiArrowLeft class="mr-2 h-4 w-4" />
               </Button>
+              {!isProd && <Button class="w-full" onclick={forceEnterHandler}>force enter</Button>}
             </form>
           ) : (
             <form onSubmit={handleOtpSubmit} class="space-y-4">
