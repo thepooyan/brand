@@ -1,25 +1,72 @@
 import axios from "axios"
-import { ActionResponse } from "~/lib/actionAbstraction"
+import { Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 
 
-export const crawl = async (address: string):ActionResponse<string> => {
-  "use server"
+export const crawl = async (address: string):Transaction => {
+  const parser = new DOMParser()
+  const checkedUrls = new Set<string>()
+  const allUniqueText = new Set<string>()
 
-  if (!isUrlValid(address)) return {ok: false, msg: "آدرس داده شده معتبر نمیباشد"}
+  let mainUrl = isUrlValid(address)
+  if (!mainUrl) return transactionFail("آدرس معتبر نیست")
 
-  const res = await safe( axios.get<string>(address) )
-  if (!res.ok) return {ok: false, msg: "آدرس مورد نظر یافت نشد. لطفا درستی آن را بررسی کنید."}
+  const sendRequest = async (subAddress: string) => {
 
-  console.log(res.data.data.replaceAll(/<.*?>/g , ""))
+    if (!isUrlValid(subAddress)) return
+    if (checkedUrls.has(subAddress)) return
 
-  return {ok: true, data: ""}
+    checkedUrls.add(subAddress)
+    const res = await safe( axios.get<string>(subAddress) )
+    if (!res.ok) return 
+
+    const dom = parser.parseFromString(res.data.data, "text/html")
+
+    const uniqueTexts = extractUniqeTexts(dom)
+    uniqueTexts.forEach(u => allUniqueText.add(u))
+
+    const links = extractLinks(dom, mainUrl.host)
+    console.log(links)
+    // links.forEach(l => sendRequest(l))
+
+    return transactionSuccess()
+  }
+
+  // debugger
+  await sendRequest(address)
+  console.log(allUniqueText)
+  return transactionSuccess()
+}
+
+const extractLinks = (dom: Document, host: string) => {
+  const query = dom.querySelectorAll("a")
+  const uniquePathname = new Set<string>()
+  const uniqueURL = new Set<string>()
+
+  for (const i of query) {
+    let href = i.href
+    try {
+      let url =  new URL(href)
+      if (url.host === host && !uniquePathname.has(url.pathname)) {
+        uniquePathname.add(url.pathname)
+        uniqueURL.add(url.toString())
+      }
+    } catch {}
+  }
+
+  return [...uniqueURL]
+}
+
+const extractUniqeTexts = (dom: Document) => {
+  const query = dom.querySelectorAll("body *:not(script)") as unknown as HTMLDivElement[]
+  const pureText = [...query].map(i => i.innerText).filter(f => f !== undefined && f !== "")
+  const unique = new Set(pureText)
+  return [...unique]
 }
 
 const isUrlValid = (url: string) => {
   try {
-    new URL(url)
-    return true
+    return new URL(url)
   } catch {
     return false
   }

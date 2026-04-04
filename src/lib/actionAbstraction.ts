@@ -1,7 +1,7 @@
 import { revalidate, useNavigate } from "@solidjs/router";
 import { callModal } from "~/components/layout/Modal";
 import { useBounce } from "./hooks/useBounce";
-import { Setter } from "solid-js";
+import { createSignal, Setter } from "solid-js";
 import { resolveError } from "./errorHandler";
 
 export type ErrorResponse = { ok: false; msg: string }
@@ -39,6 +39,7 @@ export const useTransaction = () => {
 
   const nv = useNavigate()
   const bnv = useBounce()
+  const [loading, setLoading] = createSignal(false)
 
   const callTransaction = (() => {
     let _outcome: TransactionResponse | null = null;
@@ -67,7 +68,9 @@ export const useTransaction = () => {
     const apply = async (tr: Transaction, options?:options) => {
       try {
         options?.loadingSignal && options.loadingSignal(true)
+        setLoading(true)
         let res = await tr
+        setLoading(false)
         options?.loadingSignal && options.loadingSignal(false)
         if (res.redirect) {
           if (res.redirect.bouncy) bnv(res.redirect.to)
@@ -90,5 +93,5 @@ export const useTransaction = () => {
     return apply;
   })()
 
-  return {callTransaction}
+  return {callTransaction, loading}
 }

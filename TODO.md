@@ -21,6 +21,7 @@ cron cleaner for otp
 order status page
 make a react hook
 
+human operator
 net add npm package name and url to docs
 net fix initial theme glitch
 net add pageination for admin users
