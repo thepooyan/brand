@@ -22,7 +22,6 @@ order status page
 make a react hook
 
 net add npm package name and url to docs
-net ? add syntax highlighter for example-js
 net fix initial theme glitch
 net add pageination for admin users
 net profile does not work on could?
