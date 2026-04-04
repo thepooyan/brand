@@ -2,12 +2,13 @@ import { cn, copyToClipboard } from "~/lib/utils"
 import { Button } from "./button"
 import { createSignal } from "solid-js"
 import { FiCheck, FiCopy } from "solid-icons/fi"
-import PrismParser from "../prism/prism-parser"
+import PrismParser, { PrismLangs } from "../prism/prism-parser"
 
 interface p {
   code: string
+  lang?: PrismLangs
 }
-const Code = ({code}:p) => {
+const Code = ({code, lang = "javascript"}:p) => {
 
   const [copied, setCopied] = createSignal(false)
 
@@ -19,7 +20,7 @@ const Code = ({code}:p) => {
 
   return (
     <div class="relative">
-      <PrismParser lang="javascript">{code}</PrismParser>
+      <PrismParser lang={lang}>{code}</PrismParser>
 
       <Button
         class={cn("absolute right-1 top-1 w-19 transition-all gap-2 !bg-background text-foreground",

@@ -4,14 +4,16 @@ import { onMount } from 'solid-js';
 
 interface p {
   children: string
-  lang: "javascript" | "html"
+  lang: PrismLangs
 }
+export type PrismLangs = "javascript" | "HTML"
 const PrismParser = ({children, lang}:p) => {
 
   let ref!:HTMLPreElement
 
   onMount(() => {
     Prism.highlightAllUnder(ref)
+    Prism.highlight
   })
 
   return (

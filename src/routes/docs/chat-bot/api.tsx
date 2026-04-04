@@ -1,4 +1,5 @@
 import { A } from "@solidjs/router";
+import Code from "~/components/ui/code";
 
 const create = () => {
 
@@ -19,30 +20,27 @@ const create = () => {
         </li>
         <li>
           حال با استفاده از توکن، میتوانید به آدرس زیر ریکوئست ارسال کنید و با ربات خود صحبت کنید:
-          <pre class="text-left">
-            https://hooshbaan.com/api/chat
-          </pre>
+          <Code code={`https://hooshbaan.com/api/chat`}/>
           <ul>
             <li>متد ریکوئیت باید <code>POST</code> باشد</li>
             <li>
               توکن باید به صورت Authorization Header ارسال شود:
-              <pre class="text-left">
-                Request Header: <br/>
-                Authorization: Bearer [paste-your-token]
-              </pre>
+              <Code code={`let headers = {
+  Authorization: "Bearer [paste-your-token]"
+}
+`}/>
             </li>
             <li>
               دیتا ارسالی (Request Body) باید به صورت زیر باشد:
-              <pre class="text-left">
-                Request Body: <br/>
-                
-                  messages: [ <br/>
-                    
-                      role: "user", // can be "assistant" or "user" <br/>
-                      content: "پیام خود را اینجا ارسال کنید!" <br/>
-                    
-                  ]
-              </pre>
+              <Code code={`let body = {
+  messages: [
+    {
+      role: "user", // can be "assistant" or "user"
+      content: "پیام خود را اینجا ارسال کنید!"
+    }
+  ]
+}
+`}/>
               توجه کنید که باید تمام پیام های قبلی را نیز با هر پیام جدید مجددا ارسال کنید، <br/>
               در غیر این صورت ربات به یاد نخواهد آورد.
               همه پیام ها را به صورت یک آرایه به ترتیب در messages قرار دهید.

@@ -38,7 +38,7 @@ init_chatbot({token: "paster your token..."})
         </li>
         <li>
           یا در صورتی که از لینک مستقیم استفاده میکنید:
-          <Code code={`<script src="${url}"></script>
+          <Code lang="HTML" code={`<script src="${url}"></script>
 
 <script>
   init_chatbot({token: "paster your token..."})

@@ -3,6 +3,7 @@ import Code from "~/components/ui/code"
 const examplejs = () => {
   return (
     <>
+      <h2>ارسال ریکوئست به سرور هوشبان در javascript</h2>
       <Code code={`const data = [
   {
     role: "user", 
