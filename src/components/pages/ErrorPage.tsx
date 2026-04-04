@@ -1,4 +1,3 @@
-import { TbMoodSadDizzy } from 'solid-icons/tb'
 import { Button } from '../ui/button'
 import TA from '../parts/TA'
 import { createSignal } from 'solid-js'
@@ -9,6 +8,7 @@ interface p {
 }
 const ErrorPage = ({error}:p) => {
   console.log(error)
+  const TbMoodSadDizzy = (_:{size?: number, class?:string}) => ":("
 
   const [refreshing, setRefreshing] = createSignal(false);
 

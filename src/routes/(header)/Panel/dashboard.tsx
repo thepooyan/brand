@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-import { TbMoodSad } from "solid-icons/tb"
+// import { TbMoodSad } from "solid-icons/tb"
 import { For, Show } from "solid-js"
 import TA from "~/components/parts/TA"
 import PlanDashboard from "~/components/plan/plan-dashboard"
@@ -8,6 +8,8 @@ import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
+
+const TbMoodSad = (_:{size: number}) => ":("
 
 const queryUserPlan = query(async() => {
   "use server"
