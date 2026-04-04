@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js"
 import { callModal, closeModal } from "../layout/Modal"
-import { Title } from "../prose/prose-item"
+import { H3 } from "../prose/prose-item"
 import { Button } from "../ui/button"
 import Input from "../ui/input"
 import { promoteUser } from "./userInteractions"
@@ -31,9 +31,9 @@ const NewAdminModal = ({id, number}:p) => {
 
   return (
     <div class="space-y-4">
-      <Title>
+      <H3>
         ثبت ادمین جدید:
-      </Title>
+      </H3>
       <Input placeholder="telegram chat id" bind={signal}/>
       <Button class="ml-2" onclick={handleClick}>
         ثبت

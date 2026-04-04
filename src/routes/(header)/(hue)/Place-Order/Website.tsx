@@ -18,16 +18,16 @@ export default function Website() {
 
   createEffect(() => {
     setFormData(prev => ({...prev,
-      name: String(user()?.name),
-      email: String(user()?.email),
-      phone: String(user()?.number),
+      name: String(user()?.name || ""),
+      email: String(user()?.email ||  ""),
+      phone: String(user()?.number || ""),
     }))
   })
   
   const [formData, setFormData] = createSignal<websiteOrder>({
-    name: String(user()?.name),
-    email: String(user()?.email),
-    phone: String(user()?.number),
+    name: String(user()?.name || ""),
+    email: String(user()?.email || ""),
+    phone: String(user()?.number || ""),
     websiteType: typeof p.type === "string" ? p.type : "wordpress",
     pageCount: "",
     isMarketplace: "",

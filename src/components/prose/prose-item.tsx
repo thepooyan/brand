@@ -15,7 +15,9 @@ const ProseItem = (style: string) => (props:p) => {
   )
 }
 
-export const Title = ProseItem("flex gap-1 text-xl font-bold")
+export const H1 = ProseItem("flex gap-1 text-3xl font-bold")
+export const H2 = ProseItem("flex gap-1 text-2xl font-bold")
+export const H3 = ProseItem("flex gap-1 text-xl font-bold")
 export const Muted = ProseItem("flex gap-1 text-sm text-muted-foreground")
 
 

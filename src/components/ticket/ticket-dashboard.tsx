@@ -9,6 +9,7 @@ import { useToggle } from "~/lib/hooks";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
 import { desc, eq } from "drizzle-orm";
+import { H2, Muted } from "../prose/prose-item";
 
 const getUserTickets = query(async () => {
   "use server"
@@ -54,12 +55,12 @@ const TicketDashboard = () => {
       </Button>
 
       <div>
-        <h1 class="text-2xl font-bold mt-4">
+        <H2 class="mt-4">
           تیکت ها
-        </h1>
-        <p class="text-muted-foreground text-sm mb-8">
+        </H2>
+        <Muted class="mb-8">
           میتوانید سوالات یا مشکلات خود را توسط تیکت بیان نمایید، همه تیکت ها در سریع ترین زمان ممکن پاسخ داده میشوند.
-        </p>
+        </Muted>
         <div class="flex gap-2 my-5 mb-2 items-center text-muted-foreground text-sm">
           <FiFilter/>
           فیلتر:

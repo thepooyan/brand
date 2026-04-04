@@ -8,7 +8,7 @@ import { cn, safeDbTransaction, seprateByComma } from "~/lib/utils"
 import { Button } from "../ui/button";
 import { createSignal,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
-import { Muted, Title } from "../prose/prose-item"
+import { Muted, H3 } from "../prose/prose-item"
 import { useNavigate } from "@solidjs/router"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
@@ -77,7 +77,7 @@ rounded-md items-center transition-all opacity-100 z-10`,
             مالیات بر ارزش افزوده: 
           </Muted> {seprateByComma(tax())} تومان
         </div>
-        <Title class="mt-2 flex items-center"><Muted class="inline">قیمت کل:</Muted> {seprateByComma(total())} تومان</Title>
+        <H3 class="mt-2 flex items-center"><Muted class="inline">قیمت کل:</Muted> {seprateByComma(total())} تومان</H3>
       </div>
       <div class="flex flex-col gap-2">
       <Button

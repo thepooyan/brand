@@ -5,7 +5,7 @@ import { FaSolidBan, FaSolidUnlock } from "solid-icons/fa"
 import { createEffect, For, Show } from "solid-js"
 import { Badge } from "../ui/badge"
 import PlanCard from "./plan-card"
-import { Muted, Title } from "../prose/prose-item"
+import { Muted, H3 } from "../prose/prose-item"
 import BotCard from "./bot-card"
 import { PartialUser } from "~/db/relationQueries"
 import BackBtn from "../parts/back-btn"
@@ -84,24 +84,24 @@ const UserDetails = ({user}:p) => {
 
       <CardContent>
         <div class="space-y-2">
-          <Title class="mb-5">
+          <H3 class="mb-5">
             پلن ها:
-          </Title>
+          </H3>
           <For each={user().current_plans} fallback="ندارد...">
             {p => <PlanCard plan={p}/>}
           </For>
         </div>
         <div class="space-y-2">
-          <Title class="my-5">
+          <H3 class="my-5">
             ربات ها:
-          </Title>
+          </H3>
           <For each={user().bots} fallback="ندارد...">
             {p => <BotCard bot={p}/>}
           </For>
         </div>
         <Show when={isAdmin()}>
           <div class="space-y-2">
-            <Title class="my-5">اطلاعات ادمین:</Title>
+            <H3 class="my-5">اطلاعات ادمین:</H3>
             <Muted class="mb-1">چت آیدی تلگرام:</Muted>
             {user().admin?.chat_id}
           </div>
