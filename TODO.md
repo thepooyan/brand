@@ -11,6 +11,7 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+fix streaming history problem
 fix all caps routes
 fix website order enums
 rate limit s3 uploader for normal users

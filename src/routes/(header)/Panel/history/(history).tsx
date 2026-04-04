@@ -4,6 +4,7 @@ import { createEffect, Show, Suspense } from "solid-js"
 import HistoryCardMapper from "~/components/history/history-card-mapper"
 import { callModal } from "~/components/layout/Modal"
 import { Loading } from "~/components/parts/Loading"
+import { H2, Muted } from "~/components/prose/prose-item"
 import { db } from "~/db/db"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
@@ -40,6 +41,9 @@ const botId = () => {
 
   return (
     <div {...panelPageMarker()}>
+      <H2 class="mt-4">مکالمات</H2>
+      <Muted class="mb-8">نمایش مکالمات انجام شده با چت‌بات های شما</Muted>
+
       <Suspense fallback={<Loading/>}>
         <Show when={botHistory()?.data}>
           {d => <HistoryCardMapper data={d}/>}

@@ -39,6 +39,7 @@ const TicketDashboard = () => {
   const Btn = ({children, state}:ParentProps & {state: filterStates}) => {
     const id = state
     return <Button variant={isActive(id) ? "secondary" : "outline"}
+      size="sm"
       onclick={() => {
         activate(id)
         setFilter(state)
