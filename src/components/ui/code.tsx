@@ -1,7 +1,9 @@
 import { cn, copyToClipboard } from "~/lib/utils"
 import { Button } from "./button"
-import { createSignal } from "solid-js"
+import { createSignal, onMount } from "solid-js"
 import { FiCheck, FiCopy } from "solid-icons/fi"
+import 'prismjs/themes/prism-tomorrow.css';
+import Prism from 'prismjs';
 
 interface p {
   code: string
@@ -16,9 +18,15 @@ const Code = ({code}:p) => {
     setTimeout(() => setCopied(false), 4000)
   }
 
+  let ref!:HTMLPreElement
+
+  onMount(() => {
+    Prism.highlightAllUnder(ref)
+  })
+
   return (
     <div class="relative">
-      <pre class="text-left">{code}</pre>
+      <pre class="text-left" ref={ref}><code class="language-javascript">{code}</code></pre>
 
       <Button
         class={cn("absolute right-1 top-1 w-19 transition-all gap-2 !bg-background text-foreground",
