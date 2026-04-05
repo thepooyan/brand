@@ -9,14 +9,14 @@ export const crawl = async (address: string):Transaction => {
   const brokenUrls = new Set<string>()
   const registerUrls = new Set<string>()
   const allUniqueText = new Set<string>()
-  const folan = new Map<string, string[]>()
+  const pageTexts = new Map<string, string[]>()
 
   let mainUrl = isUrlValid(address)
   if (!mainUrl) return transactionFail("آدرس معتبر نیست")
 
   const addToFolan = (key: string, value: string) => {
-    let alredy = folan.get(key)
-    folan.set(key, [...alredy || [], value])
+    let alredy = pageTexts.get(key)
+    pageTexts.set(key, [...alredy || [], value])
   }
 
   const sendRequest = async (subAddress: string) => {
@@ -58,7 +58,7 @@ export const crawl = async (address: string):Transaction => {
   console.log("ckecked", checkedUrls)
   console.log("broken", brokenUrls)
   console.log(
-    [...folan.entries()]
+    [...pageTexts.entries()]
     //   .filter(u => {
     //   if (u.split(" ").length > 2) return u
     // })
