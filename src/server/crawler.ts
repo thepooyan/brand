@@ -6,6 +6,8 @@ import { safe } from "~/lib/utils"
 export const crawl = async (address: string):Transaction => {
   const parser = new DOMParser()
   const checkedUrls = new Set<string>()
+  const brokenUrls = new Set<string>()
+  const registerUrls = new Set<string>()
   const allUniqueText = new Set<string>()
 
   let mainUrl = isUrlValid(address)
@@ -13,12 +15,20 @@ export const crawl = async (address: string):Transaction => {
 
   const sendRequest = async (subAddress: string) => {
 
-    if (checkedUrls.has(subAddress)) return
-    if (!isUrlValid(subAddress)) return
+    if (registerUrls.has(subAddress)) return
+    registerUrls.add(subAddress)
+    if (checkedUrls.size === 50) return
+    if (!isUrlValid(subAddress)) {
+      brokenUrls.add(subAddress)
+      return
+    }
 
-    checkedUrls.add(subAddress)
     const res = await safe( axios.get<string>(subAddress) )
-    if (!res.ok) return 
+    if (!res.ok) {
+      brokenUrls.add(subAddress)
+      return
+    } 
+    checkedUrls.add(subAddress)
 
     const dom = parser.parseFromString(res.data.data, "text/html")
 
@@ -33,8 +43,13 @@ export const crawl = async (address: string):Transaction => {
 
   // debugger
   await sendRequest(address)
-  console.log(checkedUrls)
-  console.log([...allUniqueText].join(" "))
+  console.log("ckecked", checkedUrls)
+  console.log("broken", brokenUrls)
+  console.log(
+    [...allUniqueText].filter(u => {
+      if (u.split(" ").length > 2) return u
+    })
+  )
   return transactionSuccess()
 }
 
