@@ -9,8 +9,8 @@ const test = () => {
 
   const hi = () => {
     callTransaction(
-      // crawl("https://zarebin.ir")
-      crawl("https://tahlildadeh.com")
+      crawl("https://zarebin.ir")
+      // crawl("https://tahlildadeh.com")
     )
   }
   onMount(() => hi())

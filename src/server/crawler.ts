@@ -54,7 +54,7 @@ export const crawl = async (address: string):Transaction => {
   const allText = removeDuplicateSentences([...pageTexts.values()].flat())
   console.log("ckecked", checkedUrls)
   console.log("broken", brokenUrls)
-  console.log(allText.slice(0, 100).join("\n"))
+  console.log(allText)
   return transactionSuccess()
 }
 
@@ -82,6 +82,7 @@ const extractUniqeTexts = (dom: Document) => {
 
   const la = (childNodes: Node["childNodes"]) => {
     for (const c of childNodes) {
+      if (c.nodeName === "SCRIPT") continue
       if (c.nodeType === c.TEXT_NODE && c.textContent) {
         result.push(c.textContent)
       }
