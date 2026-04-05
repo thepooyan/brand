@@ -9,9 +9,15 @@ export const crawl = async (address: string):Transaction => {
   const brokenUrls = new Set<string>()
   const registerUrls = new Set<string>()
   const allUniqueText = new Set<string>()
+  const folan = new Map<string, string[]>()
 
   let mainUrl = isUrlValid(address)
   if (!mainUrl) return transactionFail("آدرس معتبر نیست")
+
+  const addToFolan = (key: string, value: string) => {
+    let alredy = folan.get(key)
+    folan.set(key, [...alredy || [], value])
+  }
 
   const sendRequest = async (subAddress: string) => {
 
@@ -33,10 +39,16 @@ export const crawl = async (address: string):Transaction => {
     const dom = parser.parseFromString(res.data.data, "text/html")
 
     const uniqueTexts = extractUniqeTexts(dom)
-    uniqueTexts.forEach(u => allUniqueText.add(u))
+    for (const u of uniqueTexts) {
+      if (allUniqueText.has(u)) continue
+      allUniqueText.add(u)
+      addToFolan(subAddress, u)
+    }
 
     const links = extractLinks(dom, mainUrl.host)
-    links.forEach(l => sendRequest(l))
+    for (const l of links) {
+      await sendRequest(l)
+    }
 
     return transactionSuccess()
   }
@@ -46,9 +58,10 @@ export const crawl = async (address: string):Transaction => {
   console.log("ckecked", checkedUrls)
   console.log("broken", brokenUrls)
   console.log(
-    [...allUniqueText].filter(u => {
-      if (u.split(" ").length > 2) return u
-    })
+    [...folan.entries()]
+    //   .filter(u => {
+    //   if (u.split(" ").length > 2) return u
+    // })
   )
   return transactionSuccess()
 }
