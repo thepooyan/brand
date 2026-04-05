@@ -13,8 +13,8 @@ export const crawl = async (address: string):Transaction => {
 
   const sendRequest = async (subAddress: string) => {
 
-    if (!isUrlValid(subAddress)) return
     if (checkedUrls.has(subAddress)) return
+    if (!isUrlValid(subAddress)) return
 
     checkedUrls.add(subAddress)
     const res = await safe( axios.get<string>(subAddress) )
@@ -26,15 +26,15 @@ export const crawl = async (address: string):Transaction => {
     uniqueTexts.forEach(u => allUniqueText.add(u))
 
     const links = extractLinks(dom, mainUrl.host)
-    console.log(links)
-    // links.forEach(l => sendRequest(l))
+    links.forEach(l => sendRequest(l))
 
     return transactionSuccess()
   }
 
   // debugger
   await sendRequest(address)
-  console.log(allUniqueText)
+  console.log(checkedUrls)
+  console.log([...allUniqueText].join(" "))
   return transactionSuccess()
 }
 
