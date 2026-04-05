@@ -9,7 +9,7 @@ const test = () => {
 
   const hi = () => {
     callTransaction(
-      crawl("https://zarebin.ir")
+      crawl("http://localhost:3000/")
       // crawl("https://tahlildadeh.com")
     )
   }
