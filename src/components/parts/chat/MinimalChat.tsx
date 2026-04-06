@@ -10,6 +10,7 @@ import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
 import { Fetch } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
+import { Chatbot } from "~/db/schema";
 
 interface props {
   botId: string
@@ -29,8 +30,7 @@ const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) 
   )
 }
 
-type query = {botName: string, businessName: string }
-const queryBotName = query(async (botId: string):Fetch<query> => {
+const queryBotName = query(async (botId: string):Fetch<Chatbot> => {
   "use server"
   const user = await getAuthSession()
   if (!user) throw redirect(`/Login?back=/Panel/Testbot/${botId}`)
@@ -46,10 +46,7 @@ const queryBotName = query(async (botId: string):Fetch<query> => {
   if (!res.ok) return {...res, data: undefined}
   if (!res.data) return {ok: false, msg: "ربات یافت نشد", data: undefined}
 
-  return {ok: true,msg: undefined, data: {
-    botName: res.data.botName,
-    businessName: res.data.businessName,
-  }}
+  return {ok: true,msg: undefined, data: res.data}
 }, "botName")
 
 const MinimalChat = ({botId}:props) => {
@@ -134,6 +131,9 @@ const MinimalChat = ({botId}:props) => {
 
           {/* Chat Messages */}
           <div class="h-96 overflow-y-auto p-4 space-y-4" ref={messagesRailRef}>
+            {botName()?.data?.greeting && <Message>
+              {botName()?.data?.greeting}
+            </Message>}
             {messages().map((message) => (
               <Message right={message.role === "user"}>
                 {message.content}
