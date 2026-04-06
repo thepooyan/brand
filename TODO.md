@@ -11,6 +11,7 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+add a preview for widget features as edit is happening
 fix streaming history problem
 fix all caps routes
 fix website order enums
