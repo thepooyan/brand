@@ -22,7 +22,7 @@ type initialData = {
 const getInitialData = query(async ():Fetch<initialData> => {
   "use server"
   const user = await getAuthSession()
-  if (!user) throw redirect("/Login?back=/panel/ChatBot")
+  if (!user) throw redirect("/Login?back=/panel/chat-bot")
 
   return await db.transaction(async ctx => {
 

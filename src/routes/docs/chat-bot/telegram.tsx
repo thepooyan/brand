@@ -12,7 +12,7 @@ const create = () => {
         </li>
         <li>
           سپس در 
-          <A href="/Panel/Chatbot">پنل کاربری </A>
+          <A href="/panel/chat-bot">پنل کاربری </A>
           خود گزینه 
           <strong>دریافت توکن </strong>
           را انتخاب کنید. توکن دریافت شده را نگه دارید.
@@ -25,7 +25,7 @@ const create = () => {
         </li>
         <li>
           سپس در 
-          <A href="/Panel/Chatbot">پنل کاربری </A>
+          <A href="/panel/chat-bot">پنل کاربری </A>
           گزینه
           <strong> اتصال به تلگرام </strong>
           را انتخاب نمایید

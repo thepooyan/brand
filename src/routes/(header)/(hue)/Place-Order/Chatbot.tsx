@@ -65,7 +65,7 @@ export default function OrderChatbotPage() {
     let result = await saveChatbotOrder(formData())
     if (result.ok) {
       callModal.success()
-      navigate(`/Panel/Chatbot`)
+      navigate(`/panel/chat-bot`)
     } else {
       callModal.fail(result.msg)
     }

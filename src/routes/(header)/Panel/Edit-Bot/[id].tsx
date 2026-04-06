@@ -12,7 +12,7 @@ import { userPermissions } from "~/sections/plan"
 const queryData = query(async(bot_id: number) => {
   "use server"
   const sessionUser = await getAuthSession()
-  if (!sessionUser) throw redirect("/Login?back=/Panel/Chatbot")
+  if (!sessionUser) throw redirect("/Login?back=/panel/chat-bot")
 
   const user = await db.query.usersTable.findFirst({
     where: (tbl => eq(tbl.id, sessionUser.id)),
@@ -20,7 +20,7 @@ const queryData = query(async(bot_id: number) => {
   })
   if (!user) {
     await clearAuthSession()
-    throw redirect("/Login?back=/Panel/Chatbot")
+    throw redirect("/Login?back=/panel/chat-bot")
   }
   const permissions = userPermissions(user)
   const targetBot = user.bots.find(b => b.id === bot_id)

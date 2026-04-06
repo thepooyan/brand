@@ -12,7 +12,7 @@ const testbot = () => {
   return (
     <div {...panelPageMarker()}>
 
-      <BackBtn href="/Panel/chatbot"
+      <BackBtn href="/panel/chat-bot"
         class="mr-auto flex w-max ml-46 mb-3"
         navigatorHook={usePanelTransitiveNavigate}
       />

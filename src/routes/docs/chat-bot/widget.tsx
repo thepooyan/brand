@@ -18,7 +18,7 @@ const create = () => {
         </li>
         <li>
           سپس در 
-          <A href="/Panel/Chatbot">پنل کاربری </A>
+          <A href="/panel/chat-bot">پنل کاربری </A>
           خود گزینه 
           <strong>دریافت توکن </strong>
           را انتخاب کنید. توکن دریافت شده را نگه دارید.
@@ -49,7 +49,7 @@ init_chatbot({token: "paster your token..."})
         </li>
         <li>
           با تغییر دادن تنظیمات ربات خود در 
-          <A href="/Panel/Chatbot">پنل کاربری </A>
+          <A href="/panel/chat-bot">پنل کاربری </A>
           ویجت به صورت خودکار بعد از هر رفرش آپدیت میشود.
         </li>
       </ol>

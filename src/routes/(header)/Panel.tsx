@@ -21,7 +21,7 @@ const panelItems:panelItems = [
   },
   {
     group: "خدمات", items: [
-      {name: "چت‌بات ها", href: "Chatbot"},
+      {name: "چت‌بات ها", href: "chat-bot"},
       {name: "مکالمات", href: "history"},
       {name: "آمار", href: "analytics"},
       {name: "وضعیت سفارش", href: "order-status"},

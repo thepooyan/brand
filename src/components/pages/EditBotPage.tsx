@@ -72,7 +72,7 @@ const EditBotPage = ({bot, permission}:p) => {
     let res = await editBot(reverseFlat(data))
     setLoading(false)
     if (res.ok) {
-      nv("/Panel/Chatbot")
+      nv("/panel/chat-bot")
       callModal.success()
     }
     else
@@ -96,7 +96,7 @@ const EditBotPage = ({bot, permission}:p) => {
 
   return (
     <>
-      <BackBtn href="/Panel/chatbot"
+      <BackBtn href="/panel/chat-bot"
         class="flex mr-auto ml-13 w-max mb-3"
         navigatorHook={usePanelTransitiveNavigate}
       />
