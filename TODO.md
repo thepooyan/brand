@@ -4,6 +4,8 @@ net - test telegram database
 
 future:
 - calc based on token
+- is it possible that bot keep state after page change?
+- were you satisfied with the bot query
 
 history {
     net add pageination for history
@@ -11,6 +13,8 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+add information about hooshbaan to every bot
+live operator?
 add a preview for widget features as edit is happening
 fix streaming history problem
 fix all caps routes
@@ -22,7 +26,8 @@ cron cleaner for otp
 order status page
 make a react hook
 
-human operator
+human operator on website
+human operator on telegram via bot
 net add npm package name and url to docs
 net fix initial theme glitch
 net add pageination for admin users

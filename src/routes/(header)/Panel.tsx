@@ -56,7 +56,7 @@ const Panel = ({children}:ParentProps) => {
 
   return (
     <main class="flex">
-      <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] border-l-1">
+      <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] ">
         <For each={panelItems}>
           {p => <>
             <span class="text-sm text-muted-foreground first-of-type:mt-0 mt-5 ">
