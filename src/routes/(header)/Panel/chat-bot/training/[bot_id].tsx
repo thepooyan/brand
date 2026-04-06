@@ -1,6 +1,11 @@
+import { useParams } from "@solidjs/router"
+
 const bot_id = () => {
+  const {bot_id} = useParams()
   return (
-    <div>bot_id</div>
+    <div>
+      train {bot_id}
+    </div>
   )
 }
 
