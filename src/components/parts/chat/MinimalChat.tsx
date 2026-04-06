@@ -126,7 +126,7 @@ const MinimalChat = ({botId}:props) => {
                 <img src="/mini-logo.webp" alt={`${nameEn}'s logo` }/>
               </div>
               <div>
-                <h3 class="font-medium">دستیار هوشمند {botName()?.data?.botName}</h3>
+                <h3 class="font-medium">{botName()?.data?.botName}</h3>
                 <p class="text-sm text-muted-foreground">{botName()?.data?.businessName}</p>
               </div>
             </div>
