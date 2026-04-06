@@ -11,6 +11,7 @@ import { and, eq } from "drizzle-orm";
 import { Fetch } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
 import { Chatbot } from "~/db/schema";
+import { Muted } from "~/components/prose/prose-item";
 
 interface props {
   botId: string
@@ -98,6 +99,13 @@ const MinimalChat = ({botId}:props) => {
     scrollToBottom()
   })
 
+  const Suggest = (p:{children: string}) => <div class={` p-2 text-xs rounded-md w-max text-accent-foreground 
+    border-1 bg-muted hover:bg-accent cursor-pointer `}
+    onclick={() => send(p.children)}
+  >
+    {p.children}
+  </div>
+
   const handleSendMessage = async () => {
     if (!inputMessage().trim()) return
 
@@ -119,8 +127,8 @@ const MinimalChat = ({botId}:props) => {
           {/* Chat Header */}
           <div class="bg-primary/10 p-4 border-b">
             <div class="flex items-center gap-3">
-              <div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-                <img src="/mini-logo.webp" alt={`${nameEn}'s logo` }/>
+              <div class="h-10 w-10 rounded-full flex items-center justify-center">
+                <img src="/logo.webp" alt={`${nameEn}'s logo` }/>
               </div>
               <div>
                 <h3 class="font-medium">{botName()?.data?.botName}</h3>
@@ -134,6 +142,14 @@ const MinimalChat = ({botId}:props) => {
             {botName()?.data?.greeting && <Message>
               {botName()?.data?.greeting}
             </Message>}
+            {botName()?.data && messages().length === 0 && <div class="space-y-1">
+              <Muted class="mb-2">
+                سوالات پیشنهادی:
+              </Muted>
+              {botName()?.data?.suggestedQuestions.map(s => 
+                <Suggest>{s}</Suggest>
+              )}
+            </div>}
             {messages().map((message) => (
               <Message right={message.role === "user"}>
                 {message.content}
@@ -190,5 +206,6 @@ const MinimalChat = ({botId}:props) => {
     </div>
   )
 }
+
 
 export default MinimalChat
