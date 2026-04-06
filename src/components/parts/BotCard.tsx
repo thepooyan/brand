@@ -15,6 +15,7 @@ import TelegramSet from "./TelegramSet"
 import { Accessor } from "solid-js"
 import Restriction from "../pages/Restriction"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
+import { FaSolidGear, FaSolidGraduationCap } from "solid-icons/fa"
 
 interface props {
   bot: chatbotStatus 
@@ -119,11 +120,19 @@ const BotCard = ({bot, telegramAccess}:props) => {
           <Button
             size="sm"
             variant="secondary"
-            class="col-span-2"
             onclick={handleLimitation}
           >
             <FiLock class="w-3 h-3 ml-1" />
             اعمال محدودیت
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            as={TA}
+            href={`training/${bot.id}`}
+          >
+            <FaSolidGraduationCap class="w-3 h-3 ml-1" />
+            آموزش
           </Button>
 
           <Button
