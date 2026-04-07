@@ -17,6 +17,7 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+fill the form using llm
 add information about hooshbaan to every bot
 live operator?
 add a preview for widget features as edit is happening
