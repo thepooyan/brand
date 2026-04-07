@@ -46,10 +46,21 @@ export const useTransaction = () => {
   const bnv = useBounce()
   const [loading, setLoading] = createSignal(false)
 
+  interface options {
+    successMessage?: string,
+    revalidate?: string,
+    navigate?: string,
+    loadingSignal?: Setter<boolean>
+  }
+  type api<T> = {
+    success: ( cb: (tr: T) => void ) => void,
+    fail: ( cb: (tr: T) => void ) => void,
+  }
+
   const callTransaction = (() => {
     let _outcome: TransactionResponse | null = null;
 
-    const api = {
+    const api:api<TransactionResponse> = {
       success: (cb:successCallback) => {
         if (_outcome?.ok) {
           cb(_outcome);
@@ -64,12 +75,6 @@ export const useTransaction = () => {
       }
     };
 
-    interface options {
-      successMessage?: string,
-      revalidate?: string,
-      navigate?: string,
-      loadingSignal?: Setter<boolean>
-    }
     const apply = async (tr: Transaction, options?:options) => {
       try {
         options?.loadingSignal && options.loadingSignal(true)
@@ -98,12 +103,6 @@ export const useTransaction = () => {
     return apply;
   })()
 
-  interface options {
-    successMessage?: string,
-    revalidate?: string,
-    navigate?: string,
-    loadingSignal?: Setter<boolean>
-  }
   const callFetch = async <T>(tr: Fetch<T>, options?:options) => {
     let _outcome: FetchResponse<T> | null = null;
     try {
@@ -127,7 +126,7 @@ export const useTransaction = () => {
       callModal.fail(resolveError(e))
       _outcome = fetchFail(resolveError(e))
     }
-    const api = ({
+    const api:api<FetchResponse<T>> = ({
       success: (cb:fetchSuccessCallback<T>) => {
         if (_outcome?.ok) {
           cb(_outcome);

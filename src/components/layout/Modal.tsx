@@ -52,6 +52,7 @@ const closeCleanup = () => {
 }
 
 export const callModal = (content: (()=> JSXElement), stateToBe?: Istate) => {
+  console.log("called")
   if (!readyToOpen && state() !== "wait") return waitingStack.push({content: content, state: stateToBe})
   setOpen(true)
   setContet(() => () => content())
