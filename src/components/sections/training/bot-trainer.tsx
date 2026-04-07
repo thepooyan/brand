@@ -3,7 +3,7 @@ import Choose from "./choose"
 import { mark_training_page, set_training_state, training_state } from "./training-state"
 import TrainAuto from "./train-auto"
 import CrawlTree from "./crawl-tree"
-import TrainManual from "./train-manual"
+import TrainForm from "./train-form"
 
 interface p {
   firstTime?: boolean
@@ -17,7 +17,7 @@ const BotTrainer = ({firstTime = true}:p) => {
     {n: "choose", c:Choose },
     {n: "tree", c:CrawlTree },
     {n: "auto", c:TrainAuto },
-    {n: "manual", c:TrainManual },
+    {n: "form", c:TrainForm },
   ]
 
   return (

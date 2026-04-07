@@ -6,12 +6,15 @@ import { createEffect, createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import { Button } from "~/components/ui/button"
 import BackBtn from "~/components/parts/back-btn"
+import { Loading } from "~/components/parts/Loading"
+import { wait } from "~/lib/utils"
 
 interface p {
 }
 const CrawlTree = ({}:p) => {
 
   const [selected, setSelected] = createSignal<string[]>([])
+  const [loading, setLoading] = createSignal(false)
 
   createEffect(() => {
     console.log(selected())
@@ -21,6 +24,11 @@ const CrawlTree = ({}:p) => {
     if (!selected().length) return callModal.fail("لطفا حداقل یک صفحه را انتخاب نمایید")
 
     callModal.prompt(`مطالب ${selected().length} صفحه جهت آموزش ربات بررسی خواهد شد. ادامه؟`)
+    .yes(async () => {
+        setLoading(true)
+        await wait(2000)
+        set_training_state("form")
+      })
   }
 
   return (
@@ -38,6 +46,8 @@ const CrawlTree = ({}:p) => {
       <Muted class="text-left w-full block pl-4">
         موارد انتخاب شده: {selected().length.toLocaleString("fa-IR")} عدد
       </Muted>
+
+      {loading() && <Loading class="absolute top-0 bg-background w-full opacity-80"/>}
 
 
       <div class="overflow-auto h-80 bg-card p-1 rounded">
