@@ -1,6 +1,51 @@
 import axios from "axios"
-import { Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
+import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
+
+type a = {link: string, status: "ok" | "unreachable" | "unknown"}[]
+export const buildLinkTree = async (address: string):Fetch<a> => {
+  const brokenUrls = new Set<string>()
+  const okUrls = new Set<string>()
+  const allUrls = new Set<string>()
+  const parser = new DOMParser()
+
+  const mainUrl = isUrlValid(address)
+  if (!mainUrl) return fetchFail("آدرس معتبر نیست")
+
+  const sendRequest = async (subAddress: string) => {
+    if (allUrls.has(subAddress)) return
+    allUrls.add(subAddress)
+    if (okUrls.size === 20) return
+    if (allUrls.size === 60) return
+
+    if (!isUrlValid(subAddress)) {
+      brokenUrls.add(subAddress)
+      return
+    }
+
+    const res = await safe(axios.get<string>(subAddress))
+    if (!res.ok) {
+      brokenUrls.add(subAddress)
+      return
+    }
+    okUrls.add(subAddress)
+
+    const dom = parser.parseFromString(res.data.data, "text/html")
+
+    const links = extractLinks(dom, mainUrl.host)
+    for (const l of links) {
+      await sendRequest(l)
+    }
+  }
+
+  await sendRequest(address)
+
+  return fetchSuccess([
+    ...[...okUrls].map(o => ({link: o, status: "ok" as const})),
+    ...[...brokenUrls].map(o => ({link: o, status: "unreachable" as const})),
+    ...[...allUrls].map(o => ({link: o, status: "unknown" as const})),
+  ])
+}
 
 export const crawl = async (address: string):Transaction => {
   const parser = new DOMParser()
