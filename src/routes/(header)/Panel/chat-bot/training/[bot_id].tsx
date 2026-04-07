@@ -1,11 +1,11 @@
 import { useParams } from "@solidjs/router"
+import BotTrainer from "~/components/sections/training/bot-trainer"
 
 const bot_id = () => {
   const {bot_id} = useParams()
+
   return (
-    <div>
-      train {bot_id}
-    </div>
+    <BotTrainer bot_id={bot_id!}/>
   )
 }
 

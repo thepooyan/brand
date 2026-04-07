@@ -7,6 +7,10 @@ future:
 - is it possible that bot keep state after page change?
 - were you satisfied with the bot query
 
+training {
+    
+}
+
 history {
     net add pageination for history
     net history filter: user filter has to be dropdown with search
@@ -28,6 +32,7 @@ make a react hook
 
 human operator on website
 human operator on telegram via bot
+add a tooltip to nickname to show the ip behind it
 net add npm package name and url to docs
 net fix initial theme glitch
 net add pageination for admin users
