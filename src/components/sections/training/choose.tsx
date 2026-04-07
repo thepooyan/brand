@@ -10,7 +10,7 @@ const Choose = () => {
         <H2>لطفا روش آموزش ربات خود را انتخاب کنید:</H2>
 
         <div class="grid grid-cols-2 gap-1">
-          <Card>
+          <Card onclick={() => set_training_state("manual")}>
             <FaSolidHand size={40} class="group-hover:animate-bounce"/>
             <H3>
               آموزش به صورت دستی

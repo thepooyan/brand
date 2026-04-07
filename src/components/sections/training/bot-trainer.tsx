@@ -1,8 +1,9 @@
-import { children, Match, ParentProps, Switch } from "solid-js"
+import { Match, ParentProps, Switch } from "solid-js"
 import Choose from "./choose"
 import { mark_training_page, set_training_state, training_state } from "./training-state"
 import TrainAuto from "./train-auto"
 import CrawlTree from "./crawl-tree"
+import TrainManual from "./train-manual"
 
 interface p {
   firstTime?: boolean
@@ -12,27 +13,24 @@ const BotTrainer = ({firstTime = true}:p) => {
 
   if (firstTime) set_training_state("choose")
 
+  const stateComponents = [
+    {n: "choose", c:Choose },
+    {n: "tree", c:CrawlTree },
+    {n: "auto", c:TrainAuto },
+    {n: "manual", c:TrainManual },
+  ]
+
   return (
     <>
       <div>
         <Switch>
-          <Match when={training_state() === "choose"}>
-            <Wrap>
-              <Choose/>
-            </Wrap>
-          </Match>
-          <Match when={training_state() === "auto"}>
-            <Wrap>
-              <TrainAuto/>
-            </Wrap>
-          </Match>
-          <Match when={training_state() === "tree"}>
-            <Wrap>
-              <CrawlTree/>
-            </Wrap>
-          </Match>
+          {stateComponents.map(s => 
+            <Match when={training_state() === s.n}>
+              <Wrap>
+                <s.c/>
+              </Wrap>
+            </Match>)}
         </Switch>
-
       </div>
     </>
   )
