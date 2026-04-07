@@ -57,6 +57,8 @@ export const useTransaction = () => {
     fail: ( cb: (tr: T) => void ) => void,
   }
 
+  type caller<T> = (tr: Promise<T>, options?: options) => Promise< api<T> >
+
   const callTransaction = (() => {
     let _outcome: TransactionResponse | null = null;
 
@@ -75,7 +77,7 @@ export const useTransaction = () => {
       }
     };
 
-    const apply = async (tr: Transaction, options?:options) => {
+    const apply:caller<TransactionResponse> = async (tr: Transaction, options?:options) => {
       try {
         options?.loadingSignal && options.loadingSignal(true)
         setLoading(true)
