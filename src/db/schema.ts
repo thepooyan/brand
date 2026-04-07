@@ -79,6 +79,20 @@ export const chatbot_relations = relations(chatbotTable, ({one, many}) => ({
 export type I_Bot = typeof chatbotTable.$inferSelect
 export type I_NewBot = typeof chatbotTable.$inferInsert
 
+export const trainingDataTable = sqliteTable("training_data", {
+  id: int().primaryKey({autoIncrement: true}),
+  businessName: text().notNull(),
+  address: text().notNull(),
+  contactNumber: text({mode: "json"}).$type<string[]>().notNull(),
+  social: text({mode: "json"}).$type<{type: string, link: string}[]>().notNull(),
+  useEmojies: int({mode: "boolean"}).notNull().default(false),
+  tone: text().notNull(),
+  language: text().notNull(),
+  maxResponseLength: text().notNull(),
+  websiteUrl: text(),
+  trainingText: text().notNull(),
+})
+
 export const websiteOrdersTable = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
   user_id: int().notNull().references(() => usersTable.id),

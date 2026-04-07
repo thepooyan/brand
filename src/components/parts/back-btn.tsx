@@ -2,19 +2,21 @@ import { FiArrowLeft } from "solid-icons/fi"
 import { Button } from "../ui/button"
 import TA from "./TA"
 
-interface props {
+type props = {
   href: string
+} | {
+  onClick: () => void
+} & {
   class?: string
   navigatorHook?: () => (to: string) => void
 }
-const BackBtn = ({href, ...props}:props) => {
+const BackBtn = (p:props) => {
   return (
     <Button
       size="sm"
       variant="secondary"
       as={TA}
-      href={href}
-      {...props}
+      {...p}
     >
       بازگشت
       <FiArrowLeft/>

@@ -1,10 +1,11 @@
 import { H3, Muted } from "~/components/prose/prose-item"
 import Checkbox from "~/components/ui/checkbox"
 import { crawlTree } from "~/server/crawler"
-import { tree } from "./training-state"
+import { set_training_state, tree } from "./training-state"
 import { createEffect, createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import { Button } from "~/components/ui/button"
+import BackBtn from "~/components/parts/back-btn"
 
 interface p {
 }
@@ -23,7 +24,8 @@ const CrawlTree = ({}:p) => {
   }
 
   return (
-    <div>
+    <div class="relative">
+      <BackBtn onClick={() => set_training_state("auto")} class="absolute top-5 left-0"/>
       <H3>
         صفحات مهم را انتخاب کنید
       </H3>
@@ -36,12 +38,14 @@ const CrawlTree = ({}:p) => {
       <Muted class="text-left w-full block pl-4">
         موارد انتخاب شده: {selected().length.toLocaleString("fa-IR")} عدد
       </Muted>
+
+
       <div class="overflow-auto h-80 bg-card p-1 rounded">
         {tree().map(t => <div class="flex justify-between mb-1 ltr" >
           <div class="flex gap-2">
             <Checkbox initialValue={!!selected().find(f => f === t.link)?.length}
               onchange={val => val ? setSelected(prev => [...prev, t.link]) : setSelected(prev => prev.filter(p => p !==t.link ))}/>
-            {t.link}
+            {t.link.substring(7)}
           </div>
           <Muted class="rtl">(وضعیت: {Status(t.status)})</Muted>
         </div>)}
