@@ -64,3 +64,13 @@
   animation: 0.3s  subtle-slide-in;
   z-index: 2;
 }
+
+::view-transition-old(training) {
+  animation: 0.3s  shrink-out;
+  z-index: 1;
+}
+
+::view-transition-new(training) {
+  animation: 0.3s  subtle-slide-in;
+  z-index: 2;
+}
