@@ -52,17 +52,11 @@ export const useTransaction = () => {
     navigate?: string,
     loadingSignal?: Setter<boolean>
   }
-  type api<T> = {
-    success: ( cb: (tr: T) => void ) => void,
-    fail: ( cb: (tr: T) => void ) => void,
-  }
-
-  type caller<T> = (tr: Promise<T>, options?: options) => Promise< api<T> >
 
   const callTransaction = (() => {
     let _outcome: TransactionResponse | null = null;
 
-    const api:api<TransactionResponse> = {
+    const api = {
       success: (cb:successCallback) => {
         if (_outcome?.ok) {
           cb(_outcome);
@@ -77,7 +71,7 @@ export const useTransaction = () => {
       }
     };
 
-    const apply:caller<TransactionResponse> = async (tr: Transaction, options?:options) => {
+    const apply = async (tr: Transaction, options?:options) => {
       try {
         options?.loadingSignal && options.loadingSignal(true)
         setLoading(true)
@@ -128,7 +122,7 @@ export const useTransaction = () => {
       callModal.fail(resolveError(e))
       _outcome = fetchFail(resolveError(e))
     }
-    const api:api<FetchResponse<T>> = ({
+    const api = ({
       success: (cb:fetchSuccessCallback<T>) => {
         if (_outcome?.ok) {
           cb(_outcome);
