@@ -2,8 +2,8 @@ import axios from "axios"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 
-type a = {link: string, status: "ok" | "unreachable" | "unknown"}[]
-export const buildLinkTree = async (address: string):Fetch<a> => {
+export type crawlTree = {link: string, status: "ok" | "unreachable" | "unchecked"}[]
+export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
   const brokenUrls = new Set<string>()
   const okUrls = new Set<string>()
   const allUrls = new Set<string>()
@@ -41,9 +41,7 @@ export const buildLinkTree = async (address: string):Fetch<a> => {
   await sendRequest(address)
 
   return fetchSuccess([
-    ...[...okUrls].map(o => ({link: o, status: "ok" as const})),
-    ...[...brokenUrls].map(o => ({link: o, status: "unreachable" as const})),
-    ...[...allUrls].map(o => ({link: o, status: "unknown" as const})),
+    ...[...allUrls].map(o => ({link: o, status: okUrls.has(o) ? "ok" as const : brokenUrls.has(o) ? "unreachable" as const : "unchecked" as const})),
   ])
 }
 

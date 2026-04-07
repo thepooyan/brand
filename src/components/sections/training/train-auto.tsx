@@ -3,13 +3,15 @@ import { Loading } from "~/components/parts/Loading"
 import { Button } from "~/components/ui/button"
 import Input from "~/components/ui/input"
 import { useTransaction } from "~/lib/actionAbstraction"
-import { buildLinkTree } from "~/server/crawler"
+import { buildLinkTree, crawlTree } from "~/server/crawler"
+import CrawlTree from "./crawl-tree"
 
 const TrainAuto = () => {
 
   const {callFetch} = useTransaction()
   const addressSignal = createSignal("")
   const [loading, setLoading] = createSignal(false)
+  const [tree, setTree] = createSignal<crawlTree>([])
 
   const handleTreeBuild = async () => {
     let val = addressSignal[0]()
@@ -18,9 +20,7 @@ const TrainAuto = () => {
     (await callFetch(
       buildLinkTree(val),
       {loadingSignal: setLoading}
-    )).success(a => {
-      console.log(a.data)
-    })
+    )).success(a => setTree(a.data))
   }
 
   return (
@@ -31,6 +31,7 @@ const TrainAuto = () => {
       </label>
       <Button onclick={handleTreeBuild}>تایید</Button>
       {loading() && <Loading class="absolute top-0 bg-background w-full opacity-80"/>}
+      <CrawlTree tree={tree}/>
     </div>
   )
 }
