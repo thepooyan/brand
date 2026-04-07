@@ -1,6 +1,6 @@
-import { Match, Switch } from "solid-js"
+import { children, Match, ParentProps, Switch } from "solid-js"
 import Choose from "./choose"
-import { set_training_state, training_state } from "./training-state"
+import { mark_training_page, set_training_state, training_state } from "./training-state"
 import TrainAuto from "./train-auto"
 import CrawlTree from "./crawl-tree"
 
@@ -17,13 +17,19 @@ const BotTrainer = ({firstTime = true}:p) => {
       <div>
         <Switch>
           <Match when={training_state() === "choose"}>
-            <Choose/>
+            <Wrap>
+              <Choose/>
+            </Wrap>
           </Match>
           <Match when={training_state() === "auto"}>
-            <TrainAuto/>
+            <Wrap>
+              <TrainAuto/>
+            </Wrap>
           </Match>
           <Match when={training_state() === "tree"}>
-            <CrawlTree/>
+            <Wrap>
+              <CrawlTree/>
+            </Wrap>
           </Match>
         </Switch>
 
@@ -31,5 +37,7 @@ const BotTrainer = ({firstTime = true}:p) => {
     </>
   )
 }
+
+const Wrap = (p:ParentProps) => <div {...mark_training_page()}>{p.children}</div>
 
 export default BotTrainer
