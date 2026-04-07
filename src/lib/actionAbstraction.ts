@@ -12,17 +12,19 @@ export type ActionResponse<T = void> = Promise<EitherResponse<T>>
 export type ApiErrorResponse = { ok: false; msg: string, status: number }
 export type ApiResponse<T = void> = SuccessResponse<T> | ApiErrorResponse
 
-type FetchErrorResponse = { ok: false; msg: string, data: undefined }
-type FetchSuccessResponse<T> =  { ok: true; data: T, msg: undefined }
-type FetchResponse<T> = FetchSuccessResponse<T> | FetchErrorResponse
+type FetchErrorResponse = { ok: false; msg: string, data: undefined, redirect: undefined }
+type FetchSuccessResponse<T> =  { ok: true; data: T, msg: undefined, redirect: undefined }
+type FetchRedirect = { ok: false, msg: undefined, redirect: {to: string, bouncy?: boolean}, data: undefined }
+type FetchResponse<T> = FetchSuccessResponse<T> | FetchErrorResponse | FetchRedirect
 export type Fetch<T> = Promise<FetchResponse<T>>
 
-export const fetchSuccess = <T>(data: T):FetchSuccessResponse<T> => ({ok: true, data: data, msg: undefined})
-export const fetchFail = (msg: string):FetchErrorResponse => ({ok: false, data: undefined, msg: msg})
+export const fetchSuccess = <T>(data: T):FetchSuccessResponse<T> => ({ok: true, data: data, msg: undefined, redirect: undefined})
+export const fetchFail = (msg: string):FetchErrorResponse => ({ok: false, data: undefined, msg: msg, redirect: undefined})
+export const fetchRedirect = (to: string, bouncy?: boolean):FetchRedirect => ({ok: false, data: undefined, msg: undefined, redirect: {to: to, bouncy}})
 
 const transactionBase = {msg: undefined, data: undefined, redirect: undefined}
 
-type TransactionRedirect = { ok: false, msg: undefined, redirect: {to: string, bouncy?: boolean}, data: undefined }
+type TransactionRedirect = { ok: false, msg: undefined, redirect: {to: string, bouncy?: boolean} }
 type TransactionErrorResponse = { ok: false; msg: string, redirect: undefined }
 type TransactionSuccessResponse = { ok: true, msg: undefined, redirect: undefined }
 type TransactionResponse = TransactionErrorResponse | TransactionSuccessResponse | TransactionRedirect
@@ -34,6 +36,9 @@ export const transactionRedirect = (to: string, bouncy?: boolean):TransactionRed
 
 type successCallback = (tr: TransactionSuccessResponse) => void
 type failCallback = (tr: TransactionErrorResponse) => void
+
+type fetchSuccessCallback<T> = (tr: FetchSuccessResponse<T>) => void
+type fetchFailCallback = (tr: FetchErrorResponse) => void
 
 export const useTransaction = () => {
 
@@ -93,5 +98,51 @@ export const useTransaction = () => {
     return apply;
   })()
 
-  return {callTransaction, loading}
+  interface options {
+    successMessage?: string,
+    revalidate?: string,
+    navigate?: string,
+    loadingSignal?: Setter<boolean>
+  }
+  const callFetch = async <T>(tr: Fetch<T>, options?:options) => {
+    let _outcome: FetchResponse<T> | null = null;
+    try {
+      options?.loadingSignal && options.loadingSignal(true)
+      setLoading(true)
+      let res = await tr
+      setLoading(false)
+      options?.loadingSignal && options.loadingSignal(false)
+      if (res.redirect) {
+        if (res.redirect.bouncy) bnv(res.redirect.to)
+        else nv(res.redirect.to)
+      } else if (res.ok) {
+        callModal.success(options?.successMessage)
+        options?.revalidate && revalidate(options.revalidate)
+        options?.navigate && nv(options.navigate)
+      } else {
+        callModal.fail(res.msg)
+      }
+      _outcome = res
+    } catch(e) {
+      callModal.fail(resolveError(e))
+      _outcome = fetchFail(resolveError(e))
+    }
+    const api = ({
+      success: (cb:fetchSuccessCallback<T>) => {
+        if (_outcome?.ok) {
+          cb(_outcome);
+        }
+        return api;
+      },
+      fail: (cb: fetchFailCallback) => {
+        if (_outcome?.ok === false && _outcome.msg) {
+          cb(_outcome);
+        }
+        return api;
+      }
+    })
+    return api
+  }
+
+  return {callTransaction, callFetch, loading}
 }

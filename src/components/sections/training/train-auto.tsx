@@ -7,7 +7,7 @@ import { buildLinkTree } from "~/server/crawler"
 
 const TrainAuto = () => {
 
-  const {callTransaction} = useTransaction()
+  const {callFetch} = useTransaction()
   const addressSignal = createSignal("")
   const [loading, setLoading] = createSignal(false)
 
@@ -15,17 +15,19 @@ const TrainAuto = () => {
     let val = addressSignal[0]()
     if (!val) return
 
-    setLoading(true)
-    let a = await buildLinkTree(val)
-    setLoading(false)
-    console.log(a)
+    (await callFetch(
+      buildLinkTree(val),
+      {loadingSignal: setLoading}
+    )).success(a => {
+      console.log(a.data)
+    })
   }
 
   return (
     <div class="relative">
       <label>
         آدرس وبسایت خود را وارد کنید:
-        <Input placeholder="https://www.example.com" class="ltr" bind={addressSignal}/>
+        <Input placeholder="https://www.example.com" class="ltr" bind={addressSignal} name="website"/>
       </label>
       <Button onclick={handleTreeBuild}>تایید</Button>
       {loading() && <Loading class="absolute top-0 bg-background w-full opacity-80"/>}
