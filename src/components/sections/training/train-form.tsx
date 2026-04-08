@@ -49,7 +49,7 @@ const TrainForm = () => {
 
   const handleSubmit = () => {
     console.log({...store})
-    sett("friendly")
+    setStore("tone", "friendly")
   }
 
   const ToneSelect = GenerallSelect(
@@ -71,7 +71,7 @@ const TrainForm = () => {
             <Input {...registerInput(l.value)}/>
           </label>
         )}
-        <ToneSelect onchange={sett} value={sig()}/>
+        <ToneSelect onchange={sett} value={() => store.tone} />
 
 
         <Button type="submit">ثبت</Button>

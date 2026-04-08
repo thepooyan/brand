@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js"
+import { createEffect, createSignal } from "solid-js"
 import {
   Select,
   SelectContent,
@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
+import { OptionalAccessor, unwrap } from "~/lib/solid"
 
 type option<T> = {label: string, value: T}
 function GenerallSelect<T>(options: option<T>[]) {
@@ -13,14 +14,19 @@ function GenerallSelect<T>(options: option<T>[]) {
 
   interface p {
     onchange?: (e: T) => void
-    value?: T
+    value?: OptionalAccessor<T>
     placeholder?: string
     class?: string
   }
 
   return ({ onchange, value, placeholder, ...props }:p) => {
 
-    const [val, setValue] = createSignal<label>(options.find(o => o.value === value)?.label || "")
+    const [val, setValue] = createSignal<label>(options.find(o => o.value === unwrap(value))?.label || "")
+
+    createEffect(() => {
+      let o = options.find(o => o.value === unwrap(value))
+      if (o) setValue(o.label)
+    })
 
     const changeHandler = (e: label | null) => {
       console.log("change")
