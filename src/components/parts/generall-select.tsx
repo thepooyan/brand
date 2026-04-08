@@ -13,14 +13,14 @@ function GenerallSelect<T>(options: option<T>[]) {
 
   interface p {
     onchange?: (e: T) => void
-    initialValue?: T
+    value?: T
     placeholder?: string
     class?: string
   }
 
-  return ({ onchange, initialValue, placeholder, ...props }:p) => {
+  return ({ onchange, value, placeholder, ...props }:p) => {
 
-    const [value, setValue] = createSignal<option<T> | null>(options.find(o => o.value === initialValue) || null)
+    const [val, setValue] = createSignal<option<T> | null>(options.find(o => o.value === value) || null)
 
     const changeHandler = (e: label | null) => {
       if (!e) return
@@ -29,9 +29,13 @@ function GenerallSelect<T>(options: option<T>[]) {
       onchange && onchange(newValue.value)
     }
 
+    const getValue = () => {
+      return val()?.label || ""
+    }
+
     return (
       <Select
-          value={value()?.label || ""}
+          value={getValue()}
           onChange={changeHandler}
           options={options.map(o => o.label)}
           placeholder={placeholder}
