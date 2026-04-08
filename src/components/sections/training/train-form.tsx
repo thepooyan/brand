@@ -8,7 +8,7 @@ import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
 import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
-import { Component } from "solid-js"
+import { Component, onMount } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
@@ -69,10 +69,17 @@ const TrainForm = () => {
     {value: "useEmojies", label: "استفاده از ایموجی", Component: Checkbox, class: "flex gap-1"},
   ]
 
+  let scrollRef!:HTMLDivElement
+  onMount(() => {
+    const sh = scrollRef.scrollHeight
+    scrollRef.scrollTo({top: sh})
+    scrollRef.scrollTo({top: 0, behavior: "smooth"})
+  })
+
   return (
     <div class="grid grid-cols-2 gap-3">
 
-      <div class="overflow-auto h-134 pl-2 pr-1">
+      <div class="overflow-auto h-134 pl-2 pr-1" ref={scrollRef}>
         <form
             onsubmit={preventDefault(handleSubmit)}
             class="grid gap-4"
