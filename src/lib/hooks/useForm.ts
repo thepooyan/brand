@@ -2,6 +2,7 @@ import { FormSubmitEvent, InputChangeEvent } from "~/db/types";
 import z from "zod";
 import { createEffect, createSignal } from "solid-js";
 import { SetStoreFunction } from "solid-js/store";
+import { placeholder } from "drizzle-orm";
 
 interface p<S> {
   schema?: z.ZodType<S>,
@@ -21,7 +22,7 @@ export const useBind = <T>(initialValues: T, storeSetter: SetStoreFunction<T>) =
     return {
       name: key,
       value: initialValues[key] as A,
-      onchange: (e:A) => storeSetter(prev => ({...prev, [key]: e }))
+      onchange: (e:A) => storeSetter(prev => ({...prev, [key]: e })),
     }
   }
 

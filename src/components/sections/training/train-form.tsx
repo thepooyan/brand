@@ -53,16 +53,16 @@ const TrainForm = () => {
     Object.entries(LanguageOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
 
-  type label = {value: keyof TrainingData, label: string, Component?: Component}
+  type label = {value: keyof TrainingData, label: string, Component?: Component<{placeholder: string}>}
   const myLabels: label[] = [
     {value: "businessName", label: "نام بیزنس"},
     {value: "address", label: "آدرس"},
     {value: "websiteUrl", label: "آدرس وبسایت"},
     {value: "trainingText", label: "متن آموزش"},
-    {value: "tone", label: "لحن", Component: () => <ToneSelect {...registerCustom("tone")}/>},
-    {value: "maxResponseLength", label: "طول پاسخ", Component: () => <MRLSelect {...registerCustom("maxResponseLength")}/>},
-    {value: "language", label: "زبان", Component: () => <LangSelect {...registerCustom("language")}/>},
-    {value: "contactNumber", label: "شماره تماس", Component: () => <ArrayInput {...registerCustom("contactNumber")}/>},
+    {value: "tone", label: "لحن", Component: ToneSelect},
+    {value: "maxResponseLength", label: "طول پاسخ", Component: MRLSelect},
+    {value: "language", label: "زبان", Component: LangSelect},
+    {value: "contactNumber", label: "شماره تماس", Component: ArrayInput},
   ]
 
   return (
@@ -78,7 +78,7 @@ const TrainForm = () => {
         {myLabels.map(l => <label>
             {l.label}:
             {l.Component ? 
-              <l.Component/>
+              <l.Component {...registerCustom(l.value)} placeholder={l.label}/>
               :
               <Input {...registerInput(l.value)}/>
             }
