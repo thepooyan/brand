@@ -6,6 +6,8 @@ import { Button } from "~/components/ui/button"
 import { createStore } from "solid-js/store"
 import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
+import GenerallSelect from "~/components/parts/generall-select"
+import { ToneOptions } from "~/server/llmUtil"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -31,27 +33,28 @@ const TrainForm = () => {
   }
   const myLabels: {value: keyof TrainingData, label: string}[] = [
     {value: "businessName", label: "نام بیزنس"},
-    {value: "tone", label: "لحن"},
     {value: "address", label: "آدرس"},
-    {value: "language", label: "زبان"},
-    {value: "useEmojies", label: "استفاده از ایموجی"},
     {value: "websiteUrl", label: "آدرس وبسایت"},
-    {value: "maxResponseLength", label: "ماکسیمم طول پاسخ"},
     {value: "trainingText", label: "متن آموزش"},
   ]
 
   const [store, setStore] = createStore(newt)
-  const {register} = useBind(store, setStore)
+  const {registerInput, registerCustom}
+  = useBind(store, setStore)
 
   const handleSubmit = () => {
     console.log({...store})
   }
 
+  const ToneSelect = GenerallSelect(
+    Object.entries(ToneOptions).map(([k,v]) => ({label: v.label, value: k}))
+  )
+
   return (
     <div class="grid grid-cols-2">
       <div>
 
-      <BackBtn onClick={() => set_training_state("choose")} class=""/>
+      <BackBtn onClick={() => set_training_state("choose")} class="mb-5"/>
 
       <form
           onsubmit={preventDefault(handleSubmit)}
@@ -59,8 +62,12 @@ const TrainForm = () => {
         >
         {myLabels.map(l => <label>
             {l.label}:
-            <Input {...register(l.value)}/>
-          </label> )}
+            <Input {...registerInput(l.value)}/>
+          </label>
+        )}
+        <ToneSelect {...registerCustom("tone")} />
+
+
         <Button type="submit">ثبت</Button>
       </form>
       </div>

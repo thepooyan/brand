@@ -10,15 +10,22 @@ interface p<S> {
 
 export const useBind = <T>(initialValues: T, storeSetter: SetStoreFunction<T>) => {
 
-  const register = (key: keyof T) => {
+  const registerInput = (key: keyof T) => {
     return {
       name: key,
       value: String(initialValues[key] || ""),
       onchange: (e:InputChangeEvent) => storeSetter(prev => ({...prev, [key]: e.currentTarget.value}))
     }
   }
+  const registerCustom = (key: keyof T) => {
+    return {
+      name: key,
+      value: String(initialValues[key] || ""),
+      onchange: (e:unknown) => storeSetter(prev => ({...prev, [key]: e }))
+    }
+  }
 
-  return {register}
+  return {registerInput, registerCustom}
 }
 
 export const extractFormData = <T>(formData: FormData) => {
