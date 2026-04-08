@@ -8,7 +8,7 @@ import { getAuthSession } from "~/lib/session"
 import { For, Suspense } from "solid-js"
 import TA from "~/components/parts/TA"
 import BotCard, { BotCardFallback } from "~/components/parts/BotCard"
-import { Fetch } from "~/lib/actionAbstraction"
+import { Fetch, fetchFail, fetchSuccess } from "~/lib/actionAbstraction"
 import { callModal } from "~/components/layout/Modal"
 import { chatbotStatus } from "~/lib/interface"
 import { userPermissions } from "~/sections/plan"
@@ -30,7 +30,7 @@ const getInitialData = query(async ():Fetch<initialData> => {
       where: (tbl => eq(tbl.id, user.id)),
       with: {current_plans: true, bots: true}
     })
-    if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+    if (!dbUser) return fetchFail("لطفا ابتدا لوگین کنید")
 
     const userBots = await ctx.query.chatbotTable.findMany({
       where: (tbl => eq(tbl.userId, dbUser.id)),
@@ -40,7 +40,7 @@ const getInitialData = query(async ():Fetch<initialData> => {
 
     const userp = userPermissions(dbUser)
 
-    return {ok: true, data: {canHaveMoreBots: userp?.moreBots || false, bots: userBots, telegramAccess: userp?.telegram || false} }
+    return fetchSuccess({canHaveMoreBots: userp?.moreBots || false, bots: userBots, telegramAccess: userp?.telegram || false})
   })
 }, "bots")
 

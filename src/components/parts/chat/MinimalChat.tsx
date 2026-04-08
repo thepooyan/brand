@@ -8,7 +8,7 @@ import { createAsync, query, redirect } from "@solidjs/router";
 import { db } from "~/db/db";
 import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
-import { Fetch } from "~/lib/actionAbstraction";
+import { Fetch, fetchFail, fetchSuccess } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
 import { Chatbot } from "~/db/schema";
 import { Muted } from "~/components/prose/prose-item";
@@ -45,9 +45,9 @@ const queryBotName = query(async (botId: string):Fetch<Chatbot> => {
     })
   )
   if (!res.ok) return {...res, data: undefined}
-  if (!res.data) return {ok: false, msg: "ربات یافت نشد", data: undefined}
+  if (!res.data) return fetchFail("ربات یافت نشد")
 
-  return {ok: true,msg: undefined, data: res.data}
+  return fetchSuccess(res.data)
 }, "botName")
 
 const MinimalChat = ({botId}:props) => {

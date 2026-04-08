@@ -1,7 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { ticket_states } from "~/components/ticket/ticket-signal";
-import { chat_sources, message, order_status, timedMessage } from "~/db/constants";
+import { chat_sources, message, order_status, ticket_states, timedMessage } from "~/db/constants";
 import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
