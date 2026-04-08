@@ -12,7 +12,6 @@ import { Component } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
-import { Muted } from "~/components/prose/prose-item"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -56,7 +55,8 @@ const TrainForm = () => {
     Object.entries(LanguageOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
 
-  type label = {value: keyof TrainingData,
+  type label = {
+    value: keyof TrainingData,
     label: string,
     Component?: Component<any>
     class?: string
