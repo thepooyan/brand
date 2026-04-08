@@ -7,8 +7,8 @@ import { createStore } from "solid-js/store"
 import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
-import { ToneOptions } from "~/server/llmUtil"
-import { createEffect, createSignal } from "solid-js"
+import { ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
+import { Component, createEffect, createSignal } from "solid-js"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -32,29 +32,32 @@ const TrainForm = () => {
     ],
     maxResponseLength: "short"
   }
-  const myLabels: {value: keyof TrainingData, label: string}[] = [
-    {value: "businessName", label: "نام بیزنس"},
-    {value: "address", label: "آدرس"},
-    {value: "websiteUrl", label: "آدرس وبسایت"},
-    {value: "trainingText", label: "متن آموزش"},
-  ]
 
   const [store, setStore] = createStore(newt)
-  const [sig, sett] = createSignal("helpful")
-
-  createEffect(() => console.log(sig()))
 
   const {registerInput, registerCustom}
   = useBind(store, setStore)
 
   const handleSubmit = () => {
     console.log({...store})
-    setStore("tone", "friendly")
   }
 
   const ToneSelect = GenerallSelect(
     Object.entries(ToneOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
+  const MRLSelect = GenerallSelect(
+    Object.entries(ResponseLengthOptions).map(([k,v]) => ({label: v.label, value: k}))
+  )
+
+  type label = {value: keyof TrainingData, label: string, Component?: Component}
+  const myLabels: label[] = [
+    {value: "businessName", label: "نام بیزنس"},
+    {value: "address", label: "آدرس"},
+    {value: "websiteUrl", label: "آدرس وبسایت"},
+    {value: "trainingText", label: "متن آموزش"},
+    {value: "tone", label: "لحن", Component: () => <ToneSelect {...registerCustom("tone")}/>},
+    {value: "maxResponseLength", label: "طول پاسخ", Component: () => <MRLSelect {...registerCustom("maxResponseLength")}/>}
+  ]
 
   return (
     <div class="grid grid-cols-2">
@@ -68,10 +71,13 @@ const TrainForm = () => {
         >
         {myLabels.map(l => <label>
             {l.label}:
-            <Input {...registerInput(l.value)}/>
+            {l.Component ? 
+              <l.Component/>
+              :
+              <Input {...registerInput(l.value)}/>
+            }
           </label>
         )}
-        <ToneSelect onchange={sett} value={() => store.tone} />
 
 
         <Button type="submit">ثبت</Button>

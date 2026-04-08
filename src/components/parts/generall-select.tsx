@@ -29,7 +29,6 @@ function GenerallSelect<T>(options: option<T>[]) {
     })
 
     const changeHandler = (e: label | null) => {
-      console.log("change")
       if (!e) return
       let newValue = options.find(o => o.label === e)!
       setValue(e)
