@@ -56,7 +56,11 @@ const TrainForm = () => {
     Object.entries(LanguageOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
 
-  type label = {value: keyof TrainingData, label: string, Component?: Component<any>}
+  type label = {value: keyof TrainingData,
+    label: string,
+    Component?: Component<any>
+    class?: string
+  }
   const myLabels: label[] = [
     {value: "businessName", label: "نام بیزنس"},
     {value: "address", label: "آدرس"},
@@ -66,7 +70,7 @@ const TrainForm = () => {
     {value: "maxResponseLength", label: "طول پاسخ", Component: MRLSelect},
     {value: "language", label: "زبان", Component: LangSelect},
     {value: "contactNumber", label: "شماره تماس", Component: ArrayInput},
-    {value: "useEmojies", label: "استفاده از ایموجی", Component: Checkbox},
+    {value: "useEmojies", label: "استفاده از ایموجی", Component: Checkbox, class: "flex gap-1"},
   ]
 
   return (
@@ -79,8 +83,8 @@ const TrainForm = () => {
           onsubmit={preventDefault(handleSubmit)}
           class="grid gap-4"
         >
-        {myLabels.map(l => <label>
-            <p class="text-sm mb-1">
+        {myLabels.map(l => <label class={l.class}>
+            <p class="text-sm mb-1  ">
               {l.label}:
             </p>
             {l.Component ? 
