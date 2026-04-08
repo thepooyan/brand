@@ -15,7 +15,7 @@ const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
       {store.social.map((s, i) => (
         <div class="grid grid-cols-[3fr_7fr] ltr gap-1 relative">
           <X
-            class="absolute right-[calc(100%-.3rem)] top-0 m-auto cursor-pointer text-destructive"
+            class="absolute  top-0 m-auto cursor-pointer text-destructive"
             onclick={() =>
               setStore("social", (prev) => prev.filter((_, ii) => ii !== i))
             }

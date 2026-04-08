@@ -12,28 +12,24 @@ import { Component } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
-// import MinimalChat from "~/components/parts/chat/MinimalChat"
+import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
 
   let emptyValue: TrainingData = {
     id: 5,
-    businessName: "هوشبان",
-    tone: "friendly",
+    businessName: "",
+    tone: "",
     social: [
-      {type: "telegram", link: "http://t.me/@thepooyan"},
-      {type: "email", link: "thepooyan@gmail.com"},
+      {type: "", link: ""}
     ],
-    address: "خیابان فولان",
-    language: "persian",
-    useEmojies: true,
-    websiteUrl: "https://some.com",
-    trainingText: "t text",
-    contactNumber: [
-      "09027766926",
-      "09027766925",
-    ],
-    maxResponseLength: "short"
+    address: "",
+    language: "",
+    useEmojies: false,
+    websiteUrl: "",
+    trainingText: "",
+    contactNumber: [],
+    maxResponseLength: ""
   }
 
   const [store, setStore] = createStore(emptyValue)
@@ -74,39 +70,35 @@ const TrainForm = () => {
   ]
 
   return (
-    <div class="grid grid-cols-2">
-      <div>
+    <div class="grid grid-cols-2 gap-3">
 
-      <BackBtn onClick={() => set_training_state("choose")} class="mb-5"/>
+      <div class="overflow-auto h-134 pl-2 ">
+        <form
+            onsubmit={preventDefault(handleSubmit)}
+            class="grid gap-4"
+          >
+          {myLabels.map(l => <label class={l.class}>
+              <p class="text-sm mb-1  ">
+                {l.label}:
+              </p>
+              {l.Component ? 
+                <l.Component {...registerCustom(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
+                :
+                <Input {...registerInput(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
+              }
+            </label>
+          )}
 
-      <form
-          onsubmit={preventDefault(handleSubmit)}
-          class="grid gap-4"
-        >
-        {myLabels.map(l => <label class={l.class}>
-            <p class="text-sm mb-1  ">
-              {l.label}:
-            </p>
-            {l.Component ? 
-              <l.Component {...registerCustom(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
-              :
-              <Input {...registerInput(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
-            }
-          </label>
-        )}
+          <p class="text-sm">
+            لینک سوشیال:
+          </p>
+          <SocialLinkInputs store={store} setStore={setStore}/>
 
-        <p class="text-sm">
-          لینک سوشیال:
-        </p>
-        <SocialLinkInputs store={store} setStore={setStore}/>
-
-        <Button type="submit">ثبت</Button>
-      </form>
+          <Button type="submit">ثبت</Button>
+        </form>
       </div>
 
-      {/*
-        <MinimalChat botId="2"/>
-      */}
+      <MinimalChat botId="5"/>
     </div>
   )
 }
