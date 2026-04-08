@@ -12,6 +12,7 @@ import { Component } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
+import { Muted } from "~/components/prose/prose-item"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -76,19 +77,23 @@ const TrainForm = () => {
 
       <form
           onsubmit={preventDefault(handleSubmit)}
-          class="grid gap-2"
+          class="grid gap-4"
         >
         {myLabels.map(l => <label>
-            {l.label}:
+            <p class="text-sm mb-1">
+              {l.label}:
+            </p>
             {l.Component ? 
-              <l.Component {...registerCustom(l.value)} placeholder={l.label}/>
+              <l.Component {...registerCustom(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
               :
-              <Input {...registerInput(l.value)} placeholder={l.label}/>
+              <Input {...registerInput(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
             }
           </label>
         )}
 
-        لینک سوشیال:
+        <p class="text-sm">
+          لینک سوشیال:
+        </p>
         <SocialLinkInputs store={store} setStore={setStore}/>
 
         <Button type="submit">ثبت</Button>

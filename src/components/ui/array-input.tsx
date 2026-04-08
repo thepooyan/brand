@@ -11,6 +11,7 @@ interface props {
   value?: string[]
   disabled?: boolean
   placeholder?: string
+  class?: string
 }
 const ArrayInput = ({onchange, disabled = false, value, ...props}:props) => {
 
@@ -39,6 +40,7 @@ const ArrayInput = ({onchange, disabled = false, value, ...props}:props) => {
           onkeypress={ifEnterPressed(flush)}
           placeholder={props.placeholder}
           disabled={disabled}
+          class={props.class}
         />
         <Button onClick={flush} disabled={disabled} type="button">
           <FiPlus/>

@@ -11,7 +11,7 @@ interface p<T> {
 }
 const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
   return (
-    <>
+    <div class="flex flex-col gap-1">
       {store.social.map((s, i) => (
         <div class="grid grid-cols-[3fr_7fr] ltr gap-1 relative">
           <X
@@ -27,6 +27,7 @@ const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
               setStore("social", i, "type", e.currentTarget.value)
             }
             placeholder="email, telegram, ..."
+            class="bg-muted text-muted-foreground"
           />
           <Input
             value={s.link}
@@ -34,6 +35,7 @@ const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
               setStore("social", i, "link", e.currentTarget.value)
             }
             placeholder="example@gmail.com"
+            class="bg-muted text-muted-foreground"
           />
         </div>
       ))}
@@ -47,7 +49,7 @@ const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
         <FiPlus />
         بیشتر...
       </Button>
-    </>
+    </div>
   );
 };
 
