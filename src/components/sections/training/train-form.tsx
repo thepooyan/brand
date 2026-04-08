@@ -1,5 +1,3 @@
-import BackBtn from "~/components/parts/back-btn"
-import { set_training_state } from "./training-state"
 import Input from "~/components/ui/input"
 import { TrainingData } from "~/db/schema"
 import { Button } from "~/components/ui/button"
@@ -13,8 +11,15 @@ import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
 import MinimalChat from "~/components/parts/chat/MinimalChat"
+import { callModal } from "~/components/layout/Modal"
+import { set_training_state } from "./training-state"
 
 const TrainForm = () => {
+
+  const recrawl = () => {
+    callModal.prompt(`آیا مطمئنید؟ در صورت یادگیری مجدد اطلاعات قبلی از بین خواهد رفت.`)
+    .yes(() => set_training_state("auto"))
+  }
 
   let emptyValue: TrainingData = {
     id: 5,
@@ -101,7 +106,10 @@ const TrainForm = () => {
           </p>
           <SocialLinkInputs store={store} setStore={setStore}/>
 
-          <Button type="submit">ثبت</Button>
+          <div class="space-x-2">
+            <Button type="submit">ثبت</Button>
+            <Button variant="secondary" onclick={recrawl}>یادگیری مجدد از لینک</Button>
+          </div>
         </form>
       </div>
 

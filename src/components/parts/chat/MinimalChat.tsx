@@ -100,7 +100,7 @@ const MinimalChat = ({botId}:props) => {
   })
 
   const Suggest = (p:{children: string}) => <div class={` p-2 text-xs rounded-md w-max text-accent-foreground 
-    border-1 bg-muted hover:bg-accent cursor-pointer `}
+    border-1 bg-muted hover:bg-accent cursor-pointer mr-5`}
     onclick={() => send(p.children)}
   >
     {p.children}
@@ -143,7 +143,7 @@ const MinimalChat = ({botId}:props) => {
               {botName()?.data?.greeting}
             </Message>}
             {botName()?.data && messages().length === 0 && <div class="space-y-1">
-              <Muted class="mb-2">
+              <Muted class="mb-2 mt-10">
                 سوالات پیشنهادی:
               </Muted>
               {botName()?.data?.suggestedQuestions.map(s => 
