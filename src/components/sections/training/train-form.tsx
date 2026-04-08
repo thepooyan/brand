@@ -8,13 +8,15 @@ import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
 import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
-import { Component, createEffect, createSignal } from "solid-js"
+import { Component } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
+import Checkbox from "~/components/ui/checkbox"
+import SocialLinkInputs from "./social-link-inputs"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
 
-  let newt: TrainingData = {
+  let emptyValue: TrainingData = {
     id: 5,
     businessName: "هوشبان",
     tone: "friendly",
@@ -34,7 +36,7 @@ const TrainForm = () => {
     maxResponseLength: "short"
   }
 
-  const [store, setStore] = createStore(newt)
+  const [store, setStore] = createStore(emptyValue)
 
   const {registerInput, registerCustom}
   = useBind(store, setStore)
@@ -53,7 +55,7 @@ const TrainForm = () => {
     Object.entries(LanguageOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
 
-  type label = {value: keyof TrainingData, label: string, Component?: Component<{placeholder: string}>}
+  type label = {value: keyof TrainingData, label: string, Component?: Component<any>}
   const myLabels: label[] = [
     {value: "businessName", label: "نام بیزنس"},
     {value: "address", label: "آدرس"},
@@ -63,6 +65,7 @@ const TrainForm = () => {
     {value: "maxResponseLength", label: "طول پاسخ", Component: MRLSelect},
     {value: "language", label: "زبان", Component: LangSelect},
     {value: "contactNumber", label: "شماره تماس", Component: ArrayInput},
+    {value: "useEmojies", label: "استفاده از ایموجی", Component: Checkbox},
   ]
 
   return (
@@ -80,11 +83,13 @@ const TrainForm = () => {
             {l.Component ? 
               <l.Component {...registerCustom(l.value)} placeholder={l.label}/>
               :
-              <Input {...registerInput(l.value)}/>
+              <Input {...registerInput(l.value)} placeholder={l.label}/>
             }
           </label>
         )}
 
+        لینک سوشیال:
+        <SocialLinkInputs store={store} setStore={setStore}/>
 
         <Button type="submit">ثبت</Button>
       </form>

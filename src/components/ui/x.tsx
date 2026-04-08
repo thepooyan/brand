@@ -1,9 +1,15 @@
 import { FiX } from "solid-icons/fi"
+import { cn } from "~/lib/utils"
 
-const X = () => {
+interface p {
+  class?: string
+  onclick?: () => void
+}
+const X = (p:p) => {
   return (
     <FiX
-      class="text-destructive"
+      class={cn("text-destructive", p.class)}
+      {...p}
     />
   )
 }

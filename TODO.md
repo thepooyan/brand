@@ -8,6 +8,7 @@ future:
 - were you satisfied with the bot query
 
 training {
+    add q and a
     
 }
 
