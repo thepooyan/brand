@@ -1,10 +1,24 @@
 import { FormSubmitEvent, InputChangeEvent } from "~/db/types";
 import z from "zod";
 import { createEffect, createSignal } from "solid-js";
+import { SetStoreFunction } from "solid-js/store";
 
 interface p<S> {
   schema?: z.ZodType<S>,
   initialValues?: S
+}
+
+export const useBind = <T>(initialValues: T, storeSetter: SetStoreFunction<T>) => {
+
+  const register = (key: keyof T) => {
+    return {
+      name: key,
+      value: String(initialValues[key] || ""),
+      onchange: (e:InputChangeEvent) => storeSetter(prev => ({...prev, [key]: e.currentTarget.value}))
+    }
+  }
+
+  return {register}
 }
 
 export const extractFormData = <T>(formData: FormData) => {

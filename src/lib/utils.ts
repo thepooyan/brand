@@ -235,3 +235,10 @@ export const ifSure = (fn: () => any, msg?: string) => {
   callModal.prompt(msg)
   .yes(() => fn())
 }
+
+export const preventDefault = (cb: () => void) => {
+  return (e:SubmitEvent) => {
+    e.preventDefault()
+    cb()
+  }
+}

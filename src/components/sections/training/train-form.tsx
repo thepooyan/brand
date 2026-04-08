@@ -1,10 +1,11 @@
 import BackBtn from "~/components/parts/back-btn"
 import { set_training_state } from "./training-state"
 import Input from "~/components/ui/input"
-import { useForm } from "~/lib/hooks/useForm"
 import { TrainingData } from "~/db/schema"
 import { Button } from "~/components/ui/button"
 import { createStore } from "solid-js/store"
+import { preventDefault } from "~/lib/utils"
+import { useBind } from "~/lib/hooks/useForm"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -35,15 +36,15 @@ const TrainForm = () => {
     {value: "language", label: "زبان"},
     {value: "useEmojies", label: "استفاده از ایموجی"},
     {value: "websiteUrl", label: "آدرس وبسایت"},
-    {value: "trainingText", label: "متن آموزش"},
     {value: "maxResponseLength", label: "ماکسیمم طول پاسخ"},
+    {value: "trainingText", label: "متن آموزش"},
   ]
 
   const [store, setStore] = createStore(newt)
-  const {register, registerSubmit} = useForm({ initialValues: newt })
+  const {register} = useBind(store, setStore)
 
-  const handleSubmit = (d: TrainingData) => {
-    console.log(d)
+  const handleSubmit = () => {
+    console.log({...store})
   }
 
   return (
@@ -52,12 +53,15 @@ const TrainForm = () => {
 
       <BackBtn onClick={() => set_training_state("choose")} class=""/>
 
-      <form onsubmit={registerSubmit(handleSubmit)}>
+      <form
+          onsubmit={preventDefault(handleSubmit)}
+          class="grid gap-2"
+        >
         {myLabels.map(l => <label>
             {l.label}:
             <Input {...register(l.value)}/>
           </label> )}
-        <Button>ثبت</Button>
+        <Button type="submit">ثبت</Button>
       </form>
       </div>
 
