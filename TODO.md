@@ -17,6 +17,9 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+add rules page
+add moderation
+block should block bot from being accessible
 fill the form using llm
 add information about hooshbaan to every bot
 live operator?
