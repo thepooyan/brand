@@ -5,24 +5,24 @@ import { Badge } from "./badge"
 import { FiPlus, FiX } from "solid-icons/fi"
 import { Button } from "./button"
 import { ifEnterPressed } from "~/lib/utils"
+import { callModal } from "../layout/Modal"
 
 interface props {
   onchange?: (value: string[]) => void
-  value?: string[]
+  initialValue?: string[]
   disabled?: boolean
-  placeholder?: string
 }
-const ArrayInput = ({onchange, disabled = false, value, ...props}:props) => {
+const suggestedQArray = ({onchange, disabled, initialValue}:props) => {
 
   const [strValue, setStrValue] = createSignal("")
-  const [val, setValue] = createSignal<string[]>(value || [])
+  const [value, setValue] = createSignal<string[]>(initialValue || [])
 
   onchange &&
-  createEffect(() => onchange(val()))
+  createEffect(() => onchange(value()))
 
   const flush = () => {
+    if (value().length === 4) return callModal.fail("تعداد سوالات پیشنهاد نمیتواند بیشتر از ۴ عدد باشد.")
     let newval = strValue()
-    if (val().includes(newval)) return
     if (!newval) return
     setValue(prev => ([...prev, newval]))
     setStrValue("")
@@ -31,21 +31,22 @@ const ArrayInput = ({onchange, disabled = false, value, ...props}:props) => {
 
   return (
     <>
+      سوالات پیشنهادی:
       <div class="flex gap-2 mt-2">
         <Input
           name=""
           value={strValue()}
-          onKeyUp={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
+          onkeydown={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
           onkeypress={ifEnterPressed(flush)}
-          placeholder={props.placeholder}
+          placeholder="مثال: اطلاعات قیمت"
           disabled={disabled}
         />
-        <Button onClick={flush} disabled={disabled} type="button">
+        <Button onclick={flush} disabled={disabled}>
           <FiPlus/>
         </Button>
       </div>
       <div class="space-y-1 py-2">
-        <For each={val()}>
+        <For each={value()}>
           {(v) => <Badge
             variant="secondary"
             class="rtl flex gap-2 w-max"
@@ -63,4 +64,4 @@ hover:text-destructive-foreground rounded-full cursor-pointer`}
   )
 }
 
-export default ArrayInput
+export default suggestedQArray

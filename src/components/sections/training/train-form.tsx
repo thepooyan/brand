@@ -9,6 +9,7 @@ import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
 import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
 import { Component, createEffect, createSignal } from "solid-js"
+import ArrayInput from "~/components/ui/array-input"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -61,6 +62,7 @@ const TrainForm = () => {
     {value: "tone", label: "لحن", Component: () => <ToneSelect {...registerCustom("tone")}/>},
     {value: "maxResponseLength", label: "طول پاسخ", Component: () => <MRLSelect {...registerCustom("maxResponseLength")}/>},
     {value: "language", label: "زبان", Component: () => <LangSelect {...registerCustom("language")}/>},
+    {value: "contactNumber", label: "شماره تماس", Component: () => <ArrayInput {...registerCustom("contactNumber")}/>},
   ]
 
   return (

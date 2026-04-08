@@ -17,11 +17,11 @@ export const useBind = <T>(initialValues: T, storeSetter: SetStoreFunction<T>) =
       onchange: (e:InputChangeEvent) => storeSetter(prev => ({...prev, [key]: e.currentTarget.value}))
     }
   }
-  const registerCustom = (key: keyof T) => {
+  const registerCustom = <A>(key: keyof T) => {
     return {
       name: key,
-      value: String(initialValues[key] || ""),
-      onchange: (e:unknown) => storeSetter(prev => ({...prev, [key]: e }))
+      value: initialValues[key] as A,
+      onchange: (e:A) => storeSetter(prev => ({...prev, [key]: e }))
     }
   }
 

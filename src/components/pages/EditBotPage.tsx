@@ -14,7 +14,7 @@ import { useNavigate } from "@solidjs/router"
 import ColorPicker from "../ui/color-picker"
 import { ImageUploader } from "../parts/ImageUploader"
 import { Dynamic } from "solid-js/web"
-import ArrayInput from "../ui/array-input"
+import SuggestedQArray from "../ui/suggestedQ-array"
 import { useForm } from "~/lib/hooks/useForm"
 import Checkbox from "../ui/checkbox"
 import BackBtn from "../parts/back-btn"
@@ -158,7 +158,7 @@ const EditBotPage = ({bot, permission}:p) => {
           </div>
           <div>
             <UpgradeTooltip active={!permission.proSettings}>
-              <ArrayInput disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)}
+              <SuggestedQArray disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)}
                 initialValue={formValues().suggestedQuestions || []}/>
             </UpgradeTooltip>
           </div>
