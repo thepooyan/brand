@@ -20,22 +20,19 @@ function GenerallSelect<T>(options: option<T>[]) {
 
   return ({ onchange, value, placeholder, ...props }:p) => {
 
-    const [val, setValue] = createSignal<option<T> | null>(options.find(o => o.value === value) || null)
+    const [val, setValue] = createSignal<label>(options.find(o => o.value === value)?.label || "")
 
     const changeHandler = (e: label | null) => {
+      console.log("change")
       if (!e) return
       let newValue = options.find(o => o.label === e)!
-      setValue(() =>  newValue)
+      setValue(e)
       onchange && onchange(newValue.value)
-    }
-
-    const getValue = () => {
-      return val()?.label || ""
     }
 
     return (
       <Select
-          value={getValue()}
+          value={val()}
           onChange={changeHandler}
           options={options.map(o => o.label)}
           placeholder={placeholder}

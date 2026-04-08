@@ -8,6 +8,7 @@ import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
 import { ToneOptions } from "~/server/llmUtil"
+import { createEffect, createSignal } from "solid-js"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
 const TrainForm = () => {
@@ -39,11 +40,16 @@ const TrainForm = () => {
   ]
 
   const [store, setStore] = createStore(newt)
+  const [sig, sett] = createSignal("helpful")
+
+  createEffect(() => console.log(sig()))
+
   const {registerInput, registerCustom}
   = useBind(store, setStore)
 
   const handleSubmit = () => {
     console.log({...store})
+    sett("friendly")
   }
 
   const ToneSelect = GenerallSelect(
@@ -65,7 +71,7 @@ const TrainForm = () => {
             <Input {...registerInput(l.value)}/>
           </label>
         )}
-        <ToneSelect {...registerCustom("tone")} />
+        <ToneSelect onchange={sett} value={sig()}/>
 
 
         <Button type="submit">ثبت</Button>
