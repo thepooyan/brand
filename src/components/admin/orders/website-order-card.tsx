@@ -81,7 +81,7 @@ const WebsiteOrderCard = ({order}:p) => {
         <div class="space-y-2">
           <Muted>تغییر وضعیت:</Muted>
           <div class="flex gap-2">
-            <M initialValue={status()} onchange={e => setStatus(e)} class="w-30"/>
+            <M value={status()} onchange={e => setStatus(e)} class="w-30"/>
             <Button onclick={submitStatus}>
               ثبت وضعیت
             </Button>

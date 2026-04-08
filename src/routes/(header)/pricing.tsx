@@ -19,7 +19,7 @@ const plans = () => {
             انتخاب مدت دوره:
           </Muted>
           <div class="w-50">
-            <M initialValue={selectedMounth()} onchange={e => setSelectedMounth(e)}/>
+            <M value={selectedMounth()} onchange={e => setSelectedMounth(e)}/>
           </div>
         </div>
       </div>
