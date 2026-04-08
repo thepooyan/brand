@@ -92,6 +92,9 @@ export const trainingDataTable = sqliteTable("training_data", {
   trainingText: text().notNull(),
 })
 
+export type TrainingData = typeof trainingDataTable.$inferSelect
+export type NewTrainingData = typeof trainingDataTable.$inferInsert
+
 export const websiteOrdersTable = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
   user_id: int().notNull().references(() => usersTable.id),

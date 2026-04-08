@@ -4,6 +4,6 @@ import { crawlTree } from "~/server/crawler";
 
 export type train_stage = "choose" | "auto" | "" | "tree" | "form"
 
-export const [training_state, set_training_state, mark_training_page] = useViewTransition<train_stage>("training", "")
+export const [training_state, set_training_state, mark_training_page] = useViewTransition<train_stage>("training", "form")
 
 export const [tree, setTree] = createSignal<crawlTree>([])

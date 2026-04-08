@@ -11,7 +11,7 @@ interface p {
 }
 const BotTrainer = ({firstTime = true}:p) => {
 
-  if (firstTime) set_training_state("choose")
+  // if (firstTime) set_training_state("choose")
 
   const stateComponents = [
     {n: "choose", c:Choose },
