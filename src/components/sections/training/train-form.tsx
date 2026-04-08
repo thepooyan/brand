@@ -7,7 +7,7 @@ import { createStore } from "solid-js/store"
 import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
-import { ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
+import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
 import { Component, createEffect, createSignal } from "solid-js"
 // import MinimalChat from "~/components/parts/chat/MinimalChat"
 
@@ -48,6 +48,9 @@ const TrainForm = () => {
   const MRLSelect = GenerallSelect(
     Object.entries(ResponseLengthOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
+  const LangSelect = GenerallSelect(
+    Object.entries(LanguageOptions).map(([k,v]) => ({label: v.label, value: k}))
+  )
 
   type label = {value: keyof TrainingData, label: string, Component?: Component}
   const myLabels: label[] = [
@@ -56,7 +59,8 @@ const TrainForm = () => {
     {value: "websiteUrl", label: "آدرس وبسایت"},
     {value: "trainingText", label: "متن آموزش"},
     {value: "tone", label: "لحن", Component: () => <ToneSelect {...registerCustom("tone")}/>},
-    {value: "maxResponseLength", label: "طول پاسخ", Component: () => <MRLSelect {...registerCustom("maxResponseLength")}/>}
+    {value: "maxResponseLength", label: "طول پاسخ", Component: () => <MRLSelect {...registerCustom("maxResponseLength")}/>},
+    {value: "language", label: "زبان", Component: () => <LangSelect {...registerCustom("language")}/>},
   ]
 
   return (
