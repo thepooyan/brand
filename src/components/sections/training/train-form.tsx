@@ -72,7 +72,7 @@ const TrainForm = () => {
   return (
     <div class="grid grid-cols-2 gap-3">
 
-      <div class="overflow-auto h-134 pl-2 ">
+      <div class="overflow-auto h-134 pl-2 pr-1">
         <form
             onsubmit={preventDefault(handleSubmit)}
             class="grid gap-4"
