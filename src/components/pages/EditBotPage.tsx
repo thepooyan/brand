@@ -96,10 +96,12 @@ const EditBotPage = ({bot, permission}:p) => {
 
   return (
     <>
-      <BackBtn href="/panel/chat-bot"
-        class="flex mr-auto ml-13 w-max mb-3"
-        navigatorHook={usePanelTransitiveNavigate}
-      />
+      <div class="container p-0">
+        <BackBtn href="/panel/chat-bot"
+          class="flex mb-3 w-max mr-auto"
+          navigatorHook={usePanelTransitiveNavigate}
+        />
+      </div>
       <form class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container"
       onsubmit={registerSubmit(handleSubmit)}>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
