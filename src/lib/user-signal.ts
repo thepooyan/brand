@@ -6,7 +6,7 @@ import { DB, dbCtx } from "~/db/db";
 import { eq } from "drizzle-orm";
 import { Fetch, fetchFail, fetchSuccess } from "./actionAbstraction";
 import { User_Plan_Bots_Admin } from "~/db/schema";
-import { serverUtil } from "~/server/serverUtil";
+import { loginRedirectFetch, serverUtil } from "~/server/serverUtil";
 
 export const userQuery = query(async () => {
   return await getAuthSession()
@@ -57,7 +57,7 @@ interface options {
 }
 export const getUserServer = serverUtil(async (ctx: dbCtx | DB, _?: options):Fetch<User_Plan_Bots_Admin> => {
   const user = await getAuthSession()
-  if (!user) return fetchFail("لطفا ابتدا لوگین کنید")
+  if (!user) return loginRedirectFetch()
 
   const result = await safeDb(
     ctx.query.usersTable.findFirst({

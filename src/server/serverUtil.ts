@@ -9,7 +9,7 @@ import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
 import { chat_sources, timedMessage } from "~/db/constants";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
-import { Fetch, transactionRedirect } from "~/lib/actionAbstraction";
+import { Fetch, fetchRedirect, transactionRedirect } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
 import { ResultSet } from "@libsql/client";
 import { isServer } from "solid-js/web";
@@ -121,4 +121,5 @@ export function hashToken(token: string): string {
     .digest("hex");
 }
 
-export const loginRedirect = () => transactionRedirect("/Login", true)
+export const loginRedirectTran = () => transactionRedirect("/Login", true)
+export const loginRedirectFetch = () => fetchRedirect("/Login", true)

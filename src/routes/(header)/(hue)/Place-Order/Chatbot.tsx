@@ -14,6 +14,7 @@ import { useGetUser } from "~/lib/signal"
 import { userPermissions } from "~/sections/plan"
 import { getUserServer } from "~/lib/user-signal"
 import { safeDbTransaction } from "~/lib/utils"
+import { CustomError, throwCustomError } from "~/lib/errorHandler"
 
 export default function OrderChatbotPage() {
 
@@ -428,7 +429,7 @@ const saveChatbotOrder = async (order: chatbotOrder):Transaction => {
   return safeDbTransaction(
     db.transaction(async ctx => {
       let check = await getUserServer(ctx)
-      if (!check.ok) throw new Error("persian:کاربر لوگین شده یافت نشد")
+      if (!check.ok) throw CustomError(e => e.login)
       const user = check.data
 
       const userPermission = userPermissions(user)
