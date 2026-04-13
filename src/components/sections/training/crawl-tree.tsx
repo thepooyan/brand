@@ -53,7 +53,7 @@ const CrawlTree = ({}:p) => {
       <div class="overflow-auto h-80 bg-card p-1 rounded">
         {tree().map(t => <div class="flex justify-between mb-1 ltr" >
           <div class="flex gap-2">
-            <Checkbox initialValue={!!selected().find(f => f === t.link)?.length}
+            <Checkbox value={!!selected().find(f => f === t.link)?.length}
               onchange={val => val ? setSelected(prev => [...prev, t.link]) : setSelected(prev => prev.filter(p => p !==t.link ))}/>
             {t.link.substring(7)}
           </div>

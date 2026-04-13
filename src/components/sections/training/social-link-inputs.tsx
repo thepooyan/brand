@@ -4,6 +4,7 @@ import { SetStoreFunction } from "solid-js/store"
 import { TrainingData } from "~/db/schema"
 import Input from "~/components/ui/input"
 import { Button } from "~/components/ui/button"
+import { InputChangeEvent } from "~/db/types"
 
 interface p<T> {
   store: T
@@ -23,7 +24,7 @@ const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
 
           <Input
             value={s.type}
-            onchange={(e) =>
+            onchange={(e:InputChangeEvent) =>
               setStore("social", i, "type", e.currentTarget.value)
             }
             placeholder="email, telegram, ..."
@@ -31,7 +32,7 @@ const SocialLinkInputs = ({store, setStore}:p<TrainingData>) => {
           />
           <Input
             value={s.link}
-            onchange={(e) =>
+            onchange={(e:InputChangeEvent) =>
               setStore("social", i, "link", e.currentTarget.value)
             }
             placeholder="example@gmail.com"

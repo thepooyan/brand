@@ -153,7 +153,7 @@ const EditBotPage = ({bot, permission}:p) => {
             <UpgradeTooltip active={!permission.proSettings} >
               <In key="floatingMessage" name="پیام شناور" disabled={!permission?.proSettings}/>
               <div class="flex gap-2 mt-3 text-sm">
-                <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
+                <Checkbox onchange={val => setForm("floatingMessageActive", val)} value={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
                 فعال سازی پیام شناور
               </div>
             </UpgradeTooltip>
