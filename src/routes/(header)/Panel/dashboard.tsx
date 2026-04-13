@@ -45,7 +45,7 @@ const dashboard = () => {
         </div>
       </Show>
       <Show when={planData()}>
-        {presentPlan => <div class="grid grid-cols-2 gap-2">
+        {presentPlan => <div class="grid grid-cols-2 gap-4 w-max m-auto">
           <For each={presentPlan()}>
             {i => <PlanDashboard plan={() => i}/>}
           </For>
