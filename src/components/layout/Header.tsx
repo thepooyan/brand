@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <>
       <header class="border-b border-border z-10 bg-background">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="relative w-13 flex justify-center ">
               <div class="h-10 w-10 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
