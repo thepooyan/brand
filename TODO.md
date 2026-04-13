@@ -18,6 +18,7 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+remove all useAuthSession
 add rules page
 add moderation
 block should block bot from being accessible
