@@ -5,7 +5,7 @@ import TA from '~/components/parts/TA'
 import RedStar from '~/components/parts/RedStar'
 import { useSearchParams } from "@solidjs/router"
 import Spinner from '~/components/parts/Spinner'
-import { getUser } from "~/lib/signal"
+import { useGetUser } from "~/lib/signal"
 import { saveWebsiteOrder } from "~/server/actions"
 import { websiteOrder } from "~/lib/interface"
 import { useTransaction } from "~/lib/actionAbstraction"
@@ -13,7 +13,7 @@ import { FormSubmitEvent } from "~/db/types"
 
 export default function Website() {
 
-  let user = getUser()
+  let user = useGetUser(true)
   let [p] = useSearchParams()
 
   createEffect(() => {

@@ -4,11 +4,11 @@ import BackBtn from "~/components/parts/back-btn"
 import MinimalChat from "~/components/parts/chat/MinimalChat"
 import Spinner from "~/components/parts/Spinner"
 import { panelPageMarker, usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
-import { getUser } from "~/lib/signal"
+import { useGetUser } from "~/lib/signal"
 
 const testbot = () => {
   const params = useParams()
-  const user = getUser()
+  const user = useGetUser(true)
   return (
     <div {...panelPageMarker()}>
 

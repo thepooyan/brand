@@ -12,12 +12,12 @@ import { ActionResponse } from "~/lib/actionAbstraction"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
 import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/server/llmUtil"
 import { getAuthSession } from "~/lib/session"
-import { getUser } from "~/lib/signal"
+import { useGetUser } from "~/lib/signal"
 import { userPermissions } from "~/sections/plan"
 
 export default function OrderChatbotPage() {
 
-  const user = getUser()
+  const user = useGetUser(true)
 
   const [formData, setFormData] = createSignal<chatbotOrder>({
     name: String(user()?.name || ""),

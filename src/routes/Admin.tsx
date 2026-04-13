@@ -3,7 +3,7 @@ import { FaSolidTicket } from "solid-icons/fa"
 import { FiArrowLeft, FiCode, FiFileText, FiImage, FiUsers } from "solid-icons/fi"
 import { For } from "solid-js"
 import TA from "~/components/parts/TA"
-import { getAdminUser } from "~/lib/signal"
+import { useGetAdminUser } from "~/lib/signal"
 
 const adminMenu = [
   {
@@ -34,7 +34,7 @@ const adminMenu = [
 ]
 
 export default function AdminLayout({children}:{children: Element}) {
-  getAdminUser()
+  useGetAdminUser()
   return (
     <>
     <style>{`html {overflow: hidden}`}</style>

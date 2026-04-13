@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { getUser } from "~/lib/signal"
+import { useGetUser } from "~/lib/signal"
 
 type panelItems = {group: string, items: nav[]}[]
 type nav = {name: string, href: string}
@@ -51,7 +51,7 @@ const doesHaveNewTicket = query(async () => {
 
 const Panel = ({children}:ParentProps) => {
 
-  getUser()
+  useGetUser(true)
   const newTicket = createAsync(() => doesHaveNewTicket())
 
   return (

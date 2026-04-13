@@ -13,7 +13,7 @@ import { Transaction, transactionFail } from "~/lib/actionAbstraction"
 import { extractFormData } from "~/lib/hooks/useForm"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { getUser, updateUserSession } from "~/lib/signal"
+import { useGetUser, updateUserSession } from "~/lib/signal"
 import { safeDbTransaction } from "~/lib/utils"
 
 interface form {
@@ -46,7 +46,7 @@ const handleSubmit = action(async (formData:FormData):Transaction => {
 
 
 const Profile = () => {
-  const user = getUser()
+  const user = useGetUser(true)
   const submission = useSubmission(handleSubmit)
 
   createEffect(() => {

@@ -3,7 +3,7 @@ import { A } from "@solidjs/router"
 import clsx from "clsx"
 import { Button } from "../ui/button"
 import TA from "./TA"
-import { logUserOut, useIsLoggedIn } from "~/lib/signal"
+import { logUserOut, useGetUser } from "~/lib/signal"
 
 interface props {
   isOpen: Accessor<boolean>,
@@ -11,7 +11,7 @@ interface props {
 }
 const MobileMenu = ({isOpen, setOpen}:props) => {
 
-  const isLoggedIn = useIsLoggedIn()
+  const user = useGetUser()
 
   let menuRef!: HTMLDivElement
   let backdropRef!: HTMLDivElement
@@ -33,14 +33,14 @@ const MobileMenu = ({isOpen, setOpen}:props) => {
           <L href="/Blog">
             بلاگ
           </L>
-        <Show when={isLoggedIn() !== undefined}>
+        <Show when={user() !== undefined}>
           <div class="flex gap-2 mx-auto mt-auto mb-5">
 
             <Button class="bg-red-700 text-white hover:bg-red-900" onclick={() => {logUserOut();setOpen(false)}}>خروج</Button>
             <Button as={TA} href="/Panel" onclick={()=> {setOpen(false)} } >پنل کاربری</Button>
           </div>
         </Show>
-        <Show when={isLoggedIn() === undefined}>
+        <Show when={user() === undefined}>
           <Button as={TA} href="/Login" class="w-max mx-auto mt-auto mb-5">
             ورود
           </Button>
