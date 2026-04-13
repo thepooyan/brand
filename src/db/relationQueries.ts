@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm"
+import { desc } from "drizzle-orm"
 import { db } from "./db"
 import { AdminData, Chatbot, PlanInstance, User } from "./schema"
 

@@ -12,6 +12,7 @@ import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { Fetch } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
 import { ResultSet } from "@libsql/client";
+import { strictUserQuery } from "~/lib/user-signal";
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }

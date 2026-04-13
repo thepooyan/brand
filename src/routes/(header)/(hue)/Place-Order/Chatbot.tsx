@@ -14,6 +14,7 @@ import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/server/ll
 import { getAuthSession } from "~/lib/session"
 import { useGetUser } from "~/lib/signal"
 import { userPermissions } from "~/sections/plan"
+import { getUserServer } from "~/lib/user-signal"
 
 export default function OrderChatbotPage() {
 
@@ -426,8 +427,9 @@ const saveChatbotOrder = async (order: chatbotOrder):ActionResponse<number> => {
   "use server"
   try {
 
-    let user = await getAuthSession()
-    if (!user) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+    let check = await getUserServer()
+    if (!check.ok) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+    const user = check.data
 
     return await db.transaction(async ctx => {
 

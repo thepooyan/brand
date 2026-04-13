@@ -149,7 +149,8 @@ export const usersTable = sqliteTable("users_table", {
   createdAt: int({ mode: "timestamp"}).notNull().$defaultFn(() => new Date())
 });
 
-export type User = typeof usersTable.$inferInsert
+export type NewUser = typeof usersTable.$inferInsert
+export type User = typeof usersTable.$inferSelect
 
 export const users_relations = relations(usersTable, ({many, one}) => ({
   current_plans: many(planTable),
