@@ -12,7 +12,17 @@ import { nicknameFromIP } from "~/lib/nicknameGenerator";
 import { Fetch } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
 import { ResultSet } from "@libsql/client";
-import { strictUserQuery } from "~/lib/user-signal";
+import { isServer } from "solid-js/web";
+
+export type serverUtilType =
+<TArgs extends any[], TResult>
+(fn: (...args: TArgs) => TResult) =>
+(...args: TArgs) => TResult;
+
+export const serverUtil:serverUtilType = (fn) => (...args) => {
+  if (isServer === false) throw new Error("Can't use server util in client code.")
+  return fn(...args);
+};
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }

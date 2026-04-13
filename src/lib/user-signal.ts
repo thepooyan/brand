@@ -2,10 +2,11 @@ import { createAsync, query, redirect, revalidate, useLocation } from "@solidjs/
 import { clearAuthSession, getAuthSession, ROLES, AuthSessionData, updateAuthSession } from "./session";
 import { DeepPartial } from "ai";
 import { safeDb } from "./utils";
-import { db } from "~/db/db";
+import { DB, dbCtx } from "~/db/db";
 import { eq } from "drizzle-orm";
 import { Fetch, fetchFail, fetchSuccess } from "./actionAbstraction";
-import { User } from "~/db/schema";
+import { User_Plan_Bots_Admin } from "~/db/schema";
+import { serverUtil } from "~/server/serverUtil";
 
 export const userQuery = query(async () => {
   return await getAuthSession()
@@ -52,18 +53,20 @@ export const updateUserSession = async (data: DeepPartial<AuthSessionData>) => {
   }})
 }
 
-export const getUserServer = async ():Fetch<User> => {
-  "use server"
+interface options {
+}
+export const getUserServer = serverUtil(async (ctx: dbCtx | DB, _?: options):Fetch<User_Plan_Bots_Admin> => {
   const user = await getAuthSession()
   if (!user) return fetchFail("لطفا ابتدا لوگین کنید")
 
   const result = await safeDb(
-    db.query.usersTable.findFirst({
-      where: (tbl => eq(tbl.id, user.id))
+    ctx.query.usersTable.findFirst({
+      where: (tbl => eq(tbl.id, user.id)),
+      with: {current_plans: true, admin: true, bots: true}
     })
   )
   if (!result.data) {
     return fetchFail("کاربر یافت نشد")
   }
   return fetchSuccess(result.data)
-}
+})

@@ -1,5 +1,11 @@
+const persianErrorStart = "persian:"
 export const resolveError = (error: unknown):string => {
   if (error instanceof Error) {
+    const msg = error.message
+    if (msg.startsWith(persianErrorStart)) {
+      return msg.substring(persianErrorStart.length)
+    }
+
     if (error.cause instanceof Error) {
       const msg = error.cause.message
       const split = msg.replaceAll(":", "").split(" ")

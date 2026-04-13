@@ -21,3 +21,4 @@ export const db = drizzle({
 });
 
 export type dbCtx = SQLiteTransaction<"async", ResultSet, typeof schem, ExtractTablesWithRelations<typeof schem>>
+export type DB = typeof db
