@@ -14,7 +14,7 @@ import { useGetUser } from "~/lib/signal"
 import { userPermissions } from "~/sections/plan"
 import { getUserServer } from "~/lib/user-signal"
 import { safeDbTransaction } from "~/lib/utils"
-import { CustomError, throwCustomError } from "~/lib/errorHandler"
+import { CustomError } from "~/lib/errorHandler"
 
 export default function OrderChatbotPage() {
 
