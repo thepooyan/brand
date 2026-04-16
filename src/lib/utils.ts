@@ -147,6 +147,14 @@ export const safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok
   }
 }
 
+export const safeFetch = async <T>(fn: Fetch<T>):Fetch<T> => {
+  try {
+    return await fn
+  } catch (e) {
+    return fetchFail(resolveError(e))
+  }
+}
+
 export const safeDb = async <T>(fn: Promise<T>):Fetch<T> => {
   try {
     return fetchSuccess(await fn)

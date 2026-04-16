@@ -4,14 +4,14 @@ import { createEffect, createSignal, ParentProps, Show } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
 import { callModal } from "~/components/layout/Modal";
-import { createAsync, query, redirect } from "@solidjs/router";
+import { createAsync, query } from "@solidjs/router";
 import { db } from "~/db/db";
-import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
 import { Fetch, fetchFail, fetchSuccess } from "~/lib/actionAbstraction";
-import { safeDb } from "~/lib/utils";
+import { safeDb, safeFetch } from "~/lib/utils";
 import { Chatbot } from "~/db/schema";
 import { Muted } from "~/components/prose/prose-item";
+import { getUserServer } from "~/lib/user-signal";
 
 interface props {
   botId: string
@@ -33,21 +33,26 @@ const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) 
 
 const queryBotName = query(async (botId: string):Fetch<Chatbot> => {
   "use server"
-  const user = await getAuthSession()
-  if (!user) throw redirect(`/Login?back=/Panel/Testbot/${botId}`)
+  return safeFetch(
+    db.transaction(async ctx => {
+      const check = await getUserServer(ctx)
+      if (!check.ok) return check
 
-  let res = await safeDb(
-    db.query.chatbotTable.findFirst({
-      where: (tbl => and(
-        eq(tbl.userId, user.id),
-        eq(tbl.id, parseInt(botId)),
-      ))
+      const user = check.data
+
+      let bot = await safeDb(
+       ctx.query.chatbotTable.findFirst({
+        where: (tbl => and(
+          eq(tbl.userId, user.id),
+          eq(tbl.id, parseInt(botId)),
+          ))
+        })
+      )
+
+      if (bot.data === undefined) return fetchFail("ربات یافت نشد")
+      return fetchSuccess(bot.data)
     })
   )
-  if (!res.ok) return {...res, data: undefined}
-  if (!res.data) return fetchFail("ربات یافت نشد")
-
-  return fetchSuccess(res.data)
 }, "botName")
 
 const MinimalChat = ({botId}:props) => {
