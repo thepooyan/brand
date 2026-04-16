@@ -89,6 +89,11 @@ const Footer = () => {
                     قیمت‌ها
                   </A>
                 </li>
+                <li>
+                  <A href="/docs/terms-and-conditions" class="text-muted-foreground hover:text-primary transition-colors">
+                    قوانین و مقررات
+                  </A>
+                </li>
               </ul>
             </div>
             <div>

@@ -15,6 +15,7 @@ import { InputChangeEvent } from "~/db/types"
 import { useBounceBack } from "~/lib/hooks/useBounce"
 import { isProd } from "~/server/env/shared-env"
 import { useTransaction } from "~/lib/actionAbstraction"
+import { Muted } from "~/components/prose/prose-item"
 
 export default function Login() {
   const [rawPhoneNumber, setPhoneNumber] = createSignal("")
@@ -146,6 +147,9 @@ export default function Login() {
                   <FiArrowLeft class="mr-2 h-4 w-4" />
               </Button>
               {!isProd && <Button class="w-full" onclick={forceEnterHandler}>force enter</Button>}
+              <Muted class="text-center block">
+                ثبت‌نام به منزله پذیرش <TA href="/docs/terms-and-conditions" class="underline text-primary">قوانین وبسایت</TA> میباشد
+              </Muted>
             </form>
           ) : (
             <form onSubmit={handleOtpSubmit} class="space-y-4">
