@@ -18,6 +18,7 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+rename safeFetch
 remove all useAuthSession
 add rules page
 add moderation
