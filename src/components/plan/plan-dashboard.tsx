@@ -23,8 +23,8 @@ const PlanDashboard = ({plan}:p) => {
   const expired = () => days() <= 0
 
   return (
-    <div class="flex justify-center items-center">
-    <Card class="w-xl m-auto">
+    <div class="flex justify-center items-center w-lg">
+    <Card class="m-auto">
       <CardHeader class="relative">
         <CardTitle>
           {expired() ?
