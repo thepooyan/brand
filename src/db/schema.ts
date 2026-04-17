@@ -68,7 +68,8 @@ export type Chatbot = typeof chatbotTable.$inferSelect
 
 export const chatbot_relations = relations(chatbotTable, ({one, many}) => ({
   user: one(usersTable, {fields: [chatbotTable.userId], references: [usersTable.id]}),
-  history: many(chatbot_history_table)
+  history: many(chatbot_history_table),
+  trainingData: one(trainingDataTable, {fields: [chatbotTable.training_data_id], references: [trainingDataTable.id]})
 }))
 
 export type I_Bot = typeof chatbotTable.$inferSelect
