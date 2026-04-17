@@ -32,6 +32,7 @@ const panelItems:panelItems = [
       {name: "تیکت", href: "ticket"},
       {name: "مستندات", href: "/Docs"},
       {name: "تماس", href: "/ContactUs"},
+      {name: "قوانین استفاده", href: "/docs/terms-and-conditions"},
     ]
   },
 ]
