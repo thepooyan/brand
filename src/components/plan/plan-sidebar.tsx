@@ -9,7 +9,6 @@ import { Button } from "../ui/button";
 import { createSignal,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
 import { Muted, H3 } from "../prose/prose-item"
-import { useNavigate } from "@solidjs/router"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
   "use server"
@@ -68,16 +67,21 @@ rounded-md items-center transition-all opacity-100 z-10`,
       )}
     >
       <div>
-        <div>
+        <div class="grid grid-cols-2 gap-x-5 gap-1">
           <Muted class="inline-block">
             قیمت پلن:
-          </Muted> {seprateByComma(price())} تومان
-          <br />
-          <Muted class="inline-block">
+          </Muted> 
+          <Muted>
+            {seprateByComma(price())} تومان
+          </Muted>
+          <Muted>
             مالیات بر ارزش افزوده: 
-          </Muted> {seprateByComma(tax())} تومان
+          </Muted> 
+          <Muted>
+            {seprateByComma(tax())} تومان
+          </Muted>
+          <span>قیمت کل:</span> {seprateByComma(total())} تومان
         </div>
-        <H3 class="mt-2 flex items-center"><Muted class="inline">قیمت کل:</Muted> {seprateByComma(total())} تومان</H3>
       </div>
       <div class="flex flex-col gap-2">
       <Button
