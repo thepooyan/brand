@@ -6,7 +6,7 @@ import { preventDefault } from "~/lib/utils"
 import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
 import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmUtil"
-import { Component, onMount } from "solid-js"
+import { Accessor, Component, createEffect, onMount } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
@@ -14,7 +14,10 @@ import MinimalChat from "~/components/parts/chat/MinimalChat"
 import { callModal } from "~/components/layout/Modal"
 import { set_training_state } from "./training-state"
 
-const TrainForm = () => {
+interface p {
+  initialData?: Accessor<TrainingData | null | undefined>
+}
+const TrainForm = ({initialData}:p) => {
 
   const recrawl = () => {
     callModal.prompt(`آیا مطمئنید؟ در صورت یادگیری مجدد اطلاعات قبلی از بین خواهد رفت.`)
@@ -31,13 +34,20 @@ const TrainForm = () => {
     address: "",
     language: "",
     useEmojies: false,
-    websiteUrl: "",
     trainingText: "",
     contactNumber: [],
     maxResponseLength: ""
   }
 
   const [store, setStore] = createStore(emptyValue)
+
+  if (initialData)
+  createEffect(() => {
+    let data = initialData()
+      if (data) {
+        setStore({...data})
+      }
+  })
 
   const {registerInput, registerCustom}
   = useBind(store, setStore)
@@ -65,7 +75,6 @@ const TrainForm = () => {
   const myLabels: label[] = [
     {value: "businessName", label: "نام بیزنس"},
     {value: "address", label: "آدرس"},
-    {value: "websiteUrl", label: "آدرس وبسایت"},
     {value: "trainingText", label: "متن آموزش"},
     {value: "tone", label: "لحن", Component: ToneSelect},
     {value: "maxResponseLength", label: "طول پاسخ", Component: MRLSelect},
