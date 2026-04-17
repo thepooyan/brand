@@ -90,9 +90,11 @@ const TrainForm = ({initialData, bot_id}:p) => {
 
   let scrollRef!:HTMLDivElement
   onMount(() => {
-    const sh = scrollRef.scrollHeight
-    scrollRef.scrollTo({top: sh})
-    scrollRef.scrollTo({top: 0, behavior: "smooth"})
+    setTimeout(() => {
+      const sh = scrollRef.scrollHeight
+      scrollRef.scrollTo({top: sh})
+      scrollRef.scrollTo({top: 0, behavior: "smooth"})
+    }, 100)
   })
 
   return (
