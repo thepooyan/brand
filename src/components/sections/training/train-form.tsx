@@ -129,7 +129,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
         </form>
       </div>
 
-      <MinimalChat botId="5"/>
+      <MinimalChat botId={String(bot_id)}/>
     </div>
   )
 }
