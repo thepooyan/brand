@@ -12,12 +12,14 @@ import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
 import MinimalChat from "~/components/parts/chat/MinimalChat"
 import { callModal } from "~/components/layout/Modal"
-import { set_training_state } from "./training-state"
+import { saveTrainingData, set_training_state } from "./training-state"
+import { useTransaction } from "~/lib/actionAbstraction"
 
 interface p {
   initialData?: Accessor<TrainingData | null | undefined>
+  bot_id: number
 }
-const TrainForm = ({initialData}:p) => {
+const TrainForm = ({initialData, bot_id}:p) => {
 
   const recrawl = () => {
     callModal.prompt(`آیا مطمئنید؟ در صورت یادگیری مجدد اطلاعات قبلی از بین خواهد رفت.`)
@@ -51,9 +53,12 @@ const TrainForm = ({initialData}:p) => {
 
   const {registerInput, registerCustom}
   = useBind(store, setStore)
+  const {callTransaction} = useTransaction()
 
   const handleSubmit = () => {
-    console.log({...store})
+    callTransaction(
+      saveTrainingData(store, bot_id)
+    )
   }
 
   const ToneSelect = GenerallSelect(

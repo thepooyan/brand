@@ -1,4 +1,4 @@
-import { createEffect, Match, ParentProps, Switch } from "solid-js"
+import { createEffect, Match, onMount, ParentProps, Switch } from "solid-js"
 import Choose from "./choose"
 import { mark_training_page, set_training_state, training_state } from "./training-state"
 import TrainAuto from "./train-auto"
@@ -11,6 +11,7 @@ import { eq } from "drizzle-orm"
 import { getAuthSession } from "~/lib/session"
 import { fetchFail, fetchSuccess } from "~/lib/actionAbstraction"
 import { Loading } from "~/components/parts/Loading"
+import { callModal } from "~/components/layout/Modal"
 
 const queryChatbot = query(async (bot_id: number) => {
   "use server"
@@ -34,16 +35,22 @@ const BotTrainer = ({bot_id}:p) => {
 
   const chatbot = createAsync(() => queryChatbot(parseInt(bot_id)))
 
+  onMount(() => set_training_state("loading"))
+
   createEffect(() => {
-    if (chatbot()?.data?.trainingData === null) set_training_state("choose")
-    if (chatbot()?.data?.trainingData !== null) set_training_state("form")
+    let query = chatbot()
+    if (query !== undefined) {
+      if (query.msg) return callModal.fail(query.msg)
+      if (query.data?.trainingData === null) return set_training_state("choose")
+      if (query.data?.trainingData) return set_training_state("form")
+    }
   })
 
   const stateComponents = [
     {n: "choose", c:<Choose/> },
     {n: "tree", c:<CrawlTree/> },
     {n: "auto", c:<TrainAuto/> },
-    {n: "form", c:<TrainForm initialData={() => chatbot()?.data?.trainingData}/> },
+    {n: "form", c:<TrainForm initialData={() => chatbot()?.data?.trainingData} bot_id={parseInt(bot_id)}/> },
     {n: "loading", c:<Loading/> },
   ]
 

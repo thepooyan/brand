@@ -2,7 +2,7 @@ import { H3, Muted } from "~/components/prose/prose-item"
 import Checkbox from "~/components/ui/checkbox"
 import { crawlTree } from "~/server/crawler"
 import { set_training_state, tree } from "./training-state"
-import { createEffect, createSignal } from "solid-js"
+import { createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import { Button } from "~/components/ui/button"
 import BackBtn from "~/components/parts/back-btn"
@@ -15,10 +15,6 @@ const CrawlTree = ({}:p) => {
 
   const [selected, setSelected] = createSignal<string[]>([])
   const [loading, setLoading] = createSignal(false)
-
-  createEffect(() => {
-    console.log(selected())
-  })
 
   const handleContinue = () => {
     if (!selected().length) return callModal.fail("لطفا حداقل یک صفحه را انتخاب نمایید")
