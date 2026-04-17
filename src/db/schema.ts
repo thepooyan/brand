@@ -50,12 +50,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id, {onDelete: "cascade"}),
   botName: text().notNull(),
-  businessName: text().notNull(),
-  tone: text().notNull(),
-  language: text().notNull(),
-  maxResponseLength: text().notNull(),
   websiteUrl: text(),
-  trainingText: text().notNull(),
   customization: text(),
   description: text(),
   limitation: int(),
@@ -65,7 +60,8 @@ export const chatbotTable = sqliteTable("chatbot", {
   color: text().notNull().default("#2780d2"),
   color_foreground: text().notNull().default("#ffffff"),
   logo: text(),
-  current_token: text({length: 64}) // hash length is 64
+  current_token: text({length: 64}), // hash length is 64
+  training_data_id: int().references(() => trainingDataTable.id, {onDelete: "cascade"})
 })
 
 export type Chatbot = typeof chatbotTable.$inferSelect
@@ -88,7 +84,6 @@ export const trainingDataTable = sqliteTable("training_data", {
   tone: text().notNull(),
   language: text().notNull(),
   maxResponseLength: text().notNull(),
-  websiteUrl: text(),
   trainingText: text().notNull(),
 })
 
