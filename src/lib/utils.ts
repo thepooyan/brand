@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
-import { Accessor, createSignal, Setter } from "solid-js"
+import { Accessor, createSignal, onMount, Setter } from "solid-js"
 import { twMerge } from "tailwind-merge"
 import { PlanInstance } from "~/db/schema"
 import { resolveError } from "./errorHandler"
@@ -249,4 +249,16 @@ export const preventDefault = (cb: () => void) => {
     e.preventDefault()
     cb()
   }
+}
+
+export function respondToVisibility(element:Element, callback:() => void, once = false) {
+  let observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.intersectionRatio > 0) {
+        callback();
+        once && observer.disconnect();
+      }
+    });
+  });
+  observer.observe(element);
 }
