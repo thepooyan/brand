@@ -5,10 +5,11 @@ import { privateEnv } from '~/server/env/private-env';
 import { ResultSet } from '@libsql/client';
 import { SQLiteTransaction } from 'drizzle-orm/sqlite-core';
 import { ExtractTablesWithRelations } from 'drizzle-orm';
+import { pureProd } from '~/server/env/shared-env';
 
 export const db = drizzle({ 
     connection: 
-      process.env.NODE_ENV === "production" ?
+      pureProd ?
       { 
         url: privateEnv.TURSO_DATABASE_URL as string,
         authToken: privateEnv.TURSO_AUTH_TOKEN as string

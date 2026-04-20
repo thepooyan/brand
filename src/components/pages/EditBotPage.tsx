@@ -1,13 +1,8 @@
 import { I_Bot } from "~/db/schema"
 import Input from "../ui/input"
 import { Component, createSignal, ParentComponent, ParentProps } from "solid-js"
-import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
-import ToneSelect from "../parts/ToneSelect"
-import { getLanguageKeyByLabel, getLanguageValue, getResponseLengthKeyByLabel, getResponseLengthValue, getToneKeyByLabel, getToneValue } from "~/server/llmUtil"
-import LangSelect from "../parts/LangSelect"
-import ResLengthSelect from "../parts/ResLengthSelect"
 import { editBot } from "~/server/mutation"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
@@ -113,19 +108,6 @@ const EditBotPage = ({bot, permission}:p) => {
               key="botName"
             />
           </In>
-          <Seprator>
-            لحن
-            <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setForm("tone", getToneKeyByLabel(e) || "") }/>
-          </Seprator>
-          <Seprator>
-            زبان
-            <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setForm("language", getLanguageKeyByLabel(e) || "")}/>
-          </Seprator>
-          <Seprator>
-            حداکثر طول پاسخ
-            <ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
-              onchange={(e:string) => setForm("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
-          </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما" />
           <Seprator className="">
             رنگ سازمانی
@@ -170,7 +152,6 @@ const EditBotPage = ({bot, permission}:p) => {
               <ImageUploader disabled={!permission.removeLogo} initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
             </UpgradeTooltip>
           </Seprator>
-          <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3" />
         </div>
         <p class="text-muted-foreground text-sm">
           هرچیزی که ربات باید بداند را در قسمت بالا وارد کنید!
