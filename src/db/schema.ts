@@ -52,6 +52,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   botName: text().notNull(),
   websiteUrl: text(),
   customization: text(),
+  businessName: text(),
   description: text(),
   limitation: int(),
   greeting: text(),
@@ -77,7 +78,6 @@ export type I_NewBot = typeof chatbotTable.$inferInsert
 
 export const trainingDataTable = sqliteTable("training_data", {
   id: int().primaryKey({autoIncrement: true}),
-  businessName: text().notNull(),
   address: text().notNull(),
   contactNumber: text({mode: "json"}).$type<string[]>().notNull(),
   social: text({mode: "json"}).$type<{type: string, link: string}[]>().notNull(),
