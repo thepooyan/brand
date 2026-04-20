@@ -19,7 +19,6 @@ const TermsAndConditions = () => {
     setS( [...h].map((m,i) => {
       respondToVisibility(m, () => {
         activate(i)
-        console.log("saw", m)
       })
 
       return <Button size="sm" variant={isActive(i) ? "secondary" : "ghost"} innerHTML={m.innerHTML}
