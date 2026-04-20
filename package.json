@@ -3,13 +3,13 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev --host",
+    "prod": "VITE_ENV=halfProd vinxi dev --host",
     "build": "vinxi build",
     "start": "vinxi start",
     "pushdb:local": "drizzle-kit push --config drizzle.config.local.ts",
     "pushdb:prod": "drizzle-kit push --config drizzle.config.ts",
-    "env": "bun src/server/env/generateEnv.ts",
     "publish": "git checkout production && git pull && git merge master && git push && git checkout master",
-    "cm": "bun run pushdb:local; git acn"
+    "ch": "bun run pushdb:local; tsc --noEmit"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.2.22",
