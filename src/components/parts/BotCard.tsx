@@ -62,7 +62,7 @@ const BotCard = ({bot, telegramAccess}:props) => {
 
   return (
     <Card>
-      <CardHeader class="pb-4">
+      <CardHeader class="pb-4 h-25">
         <CardTitle> {bot.botName}</CardTitle>
         <CardDescription>{bot.businessName}</CardDescription>
       </CardHeader>
