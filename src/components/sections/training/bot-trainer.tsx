@@ -47,11 +47,11 @@ const BotTrainer = ({bot_id}:p) => {
   })
 
   const stateComponents = [
-    {n: "choose", c:<Choose/> },
-    {n: "tree", c:<CrawlTree/> },
-    {n: "auto", c:<TrainAuto/> },
-    {n: "form", c:<TrainForm initialData={() => chatbot()?.data?.trainingData} bot_id={parseInt(bot_id)}/> },
-    {n: "loading", c:<Loading/> },
+    {n: "choose", c: () => <Choose/> },
+    {n: "tree", c: () => <CrawlTree/> },
+    {n: "auto", c: () => <TrainAuto/> },
+    {n: "form", c: () => <TrainForm initialData={() => chatbot()?.data?.trainingData} bot_id={parseInt(bot_id)}/> },
+    {n: "loading", c: () => <Loading/> },
   ]
 
   return (
@@ -61,7 +61,7 @@ const BotTrainer = ({bot_id}:p) => {
           {stateComponents.map(s => 
             <Match when={training_state() === s.n}>
               <Wrap>
-                {s.c}
+                <s.c/>
               </Wrap>
             </Match>)}
         </Switch>
