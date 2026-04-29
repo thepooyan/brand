@@ -51,6 +51,7 @@ export const useTransaction = () => {
     revalidate?: string,
     navigate?: string,
     loadingSignal?: Setter<boolean>
+    noModal?: boolean
   }
 
   const callTransaction = (() => {
@@ -82,7 +83,7 @@ export const useTransaction = () => {
           if (res.redirect.bouncy) bnv(res.redirect.to)
           else nv(res.redirect.to)
         } else if (res.ok) {
-          callModal.success(options?.successMessage)
+          !options?.noModal && callModal.success(options?.successMessage)
           options?.revalidate && revalidate(options.revalidate)
           options?.navigate && nv(options.navigate)
         } else {
