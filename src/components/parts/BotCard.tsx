@@ -15,7 +15,7 @@ import TelegramSet from "./TelegramSet"
 import { Accessor } from "solid-js"
 import Restriction from "../pages/Restriction"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
-import { FaSolidGear, FaSolidGraduationCap } from "solid-icons/fa"
+import { FaSolidGraduationCap } from "solid-icons/fa"
 
 interface props {
   bot: chatbotStatus 
