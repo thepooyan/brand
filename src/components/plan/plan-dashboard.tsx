@@ -1,7 +1,7 @@
 import { PlanInstance, planTable } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Accessor, createSignal, For, ParentProps, Show } from "solid-js"
-import { allFeatures, doesPlanIncludeFeature, findPlanName, getPlan, plan_ids } from "~/sections/plan"
+import { allFeatures, doesPlanIncludeFeature, findPlanName, getPlan } from "~/sections/plan"
 import { Button } from "../ui/button"
 import { calcMessageCount, calcMessagePercent, cn, daysRemaining, safeDbTransaction } from "~/lib/utils"
 import TA from "../parts/TA"
