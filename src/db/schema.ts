@@ -52,7 +52,7 @@ export const chatbotTable = sqliteTable("chatbot", {
   botName: text().notNull(),
   websiteUrl: text(),
   customization: text(),
-  businessName: text(),
+  businessName: text().notNull(),
   description: text(),
   limitation: int(),
   greeting: text(),

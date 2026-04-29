@@ -28,7 +28,6 @@ const TrainForm = ({initialData, bot_id}:p) => {
 
   let emptyValue: TrainingData = {
     id: 5,
-    businessName: "",
     tone: "",
     social: [
       {type: "", link: ""}
@@ -78,7 +77,6 @@ const TrainForm = ({initialData, bot_id}:p) => {
     class?: string
   }
   const myLabels: label[] = [
-    {value: "businessName", label: "نام بیزنس"},
     {value: "address", label: "آدرس"},
     {value: "trainingText", label: "متن آموزش"},
     {value: "tone", label: "لحن", Component: ToneSelect},

@@ -1,5 +1,5 @@
 "use server"
-import { adminsTable, chatbot_history_table, chatbotTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbot_history_table, ChatbotRelations, chatbotTable, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
 import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmUtil"
@@ -53,14 +53,14 @@ export const compareEpochTime = (then: number) => {
   return true
 }
 
-export const getSystemPrompt = (bot: typeof chatbotTable.$inferSelect):string => {
+export const getSystemPrompt = (bot: ChatbotRelations):string => {
   return new LlmBuilder()
   .setName(bot.botName)
   .setBusinessName(bot.businessName)
-  .setTone(bot.tone as ToneValue)
-  .setLanguage(bot.language as LanguageValue)
-  .setResponseLength(bot.maxResponseLength as ResponseLengthValue)
-  .setTrainingText(bot.trainingText)
+  .setTone(bot.trainingData?.tone as ToneValue)
+  .setLanguage(bot.trainingData?.language as LanguageValue)
+  .setResponseLength(bot.trainingData?.maxResponseLength as ResponseLengthValue)
+  .setTrainingText(bot.trainingData?.trainingText || "")
   .buildPrompt()
 }
 
