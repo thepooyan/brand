@@ -14,6 +14,7 @@ import MinimalChat from "~/components/parts/chat/MinimalChat"
 import { callModal } from "~/components/layout/Modal"
 import { saveTrainingData, set_training_state } from "./training-state"
 import { useTransaction } from "~/lib/actionAbstraction"
+import BackBtn from "~/components/parts/back-btn"
 
 interface p {
   initialData?: Accessor<TrainingData | null | undefined>
@@ -120,9 +121,10 @@ const TrainForm = ({initialData, bot_id}:p) => {
           </p>
           <SocialLinkInputs store={store} setStore={setStore}/>
 
-          <div class="space-x-2">
+          <div class="space-x-2 sticky bottom-0 backdrop-blur-md py-2 rounded ">
             <Button type="submit">ثبت</Button>
             <Button variant="secondary" onclick={recrawl}>یادگیری مجدد از لینک</Button>
+            <BackBtn href="/panel/chat-bot" class="float-left" size="default" variant="outline"/>
           </div>
         </form>
       </div>
