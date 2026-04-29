@@ -27,7 +27,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
   }
 
   let emptyValue: TrainingData = {
-    id: 5,
+    id: -1,
     tone: "",
     social: [
       {type: "", link: ""}
