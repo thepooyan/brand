@@ -18,6 +18,7 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+parse llm response of markdown
 remake 1.order chatbot page 2.llm builder then fix all the dropdown options
 rename safeFetch
 remove all useAuthSession

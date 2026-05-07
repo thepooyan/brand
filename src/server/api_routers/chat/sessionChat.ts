@@ -2,16 +2,15 @@ import Elysia from "elysia";
 import { chatGaurd } from "./chatGuard";
 import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
-import { Chatbot, chatbotTable, usersTable } from "~/db/schema";
+import { ChatbotRelations, chatbotTable, usersTable } from "~/db/schema";
 import { and, eq } from "drizzle-orm";
-import { streamText } from "ai";
-import { google } from "@ai-sdk/google";
 import { isChatAllowed } from "~/server/botUtil";
-import { getFakeStream } from "~/server/fakter";
+// import { getFakeStream } from "~/server/fakter";
 import { ApiResponse } from "~/lib/actionAbstraction";
 import { updateChatHistory } from "~/server/serverUtil";
 import { timedMessage } from "~/db/constants";
 import { decrementMessageCount } from "~/sections/planServer";
+import { talk_to_bot } from "~/server/llmUtil";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
@@ -24,16 +23,6 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
   if (!res.ok)
     return status(res.status, {errorMessage: res.msg})
 
-
-    // const result = streamText({
-    //   model: google("gemini-2.5-flash"),
-    //   system: getSystemPrompt(bot),
-    //   messages: body.messages,
-    // })
-    //
-    // return result.toDataStreamResponse()
-    const stream = getFakeStream(100, 100)
-
     const lastQ = body.messages.at(-1)?.content || ""
     const qa:timedMessage[] = [
       {role: "user", content: lastQ, timestamp: new Date()},
@@ -42,13 +31,17 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
 
     await updateChatHistory(qa, res.data.id, "192.168.2.3", "website")
 
-    return new Response(stream, {
-      headers: { 'Content-Type': 'text/plain' }
-    })
+    const stream = talk_to_bot(res.data)(body.messages)
+    return stream.toTextStreamResponse()
+
+    // const stream = getFakeStream(100, 100)
+    // return new Response(stream, {
+    //   headers: { 'Content-Type': 'text/plain' }
+    // })
 },
 )
 
-const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Chatbot>> => {
+const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<ChatbotRelations>> => {
 
   return await db.transaction(async ctx => {
 
@@ -64,7 +57,9 @@ const getUserBot = async (userId: string, botId: string ):Promise<ApiResponse<Ch
           eq(chatbotTable.userId, parseInt(userId)),
           eq(chatbotTable.id, parseInt(botId))
       ),
-      with: {user: {
+      with: {
+        trainingData: true,
+        user: {
         with: {current_plans: true}
       }}
     })

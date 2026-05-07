@@ -61,11 +61,11 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
         }
 
         buffer += decoder.decode(value, { stream: true });
+        console.log(buffer)
         const lines = buffer.split("\n");
         buffer = lines.pop()!;
 
         for (const line of lines) {
-          if (line.startsWith("0:")) {
             let chunk = line.slice(2).trim();
 
             if (chunk.startsWith('"') && chunk.endsWith('"')) {
@@ -78,13 +78,13 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
 
             response += chunk
             pushToBuffer(chunk, getAnchor(), onType)
-          }
-          if (line.startsWith("3:")) { // Response is error?
-            if (line.startsWith('3:"An error occurred."')) {
-              setStreaming(false)
-              return returnError("خطایی پیش آمد. لطفا مجددا تلاش کنید.")
+
+            if (line.startsWith("3:")) { // Response is error?
+              if (line.startsWith('3:"An error occurred."')) {
+                setStreaming(false)
+                return returnError("خطایی پیش آمد. لطفا مجددا تلاش کنید.")
+              }
             }
-          }
         }
       } 
 

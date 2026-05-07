@@ -1,4 +1,10 @@
 export type ToneValue = keyof typeof ToneOptions
+import { getSystemPrompt } from "@/server/serverUtil";
+import { privateEnv } from "~/server/env/private-env";
+import { google } from "@ai-sdk/google";
+import { createOpenAI } from '@ai-sdk/openai';
+import { ModelMessage, streamText } from "ai";
+import { ChatbotRelations } from "~/db/schema";
 
 export const ToneOptions = {
   formal: {
@@ -122,3 +128,28 @@ export const getResponseLengthKeyByLabel = (label: string): ResponseLengthValue 
   return null
 }
 
+export enum llm_models {
+  gemma = "gemma-3-27b-it",
+  gpt4o = "gpt-4o",
+  deepseek = 'deepseek-v4-flash',
+  qwen = 'gapgpt-qwen-3.5',
+  gpt4nano = "gpt-4.1-nano",
+}
+
+export const chat = (messages: ModelMessage[], system?: string) => {
+  const openai = createOpenAI({
+    apiKey: privateEnv.GAPGPT_API_KEY,
+    baseURL: privateEnv.GAPGPT_API_URL
+  });
+  const result = streamText({
+    model: openai(llm_models.gpt4nano),
+    system: system,
+    messages: messages,
+  });
+  return result
+}
+
+export const talk_to_bot = (bot: ChatbotRelations) => {
+  const s = getSystemPrompt(bot)
+  return (m: ModelMessage[]) => chat(m, s)
+}

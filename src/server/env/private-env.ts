@@ -11,6 +11,8 @@ export const privateEnvSchema = z.object({
   BUCKET_SECRET: z.string().min(1),
   BUCKET_NAME: z.string().min(1),
   SMS_PANEL: z.string().min(1),
+  GAPGPT_API_KEY: z.string(),
+  GAPGPT_API_URL: z.string()
 });
 
 export type PrivateEnv = z.infer<typeof privateEnvSchema>;

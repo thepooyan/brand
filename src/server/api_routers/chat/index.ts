@@ -1,14 +1,12 @@
-import { google } from "@ai-sdk/google";
-import { Readable } from "stream"
-import { streamText } from "ai";
-import { getSystemPrompt, updateChatHistory } from "@/server/serverUtil";
+import { updateChatHistory } from "@/server/serverUtil";
 import Elysia from "elysia";
 import { hooshbaan } from "./hooshbaan";
 import { botAuthGuard } from "./botAuthGuard";
 import { chatGaurd } from "./chatGuard";
 import { sessionChatRouter } from "./sessionChat";
 import { cors } from '@elysiajs/cors'
-import { getFakeStream } from "~/server/fakter";
+// import { getFakeStream } from "~/server/fakter";
+import { talk_to_bot } from "~/server/llmUtil";
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(cors({
@@ -25,27 +23,29 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 .post( "/",
   async ({ body, bot }) => {
 
-    // const result = streamText({
-    //   model: google("gemini-2.5-flash"),
-    //   system: getSystemPrompt(bot),
-    //   messages: body.messages,
-    // })
-
-    // return result.toDataStreamResponse()
-
-
     const lastQ = body.messages.at(-1)?.content || ""
-    const stream = getFakeStream(1000, 1000)
-    const userIp = "192.168.2.3"
+
+      // const ip =
+      //       request.headers.get('x-forwarded-for') ??
+      //       request.headers.get('x-real-ip') ??
+      //       request.headers.get('cf-connecting-ip') ?? // Cloudflare
+      //       ""
+
+    const userIp = "1111"
 
     await updateChatHistory([
       {role: "user", content: lastQ, timestamp: new Date()},
       {role: "assistant", content: "response is this", timestamp: new Date()},
     ], bot.id, userIp, body.from)
 
-    return new Response(stream, {
-      headers: { 'Content-Type': 'text/plain' }
-    })
+    const result = talk_to_bot(bot)(body.messages)
+
+    return result.toTextStreamResponse()
+
+    // const stream = getFakeStream(1000, 1000)
+    // return new Response(stream, {
+    //   headers: { 'Content-Type': 'text/plain' }
+    // })
   }
 );
 

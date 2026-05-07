@@ -38,6 +38,6 @@ export const botAuthGuard = new Elysia()
 const getBot = (token: string) => {
   return db.query.chatbotTable.findFirst({
     where: (tbl) => eq(tbl.current_token, hashToken(token)),
-    with: {user: {with: {current_plans: true}}}
+    with: {user: {with: {current_plans: true}}, trainingData: true}
   });
 };
