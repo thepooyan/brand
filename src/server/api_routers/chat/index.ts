@@ -21,7 +21,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(hooshbaan)
 .use(botAuthGuard)
 .post( "/",
-  async ({ body, bot }) => {
+  async ({ body, bot, status }) => {
 
     const lastQ = body.messages.at(-1)?.content || ""
 
@@ -38,9 +38,12 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
       {role: "assistant", content: "response is this", timestamp: new Date()},
     ], bot.id, userIp, body.from)
 
-    const result = talk_to_bot(bot)(body.messages)
-
-    return result.toTextStreamResponse()
+    try {
+      const result = talk_to_bot(bot)(body.messages)
+      return result.toTextStreamResponse()
+    } catch {
+      return status("Request Timeout", {errorMessage: "ارتباط با سرور هوش مصنوعی برقرار نشد. لطفا مجددا تلاش کنید."})
+    }
 
     // const stream = getFakeStream(1000, 1000)
     // return new Response(stream, {

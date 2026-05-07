@@ -37,8 +37,8 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
       setPending(false);
 
       if (res.status !== 200) {
-        let data = await res.response.json()
-        if (typeof data.errorMessage === "string")
+        let data = await res.response.json().catch(() => null)
+        if (typeof data?.errorMessage === "string")
           return returnError(data.errorMessage)
         if (res.status === 402) return returnError("متاسفانه اعتبار شما به پایان رسیده است.")
         if (res.status === 403) return returnError("توکن ارسال شده معتبر نمیباشد")
