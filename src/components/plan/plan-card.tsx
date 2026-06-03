@@ -43,10 +43,6 @@ const PlanCard = ({plan}:p) => {
           <span>تعداد ربات:</span>
           <span>{seprateByComma(plan.botCount)} عدد</span>
         </p>
-        <p class="flex justify-between">
-          <span>پایگاه دانش:</span>
-          <span>{seprateByComma(plan.knowledgeBase)} کلمه</span>
-        </p>
       </CardContent>
       <CardFooter class=" items-start justify-end flex-col gap-2 mt-auto">
         <p>

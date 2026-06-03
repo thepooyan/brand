@@ -1,10 +1,13 @@
 import { NewPlanInstance, PlanInstance, User_Plan_Bots } from "~/db/schema"
 
 export enum planFeatures {
+  fastBuild = "ساخت ربات در کمتر از ۵ دقیقه",
+  knowledgeBase = "پایگاه دانش",
+  manualTraining = "یادگیری از طریق متن",
+  learnFromLink = "یادگیری از لینک",
   telegram = "اتصال به تلگرام",
   colors = "قابلیت تغییر تم",
-  learnFromLink = "یادگیری از لینک",
-  removeOurLogo = "حذف لوگو هوشبان",
+  removeOurLogo = "امکان افزودن لوگو",
   specialSupport = "پشتیبانی اختصاصی",
   proSettings = "تنظیمات پیشرفته",
 }
@@ -20,7 +23,6 @@ export type PlanDefinition = {
   mounthlyPrice: number,
   messageCount: number,
   botCount: number,
-  knowledgeBase: number,
   features: feature[]
 }
 
@@ -54,11 +56,12 @@ export const freePlan: PlanDefinition = {
   id: "free",
   name: "پلن رایگان",
   mounthlyPrice: 0,
-  messageCount: 10,
+  messageCount: 15,
   botCount: 1,
-  knowledgeBase: 100,
   features: [
-    planFeatures.learnFromLink
+    planFeatures.fastBuild,
+    planFeatures.manualTraining,
+    planFeatures.knowledgeBase,
   ],
 }
 
@@ -66,11 +69,13 @@ const testPlan1: PlanDefinition = {
   id: "starter",
   name: "پلن شروع",
   mounthlyPrice: 50,
-  messageCount: 100,
+  messageCount: 900,
   botCount: 2,
-  knowledgeBase: 300,
   features: [
-    planFeatures.learnFromLink
+    planFeatures.fastBuild,
+    planFeatures.learnFromLink,
+    planFeatures.knowledgeBase,
+    planFeatures.manualTraining
   ],
 }
 
@@ -78,13 +83,15 @@ const testPlan2: PlanDefinition = {
   id: "regular",
   name: "پلن متوسط",
   mounthlyPrice: 150,
-  messageCount: 500,
+  messageCount: 4000,
   botCount: 5,
-  knowledgeBase: 1000,
   features: [
+    planFeatures.fastBuild,
     planFeatures.telegram,
+    planFeatures.knowledgeBase,
     planFeatures.learnFromLink,
     planFeatures.colors,
+    planFeatures.manualTraining,
     planFeatures.removeOurLogo
   ],
 }
@@ -93,8 +100,7 @@ const testPlan3: PlanDefinition = {
   id: "pro",
   name: "پلن حرفه‌ای",
   mounthlyPrice: 200,
-  messageCount: 1000,
-  knowledgeBase: 5000,
+  messageCount: 9500,
   botCount: 10,
   features: [
     ...allFeatures
