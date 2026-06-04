@@ -3,7 +3,7 @@ import { getSystemPrompt } from "@/server/serverUtil";
 import { privateEnv } from "~/server/env/private-env";
 import { google } from "@ai-sdk/google";
 import { createOpenAI } from '@ai-sdk/openai';
-import { ModelMessage, streamText } from "ai";
+import { ModelMessage, streamText, generateText } from "ai";
 import { ChatbotRelations } from "~/db/schema";
 
 export const ToneOptions = {
@@ -136,7 +136,19 @@ export enum llm_models {
   gpt4nano = "gpt-4.1-nano",
 }
 
-export const chat = (messages: ModelMessage[], system?: string) => {
+export const chatSync = (messages: ModelMessage[], system?: string) => {
+  const openai = createOpenAI({
+    apiKey: privateEnv.GAPGPT_API_KEY,
+    baseURL: privateEnv.GAPGPT_API_URL
+  });
+  const result = generateText({
+    model: openai(llm_models.gpt4nano),
+    system: system,
+    messages: messages,
+  });
+  return result
+}
+export const chatStream = (messages: ModelMessage[], system?: string) => {
   const openai = createOpenAI({
     apiKey: privateEnv.GAPGPT_API_KEY,
     baseURL: privateEnv.GAPGPT_API_URL
@@ -151,5 +163,5 @@ export const chat = (messages: ModelMessage[], system?: string) => {
 
 export const talk_to_bot = (bot: ChatbotRelations) => {
   const s = getSystemPrompt(bot)
-  return (m: ModelMessage[]) => chat(m, s)
+  return (m: ModelMessage[]) => chatStream(m, s)
 }

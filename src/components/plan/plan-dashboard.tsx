@@ -77,11 +77,7 @@ const PlanDashboard = ({plan}:p) => {
             <Text>
               تعداد ربات: {getPlan(plan()).botCount} عدد
             </Text>
-            <Text>
-                پایگاه دانش: {getPlan(plan()).knowledgeBase}
-            </Text>
           </div>
-
 
           <div>
             <Title>

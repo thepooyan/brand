@@ -15,6 +15,7 @@ import { newFreePlan } from "~/sections/planServer"
 import { safeDb } from "~/lib/utils"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionRedirect, transactionSuccess } from "~/lib/actionAbstraction"
 import { isProd } from "./env/shared-env"
+import { chatStream, chatSync } from "./llmUtil"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -131,11 +132,7 @@ export const replyWithAI = async (message: string, history?: message[]) => {
   }
   messages.push({role: "system", content: message})
 
-  const result = await generateText({
-    model: google('gemini-2.5-flash'),
-    system: prompt.telegram,
-    messages: messages
-  });
+  let result = await chatSync(messages, prompt.telegram)
   return result.text
 }
 
