@@ -205,3 +205,8 @@ export type UserPermissions = {
   message: boolean,
   expired: boolean
 }
+
+export const planDiscountMap = new Map<number, number>([
+  [2, 3],
+  [3, 5],
+])

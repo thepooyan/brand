@@ -1,4 +1,4 @@
-import { convertPlanToDTO, PlanDefinition } from "~/sections/plan"
+import { convertPlanToDTO, PlanDefinition, planDiscountMap } from "~/sections/plan"
 import { eq } from "drizzle-orm"
 import { db } from "~/db/db"
 import { planTable } from "~/db/schema"
@@ -6,7 +6,7 @@ import { Transaction, transactionFail, transactionRedirect, useTransaction } fro
 import { getAuthSession } from "~/lib/session"
 import { cn, safeDbTransaction, seprateByComma } from "~/lib/utils"
 import { Button } from "../ui/button";
-import { createSignal,  } from "solid-js";
+import { createSignal, Show,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
 import { Muted } from "../prose/prose-item"
 import MounthSelectDropdown from "./mounth-select-dropdown"
@@ -56,10 +56,18 @@ const PlanSidebar = () => {
     if (s) return (s.mounthlyPrice * 1000)
     return 0
   }
+  const discount = () => planDiscountMap.get(selectedMounth())
 
   // const tax = () => price() / 10
   // const total = () => tax() + price()
-  const total = () => price() * selectedMounth()
+  const mounthly = () => price() * selectedMounth()
+
+  const total = () => {
+    let d = discount()
+    let m = mounthly()
+    if (!d) return m
+    return m - (m * d / 100)
+  }
 
   return (
     <div
@@ -82,6 +90,15 @@ rounded-md items-center transition-all opacity-100 z-10`,
           <Muted>
             {selectedMounth().toLocaleString("fa-IR")} ماه
           </Muted>
+          <Muted>
+            تخفیف:
+          </Muted>
+          <Muted>
+            <Show when={discount()} fallback="ندارد">
+              {d => `${d().toLocaleString("fa-IR")} درصد`}
+            </Show>
+          </Muted>
+
           <span>قابل پرداخت:</span> {seprateByComma(total())} تومان
         </div>
       </div>
