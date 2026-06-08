@@ -1,5 +1,6 @@
 import GenerallSelect from "../parts/generall-select"
 import { selectedMounth, setSelectedMounth } from "./plan-signal"
+import { planDiscountMap, planMounthOptions } from "~/sections/plan"
 
 const MounthSelectDropdown = () => {
   return (
@@ -7,10 +8,18 @@ const MounthSelectDropdown = () => {
   )
 }
 
+
+const discountString = (m: number) => {
+  let dis = planDiscountMap.get(m)
+  if (!dis) return ""
+  return `(${dis.toLocaleString("fa-IR")}% تخفیف)`
+}
+
 const M = GenerallSelect([
-  {label: "یک ماهه", value: 1},
-  {label: "دو ماهه (3% تخفیف)", value: 2},
-  {label: "سه ماهه (5% تخفیف)", value: 3},
+  ...planMounthOptions.map(m => ({
+    label: `${m.toLocaleString("fa-IR")} ماهه ${discountString(m)}`,
+    value: m
+  })),
 ])
 
 export default MounthSelectDropdown
