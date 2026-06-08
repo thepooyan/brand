@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { createSignal,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
 import { Muted, H3 } from "../prose/prose-item"
+import MounthSelectDropdown from "./mounth-select-dropdown"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
   "use server"
@@ -84,6 +85,12 @@ rounded-md items-center transition-all opacity-100 z-10`,
           </Muted>
           <span>قیمت کل:</span> {seprateByComma(total())} تومان
         </div>
+      </div>
+      <div class="w-50 space-y-2">
+        <Muted>
+          تغییر مدت دوره:
+        </Muted>
+        <MounthSelectDropdown/>
       </div>
       <div class="flex flex-col gap-2">
       <Button

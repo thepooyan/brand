@@ -1,10 +1,10 @@
 import { allFeatures, PlanDefinition } from "~/sections/plan"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { For, Show } from "solid-js"
 import { Button } from "../ui/button"
 import { FiCheck, FiX } from "solid-icons/fi"
 import { cn, seprateByComma } from "~/lib/utils"
-import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
+import { selectedPlan, setSelectedPlan } from "./plan-signal"
 
 interface p {
   plan: PlanDefinition
@@ -20,7 +20,6 @@ const PlanCard = ({plan, vertical}:p) => {
     <Card class={cn(vertical && "col-span-full flex ")}>
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
-        <CardDescription>{selectedMounth().toLocaleString("fa-IR")} ماهه</CardDescription>
       </CardHeader>
       <CardContent class={cn(vertical && "pt-8 flex flex-col h-40 flex-wrap gap-x-4")}>
         <For each={allFeatures}>
@@ -49,13 +48,18 @@ const PlanCard = ({plan, vertical}:p) => {
         "items-start justify-end flex-col gap-2 mt-auto",
         vertical && "mr-auto w-60"
       )}>
-        <p>
-          قیمت: <Show when={plan.mounthlyPrice === 0}>
-            رایگان
-          </Show>
-          <Show when={plan.mounthlyPrice !== 0}>
-            {seprateByComma(plan.mounthlyPrice * 1000 * selectedMounth())} تومان
-          </Show>
+        <p class="flex justify-between w-full">
+          <span>
+            قیمت ماهانه:
+          </span>
+          <span>
+           <Show when={plan.mounthlyPrice === 0}>
+              رایگان
+            </Show>
+            <Show when={plan.mounthlyPrice !== 0}>
+              {seprateByComma(plan.mounthlyPrice * 1000)} تومان
+            </Show>
+          </span>
         </p>
         
         <Show when={selectedPlan()?.id !== plan.id}
