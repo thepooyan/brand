@@ -15,8 +15,20 @@ const PlanCardVertical = ({plan}:p) => {
       <CardHeader>
         <CardTitle>{plan.name}</CardTitle>
         <CardDescription>{selectedMounth().toLocaleString("fa-IR")} ماهه</CardDescription>
+
+        <div class="text-muted-foreground mt-auto text-sm">
+          <p class="flex justify-between gap-4">
+            <span>تعداد پیام:</span>
+            <span>{seprateByComma(plan.messageCount)} عدد</span>
+          </p>
+          <p class="flex justify-between gap-4">
+            <span>تعداد ربات:</span>
+            <span>{seprateByComma(plan.botCount)} عدد</span>
+          </p>
+        </div>
+      
       </CardHeader>
-      <CardContent class="pt-8 flex flex-col h-40 flex-wrap gap-x-4">
+      <CardContent class="pt-8 flex flex-col h-40 flex-wrap gap-x-4 w-7/10">
         <For each={allFeatures}>
           {f => <p class="flex gap-2 items-center">
             {
@@ -30,16 +42,6 @@ const PlanCardVertical = ({plan}:p) => {
           </p>}
         </For>
       </CardContent>
-      <CardFooter class="flex flex-col pt-6">
-        <p class="flex justify-between gap-4">
-          <span>تعداد پیام:</span>
-          <span>{seprateByComma(plan.messageCount)} عدد</span>
-        </p>
-        <p class="flex justify-between gap-4">
-          <span>تعداد ربات:</span>
-          <span>{seprateByComma(plan.botCount)} عدد</span>
-        </p>
-      </CardFooter>
     </Card>
   )
 }
