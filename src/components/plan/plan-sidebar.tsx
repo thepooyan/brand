@@ -8,7 +8,7 @@ import { cn, safeDbTransaction, seprateByComma } from "~/lib/utils"
 import { Button } from "../ui/button";
 import { createSignal,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
-import { Muted, H3 } from "../prose/prose-item"
+import { Muted } from "../prose/prose-item"
 import MounthSelectDropdown from "./mounth-select-dropdown"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
