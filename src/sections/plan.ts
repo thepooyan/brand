@@ -67,8 +67,8 @@ export const freePlan: PlanDefinition = {
 
 const testPlan1: PlanDefinition = {
   id: "starter",
-  name: "پلن شروع",
-  mounthlyPrice: 50,
+  name: "پلن برنز",
+  mounthlyPrice: 770,
   messageCount: 900,
   botCount: 2,
   features: [
@@ -81,8 +81,8 @@ const testPlan1: PlanDefinition = {
 
 const testPlan2: PlanDefinition = {
   id: "regular",
-  name: "پلن متوسط",
-  mounthlyPrice: 150,
+  name: "پلن نقره ای",
+  mounthlyPrice: 2120,
   messageCount: 4000,
   botCount: 5,
   features: [
@@ -98,8 +98,8 @@ const testPlan2: PlanDefinition = {
 
 const testPlan3: PlanDefinition = {
   id: "pro",
-  name: "پلن حرفه‌ای",
-  mounthlyPrice: 200,
+  name: "پلن طلایی",
+  mounthlyPrice: 4600,
   messageCount: 9500,
   botCount: 10,
   features: [
