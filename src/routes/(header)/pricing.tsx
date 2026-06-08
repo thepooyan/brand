@@ -1,10 +1,11 @@
-import { allPlans, } from "~/sections/plan"
+import { allPlans, freePlan, } from "~/sections/plan"
 import { For } from "solid-js"
 import GenerallSelect from "~/components/parts/generall-select"
 import PlanCard from "~/components/plan/plan-card"
 import PlanSidebar from "~/components/plan/plan-sidebar"
 import { H3, Muted } from "~/components/prose/prose-item"
 import { selectedMounth, setSelectedMounth } from "~/components/plan/plan-signal"
+import PlanCardVertical from "~/components/plan/plan-card-vertical"
 
 
 const plans = () => {
@@ -24,6 +25,7 @@ const plans = () => {
         </div>
       </div>
       <div class="grid grid-cols-3 gap-3 p-5">
+        <PlanCardVertical plan={freePlan}/>
         <For each={allPlans}>
           {p => <PlanCard plan={p} vertical={p.id === "free"}/>}
         </For>

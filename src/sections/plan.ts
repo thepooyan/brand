@@ -108,7 +108,6 @@ const testPlan3: PlanDefinition = {
 }
 
 export const allPlans = [
-  freePlan,
   testPlan1,
   testPlan2,
   testPlan3,

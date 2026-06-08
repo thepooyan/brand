@@ -24,7 +24,7 @@ const PlanCard = ({plan, vertical}:p) => {
       </CardHeader>
       <CardContent class={cn(vertical && "pt-8 flex flex-col h-40 flex-wrap gap-x-4")}>
         <For each={allFeatures}>
-          {f => <p class="flex gap-2">
+          {f => <p class="flex gap-2 items-center">
             {
               plan.features.includes(f)
               &&
