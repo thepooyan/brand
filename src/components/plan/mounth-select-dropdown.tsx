@@ -8,7 +8,6 @@ const MounthSelectDropdown = () => {
   )
 }
 
-
 const discountString = (m: number) => {
   let dis = planDiscountMap.get(m)
   if (!dis) return ""
