@@ -25,7 +25,7 @@ const plans = () => {
       </div>
       <div class="grid grid-cols-3 gap-3 p-5">
         <For each={allPlans}>
-          {p => <PlanCard plan={p}/>}
+          {p => <PlanCard plan={p} vertical={p.id === "free"}/>}
         </For>
       </div>
       <PlanSidebar/>
