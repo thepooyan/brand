@@ -56,8 +56,10 @@ const PlanSidebar = () => {
     if (s) return (s.mounthlyPrice * 1000 * m)
     return 0
   }
-  const tax = () => price() / 10
-  const total = () => tax() + price()
+
+  // const tax = () => price() / 10
+  // const total = () => tax() + price()
+  const total = () => price()
 
   return (
     <div
@@ -75,10 +77,10 @@ rounded-md items-center transition-all opacity-100 z-10`,
             {seprateByComma(price())} تومان
           </Muted>
           <Muted>
-            مالیات بر ارزش افزوده: 
+            مدت:
           </Muted> 
           <Muted>
-            {seprateByComma(tax())} تومان
+            {selectedMounth().toLocaleString("fa-IR")} ماه
           </Muted>
           <span>قیمت کل:</span> {seprateByComma(total())} تومان
         </div>
