@@ -9,8 +9,8 @@ const MounthSelectDropdown = () => {
 
 const M = GenerallSelect([
   {label: "یک ماهه", value: 1},
-  {label: "دو ماهه", value: 2},
-  {label: "سه ماهه", value: 3},
+  {label: "دو ماهه (3% تخفیف)", value: 2},
+  {label: "سه ماهه (5% تخفیف)", value: 3},
 ])
 
 export default MounthSelectDropdown
