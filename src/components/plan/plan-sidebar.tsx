@@ -53,14 +53,13 @@ const PlanSidebar = () => {
 
   const price = () => {
     const s = selectedPlan()
-    const m = selectedMounth()
-    if (s) return (s.mounthlyPrice * 1000 * m)
+    if (s) return (s.mounthlyPrice * 1000)
     return 0
   }
 
   // const tax = () => price() / 10
   // const total = () => tax() + price()
-  const total = () => price()
+  const total = () => price() * selectedMounth()
 
   return (
     <div
@@ -72,7 +71,7 @@ rounded-md items-center transition-all opacity-100 z-10`,
       <div>
         <div class="grid grid-cols-2 gap-x-5 gap-1">
           <Muted class="inline-block">
-            قیمت پلن:
+            قیمت ماهیانه:
           </Muted> 
           <Muted>
             {seprateByComma(price())} تومان
@@ -83,7 +82,7 @@ rounded-md items-center transition-all opacity-100 z-10`,
           <Muted>
             {selectedMounth().toLocaleString("fa-IR")} ماه
           </Muted>
-          <span>قیمت کل:</span> {seprateByComma(total())} تومان
+          <span>قابل پرداخت:</span> {seprateByComma(total())} تومان
         </div>
       </div>
       <div class="w-50 space-y-2">
@@ -92,16 +91,15 @@ rounded-md items-center transition-all opacity-100 z-10`,
         </Muted>
         <MounthSelectDropdown/>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 w-35">
       <Button
         loading={loading()}
         onclick={handleClick}
-        size="sm"
-      >پرداخت و فعال‌سازی</Button>
+        class="bg-success text-success-foreground"
+      >پرداخت</Button>
       <Button
         variant="secondary"
         onclick={() => setSelectedPlan(null)}
-        size="sm"
       >
         کنسل
       </Button>
