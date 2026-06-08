@@ -4,6 +4,8 @@ import { For } from "solid-js"
 import { FiCheck, FiX } from "solid-icons/fi"
 import { cn, seprateByComma } from "~/lib/utils"
 import { selectedMounth } from "./plan-signal"
+import { Button } from "../ui/button"
+import TA from "../parts/TA"
 
 interface p {
   plan: PlanDefinition
@@ -28,7 +30,7 @@ const PlanCardVertical = ({plan}:p) => {
         </div>
       
       </CardHeader>
-      <CardContent class="pt-8 flex flex-col h-35 flex-wrap gap-x-4 w-7/10">
+      <CardContent class="pt-8 flex flex-col max-h-35 flex-wrap gap-x-4 w-7/10">
         <For each={allFeatures}>
           {f => <p class="flex gap-2 items-center">
             {
@@ -42,6 +44,11 @@ const PlanCardVertical = ({plan}:p) => {
           </p>}
         </For>
       </CardContent>
+      <CardFooter class="p-0 pl-4 items-center ">
+        <Button size="sm" as={TA} href="/panel" >
+          امتحان کنید!
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
