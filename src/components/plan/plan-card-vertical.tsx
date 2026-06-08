@@ -28,7 +28,7 @@ const PlanCardVertical = ({plan}:p) => {
         </div>
       
       </CardHeader>
-      <CardContent class="pt-8 flex flex-col h-40 flex-wrap gap-x-4 w-7/10">
+      <CardContent class="pt-8 flex flex-col h-35 flex-wrap gap-x-4 w-7/10">
         <For each={allFeatures}>
           {f => <p class="flex gap-2 items-center">
             {
