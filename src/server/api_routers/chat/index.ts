@@ -41,7 +41,8 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
     try {
       const result = talk_to_bot(bot)(body.messages)
       return result.toTextStreamResponse()
-    } catch {
+    } catch (e) {
+      console.log(e)
       return status("Request Timeout", {errorMessage: "ارتباط با سرور هوش مصنوعی برقرار نشد. لطفا مجددا تلاش کنید."})
     }
 

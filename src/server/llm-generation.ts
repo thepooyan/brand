@@ -41,8 +41,9 @@ export class LlmBuilder {
   }
 
   buildPrompt(): string {
-    if (!this.name || !this.businessName || !this.trainingText)
-      throw new Error("Missing required fields")
+
+    if (!this.name || !this.businessName)
+      throw new Error("Missing required fields: name, businessName on bot model.")
 
     const tonePrompt = this.tone ? ToneOptions[this.tone].llmPrompt : ""
     const languagePrompt = this.language ? LanguageOptions[this.language].llmPrompt : ""
