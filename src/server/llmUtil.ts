@@ -1,7 +1,7 @@
 export type ToneValue = keyof typeof ToneOptions
 import { getSystemPrompt } from "@/server/serverUtil";
 import { privateEnv } from "~/server/env/private-env";
-import { google } from "@ai-sdk/google";
+// import { google } from "@ai-sdk/google";
 import { createOpenAI } from '@ai-sdk/openai';
 import { ModelMessage, streamText, generateText } from "ai";
 import { ChatbotRelations } from "~/db/schema";
@@ -136,25 +136,25 @@ export enum llm_models {
   gpt4nano = "gpt-4.1-nano",
 }
 
+const openai = createOpenAI({
+  apiKey: privateEnv.GAPGPT_API_KEY,
+  baseURL: privateEnv.GAPGPT_API_URL
+});
+
+const currentModel = openai(llm_models.gpt4nano)
+
 export const chatSync = (messages: ModelMessage[], system?: string) => {
-  const openai = createOpenAI({
-    apiKey: privateEnv.GAPGPT_API_KEY,
-    baseURL: privateEnv.GAPGPT_API_URL
-  });
   const result = generateText({
-    model: openai(llm_models.gpt4nano),
+    model: currentModel,
     system: system,
     messages: messages,
   });
   return result
 }
+
 export const chatStream = (messages: ModelMessage[], system?: string) => {
-  const openai = createOpenAI({
-    apiKey: privateEnv.GAPGPT_API_KEY,
-    baseURL: privateEnv.GAPGPT_API_URL
-  });
   const result = streamText({
-    model: openai(llm_models.gpt4nano),
+    model: currentModel,
     system: system,
     messages: messages,
   });
