@@ -38,6 +38,7 @@ const BotTrainer = ({bot_id}:p) => {
   onMount(() => set_training_state("loading"))
 
   createEffect(() => {
+    console.log("effect")
     let query = chatbot()
     if (query !== undefined) {
       if (query.msg) return callModal.fail(query.msg)
