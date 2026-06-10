@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
-import { LanguageOptions } from "~/server/llmUtil"
+import { LanguageOptions } from "~/server/llmConst"
 
 interface p {
   onchange?: (e: string) => void

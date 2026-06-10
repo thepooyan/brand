@@ -1,8 +1,8 @@
 "use server"
-import { adminsTable, chatbot_history_table, ChatbotRelations, chatbotTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbot_history_table, ChatbotRelations, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
-import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmUtil"
+import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmConst"
 import { db } from "~/db/db";
 import { and, eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";

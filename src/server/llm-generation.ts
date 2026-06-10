@@ -1,6 +1,6 @@
 "use server"
 
-import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/server/llmUtil"
+import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/server/llmConst"
 
 export class LlmBuilder {
   private name!: string

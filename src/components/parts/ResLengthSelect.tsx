@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
-import { ResponseLengthOptions } from "~/server/llmUtil"
+import { ResponseLengthOptions } from "~/server/llmConst"
 
 interface p {
   onchange?: (e: string) => void
