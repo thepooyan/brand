@@ -2,7 +2,6 @@ import { FormSubmitEvent, InputChangeEvent } from "~/db/types";
 import z from "zod";
 import { createEffect, createSignal } from "solid-js";
 import { SetStoreFunction } from "solid-js/store";
-import { placeholder } from "drizzle-orm";
 
 interface p<S> {
   schema?: z.ZodType<S>,

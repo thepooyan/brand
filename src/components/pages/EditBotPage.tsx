@@ -64,14 +64,14 @@ const EditBotPage = ({bot, permission}:p) => {
   const handleSubmit = async (data: ReturnType<typeof flattenBot>) => {
     setLoading(true)
     callModal.wait()
-    let res = await editBot(reverseFlat(data))
+    let a = reverseFlat(data)
+    let res = await editBot(a)
     setLoading(false)
     if (res.ok) {
       nv("/panel/chat-bot")
       callModal.success()
     }
-    else
-    callModal.fail(res.msg)
+    else callModal.fail(res.msg)
   }
 
   interface p {
