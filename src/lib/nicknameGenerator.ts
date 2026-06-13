@@ -48,6 +48,7 @@ async function hashToNumber(input: string): Promise<number> {
 }
 
 export async function nicknameFromIP(ip: string):Promise<string> {
+  if (ip === "") return "کاربر ناشناس"
   const h = await hashToNumber(ip);
   const doubleH = await hashToNumber(h.toString())
 
