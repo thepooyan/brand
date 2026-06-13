@@ -7,6 +7,7 @@ import { sessionChatRouter } from "./sessionChat";
 import { cors } from '@elysiajs/cors'
 // import { getFakeStream } from "~/server/fakter";
 import { talk_to_bot } from "~/server/llmUtil";
+import { OnFinishEvent } from "ai";
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(cors({
@@ -33,13 +34,16 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 
     const userIp = "1111"
 
-    await updateChatHistory([
-      {role: "user", content: lastQ, timestamp: new Date()},
-      {role: "assistant", content: "response is this", timestamp: new Date()},
-    ], bot.id, userIp, body.from)
+
+    const handleFinish = async (e: OnFinishEvent) => {
+      await updateChatHistory([
+        {role: "user", content: lastQ, timestamp: new Date()},
+        {role: "assistant", content: e.text, timestamp: new Date()},
+      ], bot.id, userIp, body.from)
+    }
 
     try {
-      const result = talk_to_bot(bot)(body.messages)
+      const result = talk_to_bot(bot, handleFinish)(body.messages)
       return result.toTextStreamResponse()
     } catch (e) {
       console.log(e)
