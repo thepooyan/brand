@@ -11,6 +11,7 @@ import { updateChatHistory } from "~/server/serverUtil";
 import { timedMessage } from "~/db/constants";
 import { decrementMessageCount } from "~/sections/planServer";
 import { talk_to_bot } from "~/server/llmUtil";
+import { OnFinishEvent } from "ai";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
@@ -23,15 +24,16 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
   if (!res.ok)
     return status(res.status, {errorMessage: res.msg})
 
-    const lastQ = body.messages.at(-1)?.content || ""
-    const qa:timedMessage[] = [
-      {role: "user", content: lastQ, timestamp: new Date()},
-      {role: "assistant", content: "this is tele res", timestamp: new Date()},
-    ]
+    const handleFinish = async (e: OnFinishEvent) => {
+      const lastQ = body.messages.at(-1)?.content || ""
+      const qa:timedMessage[] = [
+        {role: "user", content: lastQ, timestamp: new Date()},
+        {role: "assistant", content: e.text, timestamp: new Date()},
+      ]
+      await updateChatHistory(qa, res.data.id, "192.168.2.3", "website")
+    }
 
-    await updateChatHistory(qa, res.data.id, "192.168.2.3", "website")
-
-    const stream = talk_to_bot(res.data)(body.messages)
+    const stream = talk_to_bot(res.data, handleFinish)(body.messages)
     return stream.toTextStreamResponse()
 
     // const stream = getFakeStream(100, 100)
