@@ -8,6 +8,7 @@ import { cors } from '@elysiajs/cors'
 // import { getFakeStream } from "~/server/fakter";
 import { talk_to_bot } from "~/server/llmUtil";
 import { OnFinishEvent } from "ai";
+import { getIp } from "./apiUtil";
 
 export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(cors({
@@ -22,24 +23,17 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 .use(hooshbaan)
 .use(botAuthGuard)
 .post( "/",
-  async ({ body, bot, status }) => {
+  async ({ body, bot, status, request }) => {
 
     const lastQ = body.messages.at(-1)?.content || ""
 
-      // const ip =
-      //       request.headers.get('x-forwarded-for') ??
-      //       request.headers.get('x-real-ip') ??
-      //       request.headers.get('cf-connecting-ip') ?? // Cloudflare
-      //       ""
-
-    const userIp = "1111"
-
+    const ip = getIp(request)
 
     const handleFinish = async (e: OnFinishEvent) => {
       await updateChatHistory([
         {role: "user", content: lastQ, timestamp: new Date()},
         {role: "assistant", content: e.text, timestamp: new Date()},
-      ], bot.id, userIp, body.from)
+      ], bot.id, ip, body.from)
     }
 
     try {

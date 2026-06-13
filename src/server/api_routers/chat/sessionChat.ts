@@ -12,10 +12,11 @@ import { timedMessage } from "~/db/constants";
 import { decrementMessageCount } from "~/sections/planServer";
 import { talk_to_bot } from "~/server/llmUtil";
 import { OnFinishEvent } from "ai";
+import { getIp } from "./apiUtil";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
 .use(chatGaurd)
-.post("/:botId", async ({ body, status, params: {botId} }) => {
+.post("/:botId", async ({ body, status, request , params: {botId} }) => {
 
   const auth = await getAuthSession()
   if (!auth) return status(401)
@@ -30,7 +31,7 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
         {role: "user", content: lastQ, timestamp: new Date()},
         {role: "assistant", content: e.text, timestamp: new Date()},
       ]
-      await updateChatHistory(qa, res.data.id, "192.168.2.3", "website")
+      await updateChatHistory(qa, res.data.id, getIp(request), "website")
     }
 
     const stream = talk_to_bot(res.data, handleFinish)(body.messages)
