@@ -1,19 +1,18 @@
-import { QueryClientConfig } from "@tanstack/solid-query";
 import { getAuthSession } from "./session";
 import { db } from "~/db/db";
 import { blogsTable, chatbotTable, usersTable } from "~/db/schema";
 import { and, desc, eq } from "drizzle-orm";
 import { query, redirect } from "@solidjs/router";
 
-export const queryConfig:QueryClientConfig = {
-  defaultOptions: {
-    queries: {
-      gcTime: 1000 * 60 * 5,
-      staleTime: Infinity,
-      experimental_prefetchInRender: true
-    }
-  },
-}
+// export const queryConfig:QueryClientConfig = {
+//   defaultOptions: {
+//     queries: {
+//       gcTime: 1000 * 60 * 5,
+//       staleTime: Infinity,
+//       experimental_prefetchInRender: true
+//     }
+//   },
+// }
 
 export const getInitialProfile = query(async () => {
   "use server"
@@ -52,8 +51,3 @@ export const getBotById = query(async (id: number) => {
     }
   )
 }, "botById")
-
-// export const profileQuery = () => useQuery(() => ({
-//   queryKey: ["profile"],
-//   queryFn: getInitialProfile
-// }))

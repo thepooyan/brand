@@ -24,7 +24,7 @@ const queryHistoryDetails = query(async (id: number) => {
 const id = () => {
 
   const {id} = useParams()
-  const h = createAsync(() => queryHistoryDetails(parseInt(id)))
+  const h = createAsync(() => queryHistoryDetails(parseInt(id || "")))
 
   return (
     <div {...panelPageMarker()}>

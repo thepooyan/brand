@@ -1,4 +1,4 @@
-import { TbCheck } from "solid-icons/tb"
+// import { TbCheck } from "solid-icons/tb"
 import { createEffect, createSignal } from "solid-js"
 import { cn } from "~/lib/utils"
 
@@ -12,6 +12,7 @@ const Checkbox = ({onchange, disabled, initialValue}:props) => {
   const [checked, setChecked] = createSignal(initialValue || false)
 
   createEffect(() => onchange && onchange(checked()) )
+  const TbCheck = (_:{class:string}) => "+"
   
   return (
     <>

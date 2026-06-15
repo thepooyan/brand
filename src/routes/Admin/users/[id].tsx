@@ -20,7 +20,7 @@ const queryUser = query(async (id: number) => {
 const id = () => {
 
   const {id} = useParams()
-  const user = createAsync(() => queryUser(parseInt(id)))
+  const user = createAsync(() => queryUser(parseInt(id || "")))
 
   return (
     <LoadingSuspense>

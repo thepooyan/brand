@@ -35,6 +35,7 @@ export const POST = async ({request}:{request: Request}) => {
   const {bot_token} = useParams()
 
   if (body.message.from.is_bot) return
+  if (!bot_token) return
 
   const msg = body.message.text
   const chat_id = body.message.from.id

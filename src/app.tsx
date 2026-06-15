@@ -3,8 +3,6 @@ import { FileRoutes } from "@solidjs/start/router";
 import { ErrorBoundary, Suspense } from "solid-js";
 import "./app.css";
 import Modal from "./components/layout/Modal";
-import {QueryClient, QueryClientProvider} from "@tanstack/solid-query"
-import { queryConfig } from "./lib/queries";
 import FallbackPage from "./components/pages/FallbackPage";
 import {Meta, MetaProvider, Title} from "@solidjs/meta"
 import ErrorPage from "./components/pages/ErrorPage";
@@ -13,27 +11,24 @@ import { updateThemeSignal } from "./lib/theme";
 
 export default function App() {
 
-  const qc = new QueryClient(queryConfig)
   updateThemeSignal()
 
   return (
     <>
-        <QueryClientProvider client={qc}>
-          <Modal/>
-          <Router
-            root={props => (
-              <MetaProvider>
-                <Title> {name} | {nameEn} </Title>
-                <Meta name="description" content={description}/>
-                <ErrorBoundary fallback={e=> <ErrorPage error={e}/>}>
-                  <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
-                </ErrorBoundary>
-              </MetaProvider>
-            )}
-          >
-            <FileRoutes />
-          </Router>
-        </QueryClientProvider>
+      <Modal/>
+      <Router
+        root={props => (
+          <MetaProvider>
+            <Title> {name} | {nameEn} </Title>
+            <Meta name="description" content={description}/>
+            <ErrorBoundary fallback={e=> <ErrorPage error={e}/>}>
+              <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
+            </ErrorBoundary>
+          </MetaProvider>
+        )}
+      >
+        <FileRoutes />
+      </Router>
     </>
   );
 }

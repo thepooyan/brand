@@ -18,7 +18,7 @@ const testbot = () => {
       />
 
       <Show when={user()} fallback={<Spinner/>}>
-        <MinimalChat botId={params.id}/>
+        <MinimalChat botId={params.id || ""}/>
       </Show>
     </div>
   )

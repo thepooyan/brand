@@ -35,7 +35,7 @@ const a = query(async (id: number) => {
 const id = () => {
 
   const {id} = useParams()
-  const ticket = createAsync(() => a(parseInt(id)))
+  const ticket = createAsync(() => a(parseInt(id || "")))
 
   createEffect(() => {
     ticket()
