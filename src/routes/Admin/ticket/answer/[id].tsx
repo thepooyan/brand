@@ -20,7 +20,7 @@ const queryTicket = query(async (id: number) => {
 const answer = () => {
 
   const {id} = useParams()
-  let ticket = createAsync(() => queryTicket(parseInt(id)))
+  let ticket = createAsync(() => queryTicket(parseInt(id || "")))
 
   return (
     <div class="p-5 relative">

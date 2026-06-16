@@ -33,7 +33,7 @@ const queryData = query(async(bot_id: number) => {
 
 const testbot = () => {
   const params = useParams()
-  const data = createAsync(() => queryData(parseInt(params.id)))
+  const data = createAsync(() => queryData(parseInt(params.id || "")))
 
   createEffect(() => {
     if (data()?.ok === false) callModal.fail(data()?.msg)

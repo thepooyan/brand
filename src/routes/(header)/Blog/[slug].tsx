@@ -8,7 +8,7 @@ import { getBlogBySlug } from "~/lib/queries"
 const slug = () => {
   const params = useParams()
 
-  const data = createAsync(() => getBlogBySlug(decodeURIComponent(params.slug)))
+  const data = createAsync(() => getBlogBySlug(decodeURIComponent(params.slug || "")))
 
   return (
     <Suspense fallback={<Loading/>}>

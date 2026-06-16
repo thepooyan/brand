@@ -6,7 +6,7 @@ import { getBlogById } from "~/lib/queries"
 
 const id = () => {
   const {id} = useParams()
-  const blog = createAsync(() => getBlogById(parseInt(id)))
+  const blog = createAsync(() => getBlogById(parseInt(id || "")))
   
   return (
     <Suspense fallback={<Loading/>}>
