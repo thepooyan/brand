@@ -1,5 +1,6 @@
 import { RouteSectionProps } from "@solidjs/router"
 import { ErrorBoundary } from "solid-js"
+import Footer from "~/components/layout/Footer"
 import Header from "~/components/layout/Header"
 import ErrorPage from "~/components/pages/ErrorPage"
 
@@ -10,7 +11,7 @@ const header = (props: RouteSectionProps) => {
       <ErrorBoundary fallback={e => <ErrorPage error={e}/>}>
         {props.children}
       </ErrorBoundary>
-      footer
+      <Footer/>
     </div>
   )
 }

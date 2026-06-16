@@ -1,6 +1,8 @@
+import { pageMarker } from "~/lib/routeChangeTransition";
+
 export default function Home() {
   return (
-    <div>
+    <div {...pageMarker()}>
       hi
     </div>
   )
