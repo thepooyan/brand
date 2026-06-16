@@ -1,5 +1,9 @@
 // @refresh reload
 import { createHandler, StartServer } from "@solidjs/start/server";
+import TagManagerHead from "./components/tagManager/TagManagerHead";
+import TagManagerBody from "./components/tagManager/TagManagerBody";
+import { isProd } from "./server/env/shared-env";
+import { defaultTheme, getClassname } from "./lib/theme";
 
 export default createHandler(() => (
   <StartServer
@@ -9,9 +13,13 @@ export default createHandler(() => (
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.png" />
+          {isProd && 
+          <TagManagerHead/>}
           {assets}
         </head>
-        <body>
+        <body class={getClassname(defaultTheme)}>
+          {isProd && 
+          <TagManagerBody/>}
           <div id="app">{children}</div>
           {scripts}
         </body>
