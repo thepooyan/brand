@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
 import { getAuthSession } from "~/lib/session"
-import { getUser } from "~/lib/signal"
+import { useGetUser } from "~/lib/signal"
 
 type panelItems = {group: string, items: nav[]}[]
 type nav = {name: string, href: string}
@@ -21,7 +21,7 @@ const panelItems:panelItems = [
   },
   {
     group: "خدمات", items: [
-      {name: "چت‌بات ها", href: "Chatbot"},
+      {name: "چت‌بات ها", href: "chat-bot"},
       {name: "مکالمات", href: "history"},
       {name: "آمار", href: "analytics"},
       {name: "وضعیت سفارش", href: "order-status"},
@@ -32,6 +32,7 @@ const panelItems:panelItems = [
       {name: "تیکت", href: "ticket"},
       {name: "مستندات", href: "/Docs"},
       {name: "تماس", href: "/ContactUs"},
+      {name: "قوانین استفاده", href: "/docs/terms-and-conditions"},
     ]
   },
 ]
@@ -51,12 +52,12 @@ const doesHaveNewTicket = query(async () => {
 
 const Panel = ({children}:ParentProps) => {
 
-  getUser()
+  useGetUser(true)
   const newTicket = createAsync(() => doesHaveNewTicket())
 
   return (
     <main class="flex">
-      <div class="flex flex-col w-60 gap-1 p-2 border-border h-[calc(100dvh-108px)] border-l-1">
+      <div class="flex flex-col w-60 gap-1 p-2 pt-5 border-border h-[calc(100dvh-108px)] ">
         <For each={panelItems}>
           {p => <>
             <span class="text-sm text-muted-foreground first-of-type:mt-0 mt-5 ">

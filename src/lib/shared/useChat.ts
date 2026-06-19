@@ -37,8 +37,8 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
       setPending(false);
 
       if (res.status !== 200) {
-        let data = await res.response.json()
-        if (typeof data.errorMessage === "string")
+        let data = await res.response.json().catch(() => null)
+        if (typeof data?.errorMessage === "string")
           return returnError(data.errorMessage)
         if (res.status === 402) return returnError("متاسفانه اعتبار شما به پایان رسیده است.")
         if (res.status === 403) return returnError("توکن ارسال شده معتبر نمیباشد")
@@ -61,31 +61,8 @@ export const getUseChat = (endpoint: string, api: Api, source: "widget" | "websi
         }
 
         buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop()!;
-
-        for (const line of lines) {
-          if (line.startsWith("0:")) {
-            let chunk = line.slice(2).trim();
-
-            if (chunk.startsWith('"') && chunk.endsWith('"')) {
-              chunk = chunk.slice(1, -1);
-            }
-
-            try {
-              chunk = JSON.parse(`"${chunk}"`);
-            } catch { }
-
-            response += chunk
-            pushToBuffer(chunk, getAnchor(), onType)
-          }
-          if (line.startsWith("3:")) { // Response is error?
-            if (line.startsWith('3:"An error occurred."')) {
-              setStreaming(false)
-              return returnError("خطایی پیش آمد. لطفا مجددا تلاش کنید.")
-            }
-          }
-        }
+        response += buffer;
+        pushToBuffer(buffer, getAnchor(), onType)
       } 
 
       if (getIsTyping()) {

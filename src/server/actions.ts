@@ -13,8 +13,9 @@ import { google } from "@ai-sdk/google"
 import { message } from "~/db/constants"
 import { newFreePlan } from "~/sections/planServer"
 import { safeDb } from "~/lib/utils"
-import { Transaction, transactionFail, transactionRedirect, transactionSuccess } from "~/lib/actionAbstraction"
+import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionRedirect, transactionSuccess } from "~/lib/actionAbstraction"
 import { isProd } from "./env/shared-env"
+import { chatStream, chatSync } from "./llmUtil"
 // import { convertNumberToE164, sendOtpSMS } from "./sms"
 
 export const newTicket = async (t: {subject:string, content:string, category:string}):Response => {
@@ -35,26 +36,24 @@ export const newTicket = async (t: {subject:string, content:string, category:str
   })
 }
 
-export const sendOTP = async (number: string):Response<string> => {
-  return warpResponse(async ():Promise<Response<string>> => {
-    if (!validatePhone(number)) return {ok: false, msg: "شماره تلفن وارد شده صحیح نمیباشد"}
+export const sendOTP = async (number: string):Fetch<string> => {
+  if (!validatePhone(number)) return fetchFail("شماره تلفن وارد شده صحیح نمیباشد")
 
-    let newOtp = generateOTP()
+  let newOtp = generateOTP()
 
-    const value: typeof otpTable.$inferInsert = {
-      number: number,
-      otp: newOtp
-    } 
+  const value: typeof otpTable.$inferInsert = {
+    number: number,
+    otp: newOtp
+  } 
 
-    let done = await safeDb(
-      db.transaction(async (tx) => {
-        await tx.delete(otpTable).where(eq(otpTable.number, number)),
-        await tx.insert(otpTable).values(value)
-      })
-    )
-    if (done.ok) return {ok: true, data: newOtp}
-    return done
-  })
+  let done = await safeDb(
+    db.transaction(async (tx) => {
+      await tx.delete(otpTable).where(eq(otpTable.number, number)),
+      await tx.insert(otpTable).values(value)
+    })
+  )
+  if (done.ok) return fetchSuccess(newOtp)
+  return done
 }
 
 export const forceEnter = async (number: string):Transaction => {
@@ -65,7 +64,7 @@ export const forceEnter = async (number: string):Transaction => {
       where: (tbl => eq(tbl.number, number))
     })
   )
-  if (!query.ok) return transactionFail(query.msg)
+  if (!query.ok) return query
   if (!query.data) return transactionFail("کاربر یافت نشد")
 
   const role = await findoutRole(query.data.number)
@@ -133,11 +132,7 @@ export const replyWithAI = async (message: string, history?: message[]) => {
   }
   messages.push({role: "system", content: message})
 
-  const result = await generateText({
-    model: google('gemini-2.5-flash'),
-    system: prompt.telegram,
-    messages: messages
-  });
+  let result = await chatSync(messages, prompt.telegram)
   return result.text
 }
 

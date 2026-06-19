@@ -1,7 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { ticket_states } from "~/components/ticket/ticket-signal";
-import { chat_sources, message, order_status, timedMessage } from "~/db/constants";
+import { chat_sources, message, order_status, ticket_states, timedMessage } from "~/db/constants";
 import { plan_ids } from "~/sections/plan";
 
 export const tokenLength = 62
@@ -51,13 +50,9 @@ export const chatbotTable = sqliteTable("chatbot", {
   id: int().primaryKey({autoIncrement: true}),
   userId: int().notNull().references(() => usersTable.id, {onDelete: "cascade"}),
   botName: text().notNull(),
-  businessName: text().notNull(),
-  tone: text().notNull(),
-  language: text().notNull(),
-  maxResponseLength: text().notNull(),
   websiteUrl: text(),
-  trainingText: text().notNull(),
   customization: text(),
+  businessName: text().notNull(),
   description: text(),
   limitation: int(),
   greeting: text(),
@@ -66,18 +61,36 @@ export const chatbotTable = sqliteTable("chatbot", {
   color: text().notNull().default("#2780d2"),
   color_foreground: text().notNull().default("#ffffff"),
   logo: text(),
-  current_token: text({length: 64}) // hash length is 64
+  current_token: text({length: 64}), // hash length is 64
+  training_data_id: int().references(() => trainingDataTable.id, {onDelete: "cascade"})
 })
 
 export type Chatbot = typeof chatbotTable.$inferSelect
+export type ChatbotRelations = Chatbot & {trainingData: TrainingData | null}
 
 export const chatbot_relations = relations(chatbotTable, ({one, many}) => ({
   user: one(usersTable, {fields: [chatbotTable.userId], references: [usersTable.id]}),
-  history: many(chatbot_history_table)
+  history: many(chatbot_history_table),
+  trainingData: one(trainingDataTable, {fields: [chatbotTable.training_data_id], references: [trainingDataTable.id]})
 }))
 
 export type I_Bot = typeof chatbotTable.$inferSelect
 export type I_NewBot = typeof chatbotTable.$inferInsert
+
+export const trainingDataTable = sqliteTable("training_data", {
+  id: int().primaryKey({autoIncrement: true}),
+  address: text().notNull(),
+  contactNumber: text({mode: "json"}).$type<string[]>().notNull(),
+  social: text({mode: "json"}).$type<{type: string, link: string}[]>().notNull(),
+  useEmojies: int({mode: "boolean"}).notNull().default(false),
+  tone: text().notNull(),
+  language: text().notNull(),
+  maxResponseLength: text().notNull(),
+  trainingText: text().notNull(),
+})
+
+export type TrainingData = typeof trainingDataTable.$inferSelect
+export type NewTrainingData = typeof trainingDataTable.$inferInsert
 
 export const websiteOrdersTable = sqliteTable("website_orders", {
   id: int().primaryKey({autoIncrement: true}),
@@ -133,7 +146,8 @@ export const usersTable = sqliteTable("users_table", {
   createdAt: int({ mode: "timestamp"}).notNull().$defaultFn(() => new Date())
 });
 
-export type User = typeof usersTable.$inferInsert
+export type NewUser = typeof usersTable.$inferInsert
+export type User = typeof usersTable.$inferSelect
 
 export const users_relations = relations(usersTable, ({many, one}) => ({
   current_plans: many(planTable),

@@ -1,8 +1,10 @@
 import { Accessor, createSignal } from "solid-js"
+import { isServer } from "solid-js/web"
 
 export const transitionID = (name: string) => ({style: {"view-transition-name": name}})
 
 export const startTransitionFallback = (callback: ()=>void, cleanup?: () => void) => {
+  if (isServer) return
   if (document.startViewTransition) 
     document.startViewTransition(callback).finished.then(() => {
       cleanup && cleanup()
@@ -44,6 +46,15 @@ export function useTransitionMarker(groupName: string):[
   return [markElement, applyTransition]
 }
 
+/** 
+ * @returns an array with these elements in order: [signalAccesor, signalSetter, markerFunction]
+ * @example
+ * const [name, setName, markElement] = useViewTransition("transition-group-1", "someName")
+ * name() // returns: someName
+ * setName("john") //reactively change the value with a view transition animation 
+ * const ele = <div {...markElement("elementName")}></div>
+ * //the element marked with {view-transition-name: `${groupName}-{elementName}`} 
+ */
 export function useViewTransition<T>(groupName: string, initial: T):[
   Accessor<T>,
   (arg: setterArg<T>)=>void,

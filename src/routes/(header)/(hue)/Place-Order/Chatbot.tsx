@@ -1,5 +1,4 @@
 import { useNavigate } from "@solidjs/router"
-import { eq } from "drizzle-orm"
 import { AiFillRobot } from "solid-icons/ai"
 import { FiArrowRight} from "solid-icons/fi"
 import { createEffect, createSignal } from "solid-js"
@@ -8,16 +7,18 @@ import RedStar from "~/components/parts/RedStar"
 import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { chatbotTable } from "~/db/schema"
-import { ActionResponse } from "~/lib/actionAbstraction"
+import { Transaction } from "~/lib/actionAbstraction"
 import {  ChangeEvent, chatbotOrder } from "~/lib/interface"
-import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/server/llmUtil"
-import { getAuthSession } from "~/lib/session"
-import { getUser } from "~/lib/signal"
+import { LanguageOptions, ToneOptions, ResponseLengthOptions } from "~/server/llmConst"
+import { useGetUser } from "~/lib/signal"
 import { userPermissions } from "~/sections/plan"
+import { getUserServer } from "~/lib/user-signal"
+import { safeDbTransaction } from "~/lib/utils"
+import { CustomError } from "~/lib/errorHandler"
 
 export default function OrderChatbotPage() {
 
-  const user = getUser()
+  const user = useGetUser(true)
 
   const [formData, setFormData] = createSignal<chatbotOrder>({
     name: String(user()?.name || ""),
@@ -65,7 +66,7 @@ export default function OrderChatbotPage() {
     let result = await saveChatbotOrder(formData())
     if (result.ok) {
       callModal.success()
-      navigate(`/Panel/Chatbot`)
+      navigate(`/panel/chat-bot`)
     } else {
       callModal.fail(result.msg)
     }
@@ -422,26 +423,18 @@ export default function OrderChatbotPage() {
   )
 }
 
-const saveChatbotOrder = async (order: chatbotOrder):ActionResponse<number> => {
+const saveChatbotOrder = async (order: chatbotOrder):Transaction => {
   "use server"
-  try {
 
-    let user = await getAuthSession()
-    if (!user) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
+  return safeDbTransaction(
+    db.transaction(async ctx => {
+      let check = await getUserServer(ctx)
+      if (!check.ok) throw CustomError(e => e.login)
+      const user = check.data
 
-    return await db.transaction(async ctx => {
+      const userPermission = userPermissions(user)
 
-      let dbUser = await ctx.query.usersTable.findFirst({
-        where: (tbl => eq(tbl.id, user.id)),
-        with: {current_plans: true, bots: true}
-      })
-      if (!dbUser) return {ok: false, msg: "کاربر لوگین شده یافت نشد"}
-
-
-      const userPermission = userPermissions(dbUser)
-
-      if (!userPermission?.moreBots) return {ok: false, msg: "متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید."}
-
+      if (!userPermission?.moreBots) throw new Error("persian:متاسفانه تعداد ربات های شما بیشتر از حد مجاز رسیده است! جهت ساخت ربات های بیشتر میتوانید از طریق پنل کاربری پلن خود را ارتقا دهید.")
 
       let values: typeof chatbotTable.$inferInsert = {
         ...order,
@@ -450,11 +443,7 @@ const saveChatbotOrder = async (order: chatbotOrder):ActionResponse<number> => {
 
       let [row] = await ctx.insert(chatbotTable).values(values).returning({id: chatbotTable.id})
 
-      return {ok: true, data: row.id}
+      return (row.id)
     })
-
-  } catch(e) {
-    console.log(e)
-    return {ok: false, msg: "متاسفانه خطایی پیش آمد. لطفا مجددا تلاش کنید"}
-  }
+  )
 }

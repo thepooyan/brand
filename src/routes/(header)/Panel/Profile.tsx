@@ -1,4 +1,4 @@
-import { action, redirect, revalidate, useSubmission } from "@solidjs/router"
+import { action, revalidate, useSubmission } from "@solidjs/router"
 import { eq } from "drizzle-orm"
 import { createEffect, Suspense } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
@@ -12,8 +12,8 @@ import { usersTable } from "~/db/schema"
 import { Transaction, transactionFail } from "~/lib/actionAbstraction"
 import { extractFormData } from "~/lib/hooks/useForm"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
-import { getAuthSession } from "~/lib/session"
-import { getUser, updateUserSession } from "~/lib/signal"
+import { useGetUser, updateUserSession } from "~/lib/signal"
+import { getUserServer } from "~/lib/user-signal"
 import { safeDbTransaction } from "~/lib/utils"
 
 interface form {
@@ -27,12 +27,15 @@ const handleSubmit = action(async (formData:FormData):Transaction => {
 
   if (!name || !email || !number) return transactionFail("لطفا همه موارد را وارد کنید")
 
-  let user = await getAuthSession()
-  if (!user) throw redirect("/Login?back=/Panel/Profile")
-
   let result = await safeDbTransaction(
-    db.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.id))
+    db.transaction(async ctx => {
+      let user = await getUserServer(ctx)
+      if (!user.ok) return transactionFail("لطفا ابتدا لوگین کنید")
+
+      return ctx.update(usersTable).set({name: name, email: email, number: number}).where(eq(usersTable.id, user.data.id))
+    })
   )
+
   if (result.ok) {
     await updateUserSession({user: {
       name: name,
@@ -46,7 +49,7 @@ const handleSubmit = action(async (formData:FormData):Transaction => {
 
 
 const Profile = () => {
-  const user = getUser()
+  const user = useGetUser(true)
   const submission = useSubmission(handleSubmit)
 
   createEffect(() => {

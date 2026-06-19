@@ -17,6 +17,7 @@
 html {
   /* always show scrollbar so width does not jump */
   overflow-y: scroll;
+  font-size: 21px;
 }
 
 body {

@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <>
       <footer class="bg-background py-12">
-        <div class="container mx-auto px-4">
+        <div class=" mx-auto px-4">
           <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div>
               <div class="flex items-center gap-2 mb-4">
@@ -87,6 +87,11 @@ const Footer = () => {
                 <li>
                   <A href="/pricing" class="text-muted-foreground hover:text-primary transition-colors">
                     قیمت‌ها
+                  </A>
+                </li>
+                <li>
+                  <A href="/docs/terms-and-conditions" class="text-muted-foreground hover:text-primary transition-colors">
+                    قوانین و مقررات
                   </A>
                 </li>
               </ul>

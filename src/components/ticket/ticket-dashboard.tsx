@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router";
 import { Button } from "../ui/button"
-import { markTicketPage, setTicketState, ticket_states, TicketStates } from "./ticket-signal";
+import { markTicketPage, setTicketState,  } from "./ticket-signal";
 import { createSignal, For, ParentProps, Show, Suspense } from "solid-js";
 import TicketCard from "./ticket-card";
 import { Loading } from "../parts/Loading";
@@ -10,6 +10,7 @@ import { getAuthSession } from "~/lib/session";
 import { db } from "~/db/db";
 import { desc, eq } from "drizzle-orm";
 import { H2, Muted } from "../prose/prose-item";
+import { ticket_states, type TicketStates } from "~/db/constants";
 
 const getUserTickets = query(async () => {
   "use server"

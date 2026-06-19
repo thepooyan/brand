@@ -1,6 +1,6 @@
 import { createAsync, query, redirect } from "@solidjs/router"
 import { eq } from "drizzle-orm"
-// import { TbMoodSad } from "solid-icons/tb"
+import { TbOutlineMoodSad } from "solid-icons/tb"
 import { For, Show } from "solid-js"
 import TA from "~/components/parts/TA"
 import PlanDashboard from "~/components/plan/plan-dashboard"
@@ -8,8 +8,6 @@ import { Button } from "~/components/ui/button"
 import { db } from "~/db/db"
 import { panelPageMarker } from "~/lib/routeChangeTransition"
 import { clearAuthSession, getAuthSession } from "~/lib/session"
-
-const TbMoodSad = (_:{size: number}) => ":("
 
 const queryUserPlan = query(async() => {
   "use server"
@@ -37,7 +35,7 @@ const dashboard = () => {
     <div {...panelPageMarker()} class="h-full">
       <Show when={planData()?.length === 0}>
         <div class="center h-full gap-1 text-muted-foreground">
-          <TbMoodSad size={40}/>
+          <TbOutlineMoodSad size={40}/>
           شما پلن فعالی ندارید...
           <Button class="mt-2" as={TA} href="/pricing">
             همین حالا بخرید!
@@ -45,7 +43,7 @@ const dashboard = () => {
         </div>
       </Show>
       <Show when={planData()}>
-        {presentPlan => <div class="grid grid-cols-2 gap-2">
+        {presentPlan => <div class="grid grid-cols-2 gap-4 w-max m-auto">
           <For each={presentPlan()}>
             {i => <PlanDashboard plan={() => i}/>}
           </For>

@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from "clsx"
-import { Accessor, createSignal, Setter } from "solid-js"
+import { Accessor, createSignal, onMount, Setter } from "solid-js"
 import { twMerge } from "tailwind-merge"
 import { PlanInstance } from "~/db/schema"
 import { resolveError } from "./errorHandler"
@@ -147,6 +147,14 @@ export const safe = async <T>(fn: Promise<T>): Promise<{ok: true, data: T} | {ok
   }
 }
 
+export const safeFetch = async <T>(fn: Fetch<T>):Fetch<T> => {
+  try {
+    return await fn
+  } catch (e) {
+    return fetchFail(resolveError(e))
+  }
+}
+
 export const safeDb = async <T>(fn: Promise<T>):Fetch<T> => {
   try {
     return fetchSuccess(await fn)
@@ -234,4 +242,23 @@ export const toEnNumbers = (str: string) => {
 export const ifSure = (fn: () => any, msg?: string) => {
   callModal.prompt(msg)
   .yes(() => fn())
+}
+
+export const preventDefault = (cb: () => void) => {
+  return (e:SubmitEvent) => {
+    e.preventDefault()
+    cb()
+  }
+}
+
+export function respondToVisibility(element:Element, callback:() => void, once = false) {
+  let observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.intersectionRatio > 0) {
+        callback();
+        once && observer.disconnect();
+      }
+    });
+  });
+  observer.observe(element);
 }

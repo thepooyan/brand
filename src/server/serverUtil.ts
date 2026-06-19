@@ -1,17 +1,28 @@
 "use server"
-import { adminsTable, chatbot_history_table, chatbotTable, tokenLength } from "~/db/schema";
+import { adminsTable, chatbot_history_table, ChatbotRelations, tokenLength } from "~/db/schema";
 import crypto from 'node:crypto'
 import { LlmBuilder } from "./llm-generation";
-import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmUtil"
+import { LanguageValue, ResponseLengthValue, ToneValue } from "~/server/llmConst"
 import { db } from "~/db/db";
 import { and, eq } from "drizzle-orm";
 import { getAuthSession, ROLES } from "~/lib/session";
 import { ErrorMessage } from "~/lib/const";
 import { chat_sources, timedMessage } from "~/db/constants";
 import { nicknameFromIP } from "~/lib/nicknameGenerator";
-import { Fetch } from "~/lib/actionAbstraction";
+import { Fetch, fetchRedirect, transactionRedirect } from "~/lib/actionAbstraction";
 import { safeDb } from "~/lib/utils";
 import { ResultSet } from "@libsql/client";
+import { isServer } from "solid-js/web";
+
+export type serverUtilType =
+<TArgs extends any[], TResult>
+(fn: (...args: TArgs) => TResult) =>
+(...args: TArgs) => TResult;
+
+export const serverUtil:serverUtilType = (fn) => (...args) => {
+  if (isServer === false) throw new Error("Can't use server util in client code.")
+  return fn(...args);
+};
 
 type ErrorResponse = { ok: false; msg: string }
 type SuccessResponse<T> = T extends void ? { ok: true } : { ok: true; data: T }
@@ -42,14 +53,14 @@ export const compareEpochTime = (then: number) => {
   return true
 }
 
-export const getSystemPrompt = (bot: typeof chatbotTable.$inferSelect):string => {
+export const getSystemPrompt = (bot: ChatbotRelations):string => {
   return new LlmBuilder()
   .setName(bot.botName)
   .setBusinessName(bot.businessName)
-  .setTone(bot.tone as ToneValue)
-  .setLanguage(bot.language as LanguageValue)
-  .setResponseLength(bot.maxResponseLength as ResponseLengthValue)
-  .setTrainingText(bot.trainingText)
+  .setTone(bot.trainingData?.tone as ToneValue)
+  .setLanguage(bot.trainingData?.language as LanguageValue)
+  .setResponseLength(bot.trainingData?.maxResponseLength as ResponseLengthValue)
+  .setTrainingText(bot.trainingData?.trainingText || "")
   .buildPrompt()
 }
 
@@ -109,3 +120,6 @@ export function hashToken(token: string): string {
     .update(token, "utf8")
     .digest("hex");
 }
+
+export const loginRedirectTran = () => transactionRedirect("/Login", true)
+export const loginRedirectFetch = () => fetchRedirect("/Login", true)

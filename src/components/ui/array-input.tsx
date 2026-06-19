@@ -5,24 +5,25 @@ import { Badge } from "./badge"
 import { FiPlus, FiX } from "solid-icons/fi"
 import { Button } from "./button"
 import { ifEnterPressed } from "~/lib/utils"
-import { callModal } from "../layout/Modal"
 
 interface props {
   onchange?: (value: string[]) => void
-  initialValue?: string[]
+  value?: string[]
   disabled?: boolean
+  placeholder?: string
+  class?: string
 }
-const ArrayInput = ({onchange, disabled, initialValue}:props) => {
+const ArrayInput = ({onchange, disabled = false, value, ...props}:props) => {
 
   const [strValue, setStrValue] = createSignal("")
-  const [value, setValue] = createSignal<string[]>(initialValue || [])
+  const [val, setValue] = createSignal<string[]>(value || [])
 
   onchange &&
-  createEffect(() => onchange(value()))
+  createEffect(() => onchange(val()))
 
   const flush = () => {
-    if (value().length === 4) return callModal.fail("تعداد سوالات پیشنهاد نمیتواند بیشتر از ۴ عدد باشد.")
     let newval = strValue()
+    if (val().includes(newval)) return
     if (!newval) return
     setValue(prev => ([...prev, newval]))
     setStrValue("")
@@ -31,22 +32,22 @@ const ArrayInput = ({onchange, disabled, initialValue}:props) => {
 
   return (
     <>
-      سوالات پیشنهادی:
       <div class="flex gap-2 mt-2">
         <Input
           name=""
           value={strValue()}
-          onkeydown={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
+          onKeyUp={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
           onkeypress={ifEnterPressed(flush)}
-          placeholder="مثال: اطلاعات قیمت"
+          placeholder={props.placeholder}
           disabled={disabled}
+          class={props.class}
         />
-        <Button onclick={flush} disabled={disabled}>
+        <Button onClick={flush} disabled={disabled} type="button">
           <FiPlus/>
         </Button>
       </div>
       <div class="space-y-1 py-2">
-        <For each={value()}>
+        <For each={val()}>
           {(v) => <Badge
             variant="secondary"
             class="rtl flex gap-2 w-max"

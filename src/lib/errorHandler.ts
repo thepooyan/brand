@@ -1,5 +1,21 @@
+const persianErrorStart = "persian:"
+
+export enum customErrors {
+  login = "لطفا ابتدا وارد حساب خود شوید"
+}
+
+export const CustomError = (err: ((errors: typeof customErrors) => customErrors) | string) => {
+  let msg = typeof err === "string" ? err : err(customErrors)
+  throw new Error(`${persianErrorStart}${msg}`)
+}
+
 export const resolveError = (error: unknown):string => {
   if (error instanceof Error) {
+    const msg = error.message
+    if (msg.startsWith(persianErrorStart)) {
+      return msg.substring(persianErrorStart.length)
+    }
+
     if (error.cause instanceof Error) {
       const msg = error.cause.message
       const split = msg.replaceAll(":", "").split(" ")

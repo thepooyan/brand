@@ -1,6 +1,6 @@
 "use server"
 
-import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/server/llmUtil"
+import { LanguageOptions, LanguageValue, ResponseLengthOptions, ResponseLengthValue, ToneOptions, ToneValue } from "~/server/llmConst"
 
 export class LlmBuilder {
   private name!: string
@@ -41,8 +41,9 @@ export class LlmBuilder {
   }
 
   buildPrompt(): string {
-    if (!this.name || !this.businessName || !this.trainingText)
-      throw new Error("Missing required fields")
+
+    if (!this.name || !this.businessName)
+      throw new Error("Missing required fields: name, businessName on bot model.")
 
     const tonePrompt = this.tone ? ToneOptions[this.tone].llmPrompt : ""
     const languagePrompt = this.language ? LanguageOptions[this.language].llmPrompt : ""

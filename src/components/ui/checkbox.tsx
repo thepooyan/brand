@@ -4,12 +4,12 @@ import { cn } from "~/lib/utils"
 
 interface props {
   onchange?: (value: boolean) => void
-  initialValue?: boolean
+  value?: boolean
   disabled?: boolean
 }
-const Checkbox = ({onchange, disabled, initialValue}:props) => {
+const Checkbox = ({onchange, disabled, value}:props) => {
 
-  const [checked, setChecked] = createSignal(initialValue || false)
+  const [checked, setChecked] = createSignal(value || false)
 
   createEffect(() => onchange && onchange(checked()) )
   const TbCheck = (_:{class:string}) => "+"

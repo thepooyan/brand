@@ -1,8 +1,8 @@
 import { chatbot_history_table, History } from "~/db/schema"
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
-import { safeDbTransaction } from "~/lib/utils"
-import { Accessor, ParentProps } from "solid-js"
+import { limitChar, safeDbTransaction } from "~/lib/utils"
+import { Accessor } from "solid-js"
 import { callModal } from "../layout/Modal"
 import { db } from "~/db/db"
 import { eq } from "drizzle-orm"
@@ -11,6 +11,7 @@ import { Transaction, transactionFail } from "~/lib/actionAbstraction"
 import { revalidate } from "@solidjs/router"
 import TA from "../parts/TA"
 import { usePanelTransitiveNavigate } from "~/lib/routeChangeTransition"
+import ProseItem from "../prose/prose-item"
 
 export type HistoryWithName = History & {chatbot: {botName: string}}
 interface p {
@@ -68,7 +69,7 @@ const HistoryCard = ({histroy:h, idx}:p) => {
             آخرین پیام:
           </Big>
           <Small>
-           {h.messages.at(-1)?.content}
+           {limitChar(h.messages.at(-1)?.content || "", 40)}
           </Small>
         </div>
         <div>
@@ -91,8 +92,7 @@ const HistoryCard = ({histroy:h, idx}:p) => {
   )
 }
 
-const Big = ({children}:ParentProps) => <div class="mb-1 font-bold text-sm">{children}</div>
-
-const Small = ({children}:ParentProps) => <div class="text-xs text-muted-foreground">{children}</div>
+const Big = ProseItem("mb-1 font-bold text-sm block")
+const Small = ProseItem("text-xs text-muted-foreground")
 
 export default HistoryCard

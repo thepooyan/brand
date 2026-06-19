@@ -1,4 +1,4 @@
-import { convertPlanToDTO, PlanDefinition } from "~/sections/plan"
+import { convertPlanToDTO, PlanDefinition, planDiscountMap } from "~/sections/plan"
 import { eq } from "drizzle-orm"
 import { db } from "~/db/db"
 import { planTable } from "~/db/schema"
@@ -6,10 +6,10 @@ import { Transaction, transactionFail, transactionRedirect, useTransaction } fro
 import { getAuthSession } from "~/lib/session"
 import { cn, safeDbTransaction, seprateByComma } from "~/lib/utils"
 import { Button } from "../ui/button";
-import { createSignal,  } from "solid-js";
+import { createSignal, Show,  } from "solid-js";
 import { selectedMounth, selectedPlan, setSelectedPlan } from "./plan-signal"
-import { Muted, H3 } from "../prose/prose-item"
-import { useNavigate } from "@solidjs/router"
+import { Muted } from "../prose/prose-item"
+import MounthSelectDropdown from "./mounth-select-dropdown"
 
 const activatePlan = async (p: PlanDefinition, mounth: number):Transaction => {
   "use server"
@@ -53,12 +53,21 @@ const PlanSidebar = () => {
 
   const price = () => {
     const s = selectedPlan()
-    const m = selectedMounth()
-    if (s) return (s.mounthlyPrice * 1000 * m)
+    if (s) return (s.mounthlyPrice * 1000)
     return 0
   }
-  const tax = () => price() / 10
-  const total = () => tax() + price()
+  const discount = () => planDiscountMap.get(selectedMounth())
+
+  // const tax = () => price() / 10
+  // const total = () => tax() + price()
+  const mounthly = () => price() * selectedMounth()
+
+  const total = () => {
+    let d = discount()
+    let m = mounthly()
+    if (!d) return m
+    return m - (m * d / 100)
+  }
 
   return (
     <div
@@ -68,27 +77,46 @@ rounded-md items-center transition-all opacity-100 z-10`,
       )}
     >
       <div>
-        <div>
+        <div class="grid grid-cols-2 gap-x-5 gap-1">
           <Muted class="inline-block">
-            قیمت پلن:
-          </Muted> {seprateByComma(price())} تومان
-          <br />
-          <Muted class="inline-block">
-            مالیات بر ارزش افزوده: 
-          </Muted> {seprateByComma(tax())} تومان
+            قیمت ماهیانه:
+          </Muted> 
+          <Muted>
+            {seprateByComma(price())} تومان
+          </Muted>
+          <Muted>
+            مدت:
+          </Muted> 
+          <Muted>
+            {selectedMounth().toLocaleString("fa-IR")} ماه
+          </Muted>
+          <Muted>
+            تخفیف:
+          </Muted>
+          <Muted>
+            <Show when={discount()} fallback="ندارد">
+              {d => `${d().toLocaleString("fa-IR")} درصد`}
+            </Show>
+          </Muted>
+
+          <span>قابل پرداخت:</span> {seprateByComma(total())} تومان
         </div>
-        <H3 class="mt-2 flex items-center"><Muted class="inline">قیمت کل:</Muted> {seprateByComma(total())} تومان</H3>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="w-50 space-y-2">
+        <Muted>
+          تغییر مدت دوره:
+        </Muted>
+        <MounthSelectDropdown/>
+      </div>
+      <div class="flex flex-col gap-2 w-35">
       <Button
         loading={loading()}
         onclick={handleClick}
-        size="sm"
-      >پرداخت و فعال‌سازی</Button>
+        class="bg-success text-success-foreground"
+      >پرداخت</Button>
       <Button
         variant="secondary"
         onclick={() => setSelectedPlan(null)}
-        size="sm"
       >
         کنسل
       </Button>

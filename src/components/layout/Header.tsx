@@ -5,26 +5,26 @@ import MobileMenu from "../parts/MobileMenu"
 import { FiLogIn, FiMenu, FiUser } from "solid-icons/fi"
 import { createSignal, Show } from "solid-js"
 import TA from "../parts/TA"
-import { logUserOut, useIsLoggedIn } from "~/lib/signal"
+import { logUserOut, useGetUser } from "~/lib/signal"
 import { ROLES } from "~/lib/session"
 import ThemeButton from "../theme/theme-button"
 
 const Header = () => {
 
-  const isLoggedIn = useIsLoggedIn()
+  const user = useGetUser()
   const [isOpen, setOpen] = createSignal(false)
 
   const logout = () => {
     logUserOut()
   }
 
-  const logged = () => isLoggedIn() !== undefined
-  const isAdmin = () => isLoggedIn()?.role === ROLES.ADMIN
+  const isLoggedIn = () => user() !== undefined
+  const isAdmin = () => user()?.role === ROLES.ADMIN
 
   return (
     <>
       <header class="border-b border-border z-10 bg-background">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="mx-auto px-4 py-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <div class="relative w-13 flex justify-center ">
               <div class="h-10 w-10 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
@@ -49,7 +49,7 @@ const Header = () => {
               قیمت‌ها
             </TA>
             <ThemeButton/>
-            <Show when={logged()}>
+            <Show when={isLoggedIn()}>
               <div class="space-x-2">
                 <Button as={TA} href="/Panel">پنل کاربری</Button>
                 <Show when={isAdmin()}>
@@ -58,7 +58,7 @@ const Header = () => {
                 <Button class="bg-red-700 text-white hover:bg-red-900" onclick={logout}>خروج</Button>
               </div>
             </Show>
-            <Show when={!logged()}>
+            <Show when={!isLoggedIn()}>
               <div class="space-x-2">
                 <Button variant="outline" class="border-primary text-primary hover:bg-primary/10" as={TA} href="/Login">
                   ورود
@@ -72,12 +72,12 @@ const Header = () => {
               <span class="sr-only">تغییر منو</span>
               <FiMenu/>
             </Button>
-            <Show when={!logged()}>
+            <Show when={!isLoggedIn()}>
               <Button as={TA} href="/Login">
                 <FiLogIn/>
               </Button>
             </Show>
-            <Show when={logged()}>
+            <Show when={isLoggedIn()}>
               <Button as={TA} href="/Panel">
                 <FiUser/>
               </Button>

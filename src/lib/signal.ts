@@ -2,11 +2,15 @@ import { createAsync, query, redirect, revalidate, useLocation } from "@solidjs/
 import { clearAuthSession, getAuthSession, ROLES, AuthSessionData, updateAuthSession } from "./session";
 import { DeepPartial } from "ai";
 
-const userQuery = (back?: string) => query(async () => {
+const userQuery = query(async () => {
+  return await getAuthSession()
+}, "user")
+
+const strictUserQuery = (back?: string) => query(async () => {
   let user = await getAuthSession()
   if (!user) throw redirect(back ? `/Login?back=${back}` : "/Login")
   return user
-}, "user")()
+}, "strictUser")()
 
 const adminUserQuery = (back?: string) => query(async () => {
   let user = await getAuthSession()
@@ -15,17 +19,17 @@ const adminUserQuery = (back?: string) => query(async () => {
   return user
 }, "adminUser")()
 
-const isLoggedInQuery = query(async () => {
-  return await getAuthSession()
-}, "isLoggedIn")
-
-export const useIsLoggedIn = () => {
-  return createAsync(() => isLoggedInQuery(), {deferStream: true})
+export const useGetUser = (throwRedirect = false) => {
+  if (!throwRedirect) {
+    return createAsync(() => userQuery())
+  }
+  const location = useLocation() 
+  return createAsync(() => strictUserQuery(location.pathname), {deferStream: true})
 }
 
-export const getUser = () => {
+export const useGetAdminUser = () => {
   const location = useLocation() 
-  return createAsync(() => userQuery(location.pathname), {deferStream: true})
+  return createAsync(() => adminUserQuery(location.pathname), {deferStream: true})
 }
 
 export const logUserOut = async () => {
@@ -41,9 +45,4 @@ export const updateUserSession = async (data: DeepPartial<AuthSessionData>) => {
     ...user,
     ...data.user
   }})
-}
-
-export const getAdminUser = () => {
-  const location = useLocation() 
-  return createAsync(() => adminUserQuery(location.pathname), {deferStream: true})
 }

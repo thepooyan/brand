@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js"
+import { createEffect, createSignal } from "solid-js"
 import {
   Select,
   SelectContent,
@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "~/components/ui/select"
+import { OptionalAccessor, unwrap } from "~/lib/solid"
 
 type option<T> = {label: string, value: T}
 function GenerallSelect<T>(options: option<T>[]) {
@@ -13,25 +14,30 @@ function GenerallSelect<T>(options: option<T>[]) {
 
   interface p {
     onchange?: (e: T) => void
-    initialValue?: T
+    value?: OptionalAccessor<T>
     placeholder?: string
     class?: string
   }
 
-  return ({ onchange, initialValue, placeholder, ...props }:p) => {
+  return ({ onchange, value, placeholder, ...props }:p) => {
 
-    const [value, setValue] = createSignal<option<T> | null>(options.find(o => o.value === initialValue) || null)
+    const [val, setValue] = createSignal<label>(options.find(o => o.value === unwrap(value))?.label || "")
+
+    createEffect(() => {
+      let o = options.find(o => o.value === unwrap(value))
+      if (o) setValue(o.label)
+    })
 
     const changeHandler = (e: label | null) => {
       if (!e) return
       let newValue = options.find(o => o.label === e)!
-      setValue(() =>  newValue)
+      setValue(e)
       onchange && onchange(newValue.value)
     }
 
     return (
       <Select
-          value={value()?.label || ""}
+          value={val()}
           onChange={changeHandler}
           options={options.map(o => o.label)}
           placeholder={placeholder}

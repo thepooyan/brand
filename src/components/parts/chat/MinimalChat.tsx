@@ -4,12 +4,14 @@ import { createEffect, createSignal, ParentProps, Show } from "solid-js"
 import { Button } from "~/components/ui/button"
 import { useUserChat } from "~/lib/chatUtil";
 import { callModal } from "~/components/layout/Modal";
-import { createAsync, query, redirect } from "@solidjs/router";
+import { createAsync, query } from "@solidjs/router";
 import { db } from "~/db/db";
-import { getAuthSession } from "~/lib/session";
 import { and, eq } from "drizzle-orm";
-import { Fetch } from "~/lib/actionAbstraction";
-import { safeDb } from "~/lib/utils";
+import { Fetch, fetchFail, fetchSuccess } from "~/lib/actionAbstraction";
+import { safeDb, safeFetch } from "~/lib/utils";
+import { Chatbot } from "~/db/schema";
+import { Muted } from "~/components/prose/prose-item";
+import { getUserServer } from "~/lib/user-signal";
 
 interface props {
   botId: string
@@ -29,27 +31,28 @@ const Message = (props: ParentProps<{ right?: boolean, ref?: HTMLDivElement }>) 
   )
 }
 
-type query = {botName: string, businessName: string }
-const queryBotName = query(async (botId: string):Fetch<query> => {
+const queryBotName = query(async (botId: string):Fetch<Chatbot> => {
   "use server"
-  const user = await getAuthSession()
-  if (!user) throw redirect(`/Login?back=/Panel/Testbot/${botId}`)
+  return safeFetch(
+    db.transaction(async ctx => {
+      const check = await getUserServer(ctx)
+      if (!check.ok) return check
 
-  let res = await safeDb(
-    db.query.chatbotTable.findFirst({
-      where: (tbl => and(
-        eq(tbl.userId, user.id),
-        eq(tbl.id, parseInt(botId)),
-      ))
+      const user = check.data
+
+      let bot = await safeDb(
+       ctx.query.chatbotTable.findFirst({
+        where: (tbl => and(
+          eq(tbl.userId, user.id),
+          eq(tbl.id, parseInt(botId)),
+          ))
+        })
+      )
+
+      if (bot.data === undefined) return fetchFail("ربات یافت نشد")
+      return fetchSuccess(bot.data)
     })
   )
-  if (!res.ok) return {...res, data: undefined}
-  if (!res.data) return {ok: false, msg: "ربات یافت نشد", data: undefined}
-
-  return {ok: true,msg: undefined, data: {
-    botName: res.data.botName,
-    businessName: res.data.businessName,
-  }}
 }, "botName")
 
 const MinimalChat = ({botId}:props) => {
@@ -101,6 +104,13 @@ const MinimalChat = ({botId}:props) => {
     scrollToBottom()
   })
 
+  const Suggest = (p:{children: string}) => <div class={` p-2 text-xs rounded-md w-max text-accent-foreground 
+    border-1 bg-muted hover:bg-accent cursor-pointer mr-5`}
+    onclick={() => send(p.children)}
+  >
+    {p.children}
+  </div>
+
   const handleSendMessage = async () => {
     if (!inputMessage().trim()) return
 
@@ -122,11 +132,11 @@ const MinimalChat = ({botId}:props) => {
           {/* Chat Header */}
           <div class="bg-primary/10 p-4 border-b">
             <div class="flex items-center gap-3">
-              <div class="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center">
-                <img src="/mini-logo.webp" alt={`${nameEn}'s logo` }/>
+              <div class="h-10 w-10 rounded-full flex items-center justify-center">
+                <img src="/logo.webp" alt={`${nameEn}'s logo` }/>
               </div>
               <div>
-                <h3 class="font-medium">دستیار هوشمند {botName()?.data?.botName}</h3>
+                <h3 class="font-medium">{botName()?.data?.botName}</h3>
                 <p class="text-sm text-muted-foreground">{botName()?.data?.businessName}</p>
               </div>
             </div>
@@ -134,6 +144,17 @@ const MinimalChat = ({botId}:props) => {
 
           {/* Chat Messages */}
           <div class="h-96 overflow-y-auto p-4 space-y-4" ref={messagesRailRef}>
+            {botName()?.data?.greeting && <Message>
+              {botName()?.data?.greeting}
+            </Message>}
+            {botName()?.data && messages().length === 0 && <div class="space-y-1">
+              <Muted class="mb-2 mt-10">
+                سوالات پیشنهادی:
+              </Muted>
+              {botName()?.data?.suggestedQuestions.map(s => 
+                <Suggest>{s}</Suggest>
+              )}
+            </div>}
             {messages().map((message) => (
               <Message right={message.role === "user"}>
                 {message.content}
@@ -190,5 +211,6 @@ const MinimalChat = ({botId}:props) => {
     </div>
   )
 }
+
 
 export default MinimalChat

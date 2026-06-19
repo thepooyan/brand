@@ -1,22 +1,15 @@
 import Elysia from "elysia";
 import prompt from "~/data/llm-prompt.json"
 import { chatGaurd } from "./chatGuard";
-import { google } from "@ai-sdk/google";
-import { streamText } from "ai";
 import { getFakeStream } from "~/server/fakter";
+import { chatStream } from "~/server/llmUtil";
 
 export const hooshbaan = (app: Elysia) => {
   return app
     .use(chatGaurd)
     .post("/hooshbaan", ({body}) => {
-
-      // const result = streamText({
-      //   model: google('gemini-2.5-flash'),
-      //   system: prompt.website,
-      //   messages: body.messages,
-      // });
-      //
-      // return result.toDataStreamResponse()
+      const result = chatStream(body.messages, prompt.website)
+      return result.toTextStreamResponse()
 
       const stream = getFakeStream(1000, 1000)
       return new Response(stream, {

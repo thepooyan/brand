@@ -48,6 +48,10 @@ export const docsChatNav:docsNav[] = [
         },
       ],
     },
+    {
+      title: "قوانین و مقررات",
+      url: "/docs/terms-and-conditions"
+    }
   ]
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {

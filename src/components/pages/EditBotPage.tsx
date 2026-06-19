@@ -1,20 +1,15 @@
 import { I_Bot } from "~/db/schema"
 import Input from "../ui/input"
 import { Component, createSignal, ParentComponent, ParentProps } from "solid-js"
-import Textarea from "../ui/Textarea"
 import { cn } from "~/lib/utils"
 import { Button } from "../ui/button"
-import ToneSelect from "../parts/ToneSelect"
-import { getLanguageKeyByLabel, getLanguageValue, getResponseLengthKeyByLabel, getResponseLengthValue, getToneKeyByLabel, getToneValue } from "~/server/llmUtil"
-import LangSelect from "../parts/LangSelect"
-import ResLengthSelect from "../parts/ResLengthSelect"
 import { editBot } from "~/server/mutation"
 import { callModal } from "../layout/Modal"
 import { useNavigate } from "@solidjs/router"
 import ColorPicker from "../ui/color-picker"
 import { ImageUploader } from "../parts/ImageUploader"
 import { Dynamic } from "solid-js/web"
-import ArrayInput from "../ui/array-input"
+import SuggestedQArray from "../ui/suggestedQ-array"
 import { useForm } from "~/lib/hooks/useForm"
 import Checkbox from "../ui/checkbox"
 import BackBtn from "../parts/back-btn"
@@ -69,14 +64,14 @@ const EditBotPage = ({bot, permission}:p) => {
   const handleSubmit = async (data: ReturnType<typeof flattenBot>) => {
     setLoading(true)
     callModal.wait()
-    let res = await editBot(reverseFlat(data))
+    let a = reverseFlat(data)
+    let res = await editBot(a)
     setLoading(false)
     if (res.ok) {
-      nv("/Panel/Chatbot")
+      nv("/panel/chat-bot")
       callModal.success()
     }
-    else
-    callModal.fail(res.msg)
+    else callModal.fail(res.msg)
   }
 
   interface p {
@@ -96,10 +91,12 @@ const EditBotPage = ({bot, permission}:p) => {
 
   return (
     <>
-      <BackBtn href="/Panel/chatbot"
-        class="flex mr-auto ml-13 w-max mb-3"
-        navigatorHook={usePanelTransitiveNavigate}
-      />
+      <div class="container p-0">
+        <BackBtn href="/panel/chat-bot"
+          class="flex mb-3 w-max mr-auto"
+          navigatorHook={usePanelTransitiveNavigate}
+        />
+      </div>
       <form class="p-5 bg-card text-card-foreground rounded-lg space-y-5 border-border border-1 container"
       onsubmit={registerSubmit(handleSubmit)}>
         <h2 class="text-xl font-bold mb-10">ویرایش چت‌بات</h2>
@@ -111,19 +108,6 @@ const EditBotPage = ({bot, permission}:p) => {
               key="botName"
             />
           </In>
-          <Seprator>
-            لحن
-            <ToneSelect initialValue={getToneValue(bot.tone)?.label} onchange={(e:string) => setForm("tone", getToneKeyByLabel(e) || "") }/>
-          </Seprator>
-          <Seprator>
-            زبان
-            <LangSelect initialValue={getLanguageValue(bot.language)?.label} onchange={(e:string) => setForm("language", getLanguageKeyByLabel(e) || "")}/>
-          </Seprator>
-          <Seprator>
-            حداکثر طول پاسخ
-            <ResLengthSelect initialValue={getResponseLengthValue(bot.maxResponseLength)?.label}
-              onchange={(e:string) => setForm("maxResponseLength", getResponseLengthKeyByLabel(e) || "")}/>
-          </Seprator>
           <In key="websiteUrl" name="آدرس وبسایت شما" />
           <Seprator className="">
             رنگ سازمانی
@@ -151,14 +135,14 @@ const EditBotPage = ({bot, permission}:p) => {
             <UpgradeTooltip active={!permission.proSettings} >
               <In key="floatingMessage" name="پیام شناور" disabled={!permission?.proSettings}/>
               <div class="flex gap-2 mt-3 text-sm">
-                <Checkbox onchange={val => setForm("floatingMessageActive", val)} initialValue={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
+                <Checkbox onchange={val => setForm("floatingMessageActive", val)} value={bot.floatingMessage.active} disabled={!permission?.proSettings}/>
                 فعال سازی پیام شناور
               </div>
             </UpgradeTooltip>
           </div>
           <div>
             <UpgradeTooltip active={!permission.proSettings}>
-              <ArrayInput disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)}
+              <SuggestedQArray disabled={!permission?.proSettings} onchange={(val) => setForm("suggestedQuestions", val)}
                 initialValue={formValues().suggestedQuestions || []}/>
             </UpgradeTooltip>
           </div>
@@ -168,7 +152,6 @@ const EditBotPage = ({bot, permission}:p) => {
               <ImageUploader disabled={!permission.removeLogo} initialValue={bot.logo || undefined} onChange={val => setForm("logo", val)}/>
             </UpgradeTooltip>
           </Seprator>
-          <In key="trainingText" name="متن آموزش ربات" as={Textarea} className="md:col-span-3" />
         </div>
         <p class="text-muted-foreground text-sm">
           هرچیزی که ربات باید بداند را در قسمت بالا وارد کنید!

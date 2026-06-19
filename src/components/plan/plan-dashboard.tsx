@@ -1,15 +1,18 @@
-import { PlanInstance } from "~/db/schema"
+import { PlanInstance, planTable } from "~/db/schema"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Accessor, For, ParentProps, Show } from "solid-js"
+import { Accessor, createSignal, For, ParentProps, Show } from "solid-js"
 import { allFeatures, doesPlanIncludeFeature, findPlanName, getPlan } from "~/sections/plan"
 import { Button } from "../ui/button"
-import { calcMessageCount, calcMessagePercent, cn, daysRemaining } from "~/lib/utils"
+import { calcMessageCount, calcMessagePercent, cn, daysRemaining, safeDbTransaction } from "~/lib/utils"
 import TA from "../parts/TA"
 import { FiTrendingUp } from "solid-icons/fi"
 import { AiFillWarning } from "solid-icons/ai"
 import { Badge } from "../ui/badge"
 import Check from "../ui/check"
 import X from "../ui/x"
+import { db } from "~/db/db"
+import { eq } from "drizzle-orm"
+import { useTransaction } from "~/lib/actionAbstraction"
 
 interface p {
   plan: Accessor<PlanInstance>
@@ -21,10 +24,20 @@ const PlanDashboard = ({plan}:p) => {
     return daysRemaining(p.expirationDate)
   }
   const expired = () => days() <= 0
+  const [loading, setLoading] = createSignal(false)
+  
+  const {callTransaction} = useTransaction()
+  const handleClean = () => {
+    const planId = plan().id
+    callTransaction(
+      cleanExpiredPlan(planId),
+      {revalidate: "userPlan", loadingSignal: setLoading, noModal: true}
+    )
+  }
 
   return (
-    <div class="flex justify-center items-center">
-    <Card class="w-xl m-auto">
+    <div class="flex justify-center items-center w-lg">
+    <Card class={cn("m-auto", loading() && "opacity-30 pointer-events-none")}>
       <CardHeader class="relative">
         <CardTitle>
           {expired() ?
@@ -37,13 +50,24 @@ const PlanDashboard = ({plan}:p) => {
           }
         </CardTitle>
         <CardDescription>{findPlanName(plan())}</CardDescription>
-        <Button
-          as={TA} href="/pricing" class="absolute left-5"
-          variant="secondary"
-        >
-          ارتقا پلن
-          <FiTrendingUp class="text-green-500"/>
-        </Button>
+        <Show when={expired()}>
+          <Button
+            class="absolute left-5" variant="secondary"
+            onclick={handleClean}
+          >
+            پاک کردن
+            <X/>
+          </Button>
+        </Show>
+        <Show when={!expired()}>
+          <Button
+            as={TA} href="/pricing" class="absolute left-5"
+            variant="secondary"
+          >
+            ارتقا پلن
+            <FiTrendingUp class="text-green-500"/>
+          </Button>
+        </Show>
       </CardHeader>
       <CardContent class="">
         <div class="grid grid-cols-2 mb-10 mt-5">
@@ -53,11 +77,7 @@ const PlanDashboard = ({plan}:p) => {
             <Text>
               تعداد ربات: {getPlan(plan()).botCount} عدد
             </Text>
-            <Text>
-                پایگاه دانش: {getPlan(plan()).knowledgeBase}
-            </Text>
           </div>
-
 
           <div>
             <Title>
@@ -118,5 +138,12 @@ const Text = ({children}:ParentProps) => <p
 >
   {children}
 </p>
+
+const cleanExpiredPlan = (planId: number) => {
+  "use server"
+  return safeDbTransaction(
+    db.delete(planTable).where(eq(planTable.id, planId))
+  )
+}
 
 export default PlanDashboard

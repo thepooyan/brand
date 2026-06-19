@@ -2,11 +2,13 @@ import { cn, copyToClipboard } from "~/lib/utils"
 import { Button } from "./button"
 import { createSignal } from "solid-js"
 import { FiCheck, FiCopy } from "solid-icons/fi"
+import PrismParser, { PrismLangs } from "../prism/prism-parser"
 
 interface p {
   code: string
+  lang?: PrismLangs
 }
-const Code = ({code}:p) => {
+const Code = ({code, lang = "javascript"}:p) => {
 
   const [copied, setCopied] = createSignal(false)
 
@@ -18,10 +20,10 @@ const Code = ({code}:p) => {
 
   return (
     <div class="relative">
-      <pre class="text-left">{code}</pre>
+      <PrismParser lang={lang}>{code}</PrismParser>
 
       <Button
-        class={cn("absolute right-1 top-1 w-19 transition-all gap-2 !bg-background text-foreground",
+        class={cn("absolute right-2 top-2 w-19 transition-all gap-2 !bg-background text-foreground",
           copied() && "!bg-success !text-success-foreground w-33"
         )}
         onclick={handleClick}
@@ -34,7 +36,6 @@ const Code = ({code}:p) => {
           <div class={cn(
             "opacity-0 invisible w-0 transition-all center flex-row gap-1 overflow-hidden text-success-foreground inline-flex",
             copied() && "opacity-100 w-12 visible"
-
           )}>
              شد! <FiCheck/>
           </div>

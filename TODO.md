@@ -4,6 +4,13 @@ net - test telegram database
 
 future:
 - calc based on token
+- is it possible that bot keep state after page change?
+- were you satisfied with the bot query
+
+training {
+    add q and a
+    
+}
 
 history {
     net add pageination for history
@@ -11,6 +18,17 @@ history {
     net test every source of history (done: api, widget, telegram, sessionChat)
 }
 
+parse llm response of markdown
+remake 1.order chatbot page 2.llm builder then fix all the dropdown options
+rename safeFetch
+remove all useAuthSession
+add rules page
+add moderation
+block should block bot from being accessible
+fill the form using llm
+add information about hooshbaan to every bot
+live operator?
+add a preview for widget features as edit is happening
 fix streaming history problem
 fix all caps routes
 fix website order enums
@@ -21,8 +39,10 @@ cron cleaner for otp
 order status page
 make a react hook
 
+human operator on website
+human operator on telegram via bot
+add a tooltip to nickname to show the ip behind it
 net add npm package name and url to docs
-net ? add syntax highlighter for example-js
 net fix initial theme glitch
 net add pageination for admin users
 net profile does not work on could?

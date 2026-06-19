@@ -1,17 +1,9 @@
-import Spinner from "~/components/parts/Spinner"
-import { crawl } from "~/server/crawler"
+import { createSignal } from "solid-js"
 
 const test = () => {
-
-  const hi = () => {
-    crawl("https://zarebin.ir")
-
-  }
-
+  const [sig, sett] = createSignal("kk")
   return <>
-    hi
-    <Spinner/>
-    hi
+    <input placeholder="hi" value={sig()} onchange={() => console.log("change")}/>
   </>
 }
 
