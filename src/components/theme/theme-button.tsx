@@ -1,14 +1,14 @@
 import { FiMoon, FiSun } from "solid-icons/fi"
 import { Button } from "../ui/button"
-import { theme, toggleTheme } from "~/lib/theme"
 import { cn } from "~/lib/utils"
 
 const ThemeButton = () => {
 
-  const isDark = () => theme() === "dark"
+  // const isDark = () => theme() === "dark"
+  const isDark = () => true
 
   return (
-    <Button variant="outline" onclick={() => toggleTheme()}
+    <Button variant="outline" //onclick={() => toggleTheme()}
       class="w-10"
     >
       <FiSun class={cn(
