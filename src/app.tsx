@@ -1,17 +1,32 @@
-import { Router } from "@solidjs/router";
+import { createAsync, Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { ErrorBoundary, Suspense } from "solid-js";
+import { createEffect, ErrorBoundary, Suspense } from "solid-js";
 import "./app.css";
 import Modal from "./components/layout/Modal";
 import FallbackPage from "./components/pages/FallbackPage";
 import {Meta, MetaProvider, Title} from "@solidjs/meta"
 import ErrorPage from "./components/pages/ErrorPage";
 import { description, name, nameEn } from "../config/config";
-import { updateThemeSignal } from "./lib/theme";
+import { getClassname, setTheme, theme } from "./lib/theme";
+import { getThemeSession } from "./lib/session";
 
 export default function App() {
 
-  updateThemeSignal()
+  const tt = createAsync(() => getThemeSession())
+
+  createEffect(() => {
+    const b = tt()
+    if (b !== undefined) {
+      setTheme(b)
+    }
+  })
+
+  createEffect(() => {
+    const t = theme()
+    if (t !== undefined) {
+      document.body.className = getClassname(t)
+    }
+  })
 
   return (
     <>
