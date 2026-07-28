@@ -19,8 +19,4 @@ const slug = () => {
   )
 }
 
-export const route = {
-  preload: (props: {params: {slug: string}}) => getBlogBySlug(decodeURIComponent((props.params.slug)))
-}
-
 export default slug
