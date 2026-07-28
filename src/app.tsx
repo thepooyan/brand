@@ -2,7 +2,6 @@ import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { ErrorBoundary, Suspense } from "solid-js";
 import "./app.css";
-import Modal from "./components/layout/Modal";
 import FallbackPage from "./components/pages/FallbackPage";
 import {Meta, MetaProvider, Title} from "@solidjs/meta"
 import ErrorPage from "./components/pages/ErrorPage";
@@ -28,7 +27,6 @@ export default function App() {
 
   return (
     <>
-      <Modal/>
       <Router
         root={props => (
           <MetaProvider>
