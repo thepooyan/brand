@@ -1,5 +1,4 @@
 dist
-bun.lock
 .wrangler
 .output
 .vercel
