@@ -27,7 +27,7 @@ export const adminUserQuery = (back?: string) => query(async () => {
 
 export const useGetUser = (throwRedirect = false) => {
   if (!throwRedirect) {
-    return createAsync(() => userQuery())
+    return createAsync(() => userQuery(), {deferStream: true})
   }
   const location = useLocation() 
   return createAsync(() => strictUserQuery(location.pathname), {deferStream: true})
