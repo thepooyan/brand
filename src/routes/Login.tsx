@@ -16,7 +16,6 @@ import { useBounceBack } from "~/lib/hooks/useBounce"
 import { isProd } from "~/server/env/shared-env"
 import { useTransaction } from "~/lib/actionAbstraction"
 import { Muted } from "~/components/prose/prose-item"
-import { useToggle } from "~/lib/hooks"
 
 export default function Login() {
   const [rawPhoneNumber, setPhoneNumber] = createSignal("")
@@ -109,7 +108,6 @@ export default function Login() {
   }
 
   const [step, setStep, markElement] = useViewTransition<"phone" | "otp">("step", "phone")
-  const {activate, isActive} = useToggle<"signup" | "signin">("signup")
 
   return (
     <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-black bg-[url('/wave.webp')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
@@ -117,13 +115,8 @@ export default function Login() {
 
       <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...markElement("card")}>
         <CardHeader class="text-center">
-          <div class="grid grid-cols-2 gap-2 mb-4 ">
-            <Button size="sm" variant={isActive("signup") ? "default" : "secondary"} onclick={() => activate("signup")}>ثبت نام</Button>
-            <Button size="sm" variant={isActive("signin") ? "default" : "secondary"} onclick={() => activate("signin")}>ورود</Button>
-          </div>
           <CardTitle class="text-2xl font-bold text-primary">
-            {isActive("signup") && "ثبت نام"}
-            {isActive("signin") && "ورود به حساب کاربری"}
+            ثبت نام / ورود
           </CardTitle>
           <CardDescription class="text-muted-foreground">
             {step() === "phone" ? "لطفا شماره تلفن همراه خود را وارد کنید" : "کد تایید ارسال شده را وارد کنید"}
