@@ -1,3 +1,7 @@
+
+fresh start:
+- fix plus on check icon
+
 more bot options:
 net - crawler
 net - test telegram database
