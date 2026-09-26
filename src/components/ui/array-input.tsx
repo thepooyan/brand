@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For } from "solid-js"
+import { createSignal, For } from "solid-js"
 import Input from "./input"
 import { InputChangeEvent } from "~/db/types"
 import { Badge } from "./badge"
@@ -8,7 +8,8 @@ import { ifEnterPressed } from "~/lib/utils"
 
 interface props {
   onchange?: (value: string[]) => void
-  value?: string[]
+  value?: () => string[]
+  defaultValue?: string[]
   disabled?: boolean
   placeholder?: string
   class?: string
@@ -16,21 +17,31 @@ interface props {
 const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
 
   const [strValue, setStrValue] = createSignal("")
-  const [innerValue, setInnerValue] = createSignal<string[]>(props.value || [])
+  const [innerValue, setInnerValue] = createSignal<string[]>(props.defaultValue ?? [])
 
-  onchange &&
-  createEffect(() => {
-    onchange(innerValue())
-  })
+  const value = () => {
+    return props.value?.() ?? innerValue()
+  }
+
+  const updateValue = (next: string[]) => {
+    if (!props.value) {
+      setInnerValue(next)
+    }
+
+    onchange?.(next)
+  }
 
   const flush = () => {
     let newval = strValue()
-    if (innerValue().includes(newval)) return
+    if (value().includes(newval)) return
     if (!newval) return
-    setInnerValue(prev => ([...prev, newval]))
+
     setStrValue("")
+    updateValue([...value(), newval])
   }
-  const deleteItem = (v: string) => setInnerValue(prev => prev.filter(f => f !== v))
+  const deleteItem = (v: string) => {
+    updateValue(value().filter(f => f !== v))
+  }
 
   return (
     <>
@@ -38,7 +49,7 @@ const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
         <Input
           name=""
           value={strValue()}
-          onKeyUp={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
+          onInput={ (e:InputChangeEvent) => setStrValue(e.currentTarget.value)}
           onkeypress={ifEnterPressed(flush)}
           placeholder={props.placeholder}
           disabled={disabled}
@@ -49,7 +60,7 @@ const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
         </Button>
       </div>
       <div class="space-y-1 py-2">
-        <For each={innerValue()}>
+        <For each={value()}>
           {(v) => <Badge
             variant="secondary"
             class="rtl flex gap-2 w-max"

@@ -152,7 +152,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
               شماره تماس:
             </p>
             <ArrayInput
-              value={store.contactNumber}
+              value={() => store.contactNumber}
               onchange={value => setStore("contactNumber", value)}
               placeholder="شماره تماس"
               class="bg-muted text-muted-foreground"
