@@ -11,7 +11,7 @@ import { updateChatHistory } from "~/server/serverUtil";
 import { timedMessage } from "~/db/constants";
 import { decrementMessageCount } from "~/sections/planServer";
 import { talk_to_bot } from "~/server/llmUtil";
-import { OnFinishEvent } from "ai";
+import { GenerateTextEndEvent } from "ai";
 import { getIp } from "./apiUtil";
 
 export const sessionChatRouter = new Elysia({ prefix: "/session" })
@@ -25,7 +25,7 @@ export const sessionChatRouter = new Elysia({ prefix: "/session" })
   if (!res.ok)
     return status(res.status, {errorMessage: res.msg})
 
-    const handleFinish = async (e: OnFinishEvent) => {
+    const handleFinish = async (e: GenerateTextEndEvent) => {
       const lastQ = body.messages.at(-1)?.content || ""
       const qa:timedMessage[] = [
         {role: "user", content: lastQ, timestamp: new Date()},

@@ -2,7 +2,7 @@ import { getSystemPrompt } from "@/server/serverUtil";
 import { privateEnv } from "~/server/env/private-env";
 // import { google } from "@ai-sdk/google";
 import { createOpenAI } from '@ai-sdk/openai';
-import { ModelMessage, streamText, generateText, OnFinishEvent } from "ai";
+import { ModelMessage, streamText, generateText, GenerateTextEndEvent } from "ai";
 import { ChatbotRelations } from "~/db/schema";
 
 export enum llm_models {
@@ -39,7 +39,7 @@ export const chatStream = (messages: ModelMessage[], system?: string, onFinish?:
   return result
 }
 
-type onFinish = (event: OnFinishEvent) => any
+type onFinish = (event: GenerateTextEndEvent) => any
 export const talk_to_bot = (bot: ChatbotRelations, onFinish?: onFinish) => {
   const s = getSystemPrompt(bot)
   return (m: ModelMessage[]) => chatStream(m, s, onFinish)
