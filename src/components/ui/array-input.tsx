@@ -16,21 +16,21 @@ interface props {
 const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
 
   const [strValue, setStrValue] = createSignal("")
-  const [val, setValue] = createSignal<string[]>(props.value || [])
+  const [innerValue, setInnerValue] = createSignal<string[]>(props.value || [])
 
   onchange &&
   createEffect(() => {
-    onchange(val())
+    onchange(innerValue())
   })
 
   const flush = () => {
     let newval = strValue()
-    if (val().includes(newval)) return
+    if (innerValue().includes(newval)) return
     if (!newval) return
-    setValue(prev => ([...prev, newval]))
+    setInnerValue(prev => ([...prev, newval]))
     setStrValue("")
   }
-  const deleteItem = (v: string) => setValue(prev => prev.filter(f => f !== v))
+  const deleteItem = (v: string) => setInnerValue(prev => prev.filter(f => f !== v))
 
   return (
     <>
@@ -49,7 +49,7 @@ const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
         </Button>
       </div>
       <div class="space-y-1 py-2">
-        <For each={val()}>
+        <For each={innerValue()}>
           {(v) => <Badge
             variant="secondary"
             class="rtl flex gap-2 w-max"
