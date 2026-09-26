@@ -117,7 +117,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
               لحن:
             </p>
             <ToneSelect
-              value={store.tone}
+              value={() => store.tone}
               onchange={value => setStore("tone", value)}
               placeholder="لحن"
               class="bg-muted text-muted-foreground"
@@ -129,7 +129,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
               طول پاسخ:
             </p>
             <MRLSelect
-              value={store.maxResponseLength}
+              value={() => store.maxResponseLength}
               onchange={value => setStore("maxResponseLength", value)}
               placeholder="طول پاسخ"
               class="bg-muted text-muted-foreground"
@@ -141,7 +141,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
               زبان:
             </p>
             <LangSelect
-              value={store.language}
+              value={() => store.language}
               onchange={value => setStore("language", value)}
               placeholder="زبان"
               class="bg-muted text-muted-foreground"
