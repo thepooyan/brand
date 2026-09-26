@@ -3,10 +3,9 @@ import { TrainingData } from "~/db/schema"
 import { Button } from "~/components/ui/button"
 import { createStore } from "solid-js/store"
 import { preventDefault } from "~/lib/utils"
-import { useBind } from "~/lib/hooks/useForm"
 import GenerallSelect from "~/components/parts/generall-select"
 import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmConst"
-import { Accessor, Component, createEffect, onMount } from "solid-js"
+import { Accessor, createEffect, onMount } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
@@ -51,8 +50,6 @@ const TrainForm = ({initialData, bot_id}:p) => {
       }
   })
 
-  const {registerInput, registerCustom}
-  = useBind(store, setStore)
   const {callTransaction} = useTransaction()
 
   const handleSubmit = () => {
@@ -71,22 +68,6 @@ const TrainForm = ({initialData, bot_id}:p) => {
     Object.entries(LanguageOptions).map(([k,v]) => ({label: v.label, value: k}))
   )
 
-  type label = {
-    value: keyof TrainingData,
-    label: string,
-    Component?: Component<any>
-    class?: string
-  }
-  const myLabels: label[] = [
-    {value: "address", label: "آدرس"},
-    {value: "trainingText", label: "متن آموزش"},
-    {value: "tone", label: "لحن", Component: ToneSelect},
-    {value: "maxResponseLength", label: "طول پاسخ", Component: MRLSelect},
-    {value: "language", label: "زبان", Component: LangSelect},
-    {value: "contactNumber", label: "شماره تماس", Component: ArrayInput},
-    {value: "useEmojies", label: "استفاده از ایموجی", Component: Checkbox, class: "flex gap-1"},
-  ]
-
   let scrollRef!:HTMLDivElement
   onMount(() => {
     setTimeout(() => {
@@ -104,17 +85,89 @@ const TrainForm = ({initialData, bot_id}:p) => {
             onsubmit={preventDefault(handleSubmit)}
             class="grid gap-4"
           >
-          {myLabels.map(l => <label class={l.class}>
-              <p class="text-sm mb-1  ">
-                {l.label}:
-              </p>
-              {l.Component ? 
-                <l.Component {...registerCustom(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
-                :
-                <Input {...registerInput(l.value)} placeholder={l.label} class="bg-muted text-muted-foreground"/>
-              }
-            </label>
-          )}
+          <label>
+            <p class="text-sm mb-1  ">
+              آدرس:
+            </p>
+            <Input
+              name="address"
+              value={store.address}
+              onchange={e => setStore("address", e.currentTarget.value)}
+              placeholder="آدرس"
+              class="bg-muted text-muted-foreground"
+            />
+          </label>
+
+          <label>
+            <p class="text-sm mb-1  ">
+              متن آموزش:
+            </p>
+            <Input
+              name="trainingText"
+              value={store.trainingText}
+              onchange={e => setStore("trainingText", e.currentTarget.value)}
+              placeholder="متن آموزش"
+              class="bg-muted text-muted-foreground"
+            />
+          </label>
+
+          <label>
+            <p class="text-sm mb-1  ">
+              لحن:
+            </p>
+            <ToneSelect
+              value={store.tone}
+              onchange={value => setStore("tone", value)}
+              placeholder="لحن"
+              class="bg-muted text-muted-foreground"
+            />
+          </label>
+
+          <label>
+            <p class="text-sm mb-1  ">
+              طول پاسخ:
+            </p>
+            <MRLSelect
+              value={store.maxResponseLength}
+              onchange={value => setStore("maxResponseLength", value)}
+              placeholder="طول پاسخ"
+              class="bg-muted text-muted-foreground"
+            />
+          </label>
+
+          <label>
+            <p class="text-sm mb-1  ">
+              زبان:
+            </p>
+            <LangSelect
+              value={store.language}
+              onchange={value => setStore("language", value)}
+              placeholder="زبان"
+              class="bg-muted text-muted-foreground"
+            />
+          </label>
+
+          <label>
+            <p class="text-sm mb-1  ">
+              شماره تماس:
+            </p>
+            <ArrayInput
+              value={store.contactNumber}
+              onchange={value => setStore("contactNumber", value)}
+              placeholder="شماره تماس"
+              class="bg-muted text-muted-foreground"
+            />
+          </label>
+
+          <label class="flex gap-1">
+            <p class="text-sm mb-1  ">
+              استفاده از ایموجی:
+            </p>
+            <Checkbox
+              value={store.useEmojies}
+              onchange={value => setStore("useEmojies", value)}
+            />
+          </label>
 
           <p class="text-sm">
             لینک سوشیال:
