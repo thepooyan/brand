@@ -21,23 +21,23 @@ function GenerallSelect<T>(options: option<T>[]) {
 
   return ({ onchange, value, placeholder, ...props }:p) => {
 
-    const [val, setValue] = createSignal<label>(options.find(o => o.value === unwrap(value))?.label || "")
+    const [innerValue, setInnerValue] = createSignal<label>(options.find(o => o.value === unwrap(value))?.label || "")
 
     createEffect(() => {
       let o = options.find(o => o.value === unwrap(value))
-      if (o) setValue(o.label)
+      if (o) setInnerValue(o.label)
     })
 
     const changeHandler = (e: label | null) => {
       if (!e) return
       let newValue = options.find(o => o.label === e)!
-      setValue(e)
+      setInnerValue(e)
       onchange && onchange(newValue.value)
     }
 
     return (
       <Select
-          value={val()}
+          value={innerValue()}
           onChange={changeHandler}
           options={options.map(o => o.label)}
           placeholder={placeholder}
