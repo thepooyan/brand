@@ -14,6 +14,7 @@ import { callModal } from "~/components/layout/Modal"
 import { saveTrainingData, set_training_state } from "./training-state"
 import { useTransaction } from "~/lib/actionAbstraction"
 import BackBtn from "~/components/parts/back-btn"
+import { InputChangeEvent } from "~/db/types"
 
 interface p {
   initialData?: Accessor<TrainingData | null | undefined>
@@ -92,7 +93,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
             <Input
               name="address"
               value={store.address}
-              onchange={e => setStore("address", e.currentTarget.value)}
+              onchange={(e:InputChangeEvent) => setStore("address", e.currentTarget.value)}
               placeholder="آدرس"
               class="bg-muted text-muted-foreground"
             />
@@ -105,7 +106,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
             <Input
               name="trainingText"
               value={store.trainingText}
-              onchange={e => setStore("trainingText", e.currentTarget.value)}
+              onchange={(e:InputChangeEvent) => setStore("trainingText", e.currentTarget.value)}
               placeholder="متن آموزش"
               class="bg-muted text-muted-foreground"
             />
