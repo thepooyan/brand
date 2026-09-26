@@ -1,18 +1,27 @@
 // import { TbCheck } from "solid-icons/tb"
-import { createEffect, createSignal } from "solid-js"
+import { TbOutlineCheck } from "solid-icons/tb"
+import { createSignal } from "solid-js"
 import { cn } from "~/lib/utils"
 
 interface props {
   onchange?: (value: boolean) => void
-  value?: boolean
+  value?: () => boolean
+  defaultValue?: boolean
   disabled?: boolean
 }
-const Checkbox = ({onchange, disabled, value}:props) => {
+const Checkbox = ({onchange, disabled, defaultValue, ...props}:props) => {
 
-  const [checked, setChecked] = createSignal(value || false)
+  const [checked, setChecked] = createSignal(defaultValue ?? false)
+  const value = () => props.value?.() ?? checked()
 
-  createEffect(() => onchange && onchange(checked()) )
-  const TbCheck = (_:{class:string}) => "+"
+  const flip = () => {
+    const newValue = !value()
+    if (!props.value) {
+      setChecked(newValue)
+    }
+    onchange?.(newValue)
+  }
+
   
   return (
     <>
@@ -20,14 +29,14 @@ const Checkbox = ({onchange, disabled, value}:props) => {
         class={cn("border-border border-1 rounded-sm bg-muted hover:bg-muted/80 box-5 overflow-hidden cursor-pointer ",
           disabled && "opacity-70 pointer-events-none "
         )}
-        onclick={() => setChecked(p => !p)}
+        onclick={flip}
       >
         <div 
           class={cn(`bg-indigo-600 w-full h-full scale-60 opacity-0 origin-center transition-all p-[2px] flex justify-center items-center`,
-            checked() && `scale-100 opacity-100`
+            value() && `scale-100 opacity-100`
           )}
         >
-          <TbCheck class="w-full text-white"/>
+          <TbOutlineCheck class="w-full text-white"/>
         </div>
       </div>
     </>

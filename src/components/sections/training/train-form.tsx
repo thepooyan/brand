@@ -164,7 +164,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
               استفاده از ایموجی:
             </p>
             <Checkbox
-              value={store.useEmojies}
+              value={() => store.useEmojies}
               onchange={value => setStore("useEmojies", value)}
             />
           </label>
