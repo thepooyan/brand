@@ -19,7 +19,9 @@ const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
   const [val, setValue] = createSignal<string[]>(props.value || [])
 
   onchange &&
-  createEffect(() => onchange(val()))
+  createEffect(() => {
+    onchange(val())
+  })
 
   const flush = () => {
     let newval = strValue()
