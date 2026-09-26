@@ -13,10 +13,10 @@ interface props {
   placeholder?: string
   class?: string
 }
-const ArrayInput = ({onchange, disabled = false, value, ...props}:props) => {
+const ArrayInput = ({onchange, disabled = false, ...props}:props) => {
 
   const [strValue, setStrValue] = createSignal("")
-  const [val, setValue] = createSignal<string[]>(value || [])
+  const [val, setValue] = createSignal<string[]>(props.value || [])
 
   onchange &&
   createEffect(() => onchange(val()))
