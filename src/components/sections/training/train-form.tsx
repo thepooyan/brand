@@ -5,7 +5,7 @@ import { createStore } from "solid-js/store"
 import { preventDefault } from "~/lib/utils"
 import GenerallSelect from "~/components/parts/generall-select"
 import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "~/server/llmConst"
-import { Accessor, createEffect, onMount } from "solid-js"
+import { Accessor, createEffect, createSignal, onMount } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
@@ -42,6 +42,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
   }
 
   const [store, setStore] = createStore(emptyValue)
+  const [loading, setLoading] = createSignal(false)
 
   if (initialData)
   createEffect(() => {
@@ -55,7 +56,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
 
   const handleSubmit = () => {
     callTransaction(
-      saveTrainingData(store, bot_id)
+      saveTrainingData(store, bot_id), { loadingSignal: setLoading }
     )
   }
 
@@ -175,7 +176,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
           <SocialLinkInputs store={store} setStore={setStore}/>
 
           <div class="space-x-2 sticky bottom-0 backdrop-blur-md py-2 rounded ">
-            <Button type="submit">ثبت</Button>
+            <Button type="submit" loading={loading}>ثبت</Button>
             <Button variant="secondary" onclick={recrawl}>یادگیری مجدد از لینک</Button>
             <BackBtn href="/panel/chat-bot" class="float-left" size="default" variant="outline"/>
           </div>
