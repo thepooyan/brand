@@ -16,5 +16,4 @@ export const toggleTheme = async () => {
 
 export const getClassname = (t:OptionalAccessor<theme>) => `theme-${unwrap(t)} ${unwrap(t).endsWith("dark") && "dark" || ""}`
 
-
-
+export const isDark = () => theme() === "dark"
