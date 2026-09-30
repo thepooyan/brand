@@ -7,26 +7,13 @@ import FallbackPage from "./components/pages/FallbackPage";
 import {Meta, MetaProvider, Title} from "@solidjs/meta"
 import ErrorPage from "./components/pages/ErrorPage";
 import { description, name, nameEn } from "../config/config";
-import { getClassname, setTheme, theme } from "./lib/theme";
+import { getClassname, theme } from "./lib/theme";
 import { getThemeSession } from "./lib/session";
 
 export default function App() {
 
-  const tt = createAsync(() => getThemeSession())
-
-  createEffect(() => {
-    const b = tt()
-    if (b !== undefined) {
-      setTheme(b)
-    }
-  })
-
-  createEffect(() => {
-    const t = theme()
-    if (t !== undefined) {
-      document.body.className = getClassname(t)
-    }
-  })
+  const initialTheme = createAsync(() => getThemeSession())
+  const finalTheme = () => theme() ?? initialTheme()
 
   return (
     <>
@@ -37,7 +24,11 @@ export default function App() {
             <Title> {name} | {nameEn} </Title>
             <Meta name="description" content={description}/>
             <ErrorBoundary fallback={e=> <ErrorPage error={e}/>}>
-              <Suspense fallback={<FallbackPage/>}>{props.children}</Suspense>
+              <Suspense fallback={<FallbackPage/>}>
+                <div class={getClassname(finalTheme() || "plain")}>
+                  {props.children}
+                </div>
+              </Suspense>
             </ErrorBoundary>
           </MetaProvider>
         )}
