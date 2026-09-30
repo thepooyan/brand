@@ -1,6 +1,6 @@
 import { createEffect, Match, onMount, ParentProps, Switch } from "solid-js"
 import Choose from "./choose"
-import { mark_training_page, set_training_state, training_state } from "./training-state"
+import { auto_training_data, mark_training_page, set_training_state, training_state } from "./training-state"
 import TrainAuto from "./train-auto"
 import CrawlTree from "./crawl-tree"
 import TrainForm from "./train-form"
@@ -46,11 +46,13 @@ const BotTrainer = ({bot_id}:p) => {
     }
   })
 
+  const someSignal = () => chatbot()?.data?.trainingData ?? auto_training_data()
+
   const stateComponents = [
     {n: "choose", c: () => <Choose/> },
     {n: "tree", c: () => <CrawlTree/> },
     {n: "auto", c: () => <TrainAuto/> },
-    {n: "form", c: () => <TrainForm initialData={() => chatbot()?.data?.trainingData} bot_id={parseInt(bot_id)}/> },
+    {n: "form", c: () => <TrainForm initialData={() => someSignal()} bot_id={parseInt(bot_id)}/> },
     {n: "loading", c: () => <Loading/> },
   ]
 
