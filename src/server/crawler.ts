@@ -85,6 +85,7 @@ const extractLinks = (dom: Document, host: string) => {
 const extractUniqeTexts = (dom: Document) => {
   const result:string[] = []
 
+  //TODO: add a bunch for each social here
   // if these keywords are spotted in href, the link will be included in text extraction
   const listOfSocialKeywords = ["wa.me", "t.me", "linkedin"]
 

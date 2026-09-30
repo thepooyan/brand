@@ -1,13 +1,12 @@
 import { H3, Muted } from "~/components/prose/prose-item"
 import Checkbox from "~/components/ui/checkbox"
-import { crawlTree } from "~/server/crawler"
+import { crawlTree, extractTextFromPage } from "~/server/crawler"
 import { set_training_state, tree } from "./training-state"
 import { createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
 import { Button } from "~/components/ui/button"
 import BackBtn from "~/components/parts/back-btn"
 import { Loading } from "~/components/parts/Loading"
-import { wait } from "~/lib/utils"
 
 interface p {
 }
@@ -21,8 +20,11 @@ const CrawlTree = ({}:p) => {
 
     callModal.prompt(`مطالب ${selected().length} صفحه جهت آموزش ربات بررسی خواهد شد. ادامه؟`)
     .yes(async () => {
-        setLoading(true)
-        await wait(2000)
+        // setLoading(true)
+        console.log(selected())
+        extractTextFromPage(selected()[0])
+
+        return
         set_training_state("form")
       })
   }
