@@ -113,8 +113,17 @@ const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
   const dom = parseHTML(res.data.data)
 
   const uniqueTexts = extractUniqeTexts(dom.document)
+  const clean = cleanupWebsiteTexts(uniqueTexts)
   
-  return fetchSuccess(uniqueTexts)
+  return fetchSuccess(clean)
+}
+
+const cleanupWebsiteTexts = (text:string[]):string[] => {
+  return text.map(t => 
+    t.replaceAll(/\n|\r/g, "")
+    .replaceAll(/ +/g, " ")
+    .trim()
+  )
 }
 
 const extractLinks = (dom: Document, host: string) => {
