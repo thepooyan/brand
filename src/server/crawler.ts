@@ -45,21 +45,32 @@ export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
   ])
 }
 
-export const extractTextFromPage = async (pageAddress: string):Transaction => {
+export const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {
+  let result:string[] = []
+  for (const page of pages) {
+    const resp = await extractTextFromPage(page)
+    if (resp.ok) {
+      resp.data.forEach(item => result.push(item))
+    }
+  }
+  const dedup = removeDuplicateSentences(result)
+  return fetchSuccess(dedup)
+}
+
+export const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
   const parser = new DOMParser()
 
   let mainUrl = isUrlValid(pageAddress)
-  if (!mainUrl) return transactionFail("آدرس معتبر نیست")
+  if (!mainUrl) return fetchFail("آدرس معتبر نیست")
 
   const res = await safe( axios.get<string>(pageAddress) )
-  if (!res.ok) return transactionFail("خطا در خواندن صفحه")
+  if (!res.ok) return fetchFail("خطا در خواندن صفحه")
 
   const dom = parser.parseFromString(res.data.data, "text/html")
 
   const uniqueTexts = extractUniqeTexts(dom)
   
-  console.log(uniqueTexts)
-  return transactionSuccess()
+  return fetchSuccess(uniqueTexts)
 }
 
 const extractLinks = (dom: Document, host: string) => {
