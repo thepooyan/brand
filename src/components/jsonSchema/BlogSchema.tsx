@@ -1,4 +1,5 @@
 import { I_Blog } from "~/db/schema";
+import { nameEn, socialLinks } from "../../../config/config";
 
 const BlogSchema = ({ blog }: { blog: I_Blog }) => {
   return (
@@ -13,23 +14,19 @@ const BlogSchema = ({ blog }: { blog: I_Blog }) => {
           "@type": "Person",
           name: "Saharnaz sadeghi",
         },
-        // author: {
-        //   "@type": "Organization",
-        //   name: "Hooshbaan",
-        // },
         publisher: {
           "@type": "Organization",
-          name: "Hooshbaan",
+          name: nameEn,
           logo: {
             "@type": "ImageObject",
-            url: "https://Hooshbaan.com/logo.webp",
+            url: `${socialLinks.website}/logo.webp`,
           },
         },
         datePublished: blog.date,
         dateModified: blog.date,
         mainEntityOfPage: {
           "@type": "WebPage",
-          "@id": `https://Hooshbaan.com/Blog/${encodeURIComponent(blog.slug)}`,
+          "@id": `${socialLinks.website}/Blog/${encodeURIComponent(blog.slug)}`,
         },
         articleBody: blog.content,
         keywords: blog.tags?.join(", "),

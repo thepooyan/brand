@@ -7,7 +7,7 @@ import TA from "~/components/parts/TA"
 import { callModal } from "~/components/layout/Modal"
 import ContactInfo from "~/components/parts/ContactInfo"
 import Consult from "~/components/parts/Consult"
-import { name } from "../../../../config/config"
+import { name, socialLinks } from "../../../../config/config"
 import { Link } from "@solidjs/meta"
 
 export default function route() {
@@ -60,7 +60,7 @@ export default function route() {
 
   return (
     <main {...pageMarker()}>
-      <Link rel="canonical" href="https://hooshbaan.com/Services/Web-design" />
+      <Link rel="canonical" href={`${socialLinks.website}/Services/Web-design`} />
 
       {/* Hero Section */}
       <section class="py-16 md:py-24">

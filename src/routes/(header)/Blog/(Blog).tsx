@@ -5,7 +5,7 @@ import NoBlogsYet from "~/components/pages/blog/NoBlogsYet"
 import BlogCard from "~/components/parts/BlogCard"
 import { Loading } from "~/components/parts/Loading"
 import { getAllBlogs } from "~/lib/queries"
-import { name } from "../../../../config/config"
+import { name, socialLinks } from "../../../../config/config"
 
 const Blog = () => {
 
@@ -13,7 +13,7 @@ const Blog = () => {
   
   return (
     <>
-      <Link rel="canonical" href="https://hooshbaan.com/Blog" />
+      <Link rel="canonical" href={`${socialLinks.website}/Blog`} />
       <Title> مقالات هوش مصنوعی ، چت بات و طراحی سایت | بلاگ {name} </Title>
       <Meta name = "description" content={` در بلاگ ${name} می توانید آخرین و جدید ترین اخبار هوش مصنوعی و آموزش های تخصصی مرتبط با طراحی سایت و استفاده از چت بات ها را مطالعه کنید.`}/>
       <Suspense fallback={<Loading/>}>

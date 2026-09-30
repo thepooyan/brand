@@ -30,7 +30,7 @@ add rules page
 add moderation
 block should block bot from being accessible
 fill the form using llm
-add information about hooshbaan to every bot
+add information about neora to every bot
 live operator?
 add a preview for widget features as edit is happening
 fix streaming history problem

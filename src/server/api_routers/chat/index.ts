@@ -1,6 +1,6 @@
 import { updateChatHistory } from "@/server/serverUtil";
 import Elysia from "elysia";
-import { hooshbaan } from "./hooshbaan";
+import { neora } from "./neora";
 import { botAuthGuard } from "./botAuthGuard";
 import { chatGaurd } from "./chatGuard";
 import { sessionChatRouter } from "./sessionChat";
@@ -20,7 +20,7 @@ export const chatRoute = new Elysia({ prefix: "/chat" })
 .options("/*", () => new Response(null, { status: 204 }))
 .use(chatGaurd)
 .use(sessionChatRouter)
-.use(hooshbaan)
+.use(neora)
 .use(botAuthGuard)
 .post( "/",
   async ({ body, bot, status, request }) => {

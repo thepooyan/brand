@@ -1,5 +1,5 @@
 import Code from "~/components/ui/code"
-import { name } from "../../../../config/config"
+import { name, socialLinks } from "../../../../config/config"
 
 const examplejs = () => {
   return (
@@ -12,7 +12,7 @@ const examplejs = () => {
   },
 ]
 
-const response = await fetch("https://hooshbaan.com/api/chat", {
+const response = await fetch("${socialLinks.website}/api/chat", {
   headers: {
     "Content-Type": "application/json",
     "authorization": "Bearer $token" 

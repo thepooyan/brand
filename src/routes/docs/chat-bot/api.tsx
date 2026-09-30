@@ -1,5 +1,6 @@
 import { A } from "@solidjs/router";
 import Code from "~/components/ui/code";
+import { socialLinks } from "../../../../config/config";
 
 const create = () => {
 
@@ -20,7 +21,7 @@ const create = () => {
         </li>
         <li>
           حال با استفاده از توکن، میتوانید به آدرس زیر ریکوئست ارسال کنید و با ربات خود صحبت کنید:
-          <Code code={`https://hooshbaan.com/api/chat`}/>
+          <Code code={`${socialLinks.website}/api/chat`}/>
           <ul>
             <li>متد ریکوئیت باید <code>POST</code> باشد</li>
             <li>

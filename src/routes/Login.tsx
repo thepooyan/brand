@@ -16,6 +16,7 @@ import { useBounceBack } from "~/lib/hooks/useBounce"
 import { isProd } from "~/server/env/shared-env"
 import { useTransaction } from "~/lib/actionAbstraction"
 import { Muted } from "~/components/prose/prose-item"
+import { socialLinks } from "../../config/config"
 
 export default function Login() {
   const [rawPhoneNumber, setPhoneNumber] = createSignal("")
@@ -111,7 +112,7 @@ export default function Login() {
 
   return (
     <div class="min-h-screen flex items-center justify-center p-4 flex-col gap-2 bg-black bg-[url('/wave.webp')] bg-repeat-x bg-position-[0_-5rem]" {...pageMarker()}>
-      <Link rel="canonical" href="https://hooshbaan.com/Login"/>
+      <Link rel="canonical" href={`${socialLinks.website}/Login`}/>
 
       <Card class="w-full max-w-md border-border bg-card text-card-foreground" {...markElement("card")}>
         <CardHeader class="text-center">

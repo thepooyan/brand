@@ -1,10 +1,10 @@
 import { A } from "@solidjs/router";
 import Code from "~/components/ui/code";
-import { name } from "../../../../config/config";
+import { name, socialLinks } from "../../../../config/config";
 
 const create = () => {
-  let url = "https://hooshbaan.com/zaza"
-  let package_name = "hooshbaan-zaza"
+  let url = `${socialLinks.website}/zaza`
+  let package_name = "neora-zaza"
 
   return (
     <>

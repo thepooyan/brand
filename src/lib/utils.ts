@@ -6,6 +6,7 @@ import { resolveError } from "./errorHandler"
 import { getPlan } from "~/sections/plan"
 import { callModal } from "~/components/layout/Modal"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "./actionAbstraction"
+import { socialLinks } from "../../config/config"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -73,7 +74,7 @@ export const limitChar = (string: string, limit: number) => {
 }
 
 export const createBlogFullUrl = (blogSlug: string) => {
-  return `https://Hooshbaan.com/Blog/${encodeURIComponent(blogSlug)}`
+  return `${socialLinks.website}/Blog/${encodeURIComponent(blogSlug)}`
 }
 
 export async function copyToClipboard(text: string): Promise<void> {

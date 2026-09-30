@@ -4,10 +4,10 @@ import { chatGaurd } from "./chatGuard";
 import { getFakeStream } from "~/server/fakter";
 import { chatStream } from "~/server/llmUtil";
 
-export const hooshbaan = (app: Elysia) => {
+export const neora = (app: Elysia) => {
   return app
     .use(chatGaurd)
-    .post("/hooshbaan", ({body}) => {
+    .post("/neora", ({body}) => {
       const result = chatStream(body.messages, prompt.website)
       return result.toTextStreamResponse()
 
