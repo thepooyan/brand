@@ -46,13 +46,13 @@ const BotTrainer = ({bot_id}:p) => {
     }
   })
 
-  const someSignal = () => chatbot()?.data?.trainingData ?? auto_training_data()
+  const trainData = () => chatbot()?.data?.trainingData ?? auto_training_data()
 
   const stateComponents = [
     {n: "choose", c: () => <Choose/> },
     {n: "tree", c: () => <CrawlTree/> },
     {n: "auto", c: () => <TrainAuto/> },
-    {n: "form", c: () => <TrainForm initialData={() => someSignal()} bot_id={parseInt(bot_id)}/> },
+    {n: "form", c: () => <TrainForm initialData={() => trainData()} bot_id={parseInt(bot_id)}/> },
     {n: "loading", c: () => <Loading/> },
   ]
 

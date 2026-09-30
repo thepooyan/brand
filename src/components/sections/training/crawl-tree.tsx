@@ -23,7 +23,10 @@ const CrawlTree = ({}:p) => {
         setLoading(true)
         const selectedPages = selected()
         let data = await generateTrainingDataFromPages(selectedPages)
-        if (!data.ok) return callModal.fail(data.msg)
+        if (!data.ok) {
+          setLoading(false)
+          return callModal.fail(data.msg)
+        }
         set_auto_training_data(data.data)
         set_training_state("form")
       })

@@ -1,10 +1,9 @@
 "use server"
 import axios from "axios"
 import { TrainingData, TrainingDataZod } from "~/db/schema"
-import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
+import { Fetch, fetchFail, fetchSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 import { parseHTML } from "linkedom";
-import { clearDelegatedEvents } from "solid-js/web"
 
 export type crawlTree = {link: string, status: "ok" | "unreachable" | "unchecked"}[]
 export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
@@ -78,7 +77,7 @@ const textJSon = `
 
 export const generateTrainingDataFromPages = async (pages: string[]):Fetch<TrainingData> => {
   let allText = await extractTextFromPages(pages)
-  if (!allText.ok) return fetchFail("some reasom")
+  if (allText.ok === false) return allText
   return train_bot_using_text(allText.data)
 }
 
@@ -89,8 +88,10 @@ const train_bot_using_text = async (text: string[]):Fetch<TrainingData> => {
   const parse1 = await safe(JSON.parse(textJSon))
   if (!parse1.ok) return fetchFail("error parsing json")
 
-  const parsedJson = TrainingDataZod.parse(parse1.data)
-  return fetchSuccess(parsedJson as TrainingData)
+  const parsedJson = TrainingDataZod.safeParse(parse1.data)
+  if (parsedJson.error) return fetchFail(parsedJson.error.message)
+
+  return fetchSuccess(parsedJson.data)
 }
 
 const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {

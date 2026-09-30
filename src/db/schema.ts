@@ -2,7 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import { int, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { chat_sources, message, order_status, ticket_states, timedMessage } from "~/db/constants";
 import { plan_ids } from "~/sections/plan";
-import { createInsertSchema } from "drizzle-zod";
+import { createSelectSchema } from "drizzle-zod";
 
 export const tokenLength = 62
 
@@ -90,7 +90,7 @@ export const trainingDataTable = sqliteTable("training_data", {
   trainingText: text().notNull(),
 })
 
-export const TrainingDataZod = createInsertSchema(trainingDataTable)
+export const TrainingDataZod = createSelectSchema(trainingDataTable)
 export type TrainingData = typeof trainingDataTable.$inferSelect
 export type NewTrainingData = typeof trainingDataTable.$inferInsert
 
