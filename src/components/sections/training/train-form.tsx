@@ -15,6 +15,7 @@ import { saveTrainingData, set_training_state } from "./training-state"
 import { useTransaction } from "~/lib/actionAbstraction"
 import BackBtn from "~/components/parts/back-btn"
 import { InputChangeEvent } from "~/db/types"
+import Textarea from "~/components/ui/Textarea"
 
 interface p {
   initialData?: Accessor<TrainingData | null | undefined>
@@ -102,10 +103,10 @@ const TrainForm = ({initialData, bot_id}:p) => {
             <p class="text-sm mb-1  ">
               متن آموزش:
             </p>
-            <Input
+            <Textarea
               name="trainingText"
               value={store.trainingText}
-              onchange={(e:InputChangeEvent) => setStore("trainingText", e.currentTarget.value)}
+              onInput={(e:InputChangeEvent) => setStore("trainingText", e.currentTarget.value)}
               placeholder="متن آموزش"
               class="bg-muted text-muted-foreground"
             />
