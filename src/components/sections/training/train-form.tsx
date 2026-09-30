@@ -79,12 +79,11 @@ const TrainForm = ({initialData, bot_id}:p) => {
   })
 
   return (
-    <div class="grid grid-cols-2 gap-3">
-
+    <div class="grid  gap-3">
       <div class="overflow-auto h-134 pl-2 pr-1" ref={scrollRef}>
         <form
             onsubmit={preventDefault(handleSubmit)}
-            class="grid gap-4"
+            class="grid gap-4 grid-cols-2"
           >
           <label>
             <p class="text-sm mb-1  ">
@@ -183,7 +182,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
         </form>
       </div>
 
-      <MinimalChat botId={String(bot_id)}/>
+      {/*<MinimalChat botId={String(bot_id)}/>*/}
     </div>
   )
 }
