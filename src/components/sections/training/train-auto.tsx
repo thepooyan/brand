@@ -5,7 +5,7 @@ import Input from "~/components/ui/input"
 import { useTransaction } from "~/lib/actionAbstraction"
 import { buildLinkTree } from "~/server/crawler"
 import { set_training_state, setTree } from "./training-state"
-import BackBtn from "~/components/parts/back-btn"
+import RealBackBtn from "~/components/parts/real-back-btn"
 
 const TrainAuto = () => {
 
@@ -28,7 +28,7 @@ const TrainAuto = () => {
 
   return (
     <div class="relative">
-      <BackBtn onClick={() => set_training_state("choose")} class="absolute left-0 top-5"/>
+      <RealBackBtn class="absolute left-0 top-5"/>
       <label>
         آدرس وبسایت خود را وارد کنید:
         <Input placeholder="https://www.example.com" class="ltr w-70" bind={addressSignal} name="website"/>
