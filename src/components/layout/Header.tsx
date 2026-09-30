@@ -8,7 +8,7 @@ import TA from "../parts/TA"
 import { logUserOut, useGetUser } from "~/lib/signal"
 import { ROLES } from "~/lib/session"
 import ThemeButton from "../theme/theme-button"
-import { Muted } from "../prose/prose-item"
+import { H3, Muted } from "../prose/prose-item"
 
 const Header = () => {
 
@@ -31,10 +31,10 @@ const Header = () => {
               <div class="h-10 w-10 rounded-full bg-primary animate-ping duration-2000 ease-out"></div>
               <img src="/logo.webp" class="absolute -top-1 rounded-full w-13 " alt={`${nameEn}'s logo`}/>
             </div>
-            <div>
-            <TA class="text-xl font-bold" href="/">{name}</TA>
+            <TA href="/">
+              <H3>{name}</H3>
               <Muted>{nameEn}</Muted>
-            </div>
+            </TA>
           </div>
           <nav class="hidden md:flex items-center gap-6">
             <TA href="/Services" class="text-sm font-medium hover:text-primary transition-colors">
