@@ -45,60 +45,22 @@ export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
   ])
 }
 
-export const crawl = async (address: string):Transaction => {
+export const extractTextFromPage = async (pageAddress: string):Transaction => {
   const parser = new DOMParser()
-  const checkedUrls = new Set<string>()
-  const brokenUrls = new Set<string>()
-  const registerUrls = new Set<string>()
-  const pageTexts = new Map<string, string[]>()
 
-  let mainUrl = isUrlValid(address)
+  let mainUrl = isUrlValid(pageAddress)
   if (!mainUrl) return transactionFail("آدرس معتبر نیست")
 
-  const addToPageTexts = (key: string, value: string) => {
-    let alredy = pageTexts.get(key)
-    pageTexts.set(key, [...alredy || [], value])
-  }
 
-  const sendRequest = async (subAddress: string) => {
 
-    if (registerUrls.has(subAddress)) return
-    registerUrls.add(subAddress)
-    if (checkedUrls.size === 20) return
-    if (!isUrlValid(subAddress)) {
-      brokenUrls.add(subAddress)
-      return
-    }
+  const res = await safe( axios.get<string>(pageAddress) )
+  if (!res.ok) return transactionFail("خطا در خواندن صفحه")
 
-    const res = await safe( axios.get<string>(subAddress) )
-    if (!res.ok) {
-      brokenUrls.add(subAddress)
-      return
-    } 
-    checkedUrls.add(subAddress)
+  const dom = parser.parseFromString(res.data.data, "text/html")
 
-    const dom = parser.parseFromString(res.data.data, "text/html")
-
-    const uniqueTexts = extractUniqeTexts(dom)
-    for (const u of uniqueTexts) {
-      addToPageTexts(subAddress, u)
-    }
-
-    const links = extractLinks(dom, mainUrl.host)
-    for (const l of links) {
-      await sendRequest(l)
-    }
-
-    return transactionSuccess()
-  }
-
-  // debugger
-  await sendRequest(address)
-  const allText = removeDuplicateSentences([...pageTexts.values()].flat())
-  console.log("ckecked", checkedUrls)
-  console.log("broken", brokenUrls)
-  console.log(pageTexts)
-  console.log(allText)
+  const uniqueTexts = extractUniqeTexts(dom)
+  
+  console.log(uniqueTexts)
   return transactionSuccess()
 }
 
