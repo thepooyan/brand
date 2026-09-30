@@ -1,13 +1,13 @@
 import { Accessor, createContext, createEffect, ParentProps, useContext } from "solid-js";
-import { defaultTheme, setTheme, theme } from "./theme";
+import { defaultIsDark, defaultTheme, setTheme, theme } from "./theme";
 import { createAsync } from "@solidjs/router";
 import { getThemeSession } from "./session";
 
 type themeContext = {
-  theme: Accessor<theme | undefined>,
-  isDark: Accessor<boolean | undefined>
+  theme: Accessor<theme>,
+  isDark: Accessor<boolean>
 }
-const ThemeContext = createContext<themeContext>({theme: () => defaultTheme, isDark: () => false});
+const ThemeContext = createContext<themeContext>({theme: () => defaultTheme, isDark: () => defaultIsDark});
 
 export const useTheme = () => useContext(ThemeContext)
 
@@ -18,7 +18,7 @@ export const ThemeProvider = (props:ParentProps) => {
     let a = initialTheme()
     if (a) setTheme(a)
   })
-  const finalTheme = () => theme() ?? initialTheme()
+  const finalTheme = () => theme() ?? initialTheme() ?? defaultTheme
   const isDark = () => finalTheme() === "dark"
 
   return <ThemeContext.Provider value={{theme: finalTheme, isDark}}>

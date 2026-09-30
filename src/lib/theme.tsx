@@ -5,6 +5,7 @@ import { useTheme } from "./themeProvider";
 
 export type theme = "dark" | "light" | "plain" | "amber-dark" | "neon-dark" 
 export const defaultTheme:theme = "dark"
+export const defaultIsDark = true
 
 export const [theme, setTheme] = createSignal<theme | null>(null)
 
@@ -21,7 +22,7 @@ export const WrapWithTheme = (props:ParentProps) => {
 
   const {theme} = useTheme()
 
-  return <div class={getClassname(theme() || "plain")} id="body">
+  return <div class={getClassname(theme())} id="body">
     {props.children}
   </div>
 }
