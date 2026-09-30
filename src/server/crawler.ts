@@ -1,15 +1,15 @@
+"use server"
 import axios from "axios"
-import { TbOutlineBrandStorj } from "solid-icons/tb"
 import { TrainingData, TrainingDataZod } from "~/db/schema"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
+import { parseHTML } from "linkedom";
 
 export type crawlTree = {link: string, status: "ok" | "unreachable" | "unchecked"}[]
 export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
   const brokenUrls = new Set<string>()
   const okUrls = new Set<string>()
   const allUrls = new Set<string>()
-  const parser = new DOMParser()
 
   const mainUrl = isUrlValid(address)
   if (!mainUrl) return fetchFail("آدرس معتبر نیست")
@@ -32,9 +32,9 @@ export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
     }
     okUrls.add(subAddress)
 
-    const dom = parser.parseFromString(res.data.data, "text/html")
+    const dom = parseHTML(res.data.data)
 
-    const links = extractLinks(dom, mainUrl.host)
+    const links = extractLinks(dom.document, mainUrl.host)
     for (const l of links) {
       await sendRequest(l)
     }
@@ -82,6 +82,7 @@ export const generateTrainingDataFromPages = async (pages: string[]):Fetch<Train
 
 const train_bot_using_text = async (text: string[]):Fetch<TrainingData> => {
 
+  console.log(text)
   const parse1 = await safe(JSON.parse(textJSon))
   if (!parse1.ok) return fetchFail("error parsing json")
 
@@ -102,7 +103,6 @@ const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {
 }
 
 const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
-  const parser = new DOMParser()
 
   let mainUrl = isUrlValid(pageAddress)
   if (!mainUrl) return fetchFail("آدرس معتبر نیست")
@@ -110,9 +110,9 @@ const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
   const res = await safe( axios.get<string>(pageAddress) )
   if (!res.ok) return fetchFail("خطا در خواندن صفحه")
 
-  const dom = parser.parseFromString(res.data.data, "text/html")
+  const dom = parseHTML(res.data.data)
 
-  const uniqueTexts = extractUniqeTexts(dom)
+  const uniqueTexts = extractUniqeTexts(dom.document)
   
   return fetchSuccess(uniqueTexts)
 }
