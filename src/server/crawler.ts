@@ -51,8 +51,6 @@ export const extractTextFromPage = async (pageAddress: string):Transaction => {
   let mainUrl = isUrlValid(pageAddress)
   if (!mainUrl) return transactionFail("آدرس معتبر نیست")
 
-
-
   const res = await safe( axios.get<string>(pageAddress) )
   if (!res.ok) return transactionFail("خطا در خواندن صفحه")
 
@@ -83,21 +81,36 @@ const extractLinks = (dom: Document, host: string) => {
   return [...uniqueURL]
 }
 
+
 const extractUniqeTexts = (dom: Document) => {
   const result:string[] = []
 
-  const la = (childNodes: Node["childNodes"]) => {
+  // if these keywords are spotted in href, the link will be included in text extraction
+  const listOfSocialKeywords = ["wa.me", "t.me", "linkedin"]
+
+  const loopOverNodes = (childNodes: Node["childNodes"]) => {
     for (const c of childNodes) {
       if (c.nodeName === "SCRIPT") continue
       if (c.nodeName === "CODE") continue
       if (c.nodeName === "PRE") continue
+      if (c.nodeName === "A") {
+        const href = (c as any).getAttribute?.("href")
+        if (typeof href === "string") {
+          listOfSocialKeywords.forEach(key => {
+            if (href.includes(key)) {
+              result.push(href)
+              return
+            }
+          })
+        }
+      }
       if (c.nodeType === c.TEXT_NODE && c.textContent) {
         result.push(c.textContent)
       }
-      la(c.childNodes)
+      loopOverNodes(c.childNodes)
     }
   }
-  la(dom.body.childNodes)
+  loopOverNodes(dom.body.childNodes)
   return removeDuplicateSentences(result)
 }
 
