@@ -9,7 +9,6 @@ import { Accessor, createEffect, createSignal, onMount } from "solid-js"
 import ArrayInput from "~/components/ui/array-input"
 import Checkbox from "~/components/ui/checkbox"
 import SocialLinkInputs from "./social-link-inputs"
-import { callModal } from "~/components/layout/Modal"
 import { saveTrainingData, set_training_state } from "./training-state"
 import { useTransaction } from "~/lib/actionAbstraction"
 import BackBtn from "~/components/parts/back-btn"
@@ -22,10 +21,7 @@ interface p {
 }
 const TrainForm = ({initialData, bot_id}:p) => {
 
-  const recrawl = () => {
-    callModal.prompt(`آیا مطمئنید؟ در صورت یادگیری مجدد اطلاعات قبلی از بین خواهد رفت.`)
-    .yes(() => set_training_state("auto"))
-  }
+  const recrawl = () => set_training_state("auto")
 
   let emptyValue: TrainingData = {
     id: -1,
