@@ -12,7 +12,7 @@ import { getThemeSession } from "./lib/session";
 
 export default function App() {
 
-  const initialTheme = createAsync(() => getThemeSession())
+  const initialTheme = createAsync(() => getThemeSession(), {deferStream: true})
   createEffect(() => {
     let a = initialTheme()
     if (a) setTheme(a)
