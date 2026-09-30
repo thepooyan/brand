@@ -6,6 +6,7 @@ import { useTransaction } from "~/lib/actionAbstraction"
 import { buildLinkTree } from "~/server/crawler"
 import { set_training_state, setTree } from "./training-state"
 import RealBackBtn from "~/components/parts/real-back-btn"
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
 
 const TrainAuto = () => {
 
@@ -27,15 +28,19 @@ const TrainAuto = () => {
   }
 
   return (
-    <div class="relative">
-      <RealBackBtn class="absolute left-0 top-5"/>
-      <label>
-        آدرس وبسایت خود را وارد کنید:
-        <Input placeholder="https://www.example.com" class="ltr w-70" bind={addressSignal} name="website"/>
-      </label>
-      <Button onclick={handleTreeBuild}>تایید</Button>
-      {loading() && <Loading class="absolute top-0 bg-background w-full opacity-80"/>}
-    </div>
+    <Card class="relative w-md m-auto mt-20">
+      <CardHeader>
+        <CardTitle>
+          آدرس وبسایت خود را وارد کنید:
+        </CardTitle>
+        <RealBackBtn class="absolute left-5 top-5"/>
+      </CardHeader>
+      <CardContent class="flex flex-col gap-2">
+        <Input placeholder="https://www.example.com" class="ltr w-full" bind={addressSignal} name="website" />
+        <Button onclick={handleTreeBuild}>تایید</Button>
+        {loading() && <Loading class="absolute top-0 bg-background w-full opacity-80"/>}
+      </CardContent>
+    </Card>
   )
 }
 
