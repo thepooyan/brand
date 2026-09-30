@@ -6,7 +6,7 @@ import { useTransaction } from "~/lib/actionAbstraction"
 import { buildLinkTree } from "~/server/crawler"
 import { set_training_state, setTree } from "./training-state"
 import RealBackBtn from "~/components/parts/real-back-btn"
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 
 const TrainAuto = () => {
 
@@ -31,8 +31,11 @@ const TrainAuto = () => {
     <Card class="relative w-md m-auto mt-20">
       <CardHeader>
         <CardTitle>
-          آدرس وبسایت خود را وارد کنید:
+          یادگیری خودکار
         </CardTitle>
+        <CardDescription>
+          لطفا آدرس وبسایت خود را جهت آموزش ربات وارد کنید:
+        </CardDescription>
         <RealBackBtn class="absolute left-5 top-5"/>
       </CardHeader>
       <CardContent class="flex flex-col gap-2">
