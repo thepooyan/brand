@@ -1,5 +1,5 @@
 export const name = "نئورا تک"
-export const nameEn = "Neora"
+export const nameEn = "Neora tech"
 export const socialLinks = {
   email: "hooshbaan@gmail.com",
   X: "",
