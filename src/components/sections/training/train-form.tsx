@@ -108,7 +108,7 @@ const TrainForm = ({initialData, bot_id}:p) => {
               value={store.trainingText}
               onInput={(e:InputChangeEvent) => setStore("trainingText", e.currentTarget.value)}
               placeholder="متن آموزش"
-              class="bg-muted text-muted-foreground"
+              class="bg-muted text-muted-foreground !min-h-20"
             />
           </label>
 
