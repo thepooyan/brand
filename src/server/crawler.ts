@@ -1,5 +1,6 @@
 import axios from "axios"
-import { TrainingData } from "~/db/schema"
+import { TbOutlineBrandStorj } from "solid-icons/tb"
+import { TrainingData, TrainingDataZod } from "~/db/schema"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 
@@ -46,9 +47,45 @@ export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
   ])
 }
 
+
+const textJSon = `
+{
+  "id": 1,
+  "address": "123 Example Street, Baku, Azerbaijan",
+  "contactNumber": [
+    "+994501234567",
+    "+994551234567"
+  ],
+  "social": [
+    {
+      "type": "instagram",
+      "link": "https://instagram.com/example"
+    },
+    {
+      "type": "telegram",
+      "link": "https://t.me/example"
+    }
+  ],
+  "useEmojies": false,
+  "tone": "friendly and professional",
+  "language": "English",
+  "maxResponseLength": "medium",
+  "trainingText": "You are a helpful assistant. Answer clearly and politely, provide accurate information, and keep responses concise."
+}
+`
+
+export const generateTrainingDataFromPages = async (pages: string[]):Fetch<TrainingData> => {
+  let allText = await extractTextFromPages(pages)
+  if (!allText.ok) return fetchFail("some reasom")
+  return train_bot_using_text(allText.data)
+}
+
 const train_bot_using_text = async (text: string[]):Fetch<TrainingData> => {
-  const json = ""
-  const parsedJson = JSON.parse(json)
+
+  const parse1 = await safe(JSON.parse(textJSon))
+  if (!parse1.ok) return fetchFail("error parsing json")
+
+  const parsedJson = TrainingDataZod.parse(parse1.data)
   return fetchSuccess(parsedJson as TrainingData)
 }
 
