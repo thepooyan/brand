@@ -4,9 +4,11 @@ import { TrainingData, TrainingDataZod } from "~/db/schema"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 import { parseHTML } from "linkedom";
+import { clearDelegatedEvents } from "solid-js/web"
 
 export type crawlTree = {link: string, status: "ok" | "unreachable" | "unchecked"}[]
 export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
+  debugger
   const brokenUrls = new Set<string>()
   const okUrls = new Set<string>()
   const allUrls = new Set<string>()
@@ -32,9 +34,9 @@ export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
     }
     okUrls.add(subAddress)
 
-    const dom = parseHTML(res.data.data)
+    const dom = parseHTML(res.data.data).document
 
-    const links = extractLinks(dom.document, mainUrl.host)
+    const links = extractLinks(dom, mainUrl.host, mainUrl.protocol)
     for (const l of links) {
       await sendRequest(l)
     }
@@ -83,6 +85,7 @@ export const generateTrainingDataFromPages = async (pages: string[]):Fetch<Train
 const train_bot_using_text = async (text: string[]):Fetch<TrainingData> => {
 
   console.log(text)
+  console.log(text.join("").length)
   const parse1 = await safe(JSON.parse(textJSon))
   if (!parse1.ok) return fetchFail("error parsing json")
 
@@ -110,9 +113,9 @@ const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
   const res = await safe( axios.get<string>(pageAddress) )
   if (!res.ok) return fetchFail("خطا در خواندن صفحه")
 
-  const dom = parseHTML(res.data.data)
+  const dom = parseHTML(res.data.data).document
 
-  const uniqueTexts = extractUniqeTexts(dom.document)
+  const uniqueTexts = extractUniqeTexts(dom)
   const clean = cleanupWebsiteTexts(uniqueTexts)
   
   return fetchSuccess(clean)
@@ -126,13 +129,14 @@ const cleanupWebsiteTexts = (text:string[]):string[] => {
   )
 }
 
-const extractLinks = (dom: Document, host: string) => {
+const extractLinks = (dom: Document, host: string, protocol: string) => {
   const query = dom.querySelectorAll("a")
   const uniquePathname = new Set<string>()
   const uniqueURL = new Set<string>()
 
   for (const i of query) {
     let href = i.href
+    if (href.startsWith("/")) href = `${protocol}${host}${href}`
     try {
       let url =  new URL(href)
       if (url.host === host && !uniquePathname.has(url.pathname)) {

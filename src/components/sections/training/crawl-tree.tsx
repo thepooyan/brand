@@ -1,6 +1,6 @@
 import { H3, Muted } from "~/components/prose/prose-item"
 import Checkbox from "~/components/ui/checkbox"
-import { crawlTree } from "~/server/crawler"
+import { crawlTree, generateTrainingDataFromPages } from "~/server/crawler"
 import { set_training_state, tree } from "./training-state"
 import { createSignal } from "solid-js"
 import { callModal } from "~/components/layout/Modal"
@@ -22,7 +22,8 @@ const CrawlTree = ({}:p) => {
     .yes(async () => {
         // setLoading(true)
         const selectedPages = selected()
-
+        let data = await generateTrainingDataFromPages(selectedPages)
+        console.log(data)
         return
         set_training_state("form")
       })
