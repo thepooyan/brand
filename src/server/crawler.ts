@@ -1,4 +1,5 @@
 import axios from "axios"
+import { TrainingData } from "~/db/schema"
 import { Fetch, fetchFail, fetchSuccess, Transaction, transactionFail, transactionSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 
@@ -45,7 +46,13 @@ export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
   ])
 }
 
-export const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {
+const train_bot_using_text = async (text: string[]):Fetch<TrainingData> => {
+  const json = ""
+  const parsedJson = JSON.parse(json)
+  return fetchSuccess(parsedJson as TrainingData)
+}
+
+const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {
   let result:string[] = []
   for (const page of pages) {
     const resp = await extractTextFromPage(page)
@@ -57,7 +64,7 @@ export const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {
   return fetchSuccess(dedup)
 }
 
-export const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
+const extractTextFromPage = async (pageAddress: string):Fetch<string[]> => {
   const parser = new DOMParser()
 
   let mainUrl = isUrlValid(pageAddress)
