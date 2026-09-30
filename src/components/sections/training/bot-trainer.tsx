@@ -46,7 +46,7 @@ const BotTrainer = ({bot_id}:p) => {
     }
   })
 
-  const trainData = () => chatbot()?.data?.trainingData ?? auto_training_data()
+  const trainData = () => auto_training_data() ?? chatbot()?.data?.trainingData
 
   const stateComponents = [
     {n: "choose", c: () => <Choose/> },

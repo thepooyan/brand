@@ -67,10 +67,10 @@ const textJSon = `
       "link": "https://t.me/example"
     }
   ],
-  "useEmojies": false,
-  "tone": "friendly and professional",
-  "language": "English",
-  "maxResponseLength": "medium",
+  "useEmojies": true,
+  "tone": "formal",
+  "language": "english",
+  "maxResponseLength": "short",
   "trainingText": "You are a helpful assistant. Answer clearly and politely, provide accurate information, and keep responses concise."
 }
 `
