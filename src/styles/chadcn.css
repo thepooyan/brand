@@ -61,7 +61,7 @@
   * {
     @apply border-border;
   }
-  body {
+  body, #body {
     @apply bg-background text-foreground;
     font-feature-settings:
       "rlig" 1,
