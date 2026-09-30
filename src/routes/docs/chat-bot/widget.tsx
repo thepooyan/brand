@@ -1,5 +1,6 @@
 import { A } from "@solidjs/router";
 import Code from "~/components/ui/code";
+import { name } from "../../../../config/config";
 
 const create = () => {
   let url = "https://hooshbaan.com/zaza"
@@ -45,7 +46,7 @@ init_chatbot({token: "paster your token..."})
 </script>`}/>
         </li>
         <li>
-          حال ویجت هوشبان، با اتصال به ربات خودتان باید نمایش داده شود.
+          حال ویجت {name}، با اتصال به ربات خودتان باید نمایش داده شود.
         </li>
         <li>
           با تغییر دادن تنظیمات ربات خود در 

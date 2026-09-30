@@ -1,5 +1,5 @@
-export const name = "هوش‌بان"
-export const nameEn = "Hooshbaan"
+export const name = "نئورا تک"
+export const nameEn = "Neora"
 export const socialLinks = {
   email: "hooshbaan@gmail.com",
   X: "",
@@ -16,4 +16,4 @@ export const support = {
   mobile: "+989027766926",
   whatsapp: "+989027766926"
 }
-export const description = "هوشبان، ارائه‌دهنده خدمات هوش مصنوعی و دیجیتال مارکتینگ برای رشد هوشمندانه کسب و کار شما"
+export const description = `${name}، ارائه‌دهنده خدمات هوش مصنوعی و دیجیتال مارکتینگ برای رشد هوشمندانه کسب و کار شما`

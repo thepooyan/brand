@@ -1,9 +1,10 @@
 import Code from "~/components/ui/code"
+import { name } from "../../../../config/config"
 
 const examplejs = () => {
   return (
     <>
-      <h2>ارسال ریکوئست به سرور هوشبان در javascript</h2>
+      <h2>ارسال ریکوئست به سرور {name} در javascript</h2>
       <Code code={`const data = [
   {
     role: "user", 

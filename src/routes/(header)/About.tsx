@@ -8,7 +8,7 @@ const About = () => {
     <main {...pageMarker()}>
       <Link rel="canonical" href="https://hooshbaan.com/About" />
       <Title> {name} | تیمی از برنامه نویسان متخصص هوش مصنوعی </Title>
-      <Meta name="description" content="هوش بان ، تیمی خلاق در ارائه خدمات هوش مصنوعی و طراحی سایت. با برنامه نویسان متخصص ، همراه کسب و کار شماییم" />
+      <Meta name="description" content={`${name} ، تیمی خلاق در ارائه خدمات هوش مصنوعی و طراحی سایت. با برنامه نویسان متخصص ، همراه کسب و کار شماییم` }/>
       <AboutSection/>
     </main>
   )
