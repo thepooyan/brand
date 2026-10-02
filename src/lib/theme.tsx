@@ -27,9 +27,18 @@ export const toggleTheme = async () => {
 }
 
 export const setupTheme = async () => {
+  // this is client side
+  await setupThemeSession()
+  setTheme(defaultTheme)
+}
+
+const setupThemeSession = async () => {
   "use server"
   await updateThemeSession({theme: defaultTheme})
-  return defaultTheme
+}
+
+export const validateThemeObject = (themeObject: any) => {
+  return zodThemeObject.safeParse(themeObject)
 }
 
 export const getClassname = (t:OptionalAccessor<themeObject>) => {

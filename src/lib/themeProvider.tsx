@@ -1,5 +1,5 @@
 import { Accessor, createContext, createEffect, ParentProps, useContext } from "solid-js";
-import { defaultTheme, setTheme, setupTheme, theme, themeObject } from "./theme";
+import { defaultTheme, setTheme, setupTheme, theme, themeObject, validateThemeObject } from "./theme";
 import { createAsync } from "@solidjs/router";
 import { getThemeSession } from "./session";
 
@@ -13,11 +13,12 @@ export const ThemeProvider = (props:ParentProps) => {
   createEffect(async () => {
     let a = initialTheme()
     if (a === undefined) {
-      let setup = await setupTheme()
-      setTheme(setup)
+      await setupTheme()
     }
-    //validate the cookie
-    if (a) setTheme(a)
+    let validated = validateThemeObject(a)
+    if (validated.success)
+     setTheme(validated.data)
+    else await setupTheme()
   })
   const finalTheme = () => theme() ?? initialTheme() ?? defaultTheme
 
