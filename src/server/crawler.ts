@@ -1,9 +1,13 @@
 "use server"
 import axios from "axios"
+import trainer_prompt from "../data/bot_trainer_prompt.md?raw"
 import { TrainingData, TrainingDataZod } from "~/db/schema"
 import { Fetch, fetchFail, fetchSuccess } from "~/lib/actionAbstraction"
 import { safe } from "~/lib/utils"
 import { parseHTML } from "linkedom";
+import { chatSync } from "./llmUtil"
+import { clearDelegatedEvents } from "solid-js/web"
+import { LanguageOptions, ResponseLengthOptions, ToneOptions } from "./llmConst"
 
 export type crawlTree = {link: string, status: "ok" | "unreachable" | "unchecked"}[]
 export const buildLinkTree = async (address: string):Fetch<crawlTree> => {
@@ -83,15 +87,49 @@ export const generateTrainingDataFromPages = async (pages: string[]):Fetch<Train
 
 const train_bot_using_text = async (text: string[]):Fetch<TrainingData> => {
 
+  const websiteContentString = text.join("\n")
   console.log(text)
-  console.log(text.join("").length)
-  const parse1 = await safe(JSON.parse(textJSon))
-  if (!parse1.ok) return fetchFail("error parsing json")
+  console.log(text.join("\n"))
 
-  const parsedJson = TrainingDataZod.safeParse(parse1.data)
-  if (parsedJson.error) return fetchFail(parsedJson.error.message)
 
-  return fetchSuccess(parsedJson.data)
+  const testWebsite = "hshshs, address: 5th street";
+  let resp = await chatSync([
+    {content: websiteContentString, role: "user"}
+  ], trainer_prompt)
+
+  console.log("resp: ", resp)
+  console.log("llm: ", resp.text)
+  const cleanText = resp.text.replaceAll("```json", "").replaceAll("```", "");
+  console.log("clean llm: ", resp.text)
+
+  let parse1;
+  try {
+    parse1 = JSON.parse(cleanText)
+  } catch {
+    return fetchFail("error: llm did not respond with json")
+  }
+
+  console.log("parse1:", parse1)
+
+  const makeful = {
+    id: 0,
+    useEmojies: false,
+    tone: ToneOptions.professional.label,
+    language: LanguageOptions.persian.label,
+    maxResponseLength: ResponseLengthOptions.short.label,
+    address: parse1.address,
+    contactNumber: [...parse1.contactNumber],
+    social: [...parse1.social],
+    trainingText: parse1.trainingText
+  }
+  console.log("makeful", makeful)
+
+  const parse2 = TrainingDataZod.safeParse(makeful)
+  if (parse2.error) return fetchFail("error: llm response did not comply with standard")
+
+  console.log("makeful", parse2)
+
+  return fetchSuccess(parse2.data)
 }
 
 const extractTextFromPages = async (pages: string[]):Fetch<string[]> => {

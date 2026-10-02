@@ -5,6 +5,8 @@ const test = () => {
   const [sig, sett] = createSignal("kk")
   onMount(async () => {
     let a = await generateTrainingDataFromPages(["http://tahlildadeh.com"])
+    console.log(a.ok)
+    console.log(a.msg)
     console.log(a.data)
   })
   return <>
