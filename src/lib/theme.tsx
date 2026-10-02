@@ -1,4 +1,4 @@
-import { createSignal, ParentProps } from "solid-js";
+import { createEffect, createSignal, ParentProps } from "solid-js";
 import { updateThemeSession } from "./session";
 import { OptionalAccessor, unwrap } from "./solid";
 import { useTheme } from "./themeProvider";
@@ -9,6 +9,7 @@ export const defaultIsDark = true
 
 export const [theme, setTheme] = createSignal<theme | null>(null)
 
+
 export const toggleTheme = async () => {
   const t = theme()
   const newTheme = t === "dark" ? "light" : "dark"
@@ -17,6 +18,8 @@ export const toggleTheme = async () => {
 }
 
 export const getClassname = (t:OptionalAccessor<theme>) => `theme-${unwrap(t)} ${unwrap(t).endsWith("dark") && "dark" || ""}`
+
+createEffect(() => document.body.className = getClassname(theme() ?? defaultTheme))
 
 export const WrapWithTheme = (props:ParentProps) => {
 
