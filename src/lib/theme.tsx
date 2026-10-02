@@ -19,7 +19,11 @@ export const toggleTheme = async () => {
 
 export const getClassname = (t:OptionalAccessor<theme>) => `theme-${unwrap(t)} ${unwrap(t).endsWith("dark") && "dark" || ""}`
 
-createEffect(() => document.body.className = getClassname(theme() ?? defaultTheme))
+createEffect(() => {
+  const t = theme()
+  if (t)
+  document.body.className = getClassname(t)
+})
 
 export const WrapWithTheme = (props:ParentProps) => {
 
