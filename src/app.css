@@ -15,9 +15,16 @@
 @config "../tailwind.config.ts";
 
 html {
-  /* always show scrollbar so width does not jump */
-  overflow-y: scroll;
   font-size: 21px;
+  /* never show the default scrollbar */
+  overflow: hidden;
+}
+
+#body {
+  /* create a manual scrollbar inside theme variables */
+  overflow-y: auto;
+  height: 100dvh;
+
 }
 
 body {
