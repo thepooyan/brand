@@ -5,18 +5,18 @@ import { toggleTheme } from "~/lib/theme"
 import { useTheme } from "~/lib/themeProvider"
 
 const ThemeButton = () => {
-  const {isDark} = useTheme()
+  const theme = useTheme()
   return (
     <Button variant="outline" onclick={() => toggleTheme()}
       class="w-10"
     >
       <FiSun class={cn(
         "transition-all absolute duration-100",
-        !isDark() && "opacity-0 rotate-45 invisible"
+        !theme().isDark && "opacity-0 rotate-45 invisible"
       )}/>
       <FiMoon class={cn(
         "transition-all absolute duration-100",
-        isDark() && "opacity-0 -rotate-45 invisible"
+        theme().isDark && "opacity-0 -rotate-45 invisible"
       )}/>
     </Button>
   )

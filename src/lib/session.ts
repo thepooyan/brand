@@ -1,7 +1,7 @@
 import { useSession } from "vinxi/http";
 import { usersTable } from "~/db/schema";
 import {  privateEnv } from "~/server/env/private-env";
-import { theme } from "./theme";
+import { themeObject } from "./theme";
 
 export enum ROLES {
   USER,
@@ -42,7 +42,7 @@ export async function clearAuthSession() {
 }
 
 export type ThemeSessionData = {
-  theme: theme
+  theme: themeObject
 };
 
 async function useThemeSession() {

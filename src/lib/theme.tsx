@@ -4,20 +4,34 @@ import { OptionalAccessor, unwrap } from "./solid";
 import { useTheme } from "./themeProvider";
 
 export type theme = "dark" | "light" | "plain" | "amber-dark" | "neon-dark" 
-export const defaultTheme:theme = "dark"
-export const defaultIsDark = true
+export type themeObject = {light: theme, dark: theme, isDark: boolean}
+export const defaultTheme:themeObject = {light: "light", dark: "dark", isDark: true}
 
-export const [theme, setTheme] = createSignal<theme | null>(null)
-
+// initial value has to be undefined because
+// it flashes on the default theme for some reason
+export const [theme, setTheme] = createSignal<themeObject>()
 
 export const toggleTheme = async () => {
   const t = theme()
-  const newTheme = t === "dark" ? "light" : "dark"
+  if (!t) return
+  const newTheme = {...t, isDark: !t.isDark}
   setTheme(newTheme)
   await updateThemeSession({theme: newTheme})
 }
 
-export const getClassname = (t:OptionalAccessor<theme>) => `theme-${unwrap(t)} ${unwrap(t).endsWith("dark") && "dark" || ""}`
+export const setupTheme = async () => {
+  "use server"
+  await updateThemeSession({theme: defaultTheme})
+  return defaultTheme
+}
+
+export const getClassname = (t:OptionalAccessor<themeObject>) => {
+  const opened = unwrap(t)
+  const isDark = opened.isDark
+  const theme = isDark ? opened.dark : opened.light
+
+  return `theme-${theme} ${isDark ? "dark" : ""}`
+}
 
 createEffect(() => {
   const t = theme()
@@ -27,7 +41,7 @@ createEffect(() => {
 
 export const WrapWithTheme = (props:ParentProps) => {
 
-  const {theme} = useTheme()
+  const theme = useTheme()
 
   return <div class={getClassname(theme())} id="body">
     {props.children}
