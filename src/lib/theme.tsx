@@ -2,9 +2,16 @@ import { createEffect, createSignal, ParentProps } from "solid-js";
 import { updateThemeSession } from "./session";
 import { OptionalAccessor, unwrap } from "./solid";
 import { useTheme } from "./themeProvider";
+import z from "zod";
 
-export type theme = "dark" | "light" | "plain" | "amber-dark" | "neon-dark" 
-export type themeObject = {light: theme, dark: theme, isDark: boolean}
+const availableThemes = z.enum(["dark" , "light" , "plain" , "amber-dark" , "neon-dark" ])
+const zodThemeObject = z.object({
+  light: availableThemes,
+  dark: availableThemes,
+  isDark: z.boolean()
+})
+export type theme = z.infer<typeof availableThemes>
+export type themeObject = z.infer<typeof zodThemeObject>
 export const defaultTheme:themeObject = {light: "light", dark: "dark", isDark: true}
 
 // initial value has to be undefined because
